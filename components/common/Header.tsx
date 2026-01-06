@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({
   }
 
   return (
-    <nav className=" text-blackColor border-b bg-whiteColor border-borderColor  py-3">
+    <nav className=" text-blackColor border-b bg-grayColor1 border-borderColor  py-3">
       <div className=" px-3  md:px-8   relative flex justify-between mb-1 z-50">
         {/* Mobile menu button */}
         <div>

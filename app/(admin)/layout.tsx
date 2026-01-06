@@ -15,9 +15,11 @@ interface AdminLayoutProps {
 }
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const queryClient = new QueryClient(); 
   const openSidebar = () => setSidebarOpen(true);
   const closeSidebar = () => setSidebarOpen(false);
+  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 
   return (
   <QueryClientProvider client={queryClient}>
@@ -28,16 +30,22 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <div
           className={`
             fixed top-0 left-1/2 -translate-x-1/2 xl:translate-x-0
-            h-screen w-[300px] z-30 bg-white border-r border-borderColor
-            transition-transform duration-300 ease-in-out
+            h-screen z-30 bg-white border-r border-borderColor
+            transition-all duration-300 ease-in-out
             ${sidebarOpen ? "translate-x-[0%]" : "-translate-x-[150%]"}
             xl:static xl:translate-x-0 z-50
+            ${isCollapsed ? 'xl:w-20 w-[300px]' : 'w-[300px]'}
           `}
           style={{
             left: "0px", // Only relevant for mobile now
           }}
         >
-          <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+          <Sidebar 
+            isOpen={sidebarOpen} 
+            onClose={closeSidebar} 
+            isCollapsed={isCollapsed}
+            onToggleCollapse={toggleCollapse}
+          />
         </div>
 
         {/* Overlay for mobile */}

@@ -70,11 +70,11 @@
 :root {
   --primaryColor: #FFA83E;
   --secondaryColor: #FFF6D2;
-  --blackColor: #070707;
+  --blackColor: #111927;
   --whiteColor: #fff;
   --ratingColor: #ffc52e;
   --headerColor: #1d1f2c;
-  --grayColor1: #777980;
+  --grayColor1: #F3F4F6;
   --bgColor: rgba(243, 243, 244, 0.5);
   --descriptionColor: #4a4c56;
   /* ========== */

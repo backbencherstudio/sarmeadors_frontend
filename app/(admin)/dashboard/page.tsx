@@ -1,9 +1,9 @@
-import DashboardPage from "@/components/dashboard/DashboardPage";
+import React from 'react'
 
-export default function Page() {
+function page() {
   return (
-    <div>
-      <DashboardPage />
-    </div>
-  );
+    <div>page</div>
+  )
 }
+
+export default page
