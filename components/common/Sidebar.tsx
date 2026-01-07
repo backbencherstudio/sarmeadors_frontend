@@ -13,6 +13,16 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill, RiHome6Line } from "react-icons/ri";
 import { TbLogout2 } from "react-icons/tb";
 
+import menuOne from "@/public/icon/client.svg"
+import menu2 from "@/public/icon/candidates.svg"
+import menu3 from "@/public/icon/calendar 01.svg"
+import menu4 from "@/public/icon/jobs.svg"
+import menu5 from "@/public/icon/setting.svg"
+import menu6 from "@/public/icon/more.svg"
+import menu7 from "@/public/icon/billing.svg"
+import menu8 from "@/public/icon/support.svg"
+import menu9 from "@/public/icon/main_setting.svg"
+import menu10 from "@/public/icon/logout.svg"
 
 interface NavItem {
   icon: any;
@@ -29,35 +39,53 @@ interface SidebarProps {
 
 const navItems: NavItem[] = [
   {
-    icon: <RiHome6Line />,
+    icon: menuOne,
     label: "Clients",
     href: "/dashboard",
   },
   {
-    icon: <FaPlus />,
+    icon: menu2,
     label: "Candidates",
     href: "/dashboard/Candidates",
   },
   {
-    icon: <LuUsers />,
+    icon: menu3,
     label: "Shift Job calendar",
     href: "/dashboard/shift-job-calendar",
   },
   {
-    icon: <MdOutlinePostAdd />,
+    icon: menu4,
     label: "Placement Jobs",
     href: "/dashboard/placement-jobs",
   },  
   {
-    icon: <MdOutlinePostAdd />,
+    icon: menu5,
     label: "Platform settings",
     href: "/dashboard/platform-settings",
   },  
   {
-    icon: <MdOutlinePostAdd />,
+    icon: menu6,
     label: "More",
     href: "/dashboard/more",
   },  
+];
+
+const otherItems = [
+  {
+    icon: menu7,
+    label: "Billing",
+    href: "/dashboard/billing",
+  },
+  {
+    icon: menu8,
+    label: "Help & Support",
+    href: "/dashboard/help-support",
+  },
+  {
+    icon: menu9,
+    label: "Settings",
+    href: "/dashboard/settings",
+  },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false, onToggleCollapse }) => {
@@ -158,16 +186,51 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
                   className={`
                     flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
                     hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
-                    ${active ? "bg-white text-blackColor" : ""}
+                    ${active ? "bg-white opacity-100 text-blackColor" : ""}
                     ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
                   `}
                   title={isCollapsed ? item.label : ""}
                 >
                   <div className="flex gap-2 items-center">
-                    <div className="w-[30px] h-[30px] flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                      {item.icon}
+                    <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                     <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
                     </div>
-                    <span className={`text-base font-medium text-blackColor whitespace-nowrap ${
+                    <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                      isCollapsed ? 'xl:hidden' : ''
+                    }`}>
+                      {item.label}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Other Section */}
+        <div className="pt-4 border-t border-white/10">
+          <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">Other</p>
+          <div className="space-y-2">
+            {otherItems.map((item, idx) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={idx}
+                  href={item.href}
+                  onClick={onClose}
+                  className={`
+                    flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
+                    hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
+                    ${active ? "bg-white opacity-100 text-blackColor" : ""}
+                    ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
+                  `}
+                  title={isCollapsed ? item.label : ""}
+                >
+                  <div className="flex gap-2 items-center">
+                    <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                       <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
+                    </div>
+                    <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
                       isCollapsed ? 'xl:hidden' : ''
                     }`}>
                       {item.label}
@@ -180,20 +243,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
         </div>
 
         {/* Log out section */}
-        <div className="pt-4 border-t border-white/10">
+        <div className="pt-4">
+        
           <button
             onClick={handleLogout}
             className={`
-              flex items-center bg-primaryColor/10 cursor-pointer gap-3 px-3 py-3 
-              hover:bg-primaryColor w-full rounded-lg transition-all duration-200
+              flex items-center hover:bg-white text cursor-pointer gap-3 px-3 py-3 
+               w-full rounded-lg transition-all duration-200
               ${isCollapsed ? 'xl:justify-center' : ''}
             `}
             title={isCollapsed ? "Log Out Account" : ""}
           >
             <div className="w-[30px] h-[30px] flex justify-center items-center flex-shrink-0">
-              <TbLogout2 className="text-whiteColor text-xl" />
+             <Image src={menu10} alt="Log Out" width={20} height={20} />
             </div>
-            <span className={`text-base font-normal text-whiteColor whitespace-nowrap ${
+            <span className={`text-base font-normal  whitespace-nowrap ${
               isCollapsed ? 'xl:hidden' : ''
             }`}>
               Log Out Account
