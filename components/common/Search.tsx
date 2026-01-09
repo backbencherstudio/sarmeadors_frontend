@@ -81,7 +81,7 @@ export default function Search() {
         name="search"
         value={search}
         onChange={handleChange}
-        className="w-full text-sm  bg-whiteColor border border-borderColor rounded-xl py-2 md:py-3 px-4 pl-10 focus:outline-none focus:border-dark-500"
+        className="w-full text-sm  bg-whiteColor border border-borderColor rounded-xl py-2 md:py-3.5 px-4 pl-10 focus:outline-none focus:border-dark-500"
         placeholder="Search by Name, Email or Phone Number"
       />
       <button onClick={handleSearch} className="absolute left-3 top-1/2 -translate-y-1/2 text-2xl">
