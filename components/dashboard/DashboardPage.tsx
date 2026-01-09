@@ -8,7 +8,7 @@ async function DashboardPage() {
   const cookieStore = await cookies()
   const token = cookieStore?.get("jobtoken")?.value;
  
-  if (!token) {
+  if (token) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Link href="/login" className="text-xl underline text-primaryColor text-center">Please log in to view the dashboard</Link>

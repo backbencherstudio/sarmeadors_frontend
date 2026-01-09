@@ -1,143 +1,95 @@
 "use client";
-import usericon from "@/public/icon/users 01.png";
 import Image from "next/image";
 import Link from "next/link";
-import { FaLongArrowAltUp } from "react-icons/fa";
+import { ChevronRight } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
 export default function StatCards() {
-  //   const {token } =useToken()
-
-  //  const getStatCards=async()=>{
-  //    const response = await UserService.getData("/admin/dashboard", token);
-  //    return response?.data?.data;
-  //  }
-
-  // const {data, error, isLoading} = useQuery({
-  //   queryKey: ["statCards"],
-  //   queryFn: () => getStatCards(),
-  // });
   const isLoading = false;
 
   const statCards = [
     {
-      title: "Maid Enquiries",
-      value: 1000,
-      percentage: "+6.2%",
-      icon: usericon,
-      timeFrame: "Total maid applications",
+      title: "Pre Application",
+      value: 195,
+      percentage: "0.1%",
     },
     {
-      title: "Employer Enquiries",
-      value: 1500,
-      percentage: "+6.6%",
-      icon: usericon,
-      timeFrame: "Employer requests",
+      title: "Application Started",
+      value: 7,
+      percentage: "0.8%",
     },
     {
-      title: "Available Biodatas",
-      value: 2000,
-      percentage: "+6.4%",
-      icon: usericon,
-      timeFrame: "Available Biodatas",
+      title: "Applied",
+      value: 18,
+      percentage: "1.5%",
     },
     {
-      title: "Confirmed Biodata",
-      value: 2500,
-      percentage: "+6.2%",
-      icon: usericon,
-      timeFrame: "Confirmed Biodata",
+      title: "Inactive",
+      value: 635,
+      percentage: "72.6%",
+    },
+    {
+      title: "Initial Payment Made",
+      value: 0,
+      percentage: "3.2%",
+    },
+    {
+      title: "Consultation Booked",
+      value: 0,
+      percentage: "3.2%",
+    },
+    {
+      title: "Consultation Complete",
+      value: 0,
+      percentage: "3.2%",
+    },
+    {
+      title: "Job Posted",
+      value: 97,
+      percentage: "3.2%",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 xl:gap-3 gap-4 2xl:gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
       {isLoading
-        ? // Show skeleton cards for loading state
-          Array.from({ length: 4 }).map((_, idx) => (
+        ? Array.from({ length: 8 }).map((_, idx) => (
             <div
               key={idx}
-              className="p-3 2xl:p-4 rounded-lg shadow bg-white flex flex-col gap-5"
+              className="p-4 rounded-lg bg-white border border-gray-100 flex flex-col gap-4"
             >
-              {/* Top Row Skeleton */}
-              <div className="flex items-center gap-4">
-                <div className="md:w-10 md:h-10 2xl:w-12 2xl:h-12 rounded-md bg-[#C5EFF1] flex items-center justify-center">
-                  <Skeleton className="w-4 h-4 xl:w-5 xl:h-5 " />
-                </div>
-                <div className="flex-1">
-                  <Skeleton className="w-full h-4  mb-2" />
-                  <Skeleton className="w-3/4 h-6 " />
-                </div>
-              </div>
-
-              {/* Bottom Row Skeleton */}
-              <div className="flex items-end justify-between">
-                <div className="flex gap-3 items-center">
-                  <Skeleton className="w-16 h-4 " />
-                  <Skeleton className="w-20 h-4 " />
-                </div>
-              </div>
+              <Skeleton className="w-24 h-4" />
+              <Skeleton className="w-16 h-8" />
+              <Skeleton className="w-12 h-4" />
             </div>
           ))
         : statCards.map((card, idx) => (
-            <Link
-              href="#"
+            <div
               key={idx}
-              className="p-3 2xl:p-4 rounded-lg  shadow bg-white flex hover:shadow-[2px_2px_7px_2px_rgba(0, 0, 0, 0.08)] transition-all card flex-col gap-5"
+              className="p-4 rounded-lg bg-grayColor1/60  border border-gray2Color hover:shadow-md transition-shadow cursor-pointer relative"
             >
-              {/* Top Row */}
-              <div className="flex items-center gap-4">
-                <div className="md:w-10 md:h-10 2xl:w-12 2xl:h-12 rounded-md bg-[#C5EFF1] flex items-center justify-center">
-                  {isLoading ? (
-                    <Skeleton className="w-4 h-4 z-30 xl:w-5 xl:h-5" />
-                  ) : (
-                    <Image
-                      src={card.icon}
-                      alt={card.title}
-                      width={20}
-                      height={20}
-                      className="w-4 h-4 xl:w-5 xl:h-5"
-                    />
-                  )}
+              {/* Title */}
+              <p className="text-sm text-gray-600 font-medium mb-3">
+                {card.title}
+              </p>
+
+              {/* Large Number with Percentage */}
+              <div className="flex items-end justify-between">
+                <div className="text-3xl font-bold text-gray-900">
+                  {card.value}
                 </div>
-                <div>
-                  {isLoading ? (
-                    <Skeleton className="w-full h-4" />
-                  ) : (
-                    <h4 className="text-base 2xl:text-lg  font-normal text-descriptionColor">
-                      {card.title}
-                    </h4>
-                  )}
-                  {isLoading ? (
-                    <Skeleton className="w-full h-4" />
-                  ) : (
-                    <div className="text-2xl  font-medium text-black mt-1">
-                      {card.value}
-                    </div>
-                  )}
-                </div>
+                <span className="text-xs font-medium text-gray-500 bg-gray-50 px-2 py-1 rounded">
+                  ({card.percentage})
+                </span>
               </div>
 
-              <div className="flex flex- items-end justify-between  text-gray-500">
-                <div className="flex gap-3 items-center">
-                  {isLoading ? (
-                    <Skeleton className="w-full h-4 " />
-                  ) : (
-                    <div className="flex items-center justify-start text-green-600 text-base 2xl:text-xl gap-0.5">
-                      <FaLongArrowAltUp className=" text-green-600  " />
-                      {card.percentage}
-                    </div>
-                  )}
-                  {isLoading ? (
-                    <Skeleton className="w-full h-4" />
-                  ) : (
-                    <span className="text-sm 2xl:text-base">
-                      {card.timeFrame}
-                    </span>
-                  )}
+              {/* Hover Effect - Show Arrow */}
+              <div className="absolute top-1/2 -right-6 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="bg-gray-900 rounded-full p-2">
+                  <ChevronRight className="w-4 h-4 text-white" />
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
     </div>
   );
