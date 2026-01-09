@@ -11,6 +11,16 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { IoIosArrowDown } from "react-icons/io";
 import Loader from "../reusable/Loader";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import Link from "next/link";
+import Search from "./Search";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "../ui/dropdown-menu";
+
 
 interface HeaderProps {
   onNotificationClick?: () => void;
@@ -23,7 +33,6 @@ const Header: React.FC<HeaderProps> = ({
   onMenuClick,
   sidebarOpen,
 }: HeaderProps) => {
-  const [isShow, seIsShow] = useState<boolean>(false);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showAllNotifications, setShowAllNotifications] = useState(false);
@@ -75,10 +84,10 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <nav className=" text-blackColor border-b bg-grayColor1 border-borderColor  py-3">
-      <div className=" px-3  md:px-8   relative flex justify-between mb-1 z-50">
+      <div className=" px-3  md:px-6   relative flex justify-between mb-1 z-50">
         {/* Mobile menu button */}
         <div>
-          <div className=" xl:hidden flex items-center">
+          <div className=" xl:hidden h-full flex items-center">
             <button
               onClick={onMenuClick}
               className=" pr-2 py-2  text-[#4A4C56]"
@@ -89,27 +98,21 @@ const Header: React.FC<HeaderProps> = ({
                 <Menu className="text-blackColor" />
               )}
             </button>
-            {/* <Link
-              href={"/dashboard"}
-              className="text-white text-xl lg:text-3xl font-semibold tracking-wide"
-            >
-              <Image
-                src={mainLogo}
-                alt="main logo "
-                width={80}
-                height={29}
-              />
-            </Link> */}
+           
           </div>
         </div>
 
         {/* Notification and Profile Group */}
+        <div className="flex items-center gap-2 lg:gap-6 justify-between w-full">
+           <div className=" w-full lg:w-70">
+              <Search/>
+            </div>
+            <div className="flex items-center gap-2 lg:gap-5 justify-between">
 
-        <div className="flex items-center gap-2 lg:gap-5 justify-end">
           <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
             <PopoverTrigger
-              className="cursor-pointer relative flex justify-center items-center lg:p-3 p-2 rounded-full"
-              style={{ boxShadow: "2px 2px 7px 2px rgba(0, 0, 0, 0.08)" }}
+              className="cursor-pointer relative flex justify-center items-center "
+             
               onClick={() => setPopoverOpen(!popoverOpen)}
             >
               {notifications.length > 0 && (
@@ -120,8 +123,8 @@ const Header: React.FC<HeaderProps> = ({
               <Image
                 src="/icon/notification.svg"
                 alt="notification"
-                width={18}
-                height={18}
+                width={20}
+                height={20}
               />
             </PopoverTrigger>
 
@@ -197,41 +200,91 @@ const Header: React.FC<HeaderProps> = ({
               )}
             </PopoverContent>
           </Popover>
-
-          <div className="  relative sm:ml-0">
-            <div
-              className="flex items-center md:gap-3 gap-2 p-1.5 sm:p-2 rounded-md"
-              style={{
-                boxShadow: "2px 2px 7px 2px rgba(0, 0, 0, 0.1)", // uniform shadow all sides
-              }}
+           <div
+              className="cursor-pointer relative flex justify-center items-center "
+             
+              onClick={() => setPopoverOpen(!popoverOpen)}
             >
-              <div
-                onClick={() => seIsShow(!isShow)}
-                className="flex justify-start items-center gap-2 cursor-pointer hover:opacity-90"
-              >
-                <div className=" w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
-                  <Image
-                    src={userDetails?.data?.data?.avatar_url || "/profile.png"}
-                    alt="Admin Avatar"
-                    width={40}
-                    height={40}
-                    className="rounded-md w-full h-full  "
-                  />
+              {notifications.length > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 flex justify-center items-center text-sm w-6 h-6 text-whiteColor rounded-full bg-redColor">
+                  {notifications.length}
+                </span>
+              )}
+              <Image
+                src="/icon/head-gift.svg"
+                alt="notification"
+                width={20}
+                height={20}
+              />
+            </div>
+          <div className="  relative sm:ml-0">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex gap-3 h-full items-center">
+                  <div
+                  className="flex items-center  p-1  rounded-full cursor-pointer hover:opacity-90"
+                  style={{
+                    boxShadow: "2px 2px 7px 2px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div className=" w-6 h-6 lg:w-8 lg:h-8 rounded-md overflow-hidden">
+                    <Image
+                      src={userDetails?.data?.data?.avatar_url || "/profile.png"}
+                      alt="Admin Avatar"
+                      width={40}
+                      height={40}
+                      className="rounded-md w-full h-full"
+                    />
+                  </div>
+                 
                 </div>
-                <div className="whitespace-nowrap">
-                  <h4 className="sm:text-sm text-[13px] font-medium text-blackColor">
-                    {userDetails?.data?.data?.name}
-                  </h4>
-                  <p className="text-descriptionColor md:text-base text-sm">
+                
+                   <button className=" cursor-pointer">
+                    <IoIosArrowDown size={16} className="text-blackColor" />
+                  </button>
+                </div>
+                
+
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end" className="w-48">
+                <div className="px-4 py-2">
+                  <p className="text-sm font-semibold text-headerColor">
+                    {userDetails?.data?.data?.name || "User"}
+                  </p>
+                  <p className="text-xs text-textColor">
                     {userDetails?.data?.data?.email}
                   </p>
                 </div>
-                <button className=" cursor-pointer">
-                  <IoIosArrowDown size={16} className="text-grayColor1" />
-                </button>
-              </div>
-            </div>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/dashboard" className="cursor-pointer">
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/dashboard" className="cursor-pointer">
+                    Profile Settings
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem
+                  onClick={() => {
+                    router.push("/login");
+                  }}
+                  className="text-redColor font-semibold cursor-pointer"
+                >
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
+            </div>
         </div>
       </div>
     </nav>

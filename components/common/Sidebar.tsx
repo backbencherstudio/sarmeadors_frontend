@@ -12,7 +12,7 @@ import { LuUsers } from "react-icons/lu";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill, RiHome6Line } from "react-icons/ri";
 import { TbLogout2 } from "react-icons/tb";
-
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import menuOne from "@/public/icon/client.svg"
 import menu2 from "@/public/icon/candidates.svg"
 import menu3 from "@/public/icon/calendar 01.svg"
@@ -70,6 +70,24 @@ const navItems: NavItem[] = [
   },  
 ];
 
+const moreItems = [
+  {
+    icon: menu7,
+    label: "Billing",
+    href: "/dashboard/billing",
+  },
+  {
+    icon: menu8,
+    label: "Help & Support",
+    href: "/dashboard/help-support",
+  },
+  {
+    icon: menu9,
+    label: "Settings",
+    href: "/dashboard/settings",
+  },
+];
+
 const otherItems = [
   {
     icon: menu7,
@@ -91,6 +109,7 @@ const otherItems = [
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false, onToggleCollapse }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const [moreOpen, setMoreOpen] = useState<boolean>(() => moreItems.some((m) => pathname.startsWith(m.href)));
   
   const isActive = (href: string): boolean => {
     if (href === "/") {
@@ -178,6 +197,98 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
           <div className="space-y-2">
             {navItems.map((item, idx) => {
               const active = isActive(item.href);
+              const isMore = item.label === "More";
+              if (isMore) {
+                // Collapsed: simple link, no accordion
+                if (isCollapsed) {
+                  return (
+                    <Link
+                      key={idx}
+                      href={item.href}
+                      onClick={onClose}
+                      className={`
+                        w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
+                        hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
+                        ${active ? "bg-white opacity-100 text-blackColor" : ""}
+                        ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
+                      `}
+                      title={item.label}
+                    >
+                      <div className="flex gap-2 items-center">
+                        <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                         <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
+                        </div>
+                        <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                          isCollapsed ? 'xl:hidden' : ''
+                        }`}>
+                          {item.label}
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                }
+                // Expanded: accordion submenu
+                return (
+                  <Collapsible key={idx} open={moreOpen} onOpenChange={(o) => setMoreOpen(o)}>
+                    <CollapsibleTrigger asChild>
+                      <button
+                        type="button"
+                        className={`
+                          w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
+                          hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
+                          ${isCollapsed ? 'xl:justify-center' : 'justify-between'}
+                        `}
+                        title={item.label}
+                        aria-expanded={moreOpen}
+                      >
+                        <div className="flex gap-2 items-center">
+                          <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                           <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
+                          </div>
+                          <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                            isCollapsed ? 'xl:hidden' : ''
+                          }`}>
+                            {item.label}
+                          </span>
+                        </div>
+                        <ChevronRight className={`transition-transform duration-200 ${moreOpen ? 'rotate-90' : ''}`} size={18} />
+                      </button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="CollapsibleContent pb-0">
+                      <div className="space-y-1 mt-1">
+                        {moreItems.map((sub, sidx) => {
+                          const subActive = isActive(sub.href);
+                          return (
+                            <Link
+                              key={`${sub.label}-${sidx}`}
+                              href={sub.href}
+                              onClick={onClose}
+                              className={`
+                                ml-10 flex items-center group gap-3 px-3 py-1.5 lg:py-2 rounded-lg 
+                                hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
+                                ${subActive ? "bg-white opacity-100 text-blackColor" : ""}
+                                ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
+                              `}
+                              title={isCollapsed ? sub.label : ''}
+                            >
+                              <div className="flex gap-2 items-center">
+                                <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                                  <Image src={sub.icon} alt={sub.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${subActive ? 'opacity-100' : ''}`} />
+                                </div>
+                                <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                                  isCollapsed ? 'xl:hidden' : ''
+                                }`}>
+                                  {sub.label}
+                                </span>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                );
+              }
               return (
                 <Link
                   key={idx}
