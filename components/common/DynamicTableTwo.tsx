@@ -76,15 +76,15 @@ const uniqueArray = [...new Set(originalArray)];
     <div>
       {/* Table Wrapper with Border & Radius */}
       <div className="rounded-t-md border border-gray-200">
-        <div className="h-[400px] overflow-auto">
-          <table className="min-w-[1000px] w-full text-left">
-            <thead className="bg-neutral-50 sticky top-0 z-10">
+        <div className="h-[400px] overflow-auto bg-white p-2">
+          <table className="min-w-[1000px] w-full text-left bg-whiteColor p-2">
+            <thead className="bg-blackColor sticky top-0 !rounded-2xl z-10 p-2">
               <tr>
                 {columns.map((col, index) => (
                   <th
                     key={index}
                     style={{ width: col.width  || "auto" }}
-                    className="px-4 py-3 whitespace-nowrap text-sm font-medium text-[#4a4c56] border-b border-gray-100 bg-neutral-50"
+                    className="px-4 py-3 whitespace-nowrap text-sm font-medium text-white border-b border-gray-100 bg-blackColor"
                   >
                     {col.label}
                   </th>

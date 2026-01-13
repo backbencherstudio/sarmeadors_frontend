@@ -18,6 +18,9 @@ import { FiPlus, FiSearch } from "react-icons/fi";
 import { GrEdit } from "react-icons/gr";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import ButtonReuseable from "../reusable/CustomButton";
+import Search from "../common/Search";
+import { HiOutlineFilter } from "react-icons/hi";
+
 function DashboardUserTable({ recentOrder }: any) {
   const [recentOrders, setRecentOrders] = useState<any>(recentOrder);
   const [currentPage, setCurrentPage] = useState(1);
@@ -200,59 +203,29 @@ function DashboardUserTable({ recentOrder }: any) {
       <div className="bg-white shadow p-5 rounded-md">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h4 className="text-2xl font-bold text-gray-800">All Enquiries</h4>
+            <div >
+             <h4 className="text-2xl font-bold text-gray-800">Client List</h4>
+             <p className="text-base text-secondaryColor mt-0.5">List of all current clients and their details.</p>
+            </div>
+            <div className="flex items-center gap-1.5 h-full">
+            <Search/>
+             <div>
+              <ButtonReuseable
+                title="Filter"
+                className="bg-white !text-blackColor border border-gray2Color"
+                icon={<HiOutlineFilter  className="w-4 h-4" />}
+              />
+             </div>
             <Link href="/dashboard/add-enquiry">
               <ButtonReuseable
                 title="Add Enquiry"
                 icon={<FiPlus className="w-4 h-4" />}
               />
             </Link>
-          </div>
-
-          <div className=" md:flex items-center gap-4">
-            <div className="flex-1 relative">
-              <div className="absolute top-1/2 -translate-y-1/2 left-0 pl-3 flex items-center pointer-events-none">
-                <FiSearch className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search enquiry"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              />
-            </div>
-
-            {/* Filter Dropdowns */}
-            <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-3  mt-4 md:mt-0">
-              {/* Type Filter */}
-              <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="w-[140px] h-12! bg-white border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-teal-500 focus:border-transparent">
-                  <SelectValue placeholder="All Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Type</SelectItem>
-                  <SelectItem value="maid">Maid</SelectItem>
-                  <SelectItem value="employer">Employer</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Status Filter */}
-              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                <SelectTrigger className="w-[140px] h-12! bg-white border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-teal-500 focus:border-transparent">
-                  <SelectValue placeholder="All Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="contacted">Contacted</SelectItem>
-                  <SelectItem value="uncontacted">Uncontacted</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Export Button */}
             </div>
           </div>
+
+         
         </div>
         <DynamicTableTwo
           columns={columns}
