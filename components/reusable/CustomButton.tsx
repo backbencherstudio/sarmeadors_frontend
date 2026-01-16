@@ -1,6 +1,6 @@
 
 type ButtonProps = {
-    title: string;
+    title?: string;
     className?: string;
     onClick?: () => void;
     icon?: any;
