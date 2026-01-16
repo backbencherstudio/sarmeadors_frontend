@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { demoData } from "@/demoData/DashboardData";
+import { demoData, statuse } from "@/demoData/DashboardData";
 import { useToken } from "@/hooks/useToken";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -22,6 +22,7 @@ import { IoIosArrowDown, IoMdArrowDropdown } from "react-icons/io";
 import { LuCalendarRange } from "react-icons/lu";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import Search from "../common/Search";
+import ClientDashboardFilter from "../filter/ClientDashboardFilter";
 import ButtonReuseable from "../reusable/CustomButton";
 
 function DashboardUserTable() {
@@ -36,7 +37,7 @@ function DashboardUserTable() {
   const [isEdite, setIsEdite] = useState(false);
   const [loadingStatusId, setLoadingStatusId] = useState<string | null>(null);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
-
+  const [filteredData, setFilteredData] = useState(false);
   // Column visibility state
   const [visibleColumns, setVisibleColumns] = useState({
     full_name: true,
@@ -50,25 +51,6 @@ function DashboardUserTable() {
   const { token } = useToken();
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const statuse = [
-    {
-      value: "Pre Application",
-      color: "bg-green-500/15 text-green-600",
-    },
-    {
-      value: "Applied",
-      color: "bg-purple-500/15 text-purple-600",
-    },
-    {
-      value: "Inactive",
-      color: "bg-red-500/15 text-red-600",
-    },
-    {
-      value: "Pending",
-      color: "bg-orange-500/15 text-orange-600",
-    },
-  ];
 
   // Debounce search term
   useEffect(() => {
@@ -333,6 +315,9 @@ function DashboardUserTable() {
     setIsEdite(true);
     setSelectedEditRecord(record);
   };
+  const handleFilter = () => {
+    setFilteredData((prev) => !prev);
+  };
   return (
     <section>
       <div className="bg-white shadow p-5 rounded-md">
@@ -348,6 +333,7 @@ function DashboardUserTable() {
               <Search />
               <div>
                 <ButtonReuseable
+                  onClick={handleFilter}
                   title="Filter"
                   className="bg-white !text-blackColor border border-gray2Color"
                   icon={<HiOutlineFilter className="w-4 h-4" />}
@@ -362,6 +348,7 @@ function DashboardUserTable() {
             </div>
           </div>
         </div>
+        <div>{filteredData && <ClientDashboardFilter />}</div>
         <DynamicTableTwo
           columns={visibleColumnsArray}
           data={demoData || []}

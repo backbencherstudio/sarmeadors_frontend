@@ -137,3 +137,75 @@ export const demoData = [
     image_name: j2,
   },
 ];
+
+export const statuse = [
+  {
+    value: "Pre Application",
+    color: "bg-green-500/15 text-green-600",
+  },
+  {
+    value: "Applied",
+    color: "bg-purple-500/15 text-purple-600",
+  },
+  {
+    value: "Inactive",
+    color: "bg-red-500/15 text-red-600",
+  },
+  {
+    value: "Pending",
+    color: "bg-orange-500/15 text-orange-600",
+  },
+];
+
+export const applicationDateOptions = [
+  {
+    value: "application_date",
+    label: "Application Date",
+  },
+  {
+    value: "last_login",
+    label: "Last Login Date",
+  },
+  {
+    value: "recent_access",
+    label: "Recent Access",
+  },
+];
+
+export const typeFilters = [
+  {
+    value: "midwest_elite_nannies",
+    label: "Midwest Elite Nannies",
+  },
+  {
+    value: "admin",
+    label: "ADMIN",
+  },
+  {
+    value: "user",
+    label: "USER",
+  },
+];
+
+export const locationFilters = [
+  {
+    value: "dc_metro",
+    label: "DC Metro Area",
+  },
+  {
+    value: "new_york",
+    label: "New York",
+  },
+  {
+    value: "miami",
+    label: "Miami",
+  },
+  {
+    value: "iowa",
+    label: "Iowa",
+  },
+  {
+    value: "other",
+    label: "Other Locations",
+  },
+];
