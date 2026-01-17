@@ -320,31 +320,33 @@ function DashboardUserTable() {
   };
   return (
     <section>
-      <div className="bg-white shadow p-5 rounded-md">
+      <div className="bg-white shadow md:p-5 p-3 rounded-md">
         <div className="mb-6">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-4">
             <div>
               <h4 className="text-2xl font-bold text-gray-800">Client List</h4>
               <p className="text-base text-secondaryColor mt-0.5">
                 List of all current clients and their details.
               </p>
             </div>
-            <div className="flex items-center gap-1.5 h-full">
+            <div className="flex flex-col md:flex-row w-full  md:items-center gap-3 md:gap-2 h-full">
               <Search />
-              <div>
-                <ButtonReuseable
-                  onClick={handleFilter}
-                  title="Filter"
-                  className="bg-white !text-blackColor border border-gray2Color"
-                  icon={<HiOutlineFilter className="w-4 h-4" />}
-                />
+              <div className="flex items-center justify-end gap-3 md:gap-2 w-full ">
+                <div>
+                  <ButtonReuseable
+                    onClick={handleFilter}
+                    title="Filter"
+                    className="bg-white !text-blackColor border border-gray2Color"
+                    icon={<HiOutlineFilter className="w-4 h-4" />}
+                  />
+                </div>
+                <Link href="/dashboard/add-enquiry">
+                  <ButtonReuseable
+                    title="Add Enquiry"
+                    icon={<FiPlus className="w-4 h-4" />}
+                  />
+                </Link>
               </div>
-              <Link href="/dashboard/add-enquiry">
-                <ButtonReuseable
-                  title="Add Enquiry"
-                  icon={<FiPlus className="w-4 h-4" />}
-                />
-              </Link>
             </div>
           </div>
         </div>
