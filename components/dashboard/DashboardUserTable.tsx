@@ -322,16 +322,16 @@ function DashboardUserTable() {
     <section>
       <div className="bg-white shadow md:p-5 p-3 rounded-md">
         <div className="mb-6">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+          <div className="flex flex-col lg:flex-row lg:items-center md:justify-between gap-4 w-full mb-4">
             <div>
               <h4 className="text-2xl font-bold text-gray-800">Client List</h4>
               <p className="text-base text-secondaryColor mt-0.5">
                 List of all current clients and their details.
               </p>
             </div>
-            <div className="flex flex-col md:flex-row w-full  md:items-center gap-3 md:gap-2 h-full">
+            <div className="flex flex-col md:flex-row w-full md:justify-end  md:items-center gap-3 md:gap-2 h-full">
               <Search />
-              <div className="flex items-center justify-end gap-3 md:gap-2 w-full ">
+              <div className="flex items-center  gap-3 md:gap-2  ">
                 <div>
                   <ButtonReuseable
                     onClick={handleFilter}

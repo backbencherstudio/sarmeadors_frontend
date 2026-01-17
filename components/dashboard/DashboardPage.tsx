@@ -39,7 +39,6 @@ async function DashboardPage() {
               </button>
             </div>
           </div>
-
           <StatCards />
         </div>
 

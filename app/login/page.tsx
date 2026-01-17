@@ -1,7 +1,7 @@
 
 import LoginForm from "@/components/allForm/LoginForm"
 import Loader from "@/components/reusable/Loader"
-import loginPage from "@/public/loginimage.png"
+import loginPage from "@/public/icon/mainlogo.png"
 import Image from "next/image"
 import { Suspense } from "react"
 function LoginPage() {

@@ -1,28 +1,28 @@
 "use client";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { clearBiodataData } from "@/helper/biodataStorage.helper";
 import { CookieHelper } from "@/helper/cookie.helper";
+import menu7 from "@/public/icon/billing.svg";
+import menu3 from "@/public/icon/calendar 01.svg";
+import menu2 from "@/public/icon/candidates.svg";
+import menuOne from "@/public/icon/client.svg";
+import menu4 from "@/public/icon/jobs.svg";
+import menu10 from "@/public/icon/logout.svg";
+import menu9 from "@/public/icon/main_setting.svg";
 import mainLogo from "@/public/icon/mainlogo.png";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import menu6 from "@/public/icon/more.svg";
+import menu5 from "@/public/icon/setting.svg";
+import menu8 from "@/public/icon/support.svg";
+import { ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import { LuUsers } from "react-icons/lu";
-import { MdOutlinePostAdd } from "react-icons/md";
-import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill, RiHome6Line } from "react-icons/ri";
-import { TbLogout2 } from "react-icons/tb";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import menuOne from "@/public/icon/client.svg"
-import menu2 from "@/public/icon/candidates.svg"
-import menu3 from "@/public/icon/calendar 01.svg"
-import menu4 from "@/public/icon/jobs.svg"
-import menu5 from "@/public/icon/setting.svg"
-import menu6 from "@/public/icon/more.svg"
-import menu7 from "@/public/icon/billing.svg"
-import menu8 from "@/public/icon/support.svg"
-import menu9 from "@/public/icon/main_setting.svg"
-import menu10 from "@/public/icon/logout.svg"
+import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 
 interface NavItem {
   icon: any;
@@ -57,17 +57,17 @@ const navItems: NavItem[] = [
     icon: menu4,
     label: "Placement Jobs",
     href: "/dashboard/placement-jobs",
-  },  
+  },
   {
     icon: menu5,
     label: "Platform settings",
     href: "/dashboard/platform-settings",
-  },  
+  },
   {
     icon: menu6,
     label: "More",
     href: "/dashboard/more",
-  },  
+  },
 ];
 
 const moreItems = [
@@ -106,11 +106,18 @@ const otherItems = [
   },
 ];
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false, onToggleCollapse }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  isOpen,
+  onClose,
+  isCollapsed = false,
+  onToggleCollapse,
+}) => {
   const pathname = usePathname();
   const router = useRouter();
-  const [moreOpen, setMoreOpen] = useState<boolean>(() => moreItems.some((m) => pathname.startsWith(m.href)));
-  
+  const [moreOpen, setMoreOpen] = useState<boolean>(() =>
+    moreItems.some((m) => pathname.startsWith(m.href))
+  );
+
   const isActive = (href: string): boolean => {
     if (href === "/") {
       return pathname === "/dashboard";
@@ -119,10 +126,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
   };
   const handleLogout = () => {
     CookieHelper.destroy({ key: "jobtoken" });
-    clearBiodataData()
-    router.push("/login")
-
-  }
+    clearBiodataData();
+    router.push("/login");
+  };
   return (
     <div className="h-screen  ">
       {/* Overlay for mobile */}
@@ -136,16 +142,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
       {/* Sidebar container */}
       <div
         className={`
-          ${isOpen
-            ? "z-50 h-full overflow-hidden absolute top-0 left-0"
-            : "h-full"
+          ${
+            isOpen
+              ? "z-50 h-full overflow-hidden absolute top-0 left-0"
+              : "h-full"
           }
           flex flex-col
           min-h-[calc(100vh-100px)] 
           bg-grayColor1 
           shadow-[0px_-0.3px_5.5px_0px_rgba(0,0,0,0.02)]
           p-5 overflow-y-auto transition-all duration-300
-          ${isCollapsed ? 'xl:w-20' : 'w-full'}
+          ${isCollapsed ? "xl:w-20" : "w-full"}
         `}
       >
         {/* Header with Logo and Toggle */}
@@ -153,7 +160,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
           <Link
             href={"/dashboard"}
             className={`text-white flex items-center transition-all duration-300 ${
-              isCollapsed ? 'xl:justify-center xl:w-full' : ''
+              isCollapsed ? "xl:justify-center xl:w-full" : ""
             }`}
           >
             <Image
@@ -162,11 +169,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
               width={118}
               height={29}
               className={`transition-all duration-300 ${
-                isCollapsed ? 'xl:w-8 xl:h-8' : 'w-20 md:w-[100px]'
+                isCollapsed ? "xl:w-8 xl:h-8" : "w-20 md:w-[100px]"
               }`}
             />
           </Link>
-          
+
           {/* Toggle button - visible on desktop, close button on mobile */}
           <button
             onClick={() => {
@@ -180,7 +187,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
             <span className="xl:hidden">
-              <X className="text-whiteColor" size={20} />
+              <X className="text-blackColor" size={20} />
             </span>
             <span className="hidden xl:block">
               {isCollapsed ? (
@@ -210,17 +217,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
                         w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
                         hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
                         ${active ? "bg-white opacity-100 text-blackColor" : ""}
-                        ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
+                        ${isCollapsed ? "xl:justify-center" : "justify-start"}
                       `}
                       title={item.label}
                     >
                       <div className="flex gap-2 items-center">
                         <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                         <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
+                          <Image
+                            src={item.icon}
+                            alt={item.label}
+                            width={20}
+                            height={20}
+                            className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                              active ? "opacity-100" : ""
+                            }`}
+                          />
                         </div>
-                        <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
-                          isCollapsed ? 'xl:hidden' : ''
-                        }`}>
+                        <span
+                          className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                            isCollapsed ? "xl:hidden" : ""
+                          }`}
+                        >
                           {item.label}
                         </span>
                       </div>
@@ -229,29 +246,52 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
                 }
                 // Expanded: accordion submenu
                 return (
-                  <Collapsible key={idx} open={moreOpen} onOpenChange={(o) => setMoreOpen(o)}>
+                  <Collapsible
+                    key={idx}
+                    open={moreOpen}
+                    onOpenChange={(o) => setMoreOpen(o)}
+                  >
                     <CollapsibleTrigger asChild>
                       <button
                         type="button"
                         className={`
                           w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
                           hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
-                          ${isCollapsed ? 'xl:justify-center' : 'justify-between'}
+                          ${
+                            isCollapsed
+                              ? "xl:justify-center"
+                              : "justify-between"
+                          }
                         `}
                         title={item.label}
                         aria-expanded={moreOpen}
                       >
                         <div className="flex gap-2 items-center">
                           <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                           <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
+                            <Image
+                              src={item.icon}
+                              alt={item.label}
+                              width={20}
+                              height={20}
+                              className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                                active ? "opacity-100" : ""
+                              }`}
+                            />
                           </div>
-                          <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
-                            isCollapsed ? 'xl:hidden' : ''
-                          }`}>
+                          <span
+                            className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                              isCollapsed ? "xl:hidden" : ""
+                            }`}
+                          >
                             {item.label}
                           </span>
                         </div>
-                        <ChevronRight className={`transition-transform duration-200 ${moreOpen ? 'rotate-90' : ''}`} size={18} />
+                        <ChevronRight
+                          className={`transition-transform duration-200 ${
+                            moreOpen ? "rotate-90" : ""
+                          }`}
+                          size={18}
+                        />
                       </button>
                     </CollapsibleTrigger>
                     <CollapsibleContent className="CollapsibleContent pb-0">
@@ -266,18 +306,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
                               className={`
                                 ml-10 flex items-center group gap-3 px-3 py-1.5 lg:py-2 rounded-lg 
                                 hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
-                                ${subActive ? "bg-white opacity-100 text-blackColor" : ""}
-                                ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
+                                ${
+                                  subActive
+                                    ? "bg-white opacity-100 text-blackColor"
+                                    : ""
+                                }
+                                ${
+                                  isCollapsed
+                                    ? "xl:justify-center"
+                                    : "justify-start"
+                                }
                               `}
-                              title={isCollapsed ? sub.label : ''}
+                              title={isCollapsed ? sub.label : ""}
                             >
                               <div className="flex gap-2 items-center">
                                 <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                                  <Image src={sub.icon} alt={sub.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${subActive ? 'opacity-100' : ''}`} />
+                                  <Image
+                                    src={sub.icon}
+                                    alt={sub.label}
+                                    width={20}
+                                    height={20}
+                                    className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                                      subActive ? "opacity-100" : ""
+                                    }`}
+                                  />
                                 </div>
-                                <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
-                                  isCollapsed ? 'xl:hidden' : ''
-                                }`}>
+                                <span
+                                  className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                                    isCollapsed ? "xl:hidden" : ""
+                                  }`}
+                                >
                                   {sub.label}
                                 </span>
                               </div>
@@ -298,17 +356,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
                     flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
                     hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
                     ${active ? "bg-white opacity-100 text-blackColor" : ""}
-                    ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
+                    ${isCollapsed ? "xl:justify-center" : "justify-start"}
                   `}
                   title={isCollapsed ? item.label : ""}
                 >
                   <div className="flex gap-2 items-center">
                     <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                     <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
+                      <Image
+                        src={item.icon}
+                        alt={item.label}
+                        width={20}
+                        height={20}
+                        className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                          active ? "opacity-100" : ""
+                        }`}
+                      />
                     </div>
-                    <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
-                      isCollapsed ? 'xl:hidden' : ''
-                    }`}>
+                    <span
+                      className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                        isCollapsed ? "xl:hidden" : ""
+                      }`}
+                    >
                       {item.label}
                     </span>
                   </div>
@@ -320,7 +388,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
 
         {/* Other Section */}
         <div className="pt-4 border-t border-white/10">
-          <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">Other</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">
+            Other
+          </p>
           <div className="space-y-2">
             {otherItems.map((item, idx) => {
               const active = isActive(item.href);
@@ -333,17 +403,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
                     flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
                     hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
                     ${active ? "bg-white opacity-100 text-blackColor" : ""}
-                    ${isCollapsed ? 'xl:justify-center' : 'justify-start'}
+                    ${isCollapsed ? "xl:justify-center" : "justify-start"}
                   `}
                   title={isCollapsed ? item.label : ""}
                 >
                   <div className="flex gap-2 items-center">
                     <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                       <Image src={item.icon} alt={item.label} width={20} height={20} className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? 'opacity-100' : ''}`} />
+                      <Image
+                        src={item.icon}
+                        alt={item.label}
+                        width={20}
+                        height={20}
+                        className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                          active ? "opacity-100" : ""
+                        }`}
+                      />
                     </div>
-                    <span className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
-                      isCollapsed ? 'xl:hidden' : ''
-                    }`}>
+                    <span
+                      className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                        isCollapsed ? "xl:hidden" : ""
+                      }`}
+                    >
                       {item.label}
                     </span>
                   </div>
@@ -355,22 +435,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isCollapsed = false,
 
         {/* Log out section */}
         <div className="pt-4">
-        
           <button
             onClick={handleLogout}
             className={`
               flex items-center hover:bg-white text cursor-pointer gap-3 px-3 py-3 
                w-full rounded-lg transition-all duration-200
-              ${isCollapsed ? 'xl:justify-center' : ''}
+              ${isCollapsed ? "xl:justify-center" : ""}
             `}
             title={isCollapsed ? "Log Out Account" : ""}
           >
             <div className="w-[30px] h-[30px] flex justify-center items-center flex-shrink-0">
-             <Image src={menu10} alt="Log Out" width={20} height={20} />
+              <Image src={menu10} alt="Log Out" width={20} height={20} />
             </div>
-            <span className={`text-base font-normal  whitespace-nowrap ${
-              isCollapsed ? 'xl:hidden' : ''
-            }`}>
+            <span
+              className={`text-base font-normal  whitespace-nowrap ${
+                isCollapsed ? "xl:hidden" : ""
+              }`}
+            >
               Log Out Account
             </span>
           </button>
