@@ -45,8 +45,10 @@ export default function DynamicTableTwo({
 }: DynamicTableProps) {
   const totalPages = totalpage;
 
-  const effectiveTotalItems = typeof totalItems === "number" ? totalItems : data?.length;
-  const startIndex = data?.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+  const effectiveTotalItems =
+    typeof totalItems === "number" ? totalItems : data?.length;
+  const startIndex =
+    data?.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
   const endIndex = Math.min(currentPage * itemsPerPage, effectiveTotalItems);
 
   const getPagination = () => {
@@ -57,9 +59,24 @@ export default function DynamicTableTwo({
       if (currentPage <= 3) {
         pages = [1, 2, 3, 4, "...", totalPages];
       } else if (currentPage >= totalPages - 2) {
-        pages = [1, "...", totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+        pages = [
+          1,
+          "...",
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
       } else {
-        pages = [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
+        pages = [
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
       }
     }
     return pages;
@@ -70,20 +87,20 @@ export default function DynamicTableTwo({
     // Reset to page 1 on page-size change
     onPageChange(1);
   };
-const originalArray = [1,5, 10, 25, 50, 100];
-const uniqueArray = [...new Set(originalArray)];
+  const originalArray = [1, 5, 10, 25, 50, 100];
+  const uniqueArray = [...new Set(originalArray)];
   return (
     <div>
       {/* Table Wrapper with Border & Radius */}
       <div className="rounded-t-md border border-gray-200">
         <div className="h-[400px] overflow-auto bg-white p-2">
           <table className="min-w-[1000px] w-full text-left bg-whiteColor p-2">
-            <thead className="bg-blackColor sticky top-0 !rounded-2xl z-10 p-2">
+            <thead className="bg-blackColor sticky top-0 !rounded-2xl  p-2">
               <tr>
                 {columns.map((col, index) => (
                   <th
                     key={index}
-                    style={{ width: col.width  || "auto" }}
+                    style={{ width: col.width || "auto" }}
                     className="px-4 py-3 whitespace-nowrap text-sm font-medium text-white border-b border-gray-100 bg-blackColor"
                   >
                     {col.label}
@@ -99,7 +116,10 @@ const uniqueArray = [...new Set(originalArray)];
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={columns.length + (onView || onDelete ? 1 : 0)} className="px-4 py-10 text-center text-[#4a4c56] text-sm">
+                  <td
+                    colSpan={columns.length + (onView || onDelete ? 1 : 0)}
+                    className="px-4 py-10 text-center text-[#4a4c56] text-sm"
+                  >
                     <Loader />
                   </td>
                 </tr>
@@ -113,7 +133,11 @@ const uniqueArray = [...new Set(originalArray)];
                         className="px-4 py-3 text-sm text-[#4a4c56]"
                       >
                         {col.formatter
-                          ? col.formatter(row[col.accessor], row, (currentPage - 1) * itemsPerPage + i)
+                          ? col.formatter(
+                              row[col.accessor],
+                              row,
+                              (currentPage - 1) * itemsPerPage + i
+                            )
                           : row[col.accessor]}
                       </td>
                     ))}
@@ -147,10 +171,17 @@ const uniqueArray = [...new Set(originalArray)];
                     colSpan={columns.length + (onView || onDelete ? 1 : 0)}
                     className="px-4 py-10 text-center text-[#4a4c56] text-sm"
                   >
-                 {
-                  error ? <p className="text-red-500 text-xl capitalize font-semibold"> {error + " " + "please login again" }</p> : <p className="text-xl text-gray-500 capitalize font-semibold">{noDataMessage}</p>
-                 }  
-                    </td>
+                    {error ? (
+                      <p className="text-red-500 text-xl capitalize font-semibold">
+                        {" "}
+                        {error + " " + "please login again"}
+                      </p>
+                    ) : (
+                      <p className="text-xl text-gray-500 capitalize font-semibold">
+                        {noDataMessage}
+                      </p>
+                    )}
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -165,19 +196,20 @@ const uniqueArray = [...new Set(originalArray)];
             <button
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-2 cursor-pointer py-1 flex justify-center  items-center border border-primaryColor text-primaryColor rounded disabled:opacity-40 disabled:text-grayColor1 disabled:border-grayColor1"
+              className="px-2 cursor-pointer py-1.5 flex justify-center  items-center border border-border text-blackColor rounded disabled:opacity-40 disabled:text-borderColor disabled:border-borderColor"
             >
-              <MdArrowBackIosNew />
+              <MdArrowBackIosNew size={15} />
             </button>
             {getPagination().map((page, i) => (
               <button
                 key={i}
                 onClick={() => typeof page === "number" && onPageChange(page)}
                 disabled={page === "..."}
-                className={`px-2 rounded border text-sm ${page === currentPage
-                    ? "text-primaryColor border-primaryColor  font-medium"
-                    : "text-grayColor1"
-                  }`}
+                className={`px-2.5 py-1 rounded h-full text-sm ${
+                  page === currentPage
+                    ? "text-blackColor bg-grayColor1 border border-border h-full  font-medium"
+                    : "text-blackColor "
+                }`}
               >
                 {page}
               </button>
@@ -185,22 +217,25 @@ const uniqueArray = [...new Set(originalArray)];
             <button
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="cursor-pointer px-2 py-1 flex justify-center  items-center border border-primaryColor text-primaryColor rounded disabled:opacity-40 disabled:text-grayColor1 disabled:border-grayColor1"
+              className="cursor-pointer px-2 py-1.5 flex justify-center  items-center border border-border text-blackColor rounded disabled:opacity-40 disabled:text-borderColor disabled:border-borderColor"
             >
-              <MdArrowForwardIos />
+              <MdArrowForwardIos size={15} />
             </button>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="text-sm text-[#4a4c56]">
-              Showing {startIndex} to {endIndex} of {effectiveTotalItems} entries
+              Showing {startIndex} to {endIndex} of {effectiveTotalItems}{" "}
+              entries
             </div>
 
             <div className="flex items-center gap-2">
               <label className="text-sm text-[#4a4c56]">Show</label>
               <select
                 value={itemsPerPage}
-                onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+                onChange={(e) =>
+                  handleItemsPerPageChange(Number(e.target.value))
+                }
                 className="px-2 py-1 border rounded text-sm"
               >
                 {uniqueArray.map((opt) => (

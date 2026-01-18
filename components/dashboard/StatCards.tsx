@@ -1,6 +1,4 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
@@ -66,19 +64,19 @@ export default function StatCards() {
         : statCards.map((card, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-lg bg-grayColor1/60  border border-gray2Color hover:shadow-md transition-shadow cursor-pointer relative"
+              className="p-4 rounded-lg bg-bgColor  border border-gray2Color hover:shadow-md transition-shadow cursor-pointer relative"
             >
               {/* Title */}
-              <p className="text-sm text-gray-600 font-medium mb-3">
+              <p className="text-sm text-secondaryColor font-medium mb-3">
                 {card.title}
               </p>
 
               {/* Large Number with Percentage */}
               <div className="flex items-end justify-between">
-                <div className="text-3xl font-bold text-gray-900">
+                <div className="text-3xl font-semibold text-blackColor">
                   {card.value}
                 </div>
-                <span className="text-xs font-medium text-gray-500 bg-gray-50 px-2 py-1 rounded">
+                <span className="text-xs font-medium text-secondaryColor  px-2 py-1 rounded">
                   ({card.percentage})
                 </span>
               </div>
