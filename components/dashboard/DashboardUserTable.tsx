@@ -25,6 +25,7 @@ import DynamicTableTwo from "../common/DynamicTableTwo";
 import Search from "../common/Search";
 import ClientDashboardFilter from "../filter/ClientDashboardFilter";
 import ButtonReuseable from "../reusable/CustomButton";
+import ClientCreateForm from "../allForm/ClientCreateForm";
 function DashboardUserTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -37,6 +38,7 @@ function DashboardUserTable() {
   const [isEdite, setIsEdite] = useState(false);
   const [loadingStatusId, setLoadingStatusId] = useState<string | null>(null);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(false);
   // Column visibility state
   const [visibleColumns, setVisibleColumns] = useState({
@@ -314,6 +316,12 @@ function DashboardUserTable() {
   const handleFilter = () => {
     setFilteredData((prev) => !prev);
   };
+
+ const handleOpenModal = () => {
+    // Logic to open the modal
+    setIsModalOpen(true);
+  };
+
   return (
     <section>
       <div className="bg-white shadow md:p-5 p-3 rounded-md">
@@ -336,12 +344,13 @@ function DashboardUserTable() {
                     icon={<HiOutlineFilter className="w-4 h-4" />}
                   />
                 </div>
-                <Link href="/dashboard/add-enquiry">
+                <div >
                   <ButtonReuseable
+                  onClick={handleOpenModal}
                     title="Add Enquiry"
                     icon={<FiPlus className="w-4 h-4" />}
                   />
-                </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -362,6 +371,7 @@ function DashboardUserTable() {
           totalpage={2}
         />
       </div>
+      {isModalOpen && <ClientCreateForm open={isModalOpen} setOpen={setIsModalOpen} />}
     </section>
   );
 }

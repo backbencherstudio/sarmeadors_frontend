@@ -1,13 +1,5 @@
 "use client";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -21,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { locationFilters, typeFilters } from "@/demoData/DashboardData";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiSearch } from "react-icons/fi";
+import ButtonReuseable from "../reusable/CustomButton";
 
 type FormValues = {
   email: string;
@@ -33,8 +25,14 @@ type FormValues = {
   heardAboutUs: string;
 };
 
-function ClientCreateForm() {
-  const { register, handleSubmit, setValue, watch, formState } =
+function ClientCreateForm({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) {
+  const { register, handleSubmit, setValue, watch, reset, formState } =
     useForm<FormValues>({
       defaultValues: {
         email: "",
@@ -50,42 +48,48 @@ function ClientCreateForm() {
   const { errors } = formState;
   const [typeSearch, setTypeSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const filteredTypes = typeFilters.filter((t) =>
-    t.label.toLowerCase().includes(typeSearch.toLowerCase())
+    t.label.toLowerCase().includes(typeSearch.toLowerCase()),
   );
   const filteredLocations = locationFilters.filter((l) =>
-    l.label.toLowerCase().includes(locationSearch.toLowerCase())
+    l.label.toLowerCase().includes(locationSearch.toLowerCase()),
   );
 
   const onSubmit = (data: FormValues) => {
     // TODO: replace with real API integration
+    setLoading(true);
+    setTimeout(() => {
+      reset();
+      setOpen(false);
+      setLoading(false);
+    }, 300);
+
     console.log("Add New Client form submitted:", data);
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <button className="px-4 py-2 bg-primary text-white rounded-md">
-          Add New Client
-        </button>
-      </DialogTrigger>
-      <DialogContent className="p-0 sm:max-w-2xl">
-        <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg">
-          <div className="p-6 border-b border-borderColor">
-            <DialogHeader>
-              <DialogTitle>Add New Client</DialogTitle>
-            </DialogHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild></DialogTrigger>
+      <DialogContent className="p-0 sm:max-w-2xl h-[90vh] overflow-y-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-white rounded-lg p-6"
+        >
+          <div className="">
+            <h3 className="text-xl lg:text-2xl font-semibold text-blackColor">
+              Add New Client
+            </h3>
           </div>
 
-          <div className="p-6 space-y-4">
+          <div className="pt-6 space-y-4 pb-5">
             {/* Email */}
             <div className="space-y-1">
               <Label className="text-sm">Email</Label>
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="h-11"
+                className="h-12! bg-bgColor"
                 {...register("email", { required: true })}
               />
             </div>
@@ -95,8 +99,8 @@ function ClientCreateForm() {
               <Label className="text-sm">Phone Number</Label>
               <Input
                 type="text"
-                placeholder="Password"
-                className="h-11"
+                placeholder="Enter your phone number"
+                className="h-12! bg-bgColor"
                 {...register("phoneNumber", { required: true })}
               />
             </div>
@@ -106,8 +110,8 @@ function ClientCreateForm() {
               <Label className="text-sm">First Name</Label>
               <Input
                 type="text"
-                placeholder="Password"
-                className="h-11"
+                placeholder="Enter your first name"
+                className="h-12! bg-bgColor"
                 {...register("firstName", { required: true })}
               />
             </div>
@@ -117,8 +121,8 @@ function ClientCreateForm() {
               <Label className="text-sm">Last Name</Label>
               <Input
                 type="text"
-                placeholder="Password"
-                className="h-11"
+                placeholder="Enter your last name"
+                className="h-12! bg-bgColor"
                 {...register("lastName", { required: true })}
               />
             </div>
@@ -132,29 +136,10 @@ function ClientCreateForm() {
                   setValue("userType", v, { shouldValidate: true })
                 }
               >
-                <SelectTrigger className="h-11 w-full">
+                <SelectTrigger className="h-12! bg-bgColor w-full">
                   <SelectValue placeholder="Start typing to filter" />
                 </SelectTrigger>
-                <SelectContent className="p-2">
-                  <div className="pb-2">
-                    <div
-                      className="w-full relative"
-                      onMouseDown={(e) => e.preventDefault()}
-                    >
-                      <Input
-                        type="text"
-                        placeholder="Start typing to filter"
-                        value={typeSearch}
-                        onChange={(e) => setTypeSearch(e.target.value)}
-                        onKeyDown={(e) => e.stopPropagation()}
-                        className="pl-8 h-9"
-                      />
-                      <FiSearch
-                        className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-                        size={16}
-                      />
-                    </div>
-                  </div>
+                <SelectContent className="p-2 w-full">
                   {filteredTypes.map((t) => (
                     <SelectItem
                       key={t.value}
@@ -178,29 +163,10 @@ function ClientCreateForm() {
                   setValue("location", v, { shouldValidate: true })
                 }
               >
-                <SelectTrigger className="h-11 w-full">
+                <SelectTrigger className="h-12! bg-bgColor w-full">
                   <SelectValue placeholder="Start typing to filter" />
                 </SelectTrigger>
-                <SelectContent className="p-2">
-                  <div className="pb-2">
-                    <div
-                      className="w-full relative"
-                      onMouseDown={(e) => e.preventDefault()}
-                    >
-                      <Input
-                        type="text"
-                        placeholder="Start typing to filter"
-                        value={locationSearch}
-                        onChange={(e) => setLocationSearch(e.target.value)}
-                        onKeyDown={(e) => e.stopPropagation()}
-                        className="pl-8 h-9"
-                      />
-                      <FiSearch
-                        className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-                        size={16}
-                      />
-                    </div>
-                  </div>
+                <SelectContent className="p-2 w-full">
                   {filteredLocations.map((l) => (
                     <SelectItem
                       key={l.value}
@@ -219,29 +185,29 @@ function ClientCreateForm() {
             <div className="space-y-1">
               <Label className="text-sm">How did you hear about us?</Label>
               <Textarea
-                className="min-h-24"
+                className="min-h-16"
                 placeholder="How did you hear about us?"
                 {...register("heardAboutUs")}
               />
             </div>
           </div>
 
-          <DialogFooter className="p-6 border-t border-borderColor">
-            <DialogClose asChild>
-              <button
-                type="button"
-                className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md"
-              >
-                Cancel
-              </button>
-            </DialogClose>
-            <button
+          <div className="flex items-center  gap-4 pt-5 border-t ">
+            <ButtonReuseable
               type="submit"
-              className="px-4 py-2 bg-primary text-white rounded-md"
-            >
-              Add
-            </button>
-          </DialogFooter>
+              title="  Add"
+              className="px-6!"
+              sendingMsg="Creating..."
+              loading={loading}
+            />
+
+            <ButtonReuseable
+              type="button"
+              title=" Cancel"
+              onClick={() => setOpen(false)}
+              className="bg-bgColor! text-blackColor! border hover:bg-gray-100!"
+            />
+          </div>
         </form>
       </DialogContent>
     </Dialog>
