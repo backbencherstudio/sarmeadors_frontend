@@ -133,7 +133,7 @@ function ClientDashboardFilter() {
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700 transition-colors"
+              className="flex items-center gap-2 cursor-pointer text-sm text-red-600 hover:text-red-700 transition-colors"
             >
               <FiX size={16} />
               Clear All
@@ -226,7 +226,7 @@ function ClientDashboardFilter() {
             </div>
           </div>
           {/* Status Filter */}
-          <div className="col-span-2 md:col-span-2 space-y-2">
+          <div className="col-span-2 md:col-span-1 space-y-2">
             <label className="sr-only">Filter by Status</label>
             <ReactSelect
               classNamePrefix="filter-status"
@@ -256,7 +256,7 @@ function ClientDashboardFilter() {
           </div>
 
           {/* Statuses to Hide Filter */}
-          <div className="col-span-2 md:col-span-2 space-y-2">
+          <div className="col-span-2 md:col-span-1 space-y-2">
             <label className="sr-only">Statuses to Hide</label>
             <ReactSelect
               classNamePrefix="hide-statuses"

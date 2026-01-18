@@ -93,7 +93,7 @@ export default function DynamicTableTwo({
     <div>
       {/* Table Wrapper with Border & Radius */}
       <div className="rounded-t-md border border-gray-200">
-        <div className="h-[400px] overflow-auto bg-white p-2">
+        <div className=" bg-white p-2">
           <table className="min-w-[1000px] w-full text-left bg-whiteColor p-2">
             <thead className="bg-blackColor sticky top-0 !rounded-2xl  p-2">
               <tr>
@@ -136,7 +136,7 @@ export default function DynamicTableTwo({
                           ? col.formatter(
                               row[col.accessor],
                               row,
-                              (currentPage - 1) * itemsPerPage + i
+                              (currentPage - 1) * itemsPerPage + i,
                             )
                           : row[col.accessor]}
                       </td>

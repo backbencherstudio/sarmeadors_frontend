@@ -115,7 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const pathname = usePathname();
   const router = useRouter();
   const [moreOpen, setMoreOpen] = useState<boolean>(() =>
-    moreItems.some((m) => pathname.startsWith(m.href))
+    moreItems.some((m) => pathname.startsWith(m.href)),
   );
 
   const isActive = (href: string): boolean => {
@@ -160,7 +160,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <Link
             href={"/dashboard"}
             className={`text-white flex items-center transition-all duration-300 ${
-              isCollapsed ? "xl:justify-center xl:w-full" : ""
+              isCollapsed ? "xl:justify-center hidden xl:w-full" : ""
             }`}
           >
             <Image
@@ -169,7 +169,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               width={118}
               height={29}
               className={`transition-all duration-300 ${
-                isCollapsed ? "xl:w-8 xl:h-8" : "w-20 md:w-[100px]"
+                isCollapsed ? "xl:w-8 xl:h-8 " : "w-20 md:w-[100px]"
               }`}
             />
           </Link>
@@ -183,7 +183,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 onClose();
               }
             }}
-            className="flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200"
+            className="flex items-center cursor-pointer justify-center w-8 h-8 rounded-lg transition-all duration-200"
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
             <span className="xl:hidden">

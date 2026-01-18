@@ -19,12 +19,12 @@ import { FaPlus } from "react-icons/fa6";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import { HiOutlineFilter } from "react-icons/hi";
 import { IoIosArrowDown, IoMdArrowDropdown } from "react-icons/io";
+import { IoSettingsSharp } from "react-icons/io5";
 import { LuCalendarRange } from "react-icons/lu";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import Search from "../common/Search";
 import ClientDashboardFilter from "../filter/ClientDashboardFilter";
 import ButtonReuseable from "../reusable/CustomButton";
-
 function DashboardUserTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -113,14 +113,14 @@ function DashboardUserTable() {
     setSelectedRows((prev) =>
       prev.includes(rowId)
         ? prev.filter((id) => id !== rowId)
-        : [...prev, rowId]
+        : [...prev, rowId],
     );
   };
 
   const filteredStatus = statuse.filter(
     (s) =>
       s.value.toLowerCase().includes(statuseSearchTerm.toLowerCase()) ||
-      s.value === statuseSearchTerm
+      s.value === statuseSearchTerm,
   );
 
   const columns = [
@@ -217,12 +217,12 @@ function DashboardUserTable() {
                   value === "Applied"
                     ? "bg-purple-500/15 text-purple-600"
                     : value === "Pre Application"
-                    ? "bg-green-500/15 text-green-600"
-                    : value === "Inactive"
-                    ? "bg-red-500/15 text-red-600"
-                    : value === "Pending"
-                    ? "bg-orange-500/15 text-orange-600"
-                    : "bg-gray-500/15 text-gray-600"
+                      ? "bg-green-500/15 text-green-600"
+                      : value === "Inactive"
+                        ? "bg-red-500/15 text-red-600"
+                        : value === "Pending"
+                          ? "bg-orange-500/15 text-orange-600"
+                          : "bg-gray-500/15 text-gray-600"
                 }`}
               >
                 <SelectValue />
@@ -290,25 +290,21 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Action",
-      accessor: "action",
-      width: "100px",
-      formatter: (type: any, record: any) => {
-        return (
-          <button
-            onClick={() => handleEdit(record)}
-            className="px-4 py-2 cursor-pointer bg-white text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors text-sm font-medium"
-          >
-            View
+      label: (
+        <div className="text-right">
+          <button className="flex items-center cursor-pointer justify-end gap-2">
+            <IoSettingsSharp size={18} />
           </button>
-        );
-      },
+        </div>
+      ),
+      accessor: "action",
+      width: "50px",
     },
   ];
 
   // Filter columns based on visibility
   const visibleColumnsArray = columns.filter(
-    (col) => visibleColumns[col.accessor as keyof typeof visibleColumns]
+    (col) => visibleColumns[col.accessor as keyof typeof visibleColumns],
   );
 
   const handleEdit = (record: any) => {
