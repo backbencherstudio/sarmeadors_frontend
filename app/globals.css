@@ -28,7 +28,7 @@
   --color-ratingColor: #f9c80e;
   --color-footerColor: #091819;
   --color-bgColor: var(--bgColor);
-  --color-borderColor: #d2d2d5;
+  --color-borderColor: #e5e7eb;
   --color-descriptionColor: var(--descriptionColor);
   /* ======== */
   --radius-sm: calc(var(--radius) - 4px);

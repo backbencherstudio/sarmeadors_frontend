@@ -178,7 +178,7 @@ function ClientDashboardFilter() {
                 value={applicationDate}
                 onValueChange={setApplicationDate}
               >
-                <SelectTrigger className="w-full h-12.5! bg-bgColor  border border-borderColor rounded-md text-sm focus:outline-none focus:border-blue-500">
+                <SelectTrigger className="w-full h-12.5! bg-bgColor cursor-pointer  border border-borderColor rounded-md text-sm focus:outline-none focus:border-blue-500">
                   <SelectValue placeholder="Application Date" />
                 </SelectTrigger>
                 <SelectContent>
@@ -195,7 +195,7 @@ function ClientDashboardFilter() {
             <div className="space-y-2">
               <label className="sr-only">Filter By Types</label>
               <Select value={filterType} onValueChange={setFilterType}>
-                <SelectTrigger className="w-full h-12.5! bg-bgColor border border-borderColor rounded-md text-sm focus:outline-none focus:border-blue-500">
+                <SelectTrigger className="w-full h-12.5! bg-bgColor border cursor-pointer border-borderColor rounded-md text-sm focus:outline-none focus:border-blue-500">
                   <SelectValue placeholder="Filter By Types" />
                 </SelectTrigger>
                 <SelectContent>
@@ -212,7 +212,7 @@ function ClientDashboardFilter() {
             <div className="space-y-2">
               <label className="sr-only">Filter By Location</label>
               <Select value={filterLocation} onValueChange={setFilterLocation}>
-                <SelectTrigger className="w-full h-12.5! bg-bgColor border border-borderColor rounded-md text-sm focus:outline-none focus:border-blue-500">
+                <SelectTrigger className="w-full h-12.5! bg-bgColor border cursor-pointer border-borderColor rounded-md text-sm focus:outline-none focus:border-blue-500">
                   <SelectValue placeholder="Filter to Locations" />
                 </SelectTrigger>
                 <SelectContent>
@@ -236,7 +236,7 @@ function ClientDashboardFilter() {
               closeMenuOnSelect={false}
               hideSelectedOptions={false}
               value={statusOptions.filter((o) =>
-                filterStatus.includes(o.value)
+                filterStatus.includes(o.value),
               )}
               onChange={(opts) =>
                 setFilterStatus(opts ? opts.map((o) => o.value).join(",") : "")
@@ -246,10 +246,11 @@ function ClientDashboardFilter() {
                 control: (base) => ({
                   ...base,
                   minHeight: "50px",
-                  borderColor: "var(--borderColor, #e5e7eb)",
+                  borderColor: "var(--borderColor, #E5E7EB)",
                   boxShadow: "none",
-                  backgroundColor: "var(--bgColor, #f9fafb)",
-                  "&:hover": { borderColor: "#cbd5e1" },
+                  cursor: "pointer",
+                  backgroundColor: "var(--bgColor, #E5E7EB)",
+                  "&:hover": { borderColor: "#E5E7EB" },
                 }),
               }}
             />
@@ -265,7 +266,7 @@ function ClientDashboardFilter() {
               closeMenuOnSelect={false}
               hideSelectedOptions={false}
               value={statusOptions.filter((o) =>
-                hiddenStatuses.includes(o.value)
+                hiddenStatuses.includes(o.value),
               )}
               onChange={(opts) =>
                 setHiddenStatuses(opts ? opts.map((o) => o.value) : [])
@@ -275,10 +276,11 @@ function ClientDashboardFilter() {
                 control: (base) => ({
                   ...base,
                   minHeight: "50px",
-                  borderColor: "var(--borderColor, #e5e7eb)",
+                  borderColor: "var(--borderColor, #E5E7EB)",
                   boxShadow: "none",
-                  backgroundColor: "var(--bgColor, #f9fafb)",
-                  "&:hover": { borderColor: "#cbd5e1" },
+                  backgroundColor: "var(--bgColor, #E5E7EB)",
+                  "&:hover": { borderColor: "#E5E7EB" },
+                  cursor: "pointer",
                 }),
               }}
             />
