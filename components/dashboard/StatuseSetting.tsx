@@ -15,8 +15,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, GripVertical, Trash2, X } from "lucide-react";
 import React, { useState } from "react";
+import { SketchPicker } from "react-color";
 import RootDrawer from "../common/RootDrawer";
+import ButtonReuseable from "../reusable/CustomButton";
 import ColorPickerDialog from "./ColorPickerDialog";
+import SimpleColorPicker from "./SimpleColorPicker";
 
 interface Status {
   id: string;
@@ -117,6 +120,9 @@ function StatuseSetting({
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
+  const [isAddingStatus, setIsAddingStatus] = useState(false);
+  const [newStatusName, setNewStatusName] = useState("");
+  const [newStatusColor, setNewStatusColor] = useState("#3B82F6");
 
   const handleDragStart = (e: React.DragEvent, id: string) => {
     setDraggedItem(id);
@@ -173,12 +179,15 @@ function StatuseSetting({
   const handleAddStatus = () => {
     const newStatus: Status = {
       id: Date.now().toString(),
-      color: "#3B82F6",
-      name: "New Status",
+      color: newStatusColor,
+      name: newStatusName || "New Status",
       textColor: "#ffffff",
-      backgroundColor: "#3B82F6",
+      backgroundColor: newStatusColor,
     };
     setStatuses([...statuses, newStatus]);
+    setIsAddingStatus(false);
+    setNewStatusName("");
+    setNewStatusColor("#3B82F6");
   };
 
   const toggleStatusForReason = (statusName: string) => {
@@ -273,92 +282,18 @@ function StatuseSetting({
                         initialBackgroundColor={initialBackgroundColor}
                       />
                     ) : (
-                      <div className="">
-                        {/* Colors Header */}
-                        <p className="text-xs font-semibold text-gray-700 mb-4">
-                          Colours
-                        </p>
-
-                        {/* Color Grid */}
-                        <div className="space-y-3 mb-4">
-                          {/* Row 1 - First 8 colors */}
-                          <div className="flex gap-1 flex-wrap justify-start">
-                            {statusColors.map((colorOption) => (
-                              <button
-                                key={colorOption.value}
-                                onClick={() =>
-                                  handleColorChange(
-                                    status.id,
-                                    colorOption.value,
-                                  )
-                                }
-                                className="flex cursor-pointer items-center justify-center p-0.5 rounded-full hover:scale-110 transition-transform"
-                                title={colorOption.name}
-                              >
-                                <div
-                                  className={`w-5 h-5 rounded-full border-2 transition ${
-                                    status.backgroundColor === colorOption.value
-                                      ? "  rounded-full border border-black shadow-md"
-                                      : "border-gray-300"
-                                  }`}
-                                  style={{
-                                    backgroundColor: colorOption.value,
-                                  }}
-                                />
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Customise Button */}
-                        <div className="flex justify-between items-center gap-2 mb-4">
-                          <button
-                            onClick={() => {
-                              setSelectedStatusId(status.id);
-                              setColorPickerOpen(true);
-                            }}
-                            className="text-sm cursor-pointer text-green-600 hover:text-green-800 font-medium"
-                          >
-                            Customise
-                          </button>
-                          {/* Customise Color Circle */}
-                          <div className="w-5 h-5 rounded-full border-2 border-gray-300">
-                            <div
-                              className="w-full h-full rounded-full"
-                              style={{
-                                background: `conic-gradient(red, yellow, lime, cyan, blue, magenta, red)`,
-                              }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Reset Button */}
-                        <button
-                          onClick={() => {
-                            handleColorChange(status.id, "#3B82F6");
-                          }}
-                          className="w-full text-sm cursor-pointer font-medium text-headerColor  py-2 rounded-lg border border-borderColor hover:bg-gray-100 transition mb-4"
-                        >
-                          Reset
-                        </button>
-
-                        {/* Preview Section */}
-                        <div className="border-t pt-4 flex items-center gap-2">
-                          <p className="text-sm font-medium text-headerColor ">
-                            Preview
-                          </p>
-                          <div
-                            className="px-1.5 py-0.5 rounded-sm text-xs font-semibold text-white text-center"
-                            style={{
-                              backgroundColor:
-                                status.backgroundColor || status.color,
-                              color: status.textColor || "#ffffff",
-                            }}
-                          >
-                            {status.name}
-                          </div>
-                        </div>
-                      </div>
+                      <SimpleColorPicker
+                        status={status}
+                        statusColors={statusColors}
+                        onColorChange={handleColorChange}
+                        onCustomizeClick={(statusId) => {
+                          setSelectedStatusId(statusId);
+                          setColorPickerOpen(true);
+                        }}
+                        onResetClick={() => {
+                          handleColorChange(status.id, "#3B82F6");
+                        }}
+                      />
                     )}
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -378,12 +313,87 @@ function StatuseSetting({
           </div>
 
           {/* Add Another Item */}
-          <button
-            onClick={handleAddStatus}
-            className="text-sm text-gray-600 cursor-pointer hover:text-gray-800 mb-6"
-          >
-            Add another item
-          </button>
+          {isAddingStatus ? (
+            <div className="p-4 bg-gray-50 rounded-md border border-gray-200 mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <p className="text-sm font-semibold text-gray-700 ">
+                  Add New Status
+                </p>
+                <div className="">
+                  <div
+                    className="px-2 py-1 rounded text-xs inline font-semibold text-center"
+                    style={{
+                      backgroundColor: newStatusColor,
+                      color: "#ffffff",
+                    }}
+                  >
+                    {newStatusName || "New Status"}
+                  </div>
+                </div>
+              </div>
+
+              {/* Color Selection */}
+              <div className="mb-4">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-2 h-full mb-2">
+                    <button className="size-5 rounded-full bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700"></button>
+                    <p className="text-xs font-medium text-gray-600 ">
+                      Choose Color
+                    </p>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-72 p-4">
+                    <div className="flex justify-center">
+                      <SketchPicker
+                        color={newStatusColor}
+                        onChange={(color) => setNewStatusColor(color.hex)}
+                        width="100%"
+                      />
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              {/* Status Name Input */}
+              <div className="mb-4">
+                <label className="text-xs font-medium text-gray-600 mb-1 block">
+                  Status Name
+                </label>
+                <input
+                  type="text"
+                  value={newStatusName}
+                  onChange={(e) => setNewStatusName(e.target.value)}
+                  placeholder="Enter status name"
+                  className="w-full px-3 py-2 bg-white border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Preview */}
+
+              {/* Buttons */}
+              <div className="flex gap-2 justify-end">
+                <ButtonReuseable
+                  onClick={() => {
+                    setIsAddingStatus(false);
+                    setNewStatusName("");
+                    setNewStatusColor("#3B82F6");
+                  }}
+                  title="Cancle"
+                  className=" text-sm! px-3! py-2! border bg-white!  border-gray-300 rounded-md text-headerColor! font-medium hover:bg-gray-100 transition"
+                />
+
+                <ButtonReuseable
+                  title="Add Status"
+                  onClick={handleAddStatus}
+                  className=" text-sm! px-3! py-2!  text-white transition"
+                />
+              </div>
+            </div>
+          ) : (
+            <ButtonReuseable
+              title="Add Another Status"
+              onClick={() => setIsAddingStatus(true)}
+              className=" text-sm! px-3! py-2! border bg-white!  border-gray-300 rounded-md! text-headerColor! font-medium hover:bg-gray-100 transition shadow-none! mb-6"
+            />
+          )}
 
           {/* Select Statuses Section */}
           <div className="mb-4">
