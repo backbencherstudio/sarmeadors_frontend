@@ -317,7 +317,7 @@ function StatuseSetting({
                               setSelectedStatusId(status.id);
                               setColorPickerOpen(true);
                             }}
-                            className="text-sm text-green-600 hover:text-green-800 font-medium"
+                            className="text-sm cursor-pointer text-green-600 hover:text-green-800 font-medium"
                           >
                             Customise
                           </button>
@@ -391,7 +391,6 @@ function StatuseSetting({
               Select statuses which need a reason when client status was changed
               to
             </p>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="w-full flex items-center justify-between p-2 border rounded-md bg-white hover:bg-gray-50">

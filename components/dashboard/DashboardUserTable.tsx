@@ -8,11 +8,11 @@ import { HiOutlineFilter } from "react-icons/hi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSettingsSharp } from "react-icons/io5";
 import { LuCalendarRange } from "react-icons/lu";
+import ClientCreateForm from "../allForm/ClientCreateForm";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import Search from "../common/Search";
 import ClientDashboardFilter from "../filter/ClientDashboardFilter";
 import ButtonReuseable from "../reusable/CustomButton";
-import ClientCreateForm from "../allForm/ClientCreateForm";
 import DashboardStatuse from "./DashboardStatuse";
 
 function DashboardUserTable() {
@@ -25,7 +25,7 @@ function DashboardUserTable() {
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState({
     full_name: true,
-    email_address: true,  
+    email_address: true,
     mobile_number: true,
     createdAt: true,
     status: true,
@@ -46,7 +46,6 @@ function DashboardUserTable() {
         : [...prev, rowId],
     );
   };
-  
 
   const columns = [
     {
@@ -160,11 +159,11 @@ function DashboardUserTable() {
     setFilteredData((prev) => !prev);
   };
 
- const handleOpenModal = () => {
+  const handleOpenModal = () => {
     // Logic to open the modal
     setIsModalOpen(true);
   };
-   const handleStatuseSetting = () => {
+  const handleStatuseSetting = () => {
     setFilterModalOpen(true);
   };
 
@@ -190,9 +189,9 @@ function DashboardUserTable() {
                     icon={<HiOutlineFilter className="w-4 h-4" />}
                   />
                 </div>
-                <div >
+                <div>
                   <ButtonReuseable
-                  onClick={handleOpenModal}
+                    onClick={handleOpenModal}
                     title="Add Enquiry"
                     icon={<FiPlus className="w-4 h-4" />}
                   />
@@ -201,7 +200,7 @@ function DashboardUserTable() {
             </div>
           </div>
         </div>
-        <div>{filterModalOpen && <ClientDashboardFilter />}</div>
+        <div>{filteredData && <ClientDashboardFilter />}</div>
         <DynamicTableTwo
           columns={visibleColumnsArray}
           data={demoData || []}
@@ -217,7 +216,9 @@ function DashboardUserTable() {
           totalpage={2}
         />
       </div>
-      {isModalOpen && <ClientCreateForm open={isModalOpen} setOpen={setIsModalOpen} />}
+      {isModalOpen && (
+        <ClientCreateForm open={isModalOpen} setOpen={setIsModalOpen} />
+      )}
     </section>
   );
 }
