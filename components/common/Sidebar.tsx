@@ -41,7 +41,7 @@ const navItems: NavItem[] = [
   {
     icon: menuOne,
     label: "Clients",
-    href: "/dashboard",
+    href: "/clients",
   },
   {
     icon: menu2,
