@@ -113,11 +113,11 @@ export function ChecklistModal() {
                         </div>
                         <hr />
                         <div className="flex justify-start gap-2">
-                            <button type="submit" className="bg-[#111927] text-white cursor-pointer px-8 py-[17px] rounded-[12px]">
+                            <button type="submit" className="bg-[#111927] text-white cursor-pointer  md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]">
                                 Submit
                             </button>
                             <DialogClose asChild>
-                                <button type="button" className="bg-[#F3F4F6] cursor-pointer px-8 py-[17px] rounded-[12px]">
+                                <button type="button" className="bg-[#F3F4F6] cursor-pointer  md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]">
                                     Cancel
                                 </button>
                             </DialogClose>

@@ -105,7 +105,7 @@ export default function List() {
                     return (
                         <div
                             key={card.title}
-                            className="bg-white flex flex-col h-[450px] relative"
+                            className="bg-white flex flex-col h-[400px] relative"
                         >
 
 
@@ -114,7 +114,7 @@ export default function List() {
                                 {card.title}
                             </h3>
 
-                            <div className="border border-gray-200 p-4 rounded-lg h-full flex flex-col">
+                            <div className="border border-gray-200 p-4 rounded-xl h-full flex flex-col">
                                 {/* Search Bar */}
                                 <div className="relative mb-3">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
