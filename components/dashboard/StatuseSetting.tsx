@@ -14,8 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, GripVertical, Trash2, X } from "lucide-react";
+import Image from "next/image";
 import React, { useState } from "react";
-import { SketchPicker } from "react-color";
 import RootDrawer from "../common/RootDrawer";
 import ButtonReuseable from "../reusable/CustomButton";
 import ColorPickerDialog from "./ColorPickerDialog";
@@ -176,6 +176,10 @@ function StatuseSetting({
     setStatuses(statuses.filter((status) => status.id !== id));
   };
 
+  const handleStatusNameChange = (id: string, name: string) => {
+    setStatuses(statuses.map((s) => (s.id === id ? { ...s, name } : s)));
+  };
+
   const handleAddStatus = () => {
     const newStatus: Status = {
       id: Date.now().toString(),
@@ -185,7 +189,6 @@ function StatuseSetting({
       backgroundColor: newStatusColor,
     };
     setStatuses([...statuses, newStatus]);
-    setIsAddingStatus(false);
     setNewStatusName("");
     setNewStatusColor("#3B82F6");
   };
@@ -244,9 +247,9 @@ function StatuseSetting({
           </p>
         </DrawerHeader>
 
-        <div className="px-4 pb-4">
+        <div className="md:px-4 px-2 pb-4">
           {/* Status List */}
-          <div className="space-y-2 mb-4">
+          <div className="space-y-4 mb-4">
             {statuses.map((status) => (
               <div
                 key={status.id}
@@ -254,57 +257,73 @@ function StatuseSetting({
                 onDragStart={(e) => handleDragStart(e, status.id)}
                 onDragOver={(e) => handleDragOver(e, status.id)}
                 onDragEnd={handleDragEnd}
-                className="flex items-center gap-3 p-3 bg-white border rounded-md cursor-move hover:bg-gray-50"
+                className="flex items-center gap-2 md:gap-3  bg-white rounded-md cursor-move"
               >
-                <GripVertical className="w-5 h-5 text-gray-400" />
-
+                <GripVertical className="md:w-5 w-4 h-4 md:h-5 text-secondaryColor" />
                 {/* Color Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-1 focus:outline-none">
-                      <div
-                        className="w-5 h-5 rounded-full border-2 border-gray-300"
-                        style={{
-                          backgroundColor:
-                            status.backgroundColor || status.color,
-                        }}
-                      />
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-64 p-4">
-                    {colorPickerOpen && selectedStatusId ? (
-                      <ColorPickerDialog
-                        open={colorPickerOpen}
-                        onOpenChange={setColorPickerOpen}
-                        onSave={onSaveCustomColor}
-                        initialTextColor={initialTextColor}
-                        initialBackgroundColor={initialBackgroundColor}
-                      />
-                    ) : (
-                      <SimpleColorPicker
-                        status={status}
-                        statusColors={statusColors}
-                        onColorChange={handleColorChange}
-                        onCustomizeClick={(statusId) => {
-                          setSelectedStatusId(statusId);
-                          setColorPickerOpen(true);
-                        }}
-                        onResetClick={() => {
-                          handleColorChange(status.id, "#3B82F6");
-                        }}
-                      />
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <div className=" border p-3 rounded-sm">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex cursor-pointer items-center gap-2 focus:outline-none">
+                        <div
+                          className="md:w-5 w-4 h-4 md:h-5 rounded-full border-2 border-gray-300"
+                          style={{
+                            backgroundColor:
+                              status.backgroundColor || status.color,
+                          }}
+                        />
+                        <Image
+                          src="/icon/arrowdown.svg"
+                          alt="Dropdown Icon"
+                          width={16}
+                          height={16}
+                          className="w-3 h-3 md:w-4 md:h-4"
+                        />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-64 p-4">
+                      {colorPickerOpen && selectedStatusId ? (
+                        <ColorPickerDialog
+                          open={colorPickerOpen}
+                          onOpenChange={setColorPickerOpen}
+                          onSave={onSaveCustomColor}
+                          initialTextColor={initialTextColor}
+                          initialBackgroundColor={initialBackgroundColor}
+                        />
+                      ) : (
+                        <SimpleColorPicker
+                          status={status}
+                          statusColors={statusColors}
+                          onColorChange={handleColorChange}
+                          onCustomizeClick={(statusId) => {
+                            setSelectedStatusId(statusId);
+                            setColorPickerOpen(true);
+                          }}
+                          onResetClick={() => {
+                            handleColorChange(status.id, "#3B82F6");
+                          }}
+                        />
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
 
-                {/* Status Name */}
-                <span className="flex-1 text-sm">{status.name}</span>
+                {/* Status Name (editable, submitted via main Submit) */}
+                <div className=" flex-1 ">
+                  <input
+                    type="text"
+                    value={status.name}
+                    onChange={(e) =>
+                      handleStatusNameChange(status.id, e.target.value)
+                    }
+                    className="w-full px-3 py-[11px] bg-white border rounded-md text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blackColor"
+                  />
+                </div>
 
                 {/* Delete Button */}
                 <button
                   onClick={() => handleDeleteStatus(status.id)}
-                  className="text-red-500 hover:text-red-700"
+                  className="text-redColor cursor-pointer hover:text-red-700"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -313,87 +332,12 @@ function StatuseSetting({
           </div>
 
           {/* Add Another Item */}
-          {isAddingStatus ? (
-            <div className="p-4 bg-gray-50 rounded-md border border-gray-200 mb-6">
-              <div className="flex items-center gap-2 mb-3">
-                <p className="text-sm font-semibold text-gray-700 ">
-                  Add New Status
-                </p>
-                <div className="">
-                  <div
-                    className="px-2 py-1 rounded text-xs inline font-semibold text-center"
-                    style={{
-                      backgroundColor: newStatusColor,
-                      color: "#ffffff",
-                    }}
-                  >
-                    {newStatusName || "New Status"}
-                  </div>
-                </div>
-              </div>
 
-              {/* Color Selection */}
-              <div className="mb-4">
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex items-center gap-2 h-full mb-2">
-                    <button className="size-5 rounded-full bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700"></button>
-                    <p className="text-xs font-medium text-gray-600 ">
-                      Choose Color
-                    </p>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-72 p-4">
-                    <div className="flex justify-center">
-                      <SketchPicker
-                        color={newStatusColor}
-                        onChange={(color) => setNewStatusColor(color.hex)}
-                        width="100%"
-                      />
-                    </div>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              {/* Status Name Input */}
-              <div className="mb-4">
-                <label className="text-xs font-medium text-gray-600 mb-1 block">
-                  Status Name
-                </label>
-                <input
-                  type="text"
-                  value={newStatusName}
-                  onChange={(e) => setNewStatusName(e.target.value)}
-                  placeholder="Enter status name"
-                  className="w-full px-3 py-2 bg-white border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Preview */}
-
-              {/* Buttons */}
-              <div className="flex gap-2 justify-end">
-                <ButtonReuseable
-                  onClick={() => {
-                    setIsAddingStatus(false);
-                    setNewStatusName("");
-                    setNewStatusColor("#3B82F6");
-                  }}
-                  title="Cancle"
-                  className=" text-sm! px-3! py-2! border bg-white!  border-gray-300 rounded-md text-headerColor! font-medium hover:bg-gray-100 transition"
-                />
-
-                <ButtonReuseable
-                  title="Add Status"
-                  onClick={handleAddStatus}
-                  className=" text-sm! px-3! py-2!  text-white transition"
-                />
-              </div>
-            </div>
-          ) : (
-            <ButtonReuseable
-              title="Add Another Status"
-              onClick={() => setIsAddingStatus(true)}
-              className=" text-sm! px-3! py-2! border bg-white!  border-gray-300 rounded-md! text-headerColor! font-medium hover:bg-gray-100 transition shadow-none! mb-6"
-            />
-          )}
+          <ButtonReuseable
+            title="Add Another Status"
+            onClick={handleAddStatus}
+            className=" text-sm! px-3! py-2! border bg-white!  border-gray-300 rounded-md! text-headerColor! font-medium hover:bg-gray-100 transition shadow-none! mb-6"
+          />
 
           {/* Select Statuses Section */}
           <div className="mb-4">
@@ -451,7 +395,7 @@ function StatuseSetting({
           </div>
 
           {/* Reason Text Areas */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:mb-4">
             <div>
               <label className="text-sm font-medium mb-2 block">
                 List of reasons to change to Rejected{" "}
@@ -479,7 +423,7 @@ function StatuseSetting({
           </div>
         </div>
 
-        <DrawerFooter className="flex flex-row justify-end gap-2">
+        <DrawerFooter className="flex flex-row justify-end gap-2 p-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
