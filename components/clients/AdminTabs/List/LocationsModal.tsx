@@ -63,10 +63,10 @@ export function LocationsModal() {
             <DialogContent className="sm:max-w-[850px]!">
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
-                        <DialogTitle className="text-xl font-semibold">
+                        <DialogTitle className="text-xl font-semibold text-start">
                             Add Locations
                         </DialogTitle>
-                        <DialogDescription className="text-sm text-gray-600 pt-2">
+                        <DialogDescription className="text-sm text-gray-600 pt-2 text-start">
                             A checklist for tracking client items will be available in the admin tab. You can drag and drop items to reorder them.
                         </DialogDescription>
                     </DialogHeader>
@@ -113,11 +113,11 @@ export function LocationsModal() {
                         </div>
                         <hr />
                         <div className="flex justify-start gap-2">
-                            <button type="submit" className="bg-[#111927] text-white cursor-pointer px-8 py-[17px] rounded-[12px]">
+                            <button type="submit" className="bg-[#111927] text-white cursor-pointer  md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]">
                                 Submit
                             </button>
                             <DialogClose asChild>
-                                <button type="button" className="bg-[#F3F4F6] cursor-pointer px-8 py-[17px] rounded-[12px]">
+                                <button type="button" className="bg-[#F3F4F6] cursor-pointer  md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]">
                                     Cancel
                                 </button>
                             </DialogClose>

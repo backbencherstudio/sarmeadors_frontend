@@ -5,10 +5,25 @@ import Image from "next/image"
 import { FaUser } from "react-icons/fa"
 import moreIcon from "@/public/icon/more.svg"
 import { AdminTabs } from "@/components/clients/AdminTabs/AdminTabs"
+import { ArrowLeftIcon, Settings } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 function page() {
+  const router = useRouter()
+  const handleBack = () => {
+    router.back()
+  }
   return (
     <div className="p-4 bg-white">
+      <div className="flex justify-between items-center">
+        <div onClick={handleBack} className="flex items-center gap-2 cursor-pointer">
+          <ArrowLeftIcon />
+          <h1 className="font-semibold leading-[160%]" >Client details</h1>
+        </div>
+        <button className=" flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
+          <Settings />  Setting
+        </button>
+      </div>
       <Tabs defaultValue="admin" className="w-full">
         <div className="w-full border-b border-gray-200">
           <TabsList className="bg-transparent  h-auto p-0 gap-5 rounded-none justify-start">
