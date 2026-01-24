@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Image from "next/image"
 import { FaUser } from "react-icons/fa"
 import moreIcon from "@/public/icon/more.svg"
-import { AdminTabs } from "@/components/clients/AdminTabs"
+import { AdminTabs } from "@/components/clients/AdminTabs/AdminTabs"
 
 function page() {
   return (
@@ -14,7 +14,7 @@ function page() {
           <TabsList className="bg-transparent  h-auto p-0 gap-5 rounded-none justify-start">
             <TabsTrigger
               value="admin"
-              className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900"
+              className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
             >
               <div className="relative flex items-center justify-center">
                 <FaUser className="w-5 h-5" />
@@ -24,14 +24,14 @@ function page() {
             </TabsTrigger>
             <TabsTrigger
               value="profile"
-              className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900"
+              className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
             >
               <FaUser className="w-5 h-5" />
               <span>Profile</span>
             </TabsTrigger>
             <TabsTrigger
               value="more"
-              className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900"
+              className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
             >
               <Image src={moreIcon} alt="More" width={20} height={20} className="w-5 h-5" />
               <span>More</span>
