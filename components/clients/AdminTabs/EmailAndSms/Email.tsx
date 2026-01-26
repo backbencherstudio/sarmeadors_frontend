@@ -1,6 +1,8 @@
 import { RichTextEditor } from "@/components/reusable/Editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -65,11 +67,16 @@ export default function Email() {
 
             {/* Template Select */}
             <div className="mb-5">
-                <select className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option>Select Template</option>
-                    <option>Welcome Email</option>
-                    <option>Approval Email</option>
-                </select>
+                <Select>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Theme" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="light">Select Template</SelectItem>
+                        <SelectItem value="dark">Welcome Email</SelectItem>
+                        <SelectItem value="system">Approval Email</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
 
             {/* From & Reply */}
@@ -78,10 +85,10 @@ export default function Email() {
                     <label className="text-sm text-gray-700 mb-2 block">
                         From Email
                     </label>
-                    <input
+                    <Input
                         type="email"
                         defaultValue="sarah@nanniescoasttocoast.com"
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
                     />
                 </div>
 
@@ -89,10 +96,10 @@ export default function Email() {
                     <label className="text-sm text-gray-700 mb-2 block">
                         Reply To
                     </label>
-                    <input
+                    <Input
                         type="email"
                         defaultValue="sarah@nanniescoasttocoast.com"
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
                     />
                 </div>
             </div>
@@ -102,33 +109,33 @@ export default function Email() {
                 <label className="text-sm text-gray-700 mb-2 block">
                     Subject
                 </label>
-                <input
+                <Input
                     type="text"
                     placeholder="Subject"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
                 />
             </div>
 
             {/* Helper Text */}
-            <p className="text-xs text-blue-600 mb-4">
+            <p className="text-xs text-[#2B7FFF] mb-4">
                 Separate multiple emails with ; (eg: nanny1@hotmail.com; nanny2@hotmail.com)
             </p>
 
             {/* CC */}
             <div className="mb-4">
-                <input
+                <Input
                     type="text"
                     placeholder="CC"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
                 />
             </div>
 
             {/* BCC */}
             <div>
-                <input
+                <Input
                     type="text"
                     placeholder="BCC"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
                 />
             </div>
 
@@ -186,7 +193,7 @@ export default function Email() {
                     Add Attachment
                 </button>
                 <div className="space-x-2 mb-2">
-                    <input type="checkbox" />
+                    <Input type="checkbox" />
                     <span>Log email as note</span>
                 </div>
                 <div className="flex gap-2">

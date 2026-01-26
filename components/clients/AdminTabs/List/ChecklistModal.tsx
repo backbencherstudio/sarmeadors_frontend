@@ -87,7 +87,7 @@ export function ChecklistModal() {
                                         }
                                         placeholder="Enter client type"
                                         className="flex-1"
-                                        autoFocus={index === clientTypes.length - 1 && item.value === ""}
+                                    // autoFocus={index === clientTypes.length - 1 && item.value === ""}
                                     />
                                     <Button
                                         type="button"

@@ -16,10 +16,10 @@ function page() {
   }
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-2">
         <ProfileInfo />
       </div>
-      <div className="p-4 bg-white lg:col-span-9">
+      <div className="p-4 bg-white lg:col-span-10">
         <div className="flex justify-between items-center">
           <div onClick={handleBack} className="flex items-center gap-2 cursor-pointer">
             <ArrowLeftIcon />

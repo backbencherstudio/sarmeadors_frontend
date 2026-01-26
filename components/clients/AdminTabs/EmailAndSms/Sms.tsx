@@ -1,3 +1,5 @@
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Sms() {
     return (
@@ -14,19 +16,29 @@ export default function Sms() {
 
             {/* Template Select */}
             <div className="mb-4">
-                <select className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <Select>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Theme" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="light">Select Template</SelectItem>
+                        <SelectItem value="dark">Welcome SMS</SelectItem>
+                        <SelectItem value="system">Verification Code</SelectItem>
+                    </SelectContent>
+                </Select>
+                {/* <select className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <option>Select Template</option>
                     <option>Welcome SMS</option>
                     <option>Verification Code</option>
-                </select>
+                </select> */}
             </div>
 
             {/* Message Box */}
             <div className="mb-4">
-                <textarea
+                <Textarea
                     rows={4}
                     placeholder="Enter a description..."
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm resize-none"
                 />
             </div>
 
