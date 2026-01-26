@@ -118,7 +118,7 @@ export function RichTextEditor({
   if (!editor) return null;
 
   return (
-    <div className="rounded-xl overflow-hidden">
+    <div className="rounded-xl">
       {/* Update Button */}
       {onUpdate && (
         <div className="flex justify-end pt-4">
@@ -132,7 +132,7 @@ export function RichTextEditor({
       )}
       <hr className="bg-[#E5E7EB] mt-4 mb-10" />
       {/* Toolbar */}
-      <div className="flex items-center gap-1 py-2 overflow-x-auto max-w-[1000px] rounded-[8px]">
+      <div className="flex items-center gap-1 py-2 bg-transparent p-0.5 h-auto  rounded-[8px] w-full justify-start overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 
 
         {/* Text Style Dropdown */}
@@ -142,7 +142,7 @@ export function RichTextEditor({
               type="button"
               className="h-8 px-3 py-2  flex items-center gap-1 hover:bg-white/10 rounded-[8px] transition-colors  font-semibold border"
             >
-              <span className="text-sm">T Inter</span>
+              T Inter
               <ChevronDown className="w-4 h-4" />
             </button>
           </DropdownMenuTrigger>
@@ -564,10 +564,10 @@ export function RichTextEditor({
         </ToolbarButton>
       </div>
 
-      <hr className="bg-[#E5E7EB]" />
+      {/* <hr className="bg-[#E5E7EB]" /> */}
 
       {/* Editor Content */}
-      <div className="min-h-[200px] py-4">
+      <div className="min-h-[200px] p-4 border border-[#E5E7EB] rounded-2xl">
         <EditorContent
           editor={editor}
           className="focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror]:outline-none"

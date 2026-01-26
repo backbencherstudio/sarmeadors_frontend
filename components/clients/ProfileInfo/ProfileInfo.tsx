@@ -4,7 +4,7 @@ import { Trash2Icon } from "lucide-react";
 
 export default function ProfileInfo() {
     return (
-        <div className="flex flex-col justify-between w-full mx-auto bg-white border-r border-gray-200 p-6 h-screen">
+        <div className="flex flex-col justify-between w-full mx-auto bg-white border-r border-gray-200 p-6 lg:h-full lg:min-h-screen">
             <div>
                 {/* Avatar */}
                 <div className="flex flex-col items-center text-center">
