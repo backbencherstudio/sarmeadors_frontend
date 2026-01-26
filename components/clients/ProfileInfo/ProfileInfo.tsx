@@ -1,10 +1,11 @@
 import Image from "next/image";
 import avatar from "@/public/profile.png";
 import { Trash2Icon } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function ProfileInfo() {
     return (
-        <div className="flex flex-col justify-between w-full mx-auto bg-white border-r border-gray-200 p-6 lg:h-full lg:min-h-screen">
+        <div className="flex flex-col justify-between w-full mx-auto bg-white border-r border-gray-200 p-5 lg:h-full lg:min-h-screen">
             <div>
                 {/* Avatar */}
                 <div className="flex flex-col items-center text-center">
@@ -30,11 +31,16 @@ export default function ProfileInfo() {
 
                 {/* Status Dropdown */}
                 <div className="mt-5">
-                    <select className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option>Application Approved</option>
-                        <option>Pending</option>
-                        <option>Rejected</option>
-                    </select>
+                    <Select>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="light">Application Approved</SelectItem>
+                            <SelectItem value="dark">Pending</SelectItem>
+                            <SelectItem value="system">Rejected</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 {/* Info */}
