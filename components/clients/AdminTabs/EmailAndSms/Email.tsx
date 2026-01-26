@@ -193,7 +193,7 @@ export default function Email() {
                     Add Attachment
                 </button>
                 <div className="space-x-2 mb-2">
-                    <Input type="checkbox" />
+                    <input type="checkbox" />
                     <span>Log email as note</span>
                 </div>
                 <div className="flex gap-2">
