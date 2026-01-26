@@ -26,6 +26,7 @@ interface DynamicTableProps {
   onItemsPerPageChange?: (n: number) => void;
   loading?: boolean;
   error?: string;
+  border?: boolean;
 }
 
 export default function DynamicTableTwo({
@@ -33,6 +34,7 @@ export default function DynamicTableTwo({
   data,
   currentPage,
   itemsPerPage,
+  border = true,
   onPageChange,
   loading,
   onView,
@@ -92,9 +94,11 @@ export default function DynamicTableTwo({
   return (
     <div>
       {/* Table Wrapper with Border & Radius */}
-      <div className="rounded-t-md border border-gray-200">
-        <div className="h-[400px] overflow-auto bg-white p-2">
-          <table className="min-w-[1000px] w-full text-left bg-whiteColor p-2">
+      <div className={`rounded-t-md ${border ? "border border-gray-200" : ""}`}>
+        <div className={` overflow-auto bg-white ${border ? "p-2" : ""}`}>
+          <table
+            className={`min-w-[1000px] w-full text-left bg-whiteColor  ${border ? "p-2" : ""}`}
+          >
             <thead className="bg-blackColor sticky top-0 !rounded-2xl  p-2">
               <tr>
                 {columns.map((col, index) => (
@@ -136,7 +140,7 @@ export default function DynamicTableTwo({
                           ? col.formatter(
                               row[col.accessor],
                               row,
-                              (currentPage - 1) * itemsPerPage + i
+                              (currentPage - 1) * itemsPerPage + i,
                             )
                           : row[col.accessor]}
                       </td>

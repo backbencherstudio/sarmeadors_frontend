@@ -1,19 +1,21 @@
 import ClientLayout from "@/components/common/ClientLayout";
 import { AppConfig } from "@/config/app.config";
 import type { Metadata } from "next";
-import { Poppins } from 'next/font/google';
-import Script from "next/script";
+import { Archivo } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 // If loading a variable font, you don't need to specify the font weight
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 export const metadata: Metadata = {
   title: AppConfig().app.name,
   description: AppConfig().app.slogan,
   icons: {
     icon: "/icon/siteIcon.svg",
-  },  
+  },
 };
 
 export default function RootLayout({
@@ -23,12 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.className} top-0!`}>
-       
-        <ToastContainer/>
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+      <body className={`${archivo.className} top-0!`}>
+        <ToastContainer />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

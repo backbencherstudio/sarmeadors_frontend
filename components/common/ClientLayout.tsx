@@ -2,7 +2,7 @@
 import { TokenProvider } from "@/hooks/useToken";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -15,7 +15,9 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TokenProvider>{children}</TokenProvider>
+      <TokenProvider>
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+      </TokenProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

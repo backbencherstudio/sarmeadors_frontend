@@ -67,13 +67,13 @@ export default function StatCards() {
               className="p-4 rounded-lg bg-bgColor  border border-gray2Color hover:shadow-md transition-shadow cursor-pointer relative"
             >
               {/* Title */}
-              <p className="text-sm text-secondaryColor font-medium mb-3">
+              <p className="text-sm text-secondaryColor font-medium mb-5">
                 {card.title}
               </p>
 
               {/* Large Number with Percentage */}
               <div className="flex items-end justify-between">
-                <div className="text-3xl font-semibold text-blackColor">
+                <div className="text-[20px] font-semibold text-blackColor">
                   {card.value}
                 </div>
                 <span className="text-xs font-medium text-secondaryColor  px-2 py-1 rounded">
