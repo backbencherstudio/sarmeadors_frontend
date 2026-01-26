@@ -142,7 +142,7 @@ export function RichTextEditor({
               type="button"
               className="h-8 px-3 py-2  flex items-center gap-1 hover:bg-white/10 rounded-[8px] transition-colors  font-semibold border"
             >
-              T Inter
+              T
               <ChevronDown className="w-4 h-4" />
             </button>
           </DropdownMenuTrigger>
@@ -274,8 +274,6 @@ export function RichTextEditor({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
-
 
         {/* Highlight */}
         <DropdownMenu>
