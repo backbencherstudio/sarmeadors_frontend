@@ -18,6 +18,7 @@ import { MdSms } from "react-icons/md"
 import { FaTrophy } from "react-icons/fa"
 import List from "./List/List"
 import Notes from "./Notes/Notes"
+import EmailAndSms from "./EmailAndSms/EmailAndSms"
 
 
 
@@ -95,7 +96,7 @@ export function AdminTabs() {
                     <Notes />
                 </TabsContent>
                 <TabsContent value="email-sms" className="mt-4">
-                    <div className="text-gray-600">Email/SMS content here</div>
+                    <EmailAndSms />
                 </TabsContent>
                 <TabsContent value="events" className="mt-4">
                     <div className="text-gray-600">Events content here</div>
