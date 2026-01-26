@@ -28,7 +28,7 @@
   --color-ratingColor: #f9c80e;
   --color-footerColor: #091819;
   --color-bgColor: var(--bgColor);
-  --color-borderColor: #d2d2d5;
+  --color-borderColor: #e5e7eb;
   --color-descriptionColor: var(--descriptionColor);
   /* ======== */
   --radius-sm: calc(var(--radius) - 4px);
@@ -171,7 +171,7 @@
   --muted-foreground: #6b7280; /* gray-500 */
   --accent: #f3f4f6;
   --accent-foreground: #1f2937;
-  --destructive: #e11d48; /* rose-600 */
+  --destructive: #cb121d; /* rose-600 */
   --border: #e5e7eb; /* gray-200 */
   --input: #e5e7eb;
   --ring: #9ca3af; /* gray-400 */
@@ -262,4 +262,14 @@ input:checked ~ .checkmark {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #000;
+}
+
+.sketch-picker {
+  width: 200px;
+  padding: 0px !important;
+  box-sizing: initial;
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  border: none !important;
+  box-shadow: none !important;
 }

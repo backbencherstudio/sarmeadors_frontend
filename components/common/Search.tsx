@@ -68,8 +68,8 @@ export default function Search() {
     if (search.trim() !== "" && product.results.length > 0) {
       setFilteredProducts(
         product?.results?.filter((item: any) =>
-          item?.product?.name?.toLowerCase().includes(search.toLowerCase())
-        ) || []
+          item?.product?.name?.toLowerCase().includes(search.toLowerCase()),
+        ) || [],
       );
     } else {
       setFilteredProducts([]);
@@ -105,7 +105,7 @@ export default function Search() {
         name="search"
         value={search}
         onChange={handleChange}
-        className="w-full text-sm  bg-whiteColor border border-borderColor rounded-md md:rounded-lg py-3 md:py-3.5 px-4 pl-10 focus:outline-none focus:border-dark-500"
+        className="w-full text-sm  bg-whiteColor border border-gray2Color rounded-md md:rounded-lg py-3 md:py-3.5 px-4 pl-10 focus:outline-none focus:border-dark-500"
         placeholder="Search by Name, Email or Phone Number"
       />
       <button
@@ -136,7 +136,7 @@ export default function Search() {
                 onClick={() =>
                   handleProductNameSearch(
                     item.product.category.slug,
-                    item.product.name
+                    item.product.name,
                   )
                 }
                 className="block w-full text-left p-2 text-blackColor text-base font-semibold rounded-md"
