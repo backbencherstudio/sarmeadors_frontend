@@ -18,6 +18,7 @@ import { FaTrophy } from "react-icons/fa"
 import List from "./List/List"
 import Notes from "./Notes/Notes"
 import EmailAndSms from "./EmailAndSms/EmailAndSms"
+import PaymentPage from "./payment/PaymentPage";
 
 
 interface TermsConditionFormData {
@@ -113,7 +114,7 @@ export function AdminTabs() {
                     <div className="text-gray-600">Password content here</div>
                 </TabsContent>
                 <TabsContent value="payments" className="mt-4">
-                    <div className="text-gray-600">Payments content here</div>
+                    <PaymentPage />
                 </TabsContent>
                 <TabsContent value="documents" className="mt-4">
                     <div className="text-gray-600">Documents content here</div>
