@@ -14,30 +14,15 @@ import {
     HiOutlineDocument,
     HiOutlineUserGroup
 } from "react-icons/hi"
-import { MdEmail, MdSms } from "react-icons/md"
+import { MdSms } from "react-icons/md"
 import { FaTrophy } from "react-icons/fa"
 import List from "./List/List"
-import { RichTextEditor } from "@/components/reusable/Editor"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
+import Notes from "./Notes/Notes"
 
-interface TermsConditionFormData {
-    explanation: string;
-}
+
 
 export function AdminTabs() {
-    const [editorKey] = useState(0);
 
-    const { watch, setValue, handleSubmit } = useForm<TermsConditionFormData>({
-        defaultValues: {
-            explanation: "",
-        },
-    });
-
-    const onSubmit = async (data: TermsConditionFormData) => {
-        console.log("Form submitted:", data);
-        // Add your save logic here
-    };
 
     return (
         <div>
@@ -107,12 +92,7 @@ export function AdminTabs() {
                     <List />
                 </TabsContent>
                 <TabsContent value="notes" className="mt-4">
-                    <RichTextEditor
-                        key={`explanation-${editorKey}`}
-                        value={watch("explanation")}
-                        onChange={(v) => setValue("explanation", v)}
-                        onUpdate={handleSubmit(onSubmit)}
-                    />
+                    <Notes />
                 </TabsContent>
                 <TabsContent value="email-sms" className="mt-4">
                     <div className="text-gray-600">Email/SMS content here</div>
