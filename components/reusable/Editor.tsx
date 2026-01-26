@@ -119,14 +119,69 @@ export function RichTextEditor({
 
   return (
     <div className="rounded-xl overflow-hidden">
+      {/* Update Button */}
+      {onUpdate && (
+        <div className="flex justify-end pt-4">
+          <button
+            onClick={onUpdate}
+            className="bg-[#111927] text-white  px-4 py-[9px] rounded-[8px] cursor-pointer"
+          >
+            Admins to Notify
+          </button>
+        </div>
+      )}
+      <hr className="bg-[#E5E7EB] mt-4 mb-10" />
       {/* Toolbar */}
-      <div className="flex items-center gap-1 px-3 py-2 overflow-x-auto max-w-[1000px] rounded-[8px]">
+      <div className="flex items-center gap-1 py-2 overflow-x-auto max-w-[1000px] rounded-[8px]">
+
+
+        {/* Text Style Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className="h-8 px-3 py-2  flex items-center gap-1 hover:bg-white/10 rounded-[8px] transition-colors  font-semibold border"
+            >
+              <span className="text-sm">T Inter</span>
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem
+              onClick={() => editor.chain().focus().setParagraph().run()}
+            >
+              Normal Text
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 1 }).run()
+              }
+            >
+              Heading 1
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 2 }).run()
+              }
+            >
+              Heading 2
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 3 }).run()
+              }
+            >
+              Heading 3
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         {/* Font Size Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
               type="button"
-              className="h-8 px-3 flex items-center gap-1 hover:bg-white/10 rounded transition-colors  font-medium"
+              className="h-8 px-3 flex items-center gap-1 hover:bg-white/10  transition-colors  font-medium border rounded-[8px]"
             >
               <span>{fontSize.replace("px", "")}</span>
               <ChevronDown className="w-4 h-4" />
@@ -220,46 +275,7 @@ export function RichTextEditor({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Text Style Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              type="button"
-              className="h-8 px-3 flex items-center gap-1 hover:bg-white/10 rounded transition-colors  font-bold"
-            >
-              <span className="text-lg">T</span>
-              <ChevronDown className="w-4 h-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem
-              onClick={() => editor.chain().focus().setParagraph().run()}
-            >
-              Normal Text
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                editor.chain().focus().toggleHeading({ level: 1 }).run()
-              }
-            >
-              Heading 1
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                editor.chain().focus().toggleHeading({ level: 2 }).run()
-              }
-            >
-              Heading 2
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                editor.chain().focus().toggleHeading({ level: 3 }).run()
-              }
-            >
-              Heading 3
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
 
         {/* Highlight */}
         <DropdownMenu>
@@ -548,8 +564,10 @@ export function RichTextEditor({
         </ToolbarButton>
       </div>
 
+      <hr className="bg-[#E5E7EB]" />
+
       {/* Editor Content */}
-      <div className="min-h-[200px] bg-[#E6F5F0] p-4">
+      <div className="min-h-[200px] py-4">
         <EditorContent
           editor={editor}
           className="focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror]:outline-none"
@@ -558,18 +576,6 @@ export function RichTextEditor({
           }}
         />
       </div>
-
-      {/* Update Button */}
-      {onUpdate && (
-        <div className="flex justify-end  pt-4">
-          <button
-            onClick={onUpdate}
-            className="bg-[#08A270]  px-10 md:px-40 py-[10px] rounded-full hover:bg-[#07a270] transition-colors cursor-pointer"
-          >
-            Update
-          </button>
-        </div>
-      )}
     </div>
   );
 }
