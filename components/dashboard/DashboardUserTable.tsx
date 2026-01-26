@@ -192,7 +192,7 @@ function DashboardUserTable() {
                 <div>
                   <ButtonReuseable
                     onClick={handleOpenModal}
-                    title="Add Enquiry"
+                    title="Add Client"
                     icon={<FiPlus className="w-4 h-4" />}
                   />
                 </div>
