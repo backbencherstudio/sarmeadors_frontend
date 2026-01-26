@@ -1,5 +1,6 @@
 import ManualPayments from "@/components/dashboard/ManualPayments";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import InvoiceInfo from "./InvoiceInfo";
 
 function PaymentPage() {
   const role = "admin"; // This can be dynamic based on your application logic
@@ -27,7 +28,9 @@ function PaymentPage() {
           </div>
         </TabsContent>
         <TabsContent value="invoice" className="bg-transparent">
-          <div className="mt-4 text-center">Advance Invoice Manager</div>
+          <div className="">
+            <InvoiceInfo />
+          </div>
         </TabsContent>
       </Tabs>
     </div>
