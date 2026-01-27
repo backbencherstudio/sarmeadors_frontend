@@ -41,7 +41,7 @@ export default function EditDocumentPage() {
         <div className="mx-auto">
             {/* Header with Back Button */}
             <div className="flex items-center gap-3 mb-6">
-                <div onClick={router.back} className="flex items-center gap-4 cursor-pointer">
+                <div onClick={router.back} className="flex items-center gap-3 cursor-pointer">
                     <ArrowLeftIcon />
                     <h1 className="font-semibold leading-[160%]" >Edit Document</h1>
                 </div>
