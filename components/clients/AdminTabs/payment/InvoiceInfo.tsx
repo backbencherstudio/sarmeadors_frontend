@@ -1,6 +1,7 @@
 "use client";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 import InvoiceIcon from "@/components/icon/InvoiceIcon";
+import MessageIcon from "@/components/icon/MessageIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import {
   DropdownMenu,
@@ -155,24 +156,14 @@ export default function InvoiceInfo() {
                 className="min-w-[222px] rounded-lg bg-white shadow-xl p-3"
               >
                 <DropdownMenuItem asChild>
-                  <button
-                    className="flex group w-full  items-center gap-2 px-3 py-2 rounded-md
-                          text-sm font-medium text-gray-700
-                          hover:bg-primaryColor/10 hover:text-primaryColor
-                          transition cursor-pointer"
-                  >
-                    <InvoiceIcon className="group-hover:text-red-600 group-hover:fill-red-700" />
+                  <button className="flex w-full items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor hover:text-whiteColor transition cursor-pointer">
+                    <InvoiceIcon />
                     Dashboard
                   </button>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <button
-                    className="flex group w-full  items-center gap-2 px-3 py-2 rounded-md
-                          text-sm font-medium text-gray-700
-                          hover:bg-primaryColor/10 hover:text-primaryColor
-                          transition cursor-pointer"
-                  >
-                    <InvoiceIcon className="group-hover:text-red-600 group-hover:fill-red-700" />
+                <DropdownMenuItem>
+                  <button className="flex w-full items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor hover:text-whiteColor transition cursor-pointer">
+                    <MessageIcon />
                     Dashboard
                   </button>
                 </DropdownMenuItem>
