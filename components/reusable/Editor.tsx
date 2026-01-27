@@ -130,7 +130,11 @@ export function RichTextEditor({
           </button>
         </div>
       )}
-      <hr className="bg-[#E5E7EB] mt-4 mb-10" />
+      {
+        onUpdate && (
+          <hr className="bg-[#E5E7EB] mt-4 mb-10" />
+        )
+      }
       {/* Toolbar */}
       <div className="flex items-center gap-1 py-2 bg-transparent p-0.5 h-auto  rounded-[8px] w-full justify-start overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 

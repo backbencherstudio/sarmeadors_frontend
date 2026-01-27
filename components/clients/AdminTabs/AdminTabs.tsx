@@ -21,6 +21,7 @@ import EmailAndSms from "./EmailAndSms/EmailAndSms"
 import PaymentPage from "./payment/PaymentPage";
 import Events from "./Events/Events";
 import Password from "./Password/Password";
+import Documents from "./Documents/Documents";
 
 
 interface TermsConditionFormData {
@@ -119,7 +120,7 @@ export function AdminTabs() {
                     <PaymentPage />
                 </TabsContent>
                 <TabsContent value="documents" className="mt-4">
-                    <div className="text-gray-600">Documents content here</div>
+                    <Documents />
                 </TabsContent>
                 <TabsContent value="matches" className="mt-4">
                     <div className="text-gray-600">Matches content here</div>

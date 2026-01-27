@@ -22,7 +22,7 @@ function page() {
       </div>
       <div className="p-4 bg-white lg:col-span-9 2xl:col-span-10">
         <div className="flex justify-between items-center">
-          <div onClick={handleBack} className="flex items-center gap-2 cursor-pointer">
+          <div onClick={handleBack} className="flex items-center gap-4 cursor-pointer">
             <ArrowLeftIcon />
             <h1 className="font-semibold leading-[160%]" >Client details</h1>
           </div>
