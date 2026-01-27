@@ -1,13 +1,14 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Image from "next/image"
-import { FaUser } from "react-icons/fa"
-import moreIcon from "@/public/icon/more.svg"
 import { AdminTabs } from "@/components/clients/AdminTabs/AdminTabs"
-import { ArrowLeftIcon, Settings } from "lucide-react"
+import { Settings } from "lucide-react"
 import { useRouter } from "next/navigation"
 import ProfileInfo from "@/components/clients/ProfileInfo/ProfileInfo"
+import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon"
+import UserSettingsIcon from "@/public/icon/UserSettingsIcon"
+import UserIcon from "@/public/icon/UserIcon"
+import MoreIcon from "@/public/icon/MoreIcon"
 
 function page() {
   const router = useRouter()
@@ -16,10 +17,10 @@ function page() {
   }
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
-      <div className="lg:col-span-2">
+      <div className="lg:col-span-3 2xl:col-span-2">
         <ProfileInfo />
       </div>
-      <div className="p-4 bg-white lg:col-span-10">
+      <div className="p-4 bg-white lg:col-span-9 2xl:col-span-10">
         <div className="flex justify-between items-center">
           <div onClick={handleBack} className="flex items-center gap-2 cursor-pointer">
             <ArrowLeftIcon />
@@ -36,24 +37,21 @@ function page() {
                 value="admin"
                 className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
               >
-                <div className="relative flex items-center justify-center">
-                  <FaUser className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 text-[10px] leading-none">*</span>
-                </div>
+                <UserSettingsIcon />
                 <span>Admin</span>
               </TabsTrigger>
               <TabsTrigger
                 value="profile"
                 className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
               >
-                <FaUser className="w-5 h-5" />
+                <UserIcon />
                 <span>Profile</span>
               </TabsTrigger>
               <TabsTrigger
                 value="more"
                 className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
               >
-                <Image src={moreIcon} alt="More" width={20} height={20} className="w-5 h-5" />
+                <MoreIcon />
                 <span>More</span>
               </TabsTrigger>
             </TabsList>

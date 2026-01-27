@@ -2,6 +2,9 @@ import Image from "next/image";
 import avatar from "@/public/profile.png";
 import { Trash2Icon } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import EmailIcon from "@/public/icon/EmailIcon";
+import CallIcon from "@/public/icon/CallIcon";
+import CalandarIcon from "@/public/icon/CalandarIcon";
 
 export default function ProfileInfo() {
     return (
@@ -46,17 +49,17 @@ export default function ProfileInfo() {
                 {/* Info */}
                 <div className="mt-6 space-y-4 text-sm text-gray-700">
                     <div className="flex items-center gap-3">
-                        <span className="text-gray-400">📧</span>
+                        <EmailIcon />
                         <span>lincoln@gmail.com</span>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <span className="text-gray-400">📞</span>
+                        <CallIcon />
                         <span>+17036258009</span>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <span className="text-gray-400">📅</span>
+                        <CalandarIcon />
                         <span>Wed Nov 19 2025</span>
                     </div>
                 </div>
