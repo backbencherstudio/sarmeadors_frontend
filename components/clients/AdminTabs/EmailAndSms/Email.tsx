@@ -1,4 +1,5 @@
 import { RichTextEditor } from "@/components/reusable/Editor";
+import HoverInfo from "@/components/reusable/HoverInfo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -195,19 +196,8 @@ export default function Email() {
                     <button onClick={handleAddItem} className=" flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
                         Add Attachment
                     </button>
-                    <div className="relative group">
-                        <InformationIcon />
-                        <div className="absolute bottom-full left-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap pointer-events-none z-10">
-                            How to send candidates
-                            <br />
-                            individual documents to a
-                            <br />
-                            Client
-                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
-                                <div className="border-4 border-transparent border-t-gray-900"></div>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Information Icon */}
+                    <HoverInfo side="left-0 bottom-7" info="  How to send candidates individual documents to a Client" />
                 </div>
                 <div className="space-x-2 mb-2">
                     <input type="checkbox" />
@@ -220,17 +210,10 @@ export default function Email() {
                     <button className="flex items-center gap-1.5 bg-[#F3F4F6] cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
                         Schedule Send
                     </button>
-                    <div className="relative group">
-                        <InformationIcon />
-                        <div className="absolute bottom-full left-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap pointer-events-none z-10">
-                            How to schedule an email
-                            <br />
-                            for another time
-                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
-                                <div className="border-4 border-transparent border-t-gray-900"></div>
-                            </div>
-                        </div>
-                    </div>
+
+                    {/* Information Icon */}
+                    <HoverInfo side="left-0 bottom-7" info=" How to schedule an email for another time" />
+
                 </div>
             </div>
         </div>
