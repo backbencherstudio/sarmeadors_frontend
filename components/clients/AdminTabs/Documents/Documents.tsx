@@ -15,6 +15,8 @@ import { cn } from "@/lib/utils"
 import ListGreenIcon from "@/public/icon/ListGreenIcon"
 import ListBlackIcon from "@/public/icon/ListBlackIcon"
 import Link from "next/link"
+import DocumentDeleteModal from "./DocumentDeleteModal"
+import { toast } from "react-toastify"
 
 interface Document {
     id: string
@@ -54,14 +56,24 @@ export default function Documents() {
         // Implement action handlers here
     }
 
+    const handleCopyLink = async (documentId: string) => {
+        try {
+            const documentUrl = `${window.location.origin}/clients/document/document-details?id=${documentId}`
+            await navigator.clipboard.writeText(documentUrl)
+            toast.success("Link copied to clipboard!")
+        } catch (error) {
+            toast.error("Failed to copy link. Please try again.")
+        }
+    }
+
     return (
         <div className="w-full space-y-6">
             {/* Header Section */}
-            <div className="flex items-end justify-between">
+            <div className="flex flex-col md:flex-row gap-4 md:items-end justify-between items-start">
                 <div className="space-y-4 w-full">
                     <h1 className="text-2xl font-bold text-gray-900">Documents to Sign</h1>
                     <Select>
-                        <SelectTrigger className="w-1/2">
+                        <SelectTrigger className="w-full md:w-1/2">
                             <SelectValue placeholder="Select template to add" />
                         </SelectTrigger>
                         <SelectContent>
@@ -73,7 +85,7 @@ export default function Documents() {
                 </div>
                 <Button
                     variant="secondary"
-                    className="bg-gray-800 text-white hover:bg-gray-700 rounded-md px-4 py-2"
+                    className="bg-gray-800 text-white hover:bg-gray-700 rounded-md px-4 py-2 cursor-pointer w-fit"
                 >
                     Manage and edit Templates
                 </Button>
@@ -139,7 +151,7 @@ export default function Documents() {
                         <div className="flex justify-center gap-2">
                             {!document.isSigned && (
                                 <Link
-                                    href={`/clients/edit-document?id=${document.id}`}
+                                    href={`/clients/document/edit-document?id=${document.id}`}
                                     className="inline-flex items-center justify-center h-9 w-9 rounded-md bg-gray-100 hover:bg-gray-200 border-0 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                                     onClick={() => handleAction(document.id, "edit")}
                                 >
@@ -149,27 +161,22 @@ export default function Documents() {
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-9 w-9 bg-gray-100 hover:bg-gray-200 border-0"
-                                onClick={() => handleAction(document.id, "share")}
+                                className="h-9 w-9 bg-gray-100 hover:bg-gray-200 border-0 cursor-pointer"
+                                onClick={() => handleCopyLink(document.id)}
                             >
                                 <Share2 className="w-4 h-4 text-gray-600" />
                             </Button>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-9 w-9 bg-gray-100 hover:bg-gray-200 border-0"
-                                onClick={() => handleAction(document.id, "view")}
+                            <Link
+                                href={`/clients/document/document-details?id=${document.id}`}
+                                className="inline-flex items-center justify-center h-9 w-9 rounded-md bg-gray-100 hover:bg-gray-200 border-0 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+                                onClick={() => handleAction(document.id, "edit")}
                             >
                                 <Eye className="w-4 h-4 text-gray-600" />
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-9 w-9 bg-gray-100 hover:bg-gray-200 border-0"
-                                onClick={() => handleAction(document.id, "delete")}
-                            >
-                                <Trash2 className="w-4 h-4 text-gray-600" />
-                            </Button>
+                            </Link>
+
+                            {/* Delete Document Modal */}
+                            <DocumentDeleteModal />
+
                         </div>
                     </Card>
                 ))}
