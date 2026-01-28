@@ -92,7 +92,7 @@ export default function SecondaryLoginModal() {
                                 title="Cancel"
                                 type="button"
                                 onClick={handleCancel}
-                                className="bg-[#F3F4F6]! text-[#111927]!"
+                                className="bg-[#F3F4F6]! text-[#111927]! "
                             />
                         </DialogClose>
                     </DialogFooter>

@@ -1,3 +1,4 @@
+import ButtonReuseable from "@/components/reusable/CustomButton";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -52,9 +53,8 @@ export default function Sms() {
             </div>
 
             {/* Send Button */}
-            <button className="w-full bg-[#111827] text-white rounded-xl py-3 text-sm font-medium hover:bg-black transition">
-                Send
-            </button>
+            <ButtonReuseable title="Send" type="button" className="w-full rounded-xl py-3 text-sm font-medium hover:bg-black transition" />
+
         </div>
     );
 }

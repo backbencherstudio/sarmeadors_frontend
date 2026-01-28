@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Plus, Trash2 } from "lucide-react"
+import ButtonReuseable from "@/components/reusable/CustomButton"
 
 interface ClientType {
     id: string
@@ -55,7 +56,7 @@ export function ChecklistModal() {
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 bg-gray-800 hover:bg-gray-900 border-0"
+                    className="h-8 w-8 p-0 bg-gray-800 hover:bg-gray-900 border-0 cursor-pointer"
                 >
                     <Plus className="w-4 h-4 text-white" />
                 </Button>
@@ -113,13 +114,12 @@ export function ChecklistModal() {
                         </div>
                         <hr />
                         <div className="flex justify-start gap-2">
-                            <button type="submit" className="bg-[#111927] text-white cursor-pointer  md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]">
-                                Submit
-                            </button>
+                            <ButtonReuseable title="Submit" type="submit" className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]" />
+
+
                             <DialogClose asChild>
-                                <button type="button" className="bg-[#F3F4F6] cursor-pointer  md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]">
-                                    Cancel
-                                </button>
+                                <ButtonReuseable title="Cancel" type="button" className="bg-[#F3F4F6]! text-[#111927]! cursor-pointer md:px-8 md:py-[17px] px-4 py-2 rounded-[12px]" />
+
                             </DialogClose>
                         </div>
                     </div>

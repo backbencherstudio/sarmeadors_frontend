@@ -1,3 +1,4 @@
+import ButtonReuseable from "@/components/reusable/CustomButton";
 import { RichTextEditor } from "@/components/reusable/Editor";
 import HoverInfo from "@/components/reusable/HoverInfo";
 import { Button } from "@/components/ui/button";
@@ -194,9 +195,7 @@ export default function Email() {
                 </div>
 
                 <div className="flex items-center gap-2 mt-6 mb-8">
-                    <button onClick={handleAddItem} className=" flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
-                        Add Attachment
-                    </button>
+                    <ButtonReuseable title="Add Attachment" type="button" onClick={handleAddItem} className=" flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]" />
                     {/* Information Icon */}
                     <HoverInfo side="left-0 bottom-7" info="  How to send candidates individual documents to a Client" />
                 </div>
@@ -205,12 +204,9 @@ export default function Email() {
                     <span>Log email as note</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-12 md:py-[17px] px-4 py-2 rounded-[12px]">
-                        Send
-                    </button>
-                    <button className="flex items-center gap-1.5 bg-[#F3F4F6] cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
-                        Schedule Send
-                    </button>
+                    <ButtonReuseable title="Send" type="button" className="flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-12 md:py-[17px] px-4 py-2 rounded-[12px]" />
+                    <ButtonReuseable title="Schedule Send" type="button" className="flex items-center gap-1.5 bg-[#F3F4F6]! text-[#111927]! cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]" />
+
 
                     {/* Information Icon */}
                     <HoverInfo side="left-0 bottom-7" info=" How to schedule an email for another time" />
