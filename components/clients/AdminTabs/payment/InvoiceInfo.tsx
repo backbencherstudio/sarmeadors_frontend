@@ -1,4 +1,5 @@
 "use client";
+import CreateNewInvoiceForm from "@/components/allForm/CreateNewInvoiceForm";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 import InvoiceIcon from "@/components/icon/InvoiceIcon";
 import MessageIcon from "@/components/icon/MessageIcon";
@@ -93,7 +94,7 @@ export default function InvoiceInfo() {
   const [data, setData] = useState<InvoiceRow[]>(sampleData);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
-
+  const [isOpen, setIsOpen] = useState(false);
   const totalpage = Math.ceil(data.length / itemsPerPage) || 1;
 
   const columns = [
@@ -177,8 +178,7 @@ export default function InvoiceInfo() {
   ];
 
   const HandleCreateInvoice = () => {
-    // Placeholder for create invoice action
-    alert("Create Invoice clicked");
+    setIsOpen(true);
   };
 
   const handleView = (row: any) => {
@@ -224,6 +224,10 @@ export default function InvoiceInfo() {
           onItemsPerPageChange={(n) => setItemsPerPage(n)}
         />
       </div>
+
+      {
+        isOpen && <CreateNewInvoiceForm open={isOpen} setOpen={setIsOpen} />
+      }
     </div>
   );
 }
