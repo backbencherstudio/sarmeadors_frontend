@@ -81,7 +81,7 @@ export default function Password() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter new password"
-                            className="flex-1 rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                            className="flex-1 rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                         />
                         <Button
                             onClick={handleUpdatePassword}

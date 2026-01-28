@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
+import Link from "next/link";
 
 interface DocumentFormData {
     name: string;
@@ -40,12 +41,19 @@ export default function EditDocumentPage() {
     return (
         <div className="mx-auto">
             {/* Header with Back Button */}
-            <div className="flex items-center gap-3 mb-6">
+            <Link
+                href="/clients"
+                className="text-lg font-semibold flex items-center gap-3 w-fit mb-6"
+            >
+                <ArrowLeftIcon />
+                <span>Document</span>
+            </Link>
+            {/* <div className="flex items-center gap-3 mb-6">
                 <div onClick={router.back} className="flex items-center gap-3 cursor-pointer">
                     <ArrowLeftIcon />
-                    <h1 className="font-semibold leading-[160%]" >Edit Document</h1>
+                    <h1 className="font-semibold leading-[160%]" >Document</h1>
                 </div>
-            </div>
+            </div> */}
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 border border-gray-200 rounded-lg p-4">
                 {/* Name Field */}

@@ -1,9 +1,6 @@
 "use client";
 
-import { RichTextEditor } from "@/components/reusable/Editor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 
 import {
     HiOutlineMenu,
@@ -24,18 +21,18 @@ import Password from "./Password/Password";
 import Documents from "./Documents/Documents";
 
 
-interface TermsConditionFormData {
-    explanation: string;
-}
+// interface TermsConditionFormData {
+//     explanation: string;
+// }
 
 export function AdminTabs() {
-    const [editorKey] = useState(0);
+    // const [editorKey] = useState(0);
 
-    const { watch, setValue, handleSubmit } = useForm<TermsConditionFormData>({
-        defaultValues: {
-            explanation: "",
-        },
-    });
+    // const { watch, setValue, handleSubmit } = useForm<TermsConditionFormData>({
+    //     defaultValues: {
+    //         explanation: "",
+    //     },
+    // });
 
     return (
         <div>

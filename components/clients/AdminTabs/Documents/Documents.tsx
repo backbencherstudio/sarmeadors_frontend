@@ -73,7 +73,7 @@ export default function Documents() {
                 <div className="space-y-4 w-full">
                     <h1 className="text-2xl font-bold text-gray-900">Documents to Sign</h1>
                     <Select>
-                        <SelectTrigger className="w-full md:w-1/2">
+                        <SelectTrigger className="w-full md:w-1/2 h-12!">
                             <SelectValue placeholder="Select template to add" />
                         </SelectTrigger>
                         <SelectContent>

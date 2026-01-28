@@ -89,7 +89,7 @@ export default function Events() {
                             id="eventTitle"
                             type="text"
                             placeholder="eg. Interview"
-                            className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                            className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                             {...register("eventTitle", { required: true })}
                         />
                     </div>
@@ -100,7 +100,7 @@ export default function Events() {
                             Event Type<span className="text-red-500">*</span>
                         </Label>
                         <Select onValueChange={(value) => setValue("eventType", value)}>
-                            <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm">
+                            <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12!">
                                 <SelectValue placeholder="Start typing to filter" />
                             </SelectTrigger>
                             <SelectContent>
@@ -122,7 +122,7 @@ export default function Events() {
                                 Event Date<span className="text-red-500">*</span>
                             </Label>
                             <Popover>
-                                <PopoverTrigger asChild>
+                                <PopoverTrigger asChild className="h-12!">
                                     <Button
                                         variant="outline"
                                         className={cn(
@@ -155,7 +155,7 @@ export default function Events() {
                                 Event Time<span className="text-red-500">*</span>
                             </Label>
                             <Select onValueChange={(value) => setValue("eventTime", value)}>
-                                <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm">
+                                <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12!">
                                     <SelectValue placeholder="hh:mm:A" />
                                 </SelectTrigger>
                                 <SelectContent className="max-h-[200px]">
@@ -179,7 +179,7 @@ export default function Events() {
                                 Time zone<span className="text-red-500">*</span>
                             </Label>
                             <Select onValueChange={(value) => setValue("timeZone", value)}>
-                                <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm">
+                                <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12!">
                                     <SelectValue placeholder="Select timezone" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -204,7 +204,7 @@ export default function Events() {
                         Select Candidates<span className="text-red-500">*</span>
                     </Label>
                     <Select onValueChange={(value) => setValue("candidates", value)}>
-                        <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm">
+                        <SelectTrigger className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12!">
                             <SelectValue placeholder="Select Candidates" />
                         </SelectTrigger>
                         <SelectContent>
@@ -225,7 +225,7 @@ export default function Events() {
                             id="location"
                             type="text"
                             placeholder="Address, Apartment, etc."
-                            className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm pr-10"
+                            className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm pr-10 h-12"
                             {...register("location")}
                         />
                         <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
@@ -241,7 +241,7 @@ export default function Events() {
                         id="interviewLink"
                         type="text"
                         placeholder="Zoom link or other call link"
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                         {...register("interviewLink")}
                     />
                 </div>
@@ -254,7 +254,7 @@ export default function Events() {
                     <Textarea
                         id="notes"
                         placeholder="Enter a description..."
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm min-h-[100px]"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm min-h-[100px] h-32!"
                         {...register("notes")}
                     />
                 </div>

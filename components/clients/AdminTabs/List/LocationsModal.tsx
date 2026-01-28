@@ -60,7 +60,7 @@ export function LocationsModal() {
                     <Plus className="w-4 h-4 text-white" />
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[850px]!">
+            <DialogContent className="sm:max-w-[850px]! max-h-[80vh] overflow-y-auto">
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
                         <DialogTitle className="text-xl font-semibold text-start">
@@ -86,7 +86,7 @@ export function LocationsModal() {
                                             )
                                         }
                                         placeholder="Enter client type"
-                                        className="flex-1"
+                                        className="flex-1 h-12"
                                         autoFocus={index === clientTypes.length - 1 && item.value === ""}
                                     />
                                     <Button
