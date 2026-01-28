@@ -54,7 +54,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             </div>
 
             {/* Scrollable content area */}
-            <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 lg:pl-6 lg:pt-6">
+            <main className="flex-1 overflow-y-auto overflow-x-hidden ">
               {children}
               <ToastContainer />
             </main>
