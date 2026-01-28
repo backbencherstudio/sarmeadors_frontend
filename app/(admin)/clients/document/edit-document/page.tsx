@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
 import Link from "next/link";
+import ButtonReuseable from "@/components/reusable/CustomButton";
 
 interface DocumentFormData {
     name: string;
@@ -64,7 +65,7 @@ export default function EditDocumentPage() {
                     <Input
                         id="name"
                         {...register("name", { required: true })}
-                        className="w-full"
+                        className="w-full h-12"
                         placeholder="Enter document name"
                     />
                 </div>
@@ -80,20 +81,17 @@ export default function EditDocumentPage() {
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-4 pt-4">
-                    <Button
+                    <ButtonReuseable
+                        title="Submit"
                         type="submit"
                         className="bg-[#111927] text-white hover:bg-[#111927]/90 px-6"
-                    >
-                        Submit
-                    </Button>
-                    <Button
+                    />
+                    <ButtonReuseable
+                        title="Cancel"
                         type="button"
-                        variant="outline"
                         onClick={handleCancel}
-                        className="px-6"
-                    >
-                        Cancel
-                    </Button>
+                        className="bg-[#F3F4F6]! text-[#111927]! cursor-pointer!"
+                    />
                 </div>
             </form>
         </div>

@@ -31,6 +31,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ButtonReuseable from "./CustomButton";
 
 interface ToolbarButtonProps {
   onClick: () => void;
@@ -122,12 +123,12 @@ export function RichTextEditor({
       {/* Update Button */}
       {onUpdate && (
         <div className="flex justify-end pt-4">
-          <button
+          <ButtonReuseable
+            title="Admins to Notify"
             onClick={onUpdate}
             className="bg-[#111927] text-white  px-4 py-[9px] rounded-[8px] cursor-pointer"
-          >
-            Admins to Notify
-          </button>
+            type="button"
+          />
         </div>
       )}
       {

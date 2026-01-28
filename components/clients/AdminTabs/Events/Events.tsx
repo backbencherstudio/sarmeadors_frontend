@@ -1,5 +1,6 @@
 "use client"
 
+import ButtonReuseable from "@/components/reusable/CustomButton"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -303,12 +304,11 @@ export default function Events() {
 
                 {/* Submit Button */}
                 <div className="flex justify-end pt-4">
-                    <Button
+                    <ButtonReuseable
+                        title="Schedule Event"
                         type="submit"
                         className="bg-[#111927] text-white hover:bg-[#111927]/90 px-6 py-2 rounded-lg"
-                    >
-                        Schedule Event
-                    </Button>
+                    />
                 </div>
             </form>
         </div>

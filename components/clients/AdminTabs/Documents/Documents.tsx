@@ -17,6 +17,7 @@ import ListBlackIcon from "@/public/icon/ListBlackIcon"
 import Link from "next/link"
 import DocumentDeleteModal from "./DocumentDeleteModal"
 import { toast } from "react-toastify"
+import ButtonReuseable from "@/components/reusable/CustomButton"
 
 interface Document {
     id: string
@@ -83,12 +84,10 @@ export default function Documents() {
                         </SelectContent>
                     </Select>
                 </div>
-                <Button
-                    variant="secondary"
-                    className="bg-gray-800 text-white hover:bg-gray-700 rounded-md px-4 py-2 cursor-pointer w-fit"
-                >
-                    Manage and edit Templates
-                </Button>
+                <ButtonReuseable
+                    title="Manage and edit Templates"
+                    className=" px-4 py-2 cursor-pointer text-nowrap"
+                />
             </div>
 
             {/* Document Cards */}
