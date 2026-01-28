@@ -569,10 +569,10 @@ export function RichTextEditor({
       {/* <hr className="bg-[#E5E7EB]" /> */}
 
       {/* Editor Content */}
-      <div className="min-h-[200px] p-4 border border-[#E5E7EB] rounded-2xl">
+      <div className="min-h-[200px] p-4 border border-[#E5E7EB] rounded-2xl h-full">
         <EditorContent
           editor={editor}
-          className="focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror]:outline-none"
+          className="focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror]:outline-none h-full"
           style={{
             fontSize: fontSize,
           }}

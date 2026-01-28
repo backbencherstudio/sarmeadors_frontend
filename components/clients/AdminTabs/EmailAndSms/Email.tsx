@@ -1,6 +1,7 @@
 import { RichTextEditor } from "@/components/reusable/Editor";
 import HoverInfo from "@/components/reusable/HoverInfo";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import InformationIcon from "@/public/icon/InformationIcon";
@@ -70,7 +71,7 @@ export default function Email() {
             {/* Template Select */}
             <div className="mb-5">
                 <Select>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full h-12!">
                         <SelectValue placeholder="Theme" />
                     </SelectTrigger>
                     <SelectContent>
@@ -91,7 +92,7 @@ export default function Email() {
                         type="email"
                         placeholder="From Email"
                         // defaultValue="sarah@nanniescoasttocoast.com"
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                     />
                 </div>
 
@@ -103,7 +104,7 @@ export default function Email() {
                         type="email"
                         placeholder="Reply To"
                         // defaultValue="sarah@nanniescoasttocoast.com"
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                     />
                 </div>
             </div>
@@ -116,7 +117,7 @@ export default function Email() {
                 <Input
                     type="text"
                     placeholder="Subject"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                 />
             </div>
 
@@ -130,7 +131,7 @@ export default function Email() {
                 <Input
                     type="text"
                     placeholder="CC"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                 />
             </div>
 
@@ -139,7 +140,7 @@ export default function Email() {
                 <Input
                     type="text"
                     placeholder="BCC"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                 />
             </div>
 
@@ -200,7 +201,7 @@ export default function Email() {
                     <HoverInfo side="left-0 bottom-7" info="  How to send candidates individual documents to a Client" />
                 </div>
                 <div className="space-x-2 mb-2">
-                    <input type="checkbox" />
+                    <Checkbox />
                     <span>Log email as note</span>
                 </div>
                 <div className="flex items-center gap-2">
