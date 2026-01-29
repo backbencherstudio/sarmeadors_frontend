@@ -15,7 +15,7 @@ import { Trash2 } from "lucide-react";
 export default function DeleteModal() {
     return (
         <Dialog>
-            <DialogTrigger asChild>
+            <DialogTrigger className="cursor-pointer">
                 <DeleteIcon />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[550px]">

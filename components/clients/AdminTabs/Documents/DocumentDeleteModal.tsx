@@ -32,19 +32,20 @@ export default function DocumentDeleteModal() {
                 <DialogDescription className="text-center text-xl md:text-[32px] font-semibold py-4 text-[#111927]">
                     Are you sure you want to delete the document Client Agency Agreement Midwest Nannies?
                 </DialogDescription>
+
                 <div className="flex gap-3 justify-center pb-2 w-full">
 
                     <ButtonReuseable
                         title='Delete Document'
                         type="submit"
                         // onClick={handleDelete}
-                        className="flex-1 bg-[#CB121D]! text-white! w-fit"
+                        className=" bg-[#CB121D]! text-white! w-fit"
                     />
                     <DialogClose asChild>
                         <ButtonReuseable
                             title='Cancel'
                             type="button"
-                            className="flex-1 bg-[#F3F4F6]! text-[#111927]! w-fit"
+                            className=" bg-[#F3F4F6]! text-[#111927]! w-fit"
                         />
                     </DialogClose>
                 </div>

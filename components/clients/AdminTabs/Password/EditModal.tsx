@@ -18,7 +18,7 @@ interface EditModalProps {
 export default function EditModal({ email = "email_username" }: EditModalProps) {
     return (
         <Dialog>
-            <DialogTrigger asChild className="cursor-pointer">
+            <DialogTrigger className="cursor-pointer" >
                 <EditIcon />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[550px]">
