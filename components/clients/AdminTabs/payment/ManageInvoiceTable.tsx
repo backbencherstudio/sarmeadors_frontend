@@ -1,5 +1,6 @@
 "use client";
 
+import AddInvoiceItemForm from "@/components/allForm/AddInvoiceItemForm";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 import DeleteIcon from "@/components/icon/DeleteIcon";
 import DownloadIcon from "@/components/icon/DownloadIcon";
@@ -7,6 +8,15 @@ import EditeIcon from "@/components/icon/EditeIcon";
 import MessageIcon from "@/components/icon/MessageIcon";
 import ReloadIcon from "@/components/icon/ReloadIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useMemo, useState } from "react";
 
 type ItemRow = {
@@ -78,6 +88,7 @@ const sampleData: ItemRow[] = [
 
 export default function ManageInvoiceTable() {
   const [data, setData] = useState<ItemRow[]>(sampleData);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
@@ -178,11 +189,34 @@ export default function ManageInvoiceTable() {
           </p>
         </div>
         <div>
-          <ButtonReuseable
-            title="Add Item"
-            icon={""}
-            className="bg-blackColor text-whiteColor"
-          />
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <ButtonReuseable
+                title="Add Item"
+                icon={""}
+                className="bg-blackColor text-whiteColor"
+              />
+            </DialogTrigger>
+
+            <DialogContent className="p-0 sm:max-w-md">
+              <DialogHeader>
+                <div className="flex items-center justify-between w-full p-4">
+                  <DialogTitle>Add new Item</DialogTitle>
+                  <DialogClose asChild>
+                    <button className="w-9 h-9 rounded-full border bg-white flex items-center justify-center">
+                      ✕
+                    </button>
+                  </DialogClose>
+                </div>
+              </DialogHeader>
+
+              <div className="p-4">
+                <AddInvoiceItemForm open={dialogOpen} onClose={setDialogOpen} />
+              </div>
+
+              <DialogFooter />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
