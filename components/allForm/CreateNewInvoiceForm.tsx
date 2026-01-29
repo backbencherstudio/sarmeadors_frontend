@@ -58,6 +58,24 @@ function CreateNewInvoiceForm({
     }, 500);
     console.log("Create invoice", data);
   };
+  const opts = statusOptions ?? [
+    { value: "pre_application", label: "Pre Application" },
+    {
+      value: "application_started",
+      label: "Application Started",
+    },
+    { value: "applied", label: "Applied" },
+    {
+      value: "application_approved",
+      label: "Application Approved",
+    },
+    {
+      value: "interview_complete",
+      label: "Interview Complete",
+    },
+    { value: "profile_complete", label: "Profile Complete" },
+    { value: "hired", label: "Hired" },
+  ];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -105,24 +123,6 @@ function CreateNewInvoiceForm({
                 control={control}
                 name="userStatus"
                 render={({ field }) => {
-                  const opts = statusOptions ?? [
-                    { value: "pre_application", label: "Pre Application" },
-                    {
-                      value: "application_started",
-                      label: "Application Started",
-                    },
-                    { value: "applied", label: "Applied" },
-                    {
-                      value: "application_approved",
-                      label: "Application Approved",
-                    },
-                    {
-                      value: "interview_complete",
-                      label: "Interview Complete",
-                    },
-                    { value: "profile_complete", label: "Profile Complete" },
-                    { value: "hired", label: "Hired" },
-                  ];
                   return (
                     <SelecteInputField
                       options={opts}
