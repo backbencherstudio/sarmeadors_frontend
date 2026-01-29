@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon"
 import { Download } from "lucide-react"
+import ButtonReuseable from "@/components/reusable/CustomButton"
 
 export default function DocumentDetailsPage() {
     const router = useRouter()
@@ -211,20 +212,19 @@ export default function DocumentDetailsPage() {
 
             {/* Action Buttons */}
             <div className="flex justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
-                <Button
+                <ButtonReuseable
+                    title="Cancel"
                     onClick={handleCancel}
-                    variant="outline"
-                    className="px-6 py-2 bg-white text-gray-900 border border-gray-300 hover:bg-gray-50"
-                >
-                    Cancel
-                </Button>
-                <Button
+                    className="px-6 py-2 bg-white! text-[#111927]!"
+                />
+                <ButtonReuseable
+                    icon={<Download className="w-4 h-4 mr-2" />}
+                    title="Download PDF"
                     onClick={handleDownloadPDF}
                     className="px-6 py-2 bg-gray-900 text-white hover:bg-gray-800"
-                >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download PDF
-                </Button>
+                />
+
+
             </div>
         </div>
     )

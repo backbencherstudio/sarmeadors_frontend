@@ -9,6 +9,7 @@ import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon"
 import UserSettingsIcon from "@/public/icon/UserSettingsIcon"
 import UserIcon from "@/public/icon/UserIcon"
 import MoreIcon from "@/public/icon/MoreIcon"
+import ProfileTabs from "@/components/clients/ProfileTabs/ProfileTabs"
 
 function page() {
   const router = useRouter()
@@ -60,7 +61,7 @@ function page() {
             <AdminTabs />
           </TabsContent>
           <TabsContent value="profile" className="mt-4">
-            Profile content here
+            <ProfileTabs />
           </TabsContent>
           <TabsContent value="more" className="mt-4">
             More content here
