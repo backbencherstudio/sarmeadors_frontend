@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import HoverInfo from '@/components/reusable/HoverInfo';
-import { Trash2 } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import SecondaryLoginModal from './SecondaryLoginModal';
 import ButtonReuseable from '@/components/reusable/CustomButton';
+import DeleteModal from './DeleteModal';
+import EditModal from './EditModal';
+
 
 interface ClientType {
     id: string
@@ -21,6 +21,8 @@ interface TermsConditionFormData {
 export default function Password() {
     const [password, setPassword] = useState("");
     const [userId] = useState("20");
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [emailToDelete] = useState("mollahsaiful@gmail.com");
 
     // const [editorKey] = useState(0);
 
@@ -59,6 +61,13 @@ export default function Password() {
     const handleUpdatePassword = () => {
         // Add password update logic here
         console.log("Updating password:", password);
+    };
+
+    const handleDeleteSecondaryLogin = () => {
+        // Add delete logic here
+        console.log("Deleting secondary login:", emailToDelete);
+        setDeleteDialogOpen(false);
+        // You can add your delete API call here
     };
 
     const resetPasswordLink = `https://nanniescoasttocoast.enginehire.io/reset-password-request/${userId}`;
@@ -115,12 +124,21 @@ export default function Password() {
             <div className="mb-6">
                 {/* Text Title */}
                 <h2 className="text-xl font-medium whitespace-nowrap mb-2">List Secondary Logins</h2>
-                <h3>mollahsaiful@gmail.com</h3>
+                <div className="flex items-center justify-between">
+                    <h3>mollahsaiful@gmail.com</h3>
+                    <div className='flex items-center gap-3'>
+                        <EditModal email="mollahsaiful@gmail.com" />
+                        <DeleteModal />
+                    </div>
+                </div>
             </div>
 
             {/* Add Secondary Logins Button */}
 
             <SecondaryLoginModal />
+
+            {/* Delete Confirmation Dialog */}
+
         </div>
     );
 }
