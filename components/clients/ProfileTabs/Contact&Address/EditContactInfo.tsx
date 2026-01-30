@@ -9,17 +9,14 @@ import EditsIcon from '@/public/icon/EditsIcon'
 
 export default function EditContactInfo({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
     const [formData, setFormData] = useState({
-        // First Parent (Primary Contact)
         firstParentFirstName: 'Kristin',
         firstParentLastName: 'Ben',
         firstParentEmail: 'binhan628@gmail.com',
         firstParentPhone: '+14842918883',
-        // Second Parent (Alternate Contact)
         secondParentFirstName: 'Colleen',
         secondParentLastName: 'James',
         secondParentPhone: '+18143008398',
         secondParentEmail: 'tranthuy.nute@gmail.com',
-        // Address
         streetAddress: '26 Berkshire Ave.',
         city: 'Atlantic City',
         postalCode: '08401',
@@ -244,7 +241,7 @@ export default function EditContactInfo({ open, setOpen }: { open: boolean, setO
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end gap-4 pt-4 border-t">
+                    <div className="flex items-center justify-end gap-4 pt-4">
                         <ButtonReuseable
                             title="Update Details"
                             type="submit"

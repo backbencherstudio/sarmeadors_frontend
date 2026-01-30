@@ -160,7 +160,7 @@ export default function EditAdditionalInfo({ open, setOpen }: { open: boolean, s
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end gap-4 pt-4 border-t">
+                    <div className="flex items-center justify-end gap-4 pt-4">
                         <ButtonReuseable
                             title="Update Details"
                             type="submit"

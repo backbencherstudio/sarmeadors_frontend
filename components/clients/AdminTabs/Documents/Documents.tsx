@@ -6,10 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card } from "@/components/ui/card"
 import {
     Pencil,
-    Share2,
     Eye,
-    Trash2,
-    CheckCircle2
+    Copy,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import ListGreenIcon from "@/public/icon/ListGreenIcon"
@@ -54,7 +52,6 @@ export default function Documents() {
 
     const handleAction = (id: string, action: string) => {
         console.log(`Action: ${action} for document ${id}`)
-        // Implement action handlers here
     }
 
     const handleCopyLink = async (documentId: string) => {
@@ -163,7 +160,7 @@ export default function Documents() {
                                 className="h-9 w-9 bg-gray-100 hover:bg-gray-200 border-0 cursor-pointer"
                                 onClick={() => handleCopyLink(document.id)}
                             >
-                                <Share2 className="w-4 h-4 text-gray-600" />
+                                <Copy className="w-4 h-4 text-gray-600" />
                             </Button>
                             <Link
                                 href={`/clients/document/document-details?id=${document.id}`}
