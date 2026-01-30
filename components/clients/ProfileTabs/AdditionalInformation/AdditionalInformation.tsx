@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Pencil, Info, Eye } from 'lucide-react'
 import { useState } from 'react'
-import EditAdditionalInformation from './EditAdditionalInformation'
+import EditAdditionalInformation from './EditAdditionalInfo'
 
 interface AdditionalInfoItem {
     title: string
