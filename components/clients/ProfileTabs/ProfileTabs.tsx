@@ -1,8 +1,8 @@
 import ReusableTabs from "@/components/reusable/ReusableTabs"
 import ContactAndAddress from "./Contact&Address/ContactAndAddress"
-import ChildrenInformation from "./Contact&Address/ChildrenInformation"
-import Requirements from "./Contact&Address/Requirements"
-import AdditionalInformation from "./Contact&Address/AdditionalInformation"
+import ChildrenInformation from "./ChildrenInformation/ChildrenInformation"
+import Requirements from "./Requirements/Requirements"
+import AdditionalInformation from "./AdditionalInformation/AdditionalInformation"
 
 export default function ProfileTabs() {
     const tabs = [

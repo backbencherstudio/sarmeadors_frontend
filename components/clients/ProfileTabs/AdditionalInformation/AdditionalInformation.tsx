@@ -3,7 +3,9 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Pencil, Info } from 'lucide-react'
+import { Pencil, Info, Eye } from 'lucide-react'
+import { useState } from 'react'
+import EditAdditionalInformation from './EditAdditionalInformation'
 
 interface AdditionalInfoItem {
     title: string
@@ -11,6 +13,7 @@ interface AdditionalInfoItem {
 }
 
 export default function AdditionalInformation() {
+    const [open, setOpen] = useState(false)
     // Sample data matching the image
     const additionalInfo: AdditionalInfoItem[] = [
         {
@@ -62,6 +65,7 @@ export default function AdditionalInformation() {
                 <h2 className="text-xl font-semibold text-gray-900">Additional Information</h2>
                 <Button
                     variant="outline"
+                    onClick={() => setOpen(true)}
                     className="flex items-center gap-2"
                 >
                     <Pencil className="w-4 h-4" />
@@ -81,12 +85,12 @@ export default function AdditionalInformation() {
                             <AccordionItem key={index} value={`item-${index}`} className="border-b border-gray-200">
                                 <AccordionTrigger className="hover:no-underline">
                                     <div className="flex items-center gap-2 flex-1 text-left">
-                                        <span className="text-sm font-medium text-gray-900">{item.title}</span>
-                                        <Info className="w-4 h-4 text-gray-400 shrink-0" />
+                                        <span className="text-base font-medium text-[#384250]">{item.title}</span>
+                                        <Eye className="w-4 h-4 text-gray-400 shrink-0" />
                                     </div>
                                 </AccordionTrigger>
                                 <AccordionContent>
-                                    <p className="text-sm text-gray-700 pt-2">
+                                    <p className="text-sm text-[#778593] pt-2">
                                         {item.content || "No information provided."}
                                     </p>
                                 </AccordionContent>
@@ -95,6 +99,11 @@ export default function AdditionalInformation() {
                     </Accordion>
                 </CardContent>
             </Card>
+            {
+                open && (
+                    <EditAdditionalInformation open={open} setOpen={setOpen} />
+                )
+            }
         </div>
     )
 }

@@ -1,9 +1,10 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Eye, Pencil } from 'lucide-react'
+import EditChildrenInformation from './EditChildrenInformation'
 
 interface ChildData {
     name: string
@@ -22,10 +23,10 @@ function InfoField({ label, value }: InfoFieldProps) {
     return (
         <div className="space-y-1">
             <div className="flex items-center gap-1.5">
-                <span className="text-sm text-gray-500">{label}</span>
+                <span className="text-sm text-[#778593]">{label}</span>
                 <Eye className="w-3.5 h-3.5 text-gray-400" />
             </div>
-            <p className="text-sm font-medium text-gray-900">{value}</p>
+            <p className="text-base text-[#384250]">{value}</p>
         </div>
     )
 }
@@ -35,29 +36,34 @@ function ChildCard({ child }: { child: ChildData }) {
         <Card className="shadow-none border-gray-200">
             <CardContent className="pt-6 space-y-4">
                 {/* Name */}
-                <h3 className="text-lg font-semibold text-gray-900">{child.name}</h3>
+                <h3 className="text-lg font-medium ">{child.name}</h3>
 
                 {/* Date of Birth, Gender, and Likes/Dislikes in a grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <InfoField label="Date of Birth" value={child.dateOfBirth} />
-                    <InfoField label="Gender" value={child.gender} />
-                    <InfoField
-                        label="Likes, dislikes, and interests."
-                        value={child.likesDislikes}
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:col-span-4'>
+                        <InfoField label="Date of Birth" value={child.dateOfBirth} />
+                        <InfoField label="Gender" value={child.gender} />
+                    </div>
+                    <div className="lg:col-span-8 space-y-4">
+                        <InfoField
+                            label="Likes, dislikes, and interests."
+                            value={child.likesDislikes}
+                        />
+                        {/* Allergies */}
+                        <InfoField
+                            label="Allergies or special needs we need to be made aware of."
+                            value={child.allergies}
+                        />
+                    </div>
                 </div>
 
-                {/* Allergies */}
-                <InfoField
-                    label="Allergies or special needs we need to be made aware of."
-                    value={child.allergies}
-                />
             </CardContent>
         </Card>
     )
 }
 
 export default function ChildrenInformation() {
+    const [open, setOpen] = useState(false)
     // Sample data matching the image
     const children: ChildData[] = [
         {
@@ -87,9 +93,10 @@ export default function ChildrenInformation() {
         <div className="w-full space-y-6">
             {/* Header */}
             <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-gray-900">Children Information</h2>
+                <h2 className="text-xl font-semibold ">Children Information</h2>
                 <Button
                     variant="outline"
+                    onClick={() => setOpen(true)}
                     className="flex items-center gap-2"
                 >
                     <Pencil className="w-4 h-4" />
@@ -103,6 +110,11 @@ export default function ChildrenInformation() {
                     <ChildCard key={index} child={child} />
                 ))}
             </div>
+            {
+                open && (
+                    <EditChildrenInformation open={open} setOpen={setOpen} />
+                )
+            }
         </div>
     )
 }
