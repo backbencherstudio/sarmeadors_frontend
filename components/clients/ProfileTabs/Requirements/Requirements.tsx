@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Eye, Pencil } from 'lucide-react'
 import CheckMarkIcon from '@/public/icon/CheckMarkIcon'
-import EditRequirements from './EditRequirements'
+import EditRequirements from './EditRequirementsInfo'
 
 interface RequirementItem {
     text: string
