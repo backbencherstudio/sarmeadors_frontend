@@ -1,10 +1,12 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Eye, Pencil } from 'lucide-react'
+import CheckMarkIcon from '@/public/icon/CheckMarkIcon'
+import EditRequirements from './EditRequirements'
 
 interface RequirementItem {
     text: string
@@ -20,19 +22,14 @@ interface RequirementsProps {
 function RequirementListItem({ requirement }: { requirement: RequirementItem }) {
     return (
         <div className="flex items-start gap-3">
-            <Checkbox checked={true} className="mt-0.5" disabled />
+            <CheckMarkIcon />
             <div className="flex items-center gap-2 flex-1">
-                <span className="text-sm font-medium text-gray-900 flex-1">
+                <span className="flex gap-3 items-center text-base text-[#384250] flex-1">
                     {requirement.text}
-                </span>
-                {requirement.hasAdditionalIcon && (
-                    <div className="w-4 h-4 flex items-center justify-center">
+                    {requirement.hasEyeIcon && (
                         <Eye className="w-3.5 h-3.5 text-gray-400" />
-                    </div>
-                )}
-                {requirement.hasEyeIcon && (
-                    <Eye className="w-3.5 h-3.5 text-gray-400" />
-                )}
+                    )}
+                </span>
             </div>
         </div>
     )
@@ -42,6 +39,7 @@ export default function Requirements({
     name = "Theresa Webb",
     requirements
 }: RequirementsProps) {
+    const [open, setOpen] = useState(false)
     // Default requirements matching the image
     const defaultRequirements: RequirementItem[] = [
         {
@@ -92,6 +90,7 @@ export default function Requirements({
                 <h2 className="text-xl font-semibold text-gray-900">Requirements</h2>
                 <Button
                     variant="outline"
+                    onClick={() => setOpen(true)}
                     className="flex items-center gap-2"
                 >
                     <Pencil className="w-4 h-4" />
@@ -113,6 +112,11 @@ export default function Requirements({
                     </div>
                 </CardContent>
             </Card>
+            {
+                open && (
+                    <EditRequirements open={open} setOpen={setOpen} />
+                )
+            }
         </div>
     )
 }
