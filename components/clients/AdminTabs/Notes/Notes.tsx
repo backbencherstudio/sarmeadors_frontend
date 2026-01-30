@@ -122,7 +122,7 @@ export default function Notes() {
                 <div className="flex items-center justify-between p-4 border-b border-[#E5E7EB]">
                     <div className="flex items-center gap-2">
                         <h2 className="text-lg font-bold text-gray-900">Notes</h2>
-                        <InformationIcon />
+                        {/* <InformationIcon /> */}
                     </div>
                     <button
                         onClick={handleNewNote}

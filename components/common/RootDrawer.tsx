@@ -14,7 +14,7 @@ function RootDrawer({
     <div>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerContent className="max-w-2xl! w-full">
-          <div className="relative">
+          <div className="relative overflow-x-auto">
             <button
               onClick={() => setOpen(false)}
               className="group hover:scale-105 transition-all duration-200 bg-white rounded-full cursor-pointer w-13 h-13 flex justify-center shadow-2xl  items-center absolute top-1/2 transform -translate-y-1/2 md:-left-15 left-5 lg:-left-20 z-50"

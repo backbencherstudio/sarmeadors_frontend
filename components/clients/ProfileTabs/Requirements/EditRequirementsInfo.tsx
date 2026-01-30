@@ -62,7 +62,7 @@ export default function EditRequirementsInfo({ open, setOpen }: { open: boolean,
                         <RadioGroup
                             value={formData.midwestEliteNannies}
                             onValueChange={(value) => handleChange('midwestEliteNannies', value)}
-                            className="flex gap-6"
+                            className="space-y-2"
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Yes" id="midwest-yes" />
@@ -87,7 +87,7 @@ export default function EditRequirementsInfo({ open, setOpen }: { open: boolean,
                         <RadioGroup
                             value={formData.specialNeeds}
                             onValueChange={(value) => handleChange('specialNeeds', value)}
-                            className="flex gap-6"
+                            className="space-y-2"
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Yes" id="special-needs-yes" />
@@ -112,7 +112,7 @@ export default function EditRequirementsInfo({ open, setOpen }: { open: boolean,
                         <RadioGroup
                             value={formData.afterSchoolActivity}
                             onValueChange={(value) => handleChange('afterSchoolActivity', value)}
-                            className="flex gap-6"
+                            className="space-y-2"
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Yes" id="after-school-yes" />
@@ -137,7 +137,7 @@ export default function EditRequirementsInfo({ open, setOpen }: { open: boolean,
                         <RadioGroup
                             value={formData.housekeeper}
                             onValueChange={(value) => handleChange('housekeeper', value)}
-                            className="flex gap-6"
+                            className="space-y-2"
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Yes" id="housekeeper-yes" />
@@ -162,7 +162,7 @@ export default function EditRequirementsInfo({ open, setOpen }: { open: boolean,
                         <RadioGroup
                             value={formData.prepareMeals}
                             onValueChange={(value) => handleChange('prepareMeals', value)}
-                            className="flex gap-6"
+                            className="space-y-2"
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Yes" id="meals-yes" />
@@ -187,7 +187,7 @@ export default function EditRequirementsInfo({ open, setOpen }: { open: boolean,
                         <RadioGroup
                             value={formData.travelWithFamily}
                             onValueChange={(value) => handleChange('travelWithFamily', value)}
-                            className="flex gap-6"
+                            className="space-y-2"
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Yes" id="travel-yes" />
@@ -267,7 +267,7 @@ export default function EditRequirementsInfo({ open, setOpen }: { open: boolean,
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end gap-4 pt-4 border-t">
+                    <div className="flex items-center justify-end gap-4 pt-4">
                         <ButtonReuseable
                             title="Update Details"
                             type="submit"

@@ -101,56 +101,56 @@ export default function EditChildrenInformation({ open, setOpen }: { open: boole
                                         required
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor={`child-${index}-dateOfBirth`} className="text-sm font-medium">
-                                        Date of Birth <span className="text-red-500">*</span>
-                                    </Label>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant="outline"
-                                                className={cn(
-                                                    "w-full h-10 justify-start text-left font-normal",
-                                                    !child.dateOfBirth && "text-muted-foreground"
-                                                )}
-                                            >
-                                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                                {child.dateOfBirth ? format(child.dateOfBirth, "MM/dd/yyyy") : "MM/DD/YYYY"}
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar
-                                                mode="single"
-                                                selected={child.dateOfBirth}
-                                                onSelect={(date) => handleChildChange(index, 'dateOfBirth', date)}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-sm font-medium">
-                                        Gender <span className="text-red-500">*</span>
-                                    </Label>
-                                    <RadioGroup
-                                        value={child.gender}
-                                        onValueChange={(value) => handleChildChange(index, 'gender', value)}
-                                        className="flex gap-6"
-                                    >
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="Male" id={`child-${index}-male`} />
-                                            <Label htmlFor={`child-${index}-male`} className="font-normal cursor-pointer">
-                                                Male
-                                            </Label>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="Female" id={`child-${index}-female`} />
-                                            <Label htmlFor={`child-${index}-female`} className="font-normal cursor-pointer">
-                                                Female
-                                            </Label>
-                                        </div>
-                                    </RadioGroup>
-                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor={`child-${index}-dateOfBirth`} className="text-sm font-medium">
+                                    Date of Birth <span className="text-red-500">*</span>
+                                </Label>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            className={cn(
+                                                "w-full h-10 justify-start text-left font-normal",
+                                                !child.dateOfBirth && "text-muted-foreground"
+                                            )}
+                                        >
+                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                            {child.dateOfBirth ? format(child.dateOfBirth, "MM/dd/yyyy") : "MM/DD/YYYY"}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                        <Calendar
+                                            mode="single"
+                                            selected={child.dateOfBirth}
+                                            onSelect={(date) => handleChildChange(index, 'dateOfBirth', date)}
+                                        // initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
+                            <div className="flex items-center gap-2 my-5">
+                                <Label className="text-sm font-medium">
+                                    Gender <span className="text-red-500">*</span>
+                                </Label>
+                                <RadioGroup
+                                    value={child.gender}
+                                    onValueChange={(value) => handleChildChange(index, 'gender', value)}
+                                    className="flex gap-6"
+                                >
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="Male" id={`child-${index}-male`} />
+                                        <Label htmlFor={`child-${index}-male`} className="font-normal cursor-pointer">
+                                            Male
+                                        </Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="Female" id={`child-${index}-female`} />
+                                        <Label htmlFor={`child-${index}-female`} className="font-normal cursor-pointer">
+                                            Female
+                                        </Label>
+                                    </div>
+                                </RadioGroup>
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor={`child-${index}-likesDislikes`} className="text-sm font-medium">
@@ -180,7 +180,7 @@ export default function EditChildrenInformation({ open, setOpen }: { open: boole
                     ))}
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end gap-4 pt-4 border-t">
+                    <div className="flex items-center justify-end gap-4 pt-4 ">
                         <ButtonReuseable
                             title="Update Details"
                             type="submit"
