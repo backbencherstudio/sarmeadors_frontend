@@ -8,15 +8,9 @@ import EditeIcon from "@/components/icon/EditeIcon";
 import MessageIcon from "@/components/icon/MessageIcon";
 import ReloadIcon from "@/components/icon/ReloadIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
+import { PlusIcon } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type ItemRow = {
@@ -178,45 +172,31 @@ export default function ManageInvoiceTable() {
   const grandTotal = data.reduce((s, r) => s + Number(r.total), 0);
 
   return (
-    <div className="mt-6">
-      <div className="flex items-start justify-between mb-4">
+    <div className="mt-3">
+      <div className="mb-6">
+        <Link
+          href="/some-path"
+          className="flex items-center gap-2 text-lg font-semibold "
+        >
+          <ArrowLeftIcon className="w-4 h-4" /> Manage Invoice Items
+        </Link>
+      </div>
+      <div className="flex items-start justify-between mb-5">
         <div>
-          <h3 className="text-lg font-medium text-headerColor dark:text-whiteColor">
+          <h3 className="text-lg md:text-xl font-semibold text-headerColor dark:text-whiteColor">
             Invoice Items - saiful
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-secondaryColor mt-0.5">
             List of all current clients and their details.
           </p>
         </div>
         <div>
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              <ButtonReuseable
-                title="Add Item"
-                icon={""}
-                className="bg-blackColor text-whiteColor"
-              />
-            </DialogTrigger>
-
-            <DialogContent className="p-0 sm:max-w-md">
-              <DialogHeader>
-                <div className="flex items-center justify-between w-full p-4">
-                  <DialogTitle>Add new Item</DialogTitle>
-                  <DialogClose asChild>
-                    <button className="w-9 h-9 rounded-full border bg-white flex items-center justify-center">
-                      ✕
-                    </button>
-                  </DialogClose>
-                </div>
-              </DialogHeader>
-
-              <div className="p-4">
-                <AddInvoiceItemForm open={dialogOpen} onClose={setDialogOpen} />
-              </div>
-
-              <DialogFooter />
-            </DialogContent>
-          </Dialog>
+          <ButtonReuseable
+            title="Add Item"
+            icon={<PlusIcon className="w-4.5 h-4.5" />}
+            onClick={() => setDialogOpen(true)}
+            className="bg-blackColor text-whiteColor"
+          />
         </div>
       </div>
 
@@ -279,6 +259,9 @@ export default function ManageInvoiceTable() {
           }}
         />
       </div>
+      {dialogOpen && (
+        <AddInvoiceItemForm open={dialogOpen} onClose={setDialogOpen} />
+      )}
     </div>
   );
 }
