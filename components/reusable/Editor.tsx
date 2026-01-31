@@ -1,36 +1,36 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import { TextStyle } from "@tiptap/extension-text-style";
 import Highlight from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
-import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
+import TextAlign from "@tiptap/extension-text-align";
+import { TextStyle } from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
-import { useState } from "react";
-import {
-  Bold,
-  Italic,
-  Strikethrough,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
-  List,
-  ListOrdered,
-  Code,
-  Paperclip,
-  ChevronDown,
-  Highlighter,
-  Link as LinkIcon,
-} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  Bold,
+  ChevronDown,
+  Code,
+  Highlighter,
+  Italic,
+  Link as LinkIcon,
+  List,
+  ListOrdered,
+  Paperclip,
+  Strikethrough,
+} from "lucide-react";
+import { useState } from "react";
 import ButtonReuseable from "./CustomButton";
 
 interface ToolbarButtonProps {
@@ -50,8 +50,9 @@ const ToolbarButton = ({
     type="button"
     onClick={onClick}
     title={title}
-    className={`h-8 px-2 flex items-center justify-center hover:bg-white/10 rounded transition-colors ${isActive ? "bg-white/20" : ""
-      }`}
+    className={`h-8 px-2 flex items-center justify-center hover:bg-white/10 rounded transition-colors ${
+      isActive ? "bg-white/20" : ""
+    }`}
   >
     {children}
   </button>
@@ -62,12 +63,14 @@ const ToolbarDivider = () => <div className="w-px h-6 bg-white/20 mx-1" />;
 interface RichTextEditorProps {
   value?: string;
   onChange: (val: string) => void;
+  toolbarClassName?: string;
   onUpdate?: () => void;
 }
 
 export function RichTextEditor({
   value = "",
   onChange,
+  toolbarClassName,
   onUpdate,
 }: RichTextEditorProps) {
   const [fontSize, setFontSize] = useState("16px");
@@ -131,15 +134,11 @@ export function RichTextEditor({
           />
         </div>
       )}
-      {
-        onUpdate && (
-          <hr className="bg-[#E5E7EB] mt-4 mb-10" />
-        )
-      }
+      {onUpdate && <hr className="bg-[#E5E7EB] mt-4 mb-10" />}
       {/* Toolbar */}
-      <div className="flex items-center gap-1 py-2 bg-transparent p-0.5 h-auto  rounded-[8px] w-full justify-start overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-
-
+      <div
+        className={`flex items-center  gap-1 py-2  mb-2  border p-0.5 h-auto  rounded-[8px] w-full justify-start overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${toolbarClassName}`}
+      >
         {/* Text Style Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -521,7 +520,7 @@ export function RichTextEditor({
             input.accept = "image/*";
             input.onchange = (e) =>
               handleFileUpload(
-                e as unknown as React.ChangeEvent<HTMLInputElement>
+                e as unknown as React.ChangeEvent<HTMLInputElement>,
               );
             input.click();
           }}
@@ -543,7 +542,7 @@ export function RichTextEditor({
         <ToolbarButton
           onClick={() => {
             const url = prompt(
-              "Enter image URL (or use Attach File button for local images)"
+              "Enter image URL (or use Attach File button for local images)",
             );
             if (url) {
               editor.chain().focus().setImage({ src: url }).run();
@@ -570,7 +569,7 @@ export function RichTextEditor({
       {/* <hr className="bg-[#E5E7EB]" /> */}
 
       {/* Editor Content */}
-      <div className="min-h-[200px] p-4 border border-[#E5E7EB] rounded-2xl h-full">
+      <div className="min-h-[300px] p-4 border border-[#E5E7EB] rounded-lg h-full">
         <EditorContent
           editor={editor}
           className="focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror]:outline-none h-full"
