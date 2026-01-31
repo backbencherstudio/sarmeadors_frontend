@@ -1,3 +1,5 @@
+import ButtonReuseable from "@/components/reusable/CustomButton";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -17,7 +19,7 @@ export default function Sms() {
             {/* Template Select */}
             <div className="mb-4">
                 <Select>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full h-12!">
                         <SelectValue placeholder="Theme" />
                     </SelectTrigger>
                     <SelectContent>
@@ -38,26 +40,21 @@ export default function Sms() {
                 <Textarea
                     rows={4}
                     placeholder="Enter a description..."
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm resize-none"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm resize-none h-32!"
                 />
             </div>
 
             {/* Checkbox */}
             <div className="flex items-center gap-2 mb-5">
-                <input
-                    type="checkbox"
-                    id="log"
-                    className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                />
+                <Checkbox />
                 <label htmlFor="log" className="text-sm text-gray-700">
                     Log email as note
                 </label>
             </div>
 
             {/* Send Button */}
-            <button className="w-full bg-[#111827] text-white rounded-xl py-3 text-sm font-medium hover:bg-black transition">
-                Send
-            </button>
+            <ButtonReuseable title="Send" type="button" className="w-full rounded-xl py-3 text-sm font-medium hover:bg-black transition" />
+
         </div>
     );
 }

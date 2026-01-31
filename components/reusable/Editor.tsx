@@ -31,6 +31,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ButtonReuseable from "./CustomButton";
 
 interface ToolbarButtonProps {
   onClick: () => void;
@@ -122,15 +123,19 @@ export function RichTextEditor({
       {/* Update Button */}
       {onUpdate && (
         <div className="flex justify-end pt-4">
-          <button
+          <ButtonReuseable
+            title="Admins to Notify"
             onClick={onUpdate}
             className="bg-[#111927] text-white  px-4 py-[9px] rounded-[8px] cursor-pointer"
-          >
-            Admins to Notify
-          </button>
+            type="button"
+          />
         </div>
       )}
-      <hr className="bg-[#E5E7EB] mt-4 mb-10" />
+      {
+        onUpdate && (
+          <hr className="bg-[#E5E7EB] mt-4 mb-10" />
+        )
+      }
       {/* Toolbar */}
       <div className="flex items-center gap-1 py-2 bg-transparent p-0.5 h-auto  rounded-[8px] w-full justify-start overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 
@@ -142,7 +147,7 @@ export function RichTextEditor({
               type="button"
               className="h-8 px-3 py-2  flex items-center gap-1 hover:bg-white/10 rounded-[8px] transition-colors  font-semibold border"
             >
-              T Inter
+              T
               <ChevronDown className="w-4 h-4" />
             </button>
           </DropdownMenuTrigger>
@@ -274,8 +279,6 @@ export function RichTextEditor({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
-
 
         {/* Highlight */}
         <DropdownMenu>
@@ -567,10 +570,10 @@ export function RichTextEditor({
       {/* <hr className="bg-[#E5E7EB]" /> */}
 
       {/* Editor Content */}
-      <div className="min-h-[200px] p-4 border border-[#E5E7EB] rounded-2xl">
+      <div className="min-h-[200px] p-4 border border-[#E5E7EB] rounded-2xl h-full">
         <EditorContent
           editor={editor}
-          className="focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror]:outline-none"
+          className="focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror]:outline-none h-full"
           style={{
             fontSize: fontSize,
           }}

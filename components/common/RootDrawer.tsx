@@ -13,8 +13,8 @@ function RootDrawer({
   return (
     <div>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
-        <DrawerContent className="max-w-2xl! w-full ">
-          <div className="relative">
+        <DrawerContent className="max-w-2xl! w-full">
+          <div className="relative overflow-x-auto">
             <button
               onClick={() => setOpen(false)}
               aria-label="Close drawer"

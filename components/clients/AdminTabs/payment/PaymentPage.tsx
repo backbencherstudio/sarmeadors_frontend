@@ -10,14 +10,14 @@ function PaymentPage() {
         <TabsList className="flex max-w-[360px] border border-borderColor w-full px-1 gap-1 items-center bg-transparent h-13.5!">
           <TabsTrigger
             value="payment"
-            className={`lg:px-3 !h-11 hover:bg-grayColor1 hover:border duration-200 data-[state=active]:border data-[state=active]:bg-grayColor1 cursor-pointer rounded-sm text-[13px] md:text-sm font-semibold transition `}
+            className={`lg:px-3 !h-11 hover:bg-grayColor1 border border-transparent hover:border duration-200 data-[state=active]:border data-[state=active]:bg-grayColor1 cursor-pointer rounded-sm text-[13px] md:text-sm font-semibold transition `}
           >
             Manually Payments
           </TabsTrigger>
 
           <TabsTrigger
             value="invoice"
-            className={`lg:px-3 !h-11 hover:bg-grayColor1 hover:border duration-200 cursor-pointer data-[state=active]:border data-[state=active]:bg-grayColor1 rounded-sm text-[13px] md:text-sm font-semibold transition `}
+            className={`lg:px-3 !h-11 hover:bg-grayColor1 border border-transparent hover:border duration-200 cursor-pointer data-[state=active]:border data-[state=active]:bg-grayColor1 rounded-sm text-[13px] md:text-sm font-semibold transition `}
           >
             Advance Invoice Manager
           </TabsTrigger>

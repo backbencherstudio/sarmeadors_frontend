@@ -1,7 +1,11 @@
+import ButtonReuseable from "@/components/reusable/CustomButton";
 import { RichTextEditor } from "@/components/reusable/Editor";
+import HoverInfo from "@/components/reusable/HoverInfo";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import InformationIcon from "@/public/icon/InformationIcon";
 
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -68,7 +72,7 @@ export default function Email() {
             {/* Template Select */}
             <div className="mb-5">
                 <Select>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full h-12!">
                         <SelectValue placeholder="Theme" />
                     </SelectTrigger>
                     <SelectContent>
@@ -87,8 +91,9 @@ export default function Email() {
                     </label>
                     <Input
                         type="email"
-                        defaultValue="sarah@nanniescoasttocoast.com"
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                        placeholder="From Email"
+                        // defaultValue="sarah@nanniescoasttocoast.com"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                     />
                 </div>
 
@@ -98,8 +103,9 @@ export default function Email() {
                     </label>
                     <Input
                         type="email"
-                        defaultValue="sarah@nanniescoasttocoast.com"
-                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                        placeholder="Reply To"
+                        // defaultValue="sarah@nanniescoasttocoast.com"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                     />
                 </div>
             </div>
@@ -112,7 +118,7 @@ export default function Email() {
                 <Input
                     type="text"
                     placeholder="Subject"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                 />
             </div>
 
@@ -126,7 +132,7 @@ export default function Email() {
                 <Input
                     type="text"
                     placeholder="CC"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                 />
             </div>
 
@@ -135,7 +141,7 @@ export default function Email() {
                 <Input
                     type="text"
                     placeholder="BCC"
-                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm h-12"
                 />
             </div>
 
@@ -188,21 +194,23 @@ export default function Email() {
                     </div>
                 </div>
 
-
-                <button onClick={handleAddItem} className="mt-6 mb-8 flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
-                    Add Attachment
-                </button>
+                <div className="flex items-center gap-2 mt-6 mb-8">
+                    <ButtonReuseable title="Add Attachment" type="button" onClick={handleAddItem} className=" flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]" />
+                    {/* Information Icon */}
+                    <HoverInfo side="left-0 bottom-7" info="  How to send candidates individual documents to a Client" />
+                </div>
                 <div className="space-x-2 mb-2">
-                    <Input type="checkbox" />
+                    <Checkbox />
                     <span>Log email as note</span>
                 </div>
-                <div className="flex gap-2">
-                    <button className="flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-12 md:py-[17px] px-4 py-2 rounded-[12px]">
-                        Send
-                    </button>
-                    <button className="flex items-center gap-1.5 bg-[#F3F4F6] cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
-                        Schedule Send
-                    </button>
+                <div className="flex items-center gap-2">
+                    <ButtonReuseable title="Send" type="button" className="flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-12 md:py-[17px] px-4 py-2 rounded-[12px]" />
+                    <ButtonReuseable title="Schedule Send" type="button" className="flex items-center gap-1.5 bg-[#F3F4F6]! text-[#111927]! cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]" />
+
+
+                    {/* Information Icon */}
+                    <HoverInfo side="left-0 bottom-7" info=" How to schedule an email for another time" />
+
                 </div>
             </div>
         </div>
