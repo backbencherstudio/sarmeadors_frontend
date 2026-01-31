@@ -2,6 +2,7 @@
 import { demoData } from "@/demoData/DashboardData";
 import dayjs from "dayjs";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { HiOutlineFilter } from "react-icons/hi";
@@ -69,7 +70,7 @@ function DashboardUserTable() {
       accessor: "full_name",
       width: "250px",
       formatter: (value: string, record: any) => (
-        <div className="flex items-center gap-3">
+        <Link href="/clients" className="flex items-center gap-3">
           <input
             type="checkbox"
             checked={selectedRows.includes(record.id)}
@@ -95,7 +96,7 @@ function DashboardUserTable() {
             </span>
           </div>
           <span className="text-sm font-medium text-blackColor">{value}</span>
-        </div>
+        </Link>
       ),
     },
     {
@@ -103,7 +104,9 @@ function DashboardUserTable() {
       accessor: "email_address",
       width: "250px",
       formatter: (value: string) => (
-        <span className="text-sm text-blackColor">{value}</span>
+        <Link href="/clients" className="text-sm text-blackColor">
+          {value}
+        </Link>
       ),
     },
     {

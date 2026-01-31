@@ -27,6 +27,7 @@ interface DynamicTableProps {
   loading?: boolean;
   error?: string;
   border?: boolean;
+  renderFooter?: (colSpan: number) => React.ReactNode;
 }
 
 export default function DynamicTableTwo({
@@ -44,6 +45,7 @@ export default function DynamicTableTwo({
   totalItems,
   onItemsPerPageChange,
   error,
+  renderFooter,
 }: DynamicTableProps) {
   const totalPages = totalpage;
 
@@ -52,7 +54,6 @@ export default function DynamicTableTwo({
   const startIndex =
     data?.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
   const endIndex = Math.min(currentPage * itemsPerPage, effectiveTotalItems);
-
   const getPagination = () => {
     let pages: (number | string)[] = [];
     if (totalPages <= 4) {
@@ -188,7 +189,13 @@ export default function DynamicTableTwo({
                   </td>
                 </tr>
               )}
+              {/* data rows */}
             </tbody>
+            {renderFooter && (
+              <tfoot>
+                {renderFooter(columns.length + (onView || onDelete ? 1 : 0))}
+              </tfoot>
+            )}
           </table>
         </div>
       </div>

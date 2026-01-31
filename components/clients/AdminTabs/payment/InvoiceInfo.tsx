@@ -1,14 +1,9 @@
 "use client";
+import CreateNewInvoiceForm from "@/components/allForm/CreateNewInvoiceForm";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
-import InvoiceIcon from "@/components/icon/InvoiceIcon";
-import MessageIcon from "@/components/icon/MessageIcon";
+
 import ButtonReuseable from "@/components/reusable/CustomButton";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import {
   Select,
   SelectContent,
@@ -19,7 +14,8 @@ import {
 import { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
-import { HiDotsVertical } from "react-icons/hi";
+import { IoIosArrowDown } from "react-icons/io";
+import PaymentAction from "./PaymentAction";
 
 type InvoiceRow = {
   id: string | number;
@@ -93,7 +89,7 @@ export default function InvoiceInfo() {
   const [data, setData] = useState<InvoiceRow[]>(sampleData);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
-
+  const [isOpen, setIsOpen] = useState(false);
   const totalpage = Math.ceil(data.length / itemsPerPage) || 1;
 
   const columns = [
@@ -106,7 +102,7 @@ export default function InvoiceInfo() {
       width: "232px",
       formatter: (_value: any, row: InvoiceRow) => {
         return (
-          <div className="w-40">
+          <div className="w-40 change-arrow">
             <Select
               value={row.status}
               onValueChange={(v: string) => {
@@ -115,8 +111,15 @@ export default function InvoiceInfo() {
                 );
               }}
             >
-              <SelectTrigger className="w-full">
-                <SelectValue />
+              <SelectTrigger className="flex items-center gap-1.5 p-1 !h-9 w-full justify-between">
+                <div
+                  className={`px-2 cursor-pointer flex items-center  py-2.5!  h-full w-full text-xs justify-start focus-visible:ring-0 font-medium rounded-sm border-0 bg-borderColor  text-lightblackColor`}
+                >
+                  <SelectValue />
+                </div>
+                <div>
+                  <IoIosArrowDown />
+                </div>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="not_sent">Not Sent</SelectItem>
@@ -141,34 +144,7 @@ export default function InvoiceInfo() {
       formatter: (_value: any, row: InvoiceRow) => {
         return (
           <div className="flex gap-4 items-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-3 cursor-pointer hover:opacity-90">
-                <button
-                  onClick={() => handleView(row)}
-                  className="text-sm w-8 h-8 rounded-sm border bg-bgColor underline text-headerColor flex items-center justify-center cursor-pointer"
-                >
-                  <HiDotsVertical />
-                </button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent
-                align="end"
-                className="min-w-[222px] rounded-lg bg-white shadow-xl p-3"
-              >
-                <DropdownMenuItem asChild>
-                  <button className="flex w-full items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor hover:text-whiteColor transition cursor-pointer">
-                    <InvoiceIcon />
-                    Dashboard
-                  </button>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <button className="flex w-full items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor hover:text-whiteColor transition cursor-pointer">
-                    <MessageIcon />
-                    Dashboard
-                  </button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <PaymentAction />
           </div>
         );
       },
@@ -177,8 +153,7 @@ export default function InvoiceInfo() {
   ];
 
   const HandleCreateInvoice = () => {
-    // Placeholder for create invoice action
-    alert("Create Invoice clicked");
+    setIsOpen(true);
   };
 
   const handleView = (row: any) => {
@@ -224,6 +199,8 @@ export default function InvoiceInfo() {
           onItemsPerPageChange={(n) => setItemsPerPage(n)}
         />
       </div>
+
+      {isOpen && <CreateNewInvoiceForm open={isOpen} setOpen={setIsOpen} />}
     </div>
   );
 }
