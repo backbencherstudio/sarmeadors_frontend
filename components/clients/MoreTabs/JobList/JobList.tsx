@@ -31,6 +31,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import CreateJobModal from "./CreateJobModal"
+import ButtonReuseable from "@/components/reusable/CustomButton"
 
 interface JobListing {
     id: string
@@ -136,13 +137,13 @@ export default function JobListAccordion() {
     return (
         <div className="w-full space-y-6">
             {/* Header */}
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-semibold text-gray-900">Job List</h1>
                     <p className="text-sm text-gray-600">List of all current clients and their details.</p>
                 </div>
 
-                <div className="flex items-center gap-2 flex-1 max-w-3xl">
+                <div className="flex flex-col lg:flex-row lg:items-center gap-2 flex-1 max-w-3xl">
                     <div className="relative w-full">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <Input
@@ -152,16 +153,19 @@ export default function JobListAccordion() {
                             className="pl-10 h-12"
                         />
                     </div>
-                    <Button variant="ghost" size="icon" className="h-12 w-12 border">
-                        <Download className="w-5 h-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-12 w-12 border">
-                        <Settings className="w-5 h-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-12 w-12 border">
-                        <Filter className="w-5 h-5" />
-                    </Button>
-                    <CreateJobModal />
+                    <div className="flex gap-2">
+                        <Button variant="ghost" size="icon" className="h-12 w-12 border">
+                            <Download className="w-5 h-5" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-12 w-12 border">
+                            <Settings className="w-5 h-5" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-12 w-12 border">
+                            <Filter className="w-5 h-5" />
+                        </Button>
+                        {/* Create Job Modal */}
+                        <CreateJobModal />
+                    </div>
                 </div>
             </div>
 
@@ -169,9 +173,9 @@ export default function JobListAccordion() {
             <Accordion type="single" collapsible className="space-y-4">
                 {mockJobs.map((job) => (
                     <AccordionItem key={job.id} value={job.id} className="border rounded-lg">
-                        <AccordionTrigger className="hover:no-underline px-4">
-                            <Card className="w-full border-0 shadow-none">
-                                <CardContent className="flex items-center justify-between">
+                        <AccordionTrigger className="hover:no-underline px-2 ">
+                            <Card className="w-full border-0 shadow-none p-0">
+                                <CardContent className="flex gap-3 flex-col md:flex-row md:items-center justify-between lg:px-2 p-0">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
                                             {job.clientImage ? (
@@ -180,7 +184,7 @@ export default function JobListAccordion() {
                                                 <span className="text-sm font-medium">{job.clientInitials}</span>
                                             )}
                                         </div>
-                                        <h3 className="font-medium text-gray-900">{job.clientName}</h3>
+                                        <h3 className="font-medium text-gray-900 text-nowrap">{job.clientName}</h3>
                                         <span className={`px-3 py-1 rounded-full text-xs ${getStatusColor(job.status)}`}>
                                             {job.status}
                                         </span>
@@ -211,7 +215,7 @@ export default function JobListAccordion() {
                             </Card>
                         </AccordionTrigger>
 
-                        <AccordionContent className="">
+                        <AccordionContent className="p-0">
                             <div className=" border-t grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div className="p-6 space-y-6">
                                     {/* <h2 className="text-lg font-semibold">{job.title}</h2> */}
@@ -253,8 +257,8 @@ export default function JobListAccordion() {
 
 
                                     <div className="flex items-center gap-2">
-                                        <Button className="bg-[#111927] text-white">Broadcast</Button>
-                                        <Button variant="outline">View Applicants</Button>
+                                        <ButtonReuseable title="Broadcast" className="bg-[#111927] text-white py-3 px-6" />
+                                        <ButtonReuseable title="View Applicants" className="bg-white text-black! border py-3 px-6" />
                                         <Button variant="ghost" size="icon"><LinkIcon className="w-4 h-4" /></Button>
                                         <Button variant="ghost" size="icon"><User className="w-4 h-4" /></Button>
                                         <Button variant="ghost" size="icon"><FileText className="w-4 h-4" /></Button>
@@ -263,7 +267,7 @@ export default function JobListAccordion() {
 
                                 </div>
 
-                                <div className="flex-1 border-l p-4">
+                                <div className="flex-1 border-t lg:border-t-0 lg:border-l p-4">
                                     <h3 className="font-semibold mb-2">Notes</h3>
                                     <p className="text-xs text-gray-600 mb-4">Internal notes only.</p>
                                     <Button variant="outline" className="">Add Note</Button>

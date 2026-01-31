@@ -16,6 +16,7 @@ import JobsIcon from "@/public/icon/JobsIcon"
 import EmailAndSMSIcon from "@/public/icon/EmailAndSMSIcon"
 import ListIcon from "@/public/icon/ListIcon"
 import JobList from "@/components/clients/MoreTabs/JobList/JobList"
+import EmailOrSmsLog from "@/components/clients/MoreTabs/EmailOrSMSLog/EmailOrSmsLog"
 
 function page() {
   const router = useRouter()
@@ -86,7 +87,7 @@ function page() {
             <JobList />
           </TabsContent>
           <TabsContent value="email/sms log" className="mt-4">
-            Email/SMS Log
+            <EmailOrSmsLog />
           </TabsContent>
           <TabsContent value="records" className="mt-4">
             Records

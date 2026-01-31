@@ -44,7 +44,7 @@ export default function CreateJobModal() {
                 <div className="px-6 py-6 space-y-6">
                     <div className="space-y-2">
                         <Label>Status</Label>
-                        <Input value="Application Approved" className="h-12" />
+                        <Input placeholder="Select Status" className="h-12" />
                     </div>
 
                     <div className="space-y-2">
@@ -73,12 +73,25 @@ export default function CreateJobModal() {
 
                     <div className="space-y-2">
                         <Label>Upload Cover Picture</Label>
-                        <div className="flex flex-col items-center justify-center border border-dashed rounded-lg p-6 text-sm text-muted-foreground">
+
+                        {/* Hidden file input */}
+                        <Input
+                            id="cover-upload"
+                            type="file"
+                            className="hidden"
+                        />
+
+                        {/* Clickable area */}
+                        <label
+                            htmlFor="cover-upload"
+                            className="flex cursor-pointer flex-col items-center justify-center border border-dashed rounded-lg p-6 text-sm text-muted-foreground hover:bg-muted/50 transition"
+                        >
                             <Upload className="w-5 h-5 mb-2" />
                             <span>Select your file</span>
                             <span className="text-xs">Maximum 500 MB file size</span>
-                        </div>
+                        </label>
                     </div>
+
                 </div>
 
                 {/* Footer */}
