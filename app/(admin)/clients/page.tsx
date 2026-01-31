@@ -15,6 +15,7 @@ import MoreIcon from "@/public/icon/MoreIcon"
 import JobsIcon from "@/public/icon/JobsIcon"
 import EmailAndSMSIcon from "@/public/icon/EmailAndSMSIcon"
 import ListIcon from "@/public/icon/ListIcon"
+import JobList from "@/components/clients/MoreTabs/JobList/JobList"
 
 function page() {
   const router = useRouter()
@@ -62,7 +63,6 @@ function page() {
               <div>
                 <Select value={selectedTab} onValueChange={handleTabChange}>
                   <SelectTrigger className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer focus-visible:ring-0 focus-visible:ring-offset-0 border-none shadow-none">
-                    {/* <SelectValue placeholder="Select a tab" /> */}
                     <MoreIcon />
                     <span>More</span>
                   </SelectTrigger>
@@ -83,7 +83,7 @@ function page() {
             <ProfileTabs />
           </TabsContent>
           <TabsContent value="jobs" className="mt-4">
-            MoreTabs
+            <JobList />
           </TabsContent>
           <TabsContent value="email/sms log" className="mt-4">
             Email/SMS Log
