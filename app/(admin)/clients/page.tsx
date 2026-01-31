@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AdminTabs } from "@/components/clients/AdminTabs/AdminTabs"
 import { Settings } from "lucide-react"
@@ -8,13 +9,23 @@ import ProfileInfo from "@/components/clients/ProfileInfo/ProfileInfo"
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon"
 import UserSettingsIcon from "@/public/icon/UserSettingsIcon"
 import UserIcon from "@/public/icon/UserIcon"
-import MoreIcon from "@/public/icon/MoreIcon"
 import ProfileTabs from "@/components/clients/ProfileTabs/ProfileTabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import MoreIcon from "@/public/icon/MoreIcon"
+import JobsIcon from "@/public/icon/JobsIcon"
+import EmailAndSMSIcon from "@/public/icon/EmailAndSMSIcon"
+import ListIcon from "@/public/icon/ListIcon"
 
 function page() {
   const router = useRouter()
+  const [selectedTab, setSelectedTab] = useState("admin")
+
   const handleBack = () => {
     router.back()
+  }
+
+  const handleTabChange = (value: string) => {
+    setSelectedTab(value)
   }
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
@@ -31,7 +42,7 @@ function page() {
             <Settings />  Setting
           </button>
         </div>
-        <Tabs defaultValue="admin" className="w-full">
+        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
           <div className="w-full border-b border-gray-200">
             <TabsList className="bg-transparent  h-auto p-0 gap-5 rounded-none justify-start">
               <TabsTrigger
@@ -48,13 +59,21 @@ function page() {
                 <UserIcon />
                 <span>Profile</span>
               </TabsTrigger>
-              <TabsTrigger
-                value="more"
-                className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
-              >
-                <MoreIcon />
-                <span>More</span>
-              </TabsTrigger>
+              <div>
+                <Select value={selectedTab} onValueChange={handleTabChange}>
+                  <SelectTrigger className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer focus-visible:ring-0 focus-visible:ring-offset-0 border-none shadow-none">
+                    {/* <SelectValue placeholder="Select a tab" /> */}
+                    <MoreIcon />
+                    <span>More</span>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem className="cursor-pointer data-[highlighted]:bg-[#111927] data-[highlighted]:text-white data-[highlighted]:[&_svg]:text-white" value="jobs"><JobsIcon /> Jobs</SelectItem>
+                    <SelectItem className="cursor-pointer data-[highlighted]:bg-[#111927] data-[highlighted]:text-white data-[highlighted]:[&_svg]:text-white" value="email/sms log"><EmailAndSMSIcon /> Email/SMS Log</SelectItem>
+                    <SelectItem className="cursor-pointer data-[highlighted]:bg-[#111927] data-[highlighted]:text-white data-[highlighted]:[&_svg]:text-white" value="records">
+                      <ListIcon /> Records</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </TabsList>
           </div>
           <TabsContent value="admin" className="mt-4">
@@ -63,8 +82,14 @@ function page() {
           <TabsContent value="profile" className="mt-4">
             <ProfileTabs />
           </TabsContent>
-          <TabsContent value="more" className="mt-4">
-            More content here
+          <TabsContent value="jobs" className="mt-4">
+            MoreTabs
+          </TabsContent>
+          <TabsContent value="email/sms log" className="mt-4">
+            Email/SMS Log
+          </TabsContent>
+          <TabsContent value="records" className="mt-4">
+            Records
           </TabsContent>
         </Tabs>
       </div>
