@@ -100,16 +100,16 @@ export default function DynamicTableTwo({
           <table
             className={`min-w-[1000px] w-full text-left bg-whiteColor  ${border ? "p-2" : ""}`}
           >
-            <thead className=" sticky top-0 rounded-2xl! overflow-hidden  p-2">
+            <thead className=" sticky top-0 text-white rounded-2xl! overflow-hidden  p-2">
               <tr>
                 {columns.map((col, index) => (
                   <th
                     key={index}
                     style={{ width: col.width || "auto" }}
-                    className="bg-blackColor"
+                    className=""
                   >
                     <div
-                      className={`${index == 0 ? "rounded-l-xl" : columns.length - 1 ? "rounded-r-xl" : ""} px-4 bg-blackColor   py-3 text-sm font-medium text-[#4a4c56] border-b  `}
+                      className={`${index == 0 ? "rounded-l-lg" : index === columns.length - 1 ? "rounded-r-lg" : ""} px-4! bg-blackColor   py-5! text-sm font-medium border-b  `}
                     >
                       {col.label}
                     </div>

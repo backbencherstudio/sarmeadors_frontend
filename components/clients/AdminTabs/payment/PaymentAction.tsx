@@ -33,7 +33,7 @@ function PaymentAction() {
             className="px-3 py-2 group rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition "
           >
             <Link
-              href="/clients/Manage-invoice"
+              href="/clients/manage-invoice"
               className="flex w-full items-center gap-2 cursor-pointer "
             >
               <InvoiceIcon className="group-hover:text-whiteColor group-hover:fill-white" />
@@ -41,16 +41,19 @@ function PaymentAction() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+            <Link
+              href={`/clients/manage-invoice/send-invoice`}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <MessageIcon className="group-hover:text-whiteColor group-hover:stroke-white" />
               Send Invoice
-            </button>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+            <Link href={`/clients/manage-invoice/view-invoice`} className="flex w-full items-center gap-2 cursor-pointer ">
               <ViewInvoiceIcon className="group-hover:text-whiteColor group-hover:stroke-white" />
               View Invoice Page
-            </button>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
             <button className="flex w-full items-center gap-2 cursor-pointer ">

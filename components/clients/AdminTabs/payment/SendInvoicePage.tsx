@@ -1,16 +1,22 @@
 "use client";
 
 import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
+import PageLink from "@/components/common/PageLink";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { RichTextEditor } from "@/components/reusable/Editor";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import InformationIcon from "@/public/icon/InformationIcon";
-import Link from "next/link";
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 export default function SendInvoicePage() {
+  const [popoverOpen, setPopoverOpen] = React.useState(false);
   const { register, control, handleSubmit } = useForm({
     defaultValues: {
       template: "",
@@ -35,14 +41,12 @@ export default function SendInvoicePage() {
 
   return (
     <div className="">
-      <Link
-        href="/some-path"
-        className="flex items-center gap-2 text-lg md:text-xl font-semibold  "
-      >
-        <ArrowLeftIcon className="w-3.5 h-3.5" /> Send Invoice
-      </Link>
-      <div className="bg-white rounded-2xl border p-6 shadow-sm mt-6">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <PageLink path="/clients" title="Send Invoice" />
+      <div className="bg-white rounded-2xl border p-4 md:p-6  mt-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="md:space-y-8 space-y-5"
+        >
           <div>
             <h3 className="text-lg md:text-xl font-semibold">Send Email</h3>
             <p className="text-sm font-medium mt-4 mb-0.5">
@@ -146,20 +150,54 @@ export default function SendInvoicePage() {
                 title="Add Attachment"
                 className="px-3 py-2 bg-blackColor border rounded"
               />
-              <InformationIcon className="w-5 h-5" />
+              <InformationIcon className="w-5 h-5 text-blueColor" />
             </div>
           </div>
 
           <div className="flex items-center gap-3 mt-4">
             <ButtonReuseable
               title="Send"
-              className="bg-blackColor text-whiteColor"
+              className="bg-blackColor text-whiteColor px-6!"
               type="submit"
             />
             <ButtonReuseable
               title="Schedule Send"
-              className="bg-bgColor text-blackColor"
+              className="bg-bgColor! text-blackColor! border border-borderColor font-semibold"
             />
+            <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+              <PopoverTrigger asChild>
+                <button
+                  onMouseEnter={() => setPopoverOpen(true)}
+                  onMouseLeave={() => setPopoverOpen(false)}
+                  className="p-1 rounded hover:bg-bgColor"
+                  type="button"
+                >
+                  <InformationIcon className="w-5 h-5 text-blueColor" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                onMouseEnter={() => setPopoverOpen(true)}
+                onMouseLeave={() => setPopoverOpen(false)}
+                className="w-64"
+              >
+                <div className="text-sm font-medium">
+                  How to schedule an email
+                  <br />
+                  for another time
+                </div>
+                <div className="my-2 border-t border-borderColor" />
+                <ul className="text-sm space-y-1">
+                  <li>Send in 1 hour</li>
+                  <li>Send in 2 hours</li>
+                  <li>Send in 3 hours</li>
+                  <li>Send in 4 hours</li>
+                  <li>Send in 6 hours</li>
+                  <li>Send in 12 hours</li>
+                  <li>Send in 24 hours</li>
+                  <li>Send at a specific time</li>
+                </ul>
+              </PopoverContent>
+            </Popover>
           </div>
         </form>
       </div>

@@ -2,15 +2,14 @@
 
 import AddInvoiceItemForm from "@/components/allForm/AddInvoiceItemForm";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
+import PageLink from "@/components/common/PageLink";
 import DeleteIcon from "@/components/icon/DeleteIcon";
 import DownloadIcon from "@/components/icon/DownloadIcon";
 import EditeIcon from "@/components/icon/EditeIcon";
 import MessageIcon from "@/components/icon/MessageIcon";
 import ReloadIcon from "@/components/icon/ReloadIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
-import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
 import { PlusIcon } from "lucide-react";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type ItemRow = {
@@ -174,12 +173,7 @@ export default function ManageInvoiceTable() {
   return (
     <div className="mt-3">
       <div className="mb-6">
-        <Link
-          href="/some-path"
-          className="flex items-center gap-2 text-lg font-semibold "
-        >
-          <ArrowLeftIcon className="w-4 h-4" /> Manage Invoice Items
-        </Link>
+        <PageLink path="/clients" title="Manage Invoice Items" />
       </div>
       <div className="flex items-start justify-between mb-5">
         <div>
