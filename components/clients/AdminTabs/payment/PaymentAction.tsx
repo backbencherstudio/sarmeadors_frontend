@@ -1,3 +1,4 @@
+import CreateNewInvoiceForm from "@/components/allForm/CreateNewInvoiceForm";
 import DeleteIcon from "@/components/icon/DeleteIcon";
 import DuplicateIcon from "@/components/icon/DuplicateIcon";
 import EditeIcon from "@/components/icon/EditeIcon";
@@ -12,9 +13,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 
-function PaymentAction() {
+function PaymentAction({ value }: { value: any }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleEdit = () => {
+    setIsOpen(true);
+  };
+
+  console.log(value, "check by test");
+
   return (
     <div>
       <DropdownMenu>
@@ -50,13 +59,19 @@ function PaymentAction() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <Link href={`/clients/manage-invoice/view-invoice`} className="flex w-full items-center gap-2 cursor-pointer ">
+            <Link
+              href={`/clients/manage-invoice/view-invoice`}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <ViewInvoiceIcon className="group-hover:text-whiteColor group-hover:stroke-white" />
               View Invoice Page
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+            <button
+              onClick={handleEdit}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <EditeIcon className="group-hover:text-whiteColor group-hover:fill-white" />
               Edit Invoice
             </button>
@@ -81,6 +96,10 @@ function PaymentAction() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      {isOpen && (
+        <CreateNewInvoiceForm open={isOpen} setOpen={setIsOpen} data={value} />
+      )}
     </div>
   );
 }

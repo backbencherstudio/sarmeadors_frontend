@@ -22,11 +22,11 @@ type FormValues = {
 function CreateNewInvoiceForm({
   open,
   setOpen,
-  statusOptions,
+  data,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  statusOptions?: { value: string; label: string }[];
+  data?: any;
 }) {
   const {
     register,
@@ -37,12 +37,12 @@ function CreateNewInvoiceForm({
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      name: "",
-      description: "",
-      userStatus: "",
-      partialPayment: false,
-      paymentDate: "",
-      paymentDays: "",
+      name: data?.name || "",
+      description: data?.description || "",
+      userStatus: data?.userStatus || "",
+      partialPayment: data?.partialPayment || false,
+      paymentDate: data?.paymentDate || "",
+      paymentDays: data?.paymentDays || "",
       autoProcess: false,
     },
   });
@@ -58,7 +58,7 @@ function CreateNewInvoiceForm({
     }, 500);
     console.log("Create invoice", data);
   };
-  const opts = statusOptions ?? [
+  const opts = [
     { value: "pre_application", label: "Pre Application" },
     {
       value: "application_started",
