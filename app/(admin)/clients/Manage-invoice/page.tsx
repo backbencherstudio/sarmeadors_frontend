@@ -3,6 +3,7 @@ import ManageInvoiceTable from "@/components/clients/AdminTabs/payment/ManageInv
 function ManageInvoice() {
   return (
     <div className="p-4">
+        
       <ManageInvoiceTable />
     </div>
   );

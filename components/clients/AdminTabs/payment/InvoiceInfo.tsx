@@ -144,7 +144,7 @@ export default function InvoiceInfo() {
       formatter: (_value: any, row: InvoiceRow) => {
         return (
           <div className="flex gap-4 items-center">
-            <PaymentAction />
+            <PaymentAction value={row} />
           </div>
         );
       },
