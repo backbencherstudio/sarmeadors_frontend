@@ -1,4 +1,5 @@
 import CreateNewInvoiceForm from "@/components/allForm/CreateNewInvoiceForm";
+import PartialPaymentForm from "@/components/allForm/PartialPaymentForm";
 import RecordPaymentForm from "@/components/allForm/RecorndPymentForm";
 import DeleteIcon from "@/components/icon/DeleteIcon";
 import DuplicateIcon from "@/components/icon/DuplicateIcon";
@@ -17,11 +18,14 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
+import DeleteInvoice from "./DeleteInvoice";
 
 function PaymentAction({ value }: { value: any }) {
   const [isDialogOpen, setDialogIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [recordPaymentOpen, setRecordPaymentOpen] = useState(false);
+  const [partialPaymentOpen, setPartialPaymentOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const handleEdit = () => {
     setDropdownOpen(false);
     setTimeout(() => {
@@ -32,6 +36,18 @@ function PaymentAction({ value }: { value: any }) {
     setDropdownOpen(false);
     setTimeout(() => {
       setRecordPaymentOpen(true);
+    }, 10);
+  };
+  const handlePartialSystem = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setPartialPaymentOpen(true);
+    }, 10);
+  };
+  const handleDelete = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setDeleteOpen(true);
     }, 10);
   };
 
@@ -111,7 +127,7 @@ function PaymentAction({ value }: { value: any }) {
           >
             {value.is_default ? (
               <button
-                onClick={handleRecordSystem}
+                onClick={handlePartialSystem}
                 className="flex w-full items-center gap-2 cursor-pointer "
               >
                 <PartialPaymentIcon className="group-hover:text-whiteColor group-hover:fill-white" />
@@ -131,7 +147,10 @@ function PaymentAction({ value }: { value: any }) {
             asChild
             className=" group px-3 py-2 rounded-md text-sm font-medium text-redColor hover:bg-redColor! hover:text-whiteColor! transition"
           >
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+            <button
+              onClick={handleDelete}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <DeleteIcon className="group-hover:text-whiteColor group-hover:fill-white" />
               Delete Invoice
             </button>
@@ -151,6 +170,15 @@ function PaymentAction({ value }: { value: any }) {
           open={recordPaymentOpen}
           setOpen={setRecordPaymentOpen}
         />
+      )}
+      {partialPaymentOpen && (
+        <PartialPaymentForm
+          open={partialPaymentOpen}
+          setOpen={setPartialPaymentOpen}
+        />
+      )}
+      {deleteOpen && (
+        <DeleteInvoice open={deleteOpen} setOpen={setDeleteOpen} />
       )}
     </div>
   );
