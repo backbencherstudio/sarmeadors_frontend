@@ -2,11 +2,11 @@
 import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import ReusableInput from "../common/InputFiled/ReusableInput";
+import ReusableTextarea from "../common/InputFiled/TextAreaField";
 import RootDialog from "../common/RootDialog";
 
 type FormValues = {
@@ -91,21 +91,19 @@ function CreateNewInvoiceForm({
 
         <div className="mt-4 space-y-4">
           <div className="space-y-1.5">
-            <Label className="text-sm text-headerColor font-medium">
-              Name <span className="text-redColor">*</span>
-            </Label>
-            <Input
+            <ReusableInput
+              required={true}
               {...register("name", { required: true })}
+              label="Name"
               placeholder="Enter your name"
-              className="h-12 bg-bgColor"
+              type="text"
+              error={errors.name ? "Name is required" : undefined}
             />
           </div>
 
-          <div className="space-y-1.5">
-            <Label className="text-sm text-headerColor font-medium">
-              Description
-            </Label>
-            <Textarea
+          <div className="">
+            <ReusableTextarea
+              label="Description"
               {...register("description")}
               placeholder="Description of charge (this description will be included on the user's receipt)"
               className="min-h-[80px]"
@@ -140,27 +138,26 @@ function CreateNewInvoiceForm({
           </div>
 
           <div className="grid grid-cols-1  gap-4">
-            <div className="space-y-1.5">
-              <Label className="text-sm text-headerColor font-medium">
-                Payment due (Date) <span className="text-redColor">*</span>
-              </Label>
-              <Input
-                {...register("paymentDate", { required: true })}
+            <div className="">
+              <ReusableInput
+                required={true}
                 type="date"
-                className="h-12 bg-bgColor"
+                label="Payment due (Date)"
+                {...register("paymentDate", {
+                  required: "Payment date is required",
+                })}
+                error={errors.paymentDate?.message}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-sm text-headerColor font-medium">
-                Payment due (Number of days after sending invoice){" "}
-                <span className="text-redColor">*</span>
-              </Label>
-              <Input
+            <div className="">
+              <ReusableInput
+                required={true}
+                label="Payment due (Number of days after sending invoice)"
                 {...register("paymentDays", { valueAsNumber: true })}
                 type="number"
                 placeholder="Days"
-                className="h-12 bg-bgColor"
+                error={errors.paymentDays?.message}
               />
             </div>
           </div>

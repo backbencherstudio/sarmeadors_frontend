@@ -28,7 +28,7 @@ export default function SelecteInputField({
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger
-        className={`${className} h-11! md:h-12! bg-bgColor w-full`}
+        className={`${className} h-12! md:h-13! bg-bgColor w-full`}
         disabled={disabled}
       >
         <SelectValue placeholder={placeholder} />
