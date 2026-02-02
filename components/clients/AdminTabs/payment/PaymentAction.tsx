@@ -1,4 +1,5 @@
 import CreateNewInvoiceForm from "@/components/allForm/CreateNewInvoiceForm";
+import RecordPaymentForm from "@/components/allForm/RecorndPymentForm";
 import DeleteIcon from "@/components/icon/DeleteIcon";
 import DuplicateIcon from "@/components/icon/DuplicateIcon";
 import EditeIcon from "@/components/icon/EditeIcon";
@@ -17,16 +18,25 @@ import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 
 function PaymentAction({ value }: { value: any }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDialogOpen, setDialogIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [recordPaymentOpen, setRecordPaymentOpen] = useState(false);
   const handleEdit = () => {
-    setIsOpen(true);
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setDialogIsOpen(true);
+    }, 10);
   };
-
-  console.log(value, "check by test");
+  const handleRecordSystem = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setRecordPaymentOpen(true);
+    }, 10);
+  };
 
   return (
     <div>
-      <DropdownMenu>
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger className="flex items-center gap-3 cursor-pointer hover:opacity-90">
           <button className="text-sm w-8 h-8 rounded-sm border bg-bgColor underline text-headerColor flex items-center justify-center cursor-pointer">
             <HiDotsVertical />
@@ -49,7 +59,10 @@ function PaymentAction({ value }: { value: any }) {
               Manage Invoice Items
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
             <Link
               href={`/clients/manage-invoice/send-invoice`}
               className="flex w-full items-center gap-2 cursor-pointer "
@@ -58,7 +71,10 @@ function PaymentAction({ value }: { value: any }) {
               Send Invoice
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
             <Link
               href={`/clients/manage-invoice/view-invoice`}
               className="flex w-full items-center gap-2 cursor-pointer "
@@ -67,7 +83,10 @@ function PaymentAction({ value }: { value: any }) {
               View Invoice Page
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
             <button
               onClick={handleEdit}
               className="flex w-full items-center gap-2 cursor-pointer "
@@ -76,19 +95,29 @@ function PaymentAction({ value }: { value: any }) {
               Edit Invoice
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
             <button className="flex w-full items-center gap-2 cursor-pointer ">
               <DuplicateIcon className="group-hover:text-whiteColor group-hover:stroke-white" />
               Duplicate Invoice
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+            onClick={handleRecordSystem}
+          >
             <button className="flex w-full items-center gap-2 cursor-pointer ">
               <RecordIcon className="group-hover:text-whiteColor group-hover:fill-white" />
               Record System Payment
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-redColor hover:bg-redColor! hover:text-whiteColor! transition">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-redColor hover:bg-redColor! hover:text-whiteColor! transition"
+          >
             <button className="flex w-full items-center gap-2 cursor-pointer ">
               <DeleteIcon className="group-hover:text-whiteColor group-hover:fill-white" />
               Delete Invoice
@@ -97,8 +126,14 @@ function PaymentAction({ value }: { value: any }) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {isOpen && (
-        <CreateNewInvoiceForm open={isOpen} setOpen={setIsOpen} data={value} />
+      {isDialogOpen && (
+        <CreateNewInvoiceForm open={isDialogOpen} setOpen={setDialogIsOpen} data={value} />
+      )}
+      {recordPaymentOpen && (
+        <RecordPaymentForm
+          open={recordPaymentOpen}
+          setOpen={setRecordPaymentOpen}
+        />
       )}
     </div>
   );

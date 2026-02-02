@@ -2,12 +2,12 @@
 import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import RootDialog from "../common/RootDialog";
 
 type FormValues = {
   name: string;
@@ -78,121 +78,119 @@ function CreateNewInvoiceForm({
   ];
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="p-0 sm:max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="bg-white rounded-lg p-6"
-        >
-          <div className="flex items-start justify-between">
-            <h3 className="text-lg lg:text-2xl text-headerColor font-semibold">
-              Create new invoice
-            </h3>
+    <RootDialog open={open} setOpen={setOpen}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white rounded-lg p-6"
+      >
+        <div className="flex items-start justify-between">
+          <h3 className="text-lg lg:text-2xl text-headerColor font-semibold">
+            Create new invoice
+          </h3>
+        </div>
+
+        <div className="mt-4 space-y-4">
+          <div className="space-y-1.5">
+            <Label className="text-sm text-headerColor font-medium">
+              Name <span className="text-redColor">*</span>
+            </Label>
+            <Input
+              {...register("name", { required: true })}
+              placeholder="Enter your name"
+              className="h-12 bg-bgColor"
+            />
           </div>
 
-          <div className="mt-4 space-y-4">
+          <div className="space-y-1.5">
+            <Label className="text-sm text-headerColor font-medium">
+              Description
+            </Label>
+            <Textarea
+              {...register("description")}
+              placeholder="Description of charge (this description will be included on the user's receipt)"
+              className="min-h-[80px]"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-sm text-headerColor font-medium">
+              User Status to Update To
+            </Label>
+            {/* Replace these options with the status list you will provide */}
+            {/** Example status options shown below */}
+            <Controller
+              control={control}
+              name="userStatus"
+              render={({ field }) => {
+                return (
+                  <SelecteInputField
+                    options={opts}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    placeholder="Select status"
+                  />
+                );
+              }}
+            />
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Checkbox {...register("partialPayment")} />
+            <Label className="text-sm">Partial Payment</Label>
+          </div>
+
+          <div className="grid grid-cols-1  gap-4">
             <div className="space-y-1.5">
               <Label className="text-sm text-headerColor font-medium">
-                Name <span className="text-redColor">*</span>
+                Payment due (Date) <span className="text-redColor">*</span>
               </Label>
               <Input
-                {...register("name", { required: true })}
-                placeholder="Enter your name"
+                {...register("paymentDate", { required: true })}
+                type="date"
                 className="h-12 bg-bgColor"
               />
             </div>
 
             <div className="space-y-1.5">
               <Label className="text-sm text-headerColor font-medium">
-                Description
+                Payment due (Number of days after sending invoice){" "}
+                <span className="text-redColor">*</span>
               </Label>
-              <Textarea
-                {...register("description")}
-                placeholder="Description of charge (this description will be included on the user's receipt)"
-                className="min-h-[80px]"
+              <Input
+                {...register("paymentDays", { valueAsNumber: true })}
+                type="number"
+                placeholder="Days"
+                className="h-12 bg-bgColor"
               />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label className="text-sm text-headerColor font-medium">
-                User Status to Update To
-              </Label>
-              {/* Replace these options with the status list you will provide */}
-              {/** Example status options shown below */}
-              <Controller
-                control={control}
-                name="userStatus"
-                render={({ field }) => {
-                  return (
-                    <SelecteInputField
-                      options={opts}
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      placeholder="Select status"
-                    />
-                  );
-                }}
-              />
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Checkbox {...register("partialPayment")} />
-              <Label className="text-sm">Partial Payment</Label>
-            </div>
-
-            <div className="grid grid-cols-1  gap-4">
-              <div className="space-y-1.5">
-                <Label className="text-sm text-headerColor font-medium">
-                  Payment due (Date) <span className="text-redColor">*</span>
-                </Label>
-                <Input
-                  {...register("paymentDate", { required: true })}
-                  type="date"
-                  className="h-12 bg-bgColor"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label className="text-sm text-headerColor font-medium">
-                  Payment due (Number of days after sending invoice){" "}
-                  <span className="text-redColor">*</span>
-                </Label>
-                <Input
-                  {...register("paymentDays", { valueAsNumber: true })}
-                  type="number"
-                  placeholder="Days"
-                  className="h-12 bg-bgColor"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Checkbox {...register("autoProcess")} />
-              <Label className="text-sm text-headerColor ">
-                Automatically try to process payment end of day on the invoice
-                due date
-              </Label>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 pt-5 border-t mt-6">
-            <ButtonReuseable
-              type="submit"
-              title="Submit"
-              sendingMsg="Creating..."
-              loading={loading}
-              className="bg-black text-white"
-            />
-            <ButtonReuseable
-              type="button"
-              title="Cancel"
-              onClick={() => setOpen(false)}
-              className="bg-bgColor! text-black! border"
-            />
+          <div className="flex items-center gap-3">
+            <Checkbox {...register("autoProcess")} />
+            <Label className="text-sm text-headerColor ">
+              Automatically try to process payment end of day on the invoice due
+              date
+            </Label>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+        </div>
+
+        <div className="flex items-center gap-4 pt-5 border-t mt-6">
+          <ButtonReuseable
+            type="submit"
+            title="Submit"
+            sendingMsg="Creating..."
+            loading={loading}
+            className="bg-black text-white"
+          />
+          <ButtonReuseable
+            type="button"
+            title="Cancel"
+            onClick={() => setOpen(false)}
+            className="bg-bgColor! text-black! border"
+          />
+        </div>
+      </form>
+    </RootDialog>
   );
 }
 
