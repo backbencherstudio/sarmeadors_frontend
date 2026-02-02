@@ -5,6 +5,7 @@ import DuplicateIcon from "@/components/icon/DuplicateIcon";
 import EditeIcon from "@/components/icon/EditeIcon";
 import InvoiceIcon from "@/components/icon/InvoiceIcon";
 import MessageIcon from "@/components/icon/MessageIcon";
+import PartialPaymentIcon from "@/components/icon/PartialPaymentIcon";
 import RecordIcon from "@/components/icon/RecordIcon";
 import ViewInvoiceIcon from "@/components/icon/ViewInvoiceIcon";
 import {
@@ -107,12 +108,24 @@ function PaymentAction({ value }: { value: any }) {
           <DropdownMenuItem
             asChild
             className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
-            onClick={handleRecordSystem}
           >
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
-              <RecordIcon className="group-hover:text-whiteColor group-hover:fill-white" />
-              Record System Payment
-            </button>
+            {value.is_default ? (
+              <button
+                onClick={handleRecordSystem}
+                className="flex w-full items-center gap-2 cursor-pointer "
+              >
+                <PartialPaymentIcon className="group-hover:text-whiteColor group-hover:fill-white" />
+                Manage Partial Payments
+              </button>
+            ) : (
+              <button
+                onClick={handleRecordSystem}
+                className="flex w-full items-center gap-2 cursor-pointer "
+              >
+                <RecordIcon className="group-hover:text-whiteColor group-hover:fill-white" />
+                Record System Payment
+              </button>
+            )}
           </DropdownMenuItem>
           <DropdownMenuItem
             asChild
@@ -127,7 +140,11 @@ function PaymentAction({ value }: { value: any }) {
       </DropdownMenu>
 
       {isDialogOpen && (
-        <CreateNewInvoiceForm open={isDialogOpen} setOpen={setDialogIsOpen} data={value} />
+        <CreateNewInvoiceForm
+          open={isDialogOpen}
+          setOpen={setDialogIsOpen}
+          data={value}
+        />
       )}
       {recordPaymentOpen && (
         <RecordPaymentForm

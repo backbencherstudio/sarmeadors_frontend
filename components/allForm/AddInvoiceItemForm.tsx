@@ -1,8 +1,7 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
+import ReusableInput from "../common/InputFiled/ReusableInput";
 import RootDrawer from "../common/RootDrawer";
 import ButtonReuseable from "../reusable/CustomButton";
 
@@ -52,67 +51,62 @@ export default function AddInvoiceItemForm({
 
         <div className="space-y-4">
           <div>
-            <Label className="text-sm font-medium text-headerColor">
-              Item <span className="text-red-500">*</span>
-            </Label>
-            <Input
+            <ReusableInput
               {...register("item", { required: true })}
-              className="mt-1 h-11 md:h-12! bg-bgColor"
+              label="Item"
+              placeholder="Enter item name"
+              error={errors.item ? "Item is required" : undefined}
+              type="text"
+              required={true}
             />
           </div>
 
           <div>
-            <Label className="text-sm font-medium text-headerColor">
-              Rate <span className="text-red-500">*</span>
-            </Label>
-            <Input
+            <ReusableInput
+              placeholder="Enter your rate"
               type="number"
               {...register("rate", { valueAsNumber: true })}
-              className="mt-1 h-11 md:h-12! bg-bgColor"
+              label="Rate"
+              required={true}
+              error={errors.rate ? "Rate is required" : undefined}
             />
           </div>
 
           <div>
-            <Label className="text-sm font-medium text-headerColor">
-              Quantity <span className="text-red-500">*</span>
-            </Label>
-            <Input
+            <ReusableInput
+              label="Quantity"
+              placeholder="Enter quantity"
+              required={true}
               type="number"
               {...register("quantity", { valueAsNumber: true })}
-              className="mt-1 h-11 md:h-12! bg-bgColor"
+              error={errors.quantity ? "Quantity is required" : undefined}
             />
           </div>
 
           <div>
-            <Label className="text-sm font-medium text-headerColor">
-              Discount Value
-            </Label>
-            <Input
+            <ReusableInput
+              label="Discount Value"
+              placeholder="Enter discount value"
               type="number"
               {...register("discountValue", { valueAsNumber: true })}
-              className="mt-1 h-11 md:h-12! bg-bgColor"
             />
           </div>
 
           <div>
-            <Label className="text-sm font-medium text-headerColor">
-              Discount Percent
-            </Label>
-            <Input
+            <ReusableInput
+              placeholder="Enter discount percent"
+              label="Discount Percent"
               type="number"
               {...register("discountPercent", { valueAsNumber: true })}
-              className="mt-1 h-11 md:h-12! bg-bgColor"
             />
           </div>
 
           <div>
-            <Label className="text-sm font-medium text-headerColor">
-              Tax Percent
-            </Label>
-            <Input
+            <ReusableInput
+              placeholder="Enter tax percent"
+              label="Tax Percent"
               type="number"
               {...register("taxPercent", { valueAsNumber: true })}
-              className="mt-1 h-11 md:h-12! bg-bgColor"
             />
           </div>
         </div>

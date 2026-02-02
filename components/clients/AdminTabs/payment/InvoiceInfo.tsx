@@ -24,6 +24,7 @@ type InvoiceRow = {
   status: string;
   createdAt: string;
   dueDate: string;
+  is_default?: boolean;
 };
 
 const sampleData: InvoiceRow[] = [
@@ -34,6 +35,7 @@ const sampleData: InvoiceRow[] = [
     status: "not_sent",
     createdAt: "Sat Nov 29 2025 at 14:58:20",
     dueDate: "Tue Dec 30 2025",
+    is_default: true,
   },
   {
     id: 5834,
@@ -42,6 +44,7 @@ const sampleData: InvoiceRow[] = [
     status: "scheduled",
     createdAt: "Sat Nov 29 2025 at 15:27:14",
     dueDate: "Tue Dec 30 2025",
+    is_default: false,
   },
   {
     id: 5835,
@@ -50,6 +53,7 @@ const sampleData: InvoiceRow[] = [
     status: "paid",
     createdAt: "Sat Nov 29 2025 at 15:27:14",
     dueDate: "Tue Dec 30 2025",
+    is_default: true,
   },
   {
     id: 5836,
@@ -58,6 +62,7 @@ const sampleData: InvoiceRow[] = [
     status: "not_sent",
     createdAt: "Sat Nov 29 2025 at 15:27:14",
     dueDate: "Tue Dec 30 2025",
+    is_default: false,
   },
   {
     id: 5837,
@@ -66,6 +71,7 @@ const sampleData: InvoiceRow[] = [
     status: "sent",
     createdAt: "Sat Nov 29 2025 at 15:27:14",
     dueDate: "Tue Dec 30 2025",
+    is_default: false,
   },
   {
     id: 5838,
@@ -74,6 +80,7 @@ const sampleData: InvoiceRow[] = [
     status: "not_sent",
     createdAt: "Sat Nov 29 2025 at 15:27:14",
     dueDate: "Tue Dec 30 2025",
+    is_default: false,
   },
   {
     id: 5839,
@@ -82,6 +89,7 @@ const sampleData: InvoiceRow[] = [
     status: "paid",
     createdAt: "Mon Jan 05 2026 at 09:12:00",
     dueDate: "Mon Feb 05 2026",
+    is_default: true,
   },
 ];
 

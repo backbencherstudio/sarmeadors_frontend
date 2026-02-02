@@ -1,18 +1,12 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { locationFilters, typeFilters } from "@/demoData/DashboardData";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import RootDrawer from "../common/RootDrawer";
+import { Controller, useForm } from "react-hook-form";
+import ReusableInput from "../common/InputFiled/ReusableInput";
+import SelecteInputField from "../common/InputFiled/SelecteInputField";
+import ReusableTextarea from "../common/InputFiled/TextAreaField";
+import RootDialog from "../common/RootDialog";
 import ButtonReuseable from "../reusable/CustomButton";
 
 type FormValues = {
@@ -32,7 +26,7 @@ function ClientCreateForm({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
-  const { register, handleSubmit, setValue, watch, reset, formState } =
+  const { register, handleSubmit, setValue, control, watch, reset, formState } =
     useForm<FormValues>({
       defaultValues: {
         email: "",
@@ -69,7 +63,7 @@ function ClientCreateForm({
   };
 
   return (
-    <RootDrawer open={open} setOpen={setOpen}>
+    <RootDialog open={open} setOpen={setOpen}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white rounded-lg p-6"
@@ -83,44 +77,40 @@ function ClientCreateForm({
         <div className="pt-6 space-y-4 pb-5">
           {/* Email */}
           <div className="space-y-1">
-            <Label className="text-sm">Email</Label>
-            <Input
+            <ReusableInput
               type="email"
               placeholder="Enter your email"
-              className="h-12! bg-bgColor"
+              label="Email"
               {...register("email", { required: true })}
             />
           </div>
 
           {/* Phone Number */}
           <div className="space-y-1">
-            <Label className="text-sm">Phone Number</Label>
-            <Input
+            <ReusableInput
               type="text"
               placeholder="Enter your phone number"
-              className="h-12! bg-bgColor"
+              label="Phone Number"
               {...register("phoneNumber", { required: true })}
             />
           </div>
 
           {/* First Name */}
           <div className="space-y-1">
-            <Label className="text-sm">First Name</Label>
-            <Input
+            <ReusableInput
               type="text"
               placeholder="Enter your first name"
-              className="h-12! bg-bgColor"
+              label="First Name"
               {...register("firstName", { required: true })}
             />
           </div>
 
           {/* Last Name */}
           <div className="space-y-1">
-            <Label className="text-sm">Last Name</Label>
-            <Input
+            <ReusableInput
               type="text"
               placeholder="Enter your last name"
-              className="h-12! bg-bgColor"
+              label="Last Name"
               {...register("lastName", { required: true })}
             />
           </div>
@@ -128,62 +118,51 @@ function ClientCreateForm({
           {/* User Types */}
           <div className="space-y-2">
             <Label className="text-sm">User Types</Label>
-            <Select
-              value={watch("userType")}
-              onValueChange={(v) =>
-                setValue("userType", v, { shouldValidate: true })
-              }
-            >
-              <SelectTrigger className="h-12! bg-bgColor w-full">
-                <SelectValue placeholder="Start typing to filter" />
-              </SelectTrigger>
-              <SelectContent className="p-2 w-full">
-                {filteredTypes.map((t) => (
-                  <SelectItem
-                    key={t.value}
-                    value={t.value}
-                    className="cursor-pointer"
-                  >
-                    {t.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+
+            <Controller
+              control={control}
+              name="userType"
+              rules={{ required: "User Type is required" }}
+              render={({ field }) => {
+                return (
+                  <SelecteInputField
+                    options={filteredTypes}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    placeholder="Select status"
+                  />
+                );
+              }}
+            />
+
             <div className="text-secondaryColor text-sm">Clear</div>
           </div>
 
           {/* Locations */}
           <div className="space-y-2">
             <Label className="text-sm">Locations</Label>
-            <Select
-              value={watch("location")}
-              onValueChange={(v) =>
-                setValue("location", v, { shouldValidate: true })
-              }
-            >
-              <SelectTrigger className="h-12! bg-bgColor w-full">
-                <SelectValue placeholder="Start typing to filter" />
-              </SelectTrigger>
-              <SelectContent className="p-2 w-full">
-                {filteredLocations.map((l) => (
-                  <SelectItem
-                    key={l.value}
-                    value={l.value}
-                    className="cursor-pointer"
-                  >
-                    {l.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Controller
+              control={control}
+              name="location"
+              rules={{ required: "Location is required" }}
+              render={({ field }) => {
+                return (
+                  <SelecteInputField
+                    options={filteredLocations}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    placeholder="Select status"
+                  />
+                );
+              }}
+            />
             <div className="text-secondaryColor text-sm">Clear</div>
           </div>
 
           {/* How did you hear about us? */}
-          <div className="space-y-1">
-            <Label className="text-sm">How did you hear about us?</Label>
-            <Textarea
-              className="min-h-16"
+          <div className="">
+            <ReusableTextarea
+              label="How did you hear about us?"
               placeholder="How did you hear about us?"
               {...register("heardAboutUs")}
             />
@@ -207,7 +186,7 @@ function ClientCreateForm({
           />
         </div>
       </form>
-    </RootDrawer>
+    </RootDialog>
   );
 }
 

@@ -2,9 +2,9 @@
 import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import ReusableTextarea from "../common/InputFiled/TextAreaField";
 import RootDialog from "../common/RootDialog";
 
 type FormValues = {
@@ -103,10 +103,9 @@ function RecordPaymentForm({
             <Label className="text-sm text-headerColor font-medium">
               Description
             </Label>
-            <Textarea
+            <ReusableTextarea
               {...register("description")}
               placeholder="Description of charge (this description will be included on the user's receipt)"
-              className="min-h-[80px]"
             />
           </div>
         </div>
