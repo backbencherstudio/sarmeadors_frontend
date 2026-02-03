@@ -1,6 +1,7 @@
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 import MyProfile from "./MyProfile/MyProfile";
 import ShortTermJob from "./ShortTermJob/ShortTermJob";
+import LongTermJob from "./LongTermJob/LongTermJob";
 
 export default function ProfileTabs() {
   const tabs = [
@@ -17,7 +18,7 @@ export default function ProfileTabs() {
     {
       label: "Long-Term Job",
       value: "Long-Term Job",
-      component: <p>Long-Term Job</p>,
+      component: <LongTermJob/>,
     },
     {
       label: "My Schedule",
