@@ -1,4 +1,7 @@
+"use client";
 import { Phone, X } from "lucide-react";
+import { useState } from "react";
+import DeclineModal from "./DeclineModal";
 
 interface JobPosting {
   id: string;
@@ -50,6 +53,7 @@ const jobPostings: JobPosting[] = [
 ];
 
 export default function JobPostingCard() {
+  const [open, setOpen] = useState(false);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       {jobPostings.map((job) => (
@@ -131,7 +135,10 @@ export default function JobPostingCard() {
                 <Phone className="w-4 h-4 mr-2" />
                 <span className="text-nowrap">Confirm Interview</span>
               </button>
-              <button className="flex-1 px-6 py-3 bg-[#FEF1F1] text-[#CB121D] cursor-pointer font-semibold flex items-center rounded-md">
+              <button
+                className="flex-1 px-6 py-3 bg-[#FEF1F1] text-[#CB121D] cursor-pointer font-semibold flex items-center rounded-md"
+                onClick={() => setOpen(true)}
+              >
                 <X className="w-4 h-4 mr-2" />
                 <span>Decline</span>
               </button>
@@ -139,6 +146,8 @@ export default function JobPostingCard() {
           )}
         </div>
       ))}
+
+      <DeclineModal open={open} onClose={() => setOpen(false)} />
     </div>
   );
 }
