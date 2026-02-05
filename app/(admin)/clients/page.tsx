@@ -17,6 +17,7 @@ import EmailAndSMSIcon from "@/public/icon/EmailAndSMSIcon"
 import ListIcon from "@/public/icon/ListIcon"
 import JobList from "@/components/clients/MoreTabs/JobList/JobList"
 import EmailOrSmsLog from "@/components/clients/MoreTabs/EmailOrSMSLog/EmailOrSmsLog"
+import Records from "@/components/clients/MoreTabs/Records/Records"
 
 function page() {
   const router = useRouter()
@@ -90,7 +91,7 @@ function page() {
             <EmailOrSmsLog />
           </TabsContent>
           <TabsContent value="records" className="mt-4">
-            Records
+            <Records />
           </TabsContent>
         </Tabs>
       </div>

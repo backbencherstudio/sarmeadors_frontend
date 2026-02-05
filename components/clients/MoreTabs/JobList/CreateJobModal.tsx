@@ -33,7 +33,7 @@ export default function CreateJobModal() {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="max-w-[1000px]! h-[90vh] overflow-y-auto p-[32px]">
+            <DialogContent className="w-full lg:max-w-[1000px]! h-[90vh] overflow-y-auto p-[32px]">
                 {/* Header */}
                 <DialogHeader className="px-6 pt-6">
                     <DialogTitle className="text-xl font-semibold">Create job</DialogTitle>
@@ -43,9 +43,9 @@ export default function CreateJobModal() {
                 </DialogHeader>
 
                 {/* Steps */}
-                <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-                    <div className="w-full border-b border-gray-200">
-                        <TabsList className="bg-transparent  h-auto p-0 gap-5 rounded-none flex justify-between w-full">
+                <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full ">
+                    <div className="w-[90%] lg:w-full border-b border-gray-200 ">
+                        <TabsList className="bg-transparent  h-auto p-0 gap-5 rounded-none flex justify-between w-full overflow-x-auto scrollbar-show-on-scroll">
                             <TabsTrigger
                                 value="JobDetails"
                                 className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
