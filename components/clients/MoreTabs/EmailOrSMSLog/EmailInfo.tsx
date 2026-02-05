@@ -30,11 +30,11 @@ const logs = [
   },
 ];
 
-export default function EmailInfo() {
+export default function EmailInfo({ isShow }: { isShow?: boolean }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {logs.map((l) => (
-        <MessageCard key={l.id} value={l} />
+        <MessageCard key={l.id} value={l} isShow={isShow} />
       ))}
     </div>
   );

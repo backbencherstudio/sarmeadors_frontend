@@ -5,7 +5,7 @@ import ButtonReuseable from "@/components/reusable/CustomButton";
 import { useState } from "react";
 import MessageView from "./MessageView";
 
-function MessageCard({ value }) {
+function MessageCard({ value, isShow }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -15,16 +15,20 @@ function MessageCard({ value }) {
           <div className="w-11 h-11 rounded-full bg-grayColor1 flex items-center justify-center">
             <ClientEmail className="w-5 h-5 text-headerColor" />
           </div>
-          <div className=" flex flex-col items-end gap-2">
-            <div
-              className={`text-xs px-6 py-1 inline rounded-sm font-semibold ${value.statusClass}`}
-            >
-              {value.status}
-            </div>
-            <div className="text-sm text-lightblackColor ">
-              Tue Dec 09 2025 at AM
-            </div>
-          </div>
+          {
+            isShow && (
+              <div className=" flex flex-col items-end gap-2">
+                <div
+                  className={`text-xs px-6 py-1 inline rounded-sm font-semibold ${value.statusClass}`}
+                >
+                  {value.status}
+                </div>
+                <div className="text-sm text-lightblackColor ">
+                  Tue Dec 09 2025 at AM
+                </div>
+              </div>
+            )
+          }
         </div>
         <div className="flex-1">
           <div className="mt-6 space-y-3 text-base">
