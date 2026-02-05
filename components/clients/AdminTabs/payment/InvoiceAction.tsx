@@ -86,7 +86,7 @@ function InvoiceAction({ value }: { value: any }) {
 
             <DropdownMenuItem
               asChild
-              className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+              className="group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
             >
               <button
                 onClick={handleRecordSystem}
@@ -98,7 +98,7 @@ function InvoiceAction({ value }: { value: any }) {
             </DropdownMenuItem>
             <DropdownMenuItem
               asChild
-              className=" group px-3 py-2 rounded-md text-sm font-medium text-redColor hover:bg-redColor! hover:text-whiteColor! transition"
+              className="group px-3 py-2 rounded-md text-sm font-medium text-redColor hover:bg-redColor! hover:text-whiteColor! transition"
             >
               <button
                 onClick={handleDelete}
