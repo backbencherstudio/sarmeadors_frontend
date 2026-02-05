@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -6,14 +8,22 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Plus, Upload } from "lucide-react"
-import ButtonReuseable from "@/components/reusable/CustomButton"
+import { Plus } from "lucide-react"
+import JobDetails from "./JobDetails"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import UserSettingsIcon from "@/public/icon/UserSettingsIcon"
+import UserIcon from "@/public/icon/UserIcon"
+import ProfileTabs from "@/components/clients/ProfileTabs/ProfileTabs"
+import EmailOrSmsLog from "@/components/clients/MoreTabs/EmailOrSMSLog/EmailOrSmsLog"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function CreateJobModal() {
+    const router = useRouter()
+    const [selectedTab, setSelectedTab] = useState("JobDetails")
+    const handleTabChange = (value: string) => {
+        setSelectedTab(value)
+    }
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -23,7 +33,7 @@ export default function CreateJobModal() {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="max-w-[1000px]! h-[90vh] overflow-y-auto p-0">
+            <DialogContent className="max-w-[1000px]! h-[90vh] overflow-y-auto p-[32px]">
                 {/* Header */}
                 <DialogHeader className="px-6 pt-6">
                     <DialogTitle className="text-xl font-semibold">Create job</DialogTitle>
@@ -33,72 +43,59 @@ export default function CreateJobModal() {
                 </DialogHeader>
 
                 {/* Steps */}
-                <div className="flex items-center gap-6 border-b px-6 py-4 text-sm">
-                    <span className="font-medium text-primary">1 Job Details</span>
-                    <span className="text-muted-foreground">2 Job Address</span>
-                    <span className="text-muted-foreground">3 Date & Time</span>
-                    <span className="text-muted-foreground">4 Set Budget</span>
-                </div>
+                <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
+                    <div className="w-full border-b border-gray-200">
+                        <TabsList className="bg-transparent  h-auto p-0 gap-5 rounded-none flex justify-between w-full">
+                            <TabsTrigger
+                                value="JobDetails"
+                                className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
+                            >
+                                <UserSettingsIcon />
+                                <span>Job Details</span>
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="JobAddress"
+                                className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
+                            >
+                                <UserIcon />
+                                <span>Job Address</span>
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="DateTime"
+                                className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
+                            >
+                                <UserIcon />
+                                <span>Date & Time</span>
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="SetBudget"
+                                className="flex items-center gap-2 px-4 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-gray-800 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-gray-700 font-normal hover:text-gray-900 cursor-pointer"
+                            >
+                                <UserIcon />
+                                <span>Set Budget</span>
+                            </TabsTrigger>
 
-                {/* Form */}
-                <div className="px-6 py-6 space-y-6">
-                    <div className="space-y-2">
-                        <Label>Status</Label>
-                        <Input placeholder="Select Status" className="h-12" />
+                        </TabsList>
                     </div>
+                    <TabsContent value="JobDetails" className="mt-4">
+                        {/* Job Details */}
+                        <JobDetails />
+                    </TabsContent>
+                    <TabsContent value="JobAddress" className="mt-4">
+                        <ProfileTabs />
+                    </TabsContent>
+                    <TabsContent value="DateTime" className="mt-4">
+                        {/* <JobList /> */}
+                    </TabsContent>
+                    <TabsContent value="SetBudget" className="mt-4">
+                        <EmailOrSmsLog />
+                    </TabsContent>
+                </Tabs>
 
-                    <div className="space-y-2">
-                        <Label>Manager</Label>
-                        <Input className="h-12" placeholder="Enter your email" />
-                        <div className="flex items-center gap-2 pt-1">
-                            <Checkbox id="notify" />
-                            <Label htmlFor="notify" className="text-sm">Notify Manager</Label>
-                        </div>
-                    </div>
 
-                    <div className="space-y-2">
-                        <Label>Job Title *</Label>
-                        <Input className="h-12" placeholder="Enter job title" />
-                    </div>
 
-                    <div className="space-y-2">
-                        <Label>Select child for whom you need this job *</Label>
-                        <Input className="h-12" placeholder="Augustin Miquel, Johanie Jack" />
-                    </div>
 
-                    <div className="space-y-2">
-                        <Label>Description *</Label>
-                        <Textarea className="h-20" placeholder="Enter a description..." rows={4} />
-                    </div>
 
-                    <div className="space-y-2">
-                        <Label>Upload Cover Picture</Label>
-
-                        {/* Hidden file input */}
-                        <Input
-                            id="cover-upload"
-                            type="file"
-                            className="hidden"
-                        />
-
-                        {/* Clickable area */}
-                        <label
-                            htmlFor="cover-upload"
-                            className="flex cursor-pointer flex-col items-center justify-center border border-dashed rounded-lg p-6 text-sm text-muted-foreground hover:bg-muted/50 transition"
-                        >
-                            <Upload className="w-5 h-5 mb-2" />
-                            <span>Select your file</span>
-                            <span className="text-xs">Maximum 500 MB file size</span>
-                        </label>
-                    </div>
-
-                </div>
-
-                {/* Footer */}
-                <div className="flex justify-between border-t px-6 py-4">
-                    <ButtonReuseable title="< Back" type="button" className="bg-[#F3F4F6]! text-[#111927]! cursor-pointer md:py-[17px] px-4 py-2 rounded-[12px]" />
-                    <ButtonReuseable title="Next >" type="button" className="bg-[#111927]! text-white! cursor-pointer  md:py-[17px] px-4 py-2 rounded-[12px]" />
-                </div>
             </DialogContent>
         </Dialog>
     )

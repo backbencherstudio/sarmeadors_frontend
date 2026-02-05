@@ -28,12 +28,12 @@ function EmailorMessagesent() {
         </div>
         <TabsContent value="email" className="">
           <div className="">
-            <EmailInfo />
+            <EmailInfo isShow={true} />
           </div>
         </TabsContent>
         <TabsContent value="sms" className="bg-transparent">
-          <div className="">{/* <InvoiceInfo /> */}</div>
-          sdfasdfasd
+          <div className=""><EmailInfo /></div>
+
         </TabsContent>
       </Tabs>
     </div>
