@@ -24,6 +24,7 @@ export default function JobApplicationLog() {
         mobile_number: true,
         createdAt: true,
         status: true,
+        details: true,
         action: true,
     });
     const toggleSelectAll = () => {
@@ -94,25 +95,7 @@ export default function JobApplicationLog() {
             ),
         },
         {
-            label: "Email Address",
-            accessor: "email_address",
-            width: "250px",
-            formatter: (value: string) => (
-                <Link href="/clients" className="text-sm text-blackColor">
-                    {value}
-                </Link>
-            ),
-        },
-        {
-            label: "Phone Number",
-            accessor: "mobile_number",
-            width: "150px",
-            formatter: (value: string) => (
-                <span className="text-sm text-blackColor">{value}</span>
-            ),
-        },
-        {
-            label: "Registration Date",
+            label: "Timestamp",
             accessor: "createdAt",
             width: "180px",
             formatter: (value: string) => (
@@ -122,29 +105,14 @@ export default function JobApplicationLog() {
                 </div>
             ),
         },
-        // {
-        //     label: "Status",
-        //     accessor: "status",
-        //     width: "150px",
-        //     formatter: (value: string, record: any) => (
-        //         <DashboardStatuse
-        //             value={value}
-        //             record={record}
-        //             loadingStatusId={loadingStatusId}
-        //         />
-        //     ),
-        // },
-        // {
-        //     label: (
-        //         <div className="text-right">
-        //             <button className="flex items-center cursor-pointer justify-end gap-2">
-        //                 <IoSettingsSharp size={18} />
-        //             </button>
-        //         </div>
-        //     ),
-        //     accessor: "action",
-        //     width: "50px",
-        // },
+        {
+            label: "Details",
+            accessor: "details",
+            width: "400px",
+            formatter: (value: string) => (
+                <span className="text-sm text-blackColor">{value}</span>
+            ),
+        },
     ];
 
     // Filter columns based on visibility

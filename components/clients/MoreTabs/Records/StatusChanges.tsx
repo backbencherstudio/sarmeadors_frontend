@@ -21,7 +21,11 @@ export default function StatusChanges() {
     const [filterModalOpen, setFilterModalOpen] = useState(false);
     const [visibleColumns, setVisibleColumns] = useState({
         full_name: true,
+        changed_by: true,
         email_address: true,
+        reason: true,
+        time_in_status: true,
+        note: true,
         mobile_number: true,
         createdAt: true,
         status: true,
@@ -94,26 +98,58 @@ export default function StatusChanges() {
                 </Link>
             ),
         },
+        // {
+        //     label: "Email Address",
+        //     accessor: "email_address",
+        //     width: "250px",
+        //     formatter: (value: string) => (
+        //         <Link href="/clients" className="text-sm text-blackColor">
+        //             {value}
+        //         </Link>
+        //     ),
+        // },
         {
-            label: "Email Address",
-            accessor: "email_address",
-            width: "250px",
-            formatter: (value: string) => (
-                <Link href="/clients" className="text-sm text-blackColor">
-                    {value}
-                </Link>
-            ),
-        },
-        {
-            label: "Phone Number",
-            accessor: "mobile_number",
+            label: "Changed By",
+            accessor: "changed_by",
             width: "150px",
             formatter: (value: string) => (
                 <span className="text-sm text-blackColor">{value}</span>
             ),
         },
         {
-            label: "Registration Date",
+            label: "Status",
+            accessor: "status",
+            width: "150px",
+            formatter: (value: string) => (
+                <span className="text-sm text-blackColor">{value}</span>
+            ),
+        },
+        {
+            label: "Reason",
+            accessor: "reason",
+            width: "150px",
+            formatter: (value: string) => (
+                <span className="text-sm text-blackColor">{value}</span>
+            ),
+        },
+        {
+            label: "Note",
+            accessor: "note",
+            width: "150px",
+            formatter: (value: string) => (
+                <span className="text-sm text-blackColor">{value}</span>
+            ),
+        },
+        {
+            label: "Time in Status",
+            accessor: "time_in_status",
+            width: "150px",
+            formatter: (value: string) => (
+                <span className="text-sm text-blackColor">{value}</span>
+            ),
+        },
+        {
+            label: "Time Stamp",
             accessor: "createdAt",
             width: "180px",
             formatter: (value: string) => (

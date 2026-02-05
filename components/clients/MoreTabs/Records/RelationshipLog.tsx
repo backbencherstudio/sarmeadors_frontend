@@ -21,6 +21,9 @@ export default function RelationshipLog() {
     const [filterModalOpen, setFilterModalOpen] = useState(false);
     const [visibleColumns, setVisibleColumns] = useState({
         full_name: true,
+        actor: true,
+        type: true,
+        details: true,
         email_address: true,
         mobile_number: true,
         createdAt: true,
@@ -45,75 +48,15 @@ export default function RelationshipLog() {
 
     const columns = [
         {
-            label: (
-                <div className="flex items-center gap-3">
-                    <input
-                        type="checkbox"
-                        checked={
-                            selectedRows.length === demoData.length && demoData.length > 0
-                        }
-                        onChange={toggleSelectAll}
-                        className="w-4 h-4 cursor-pointer rounded border-gray-300"
-                    />
-                    <span>Name</span>
-                    <button className="flex flex-col cursor-pointer">
-                        <IoMdArrowDropdown className=" rotate-180" />
-                        <IoMdArrowDropdown />
-                    </button>
-                </div>
-            ),
-            accessor: "full_name",
+            label: "Actor",
+            accessor: "actor",
             width: "250px",
-            formatter: (value: string, record: any) => (
-                <Link href="/clients" className="flex items-center gap-3">
-                    <input
-                        type="checkbox"
-                        checked={selectedRows.includes(record.id)}
-                        onChange={() => toggleRowSelection(record.id)}
-                        className="w-4 h-4 cursor-pointer rounded border-gray-300"
-                    />
-                    <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                        <span className="text-xs font-medium text-gray-600">
-                            {record?.image_name ? (
-                                <Image
-                                    src={record?.image_name || `/empty-user.png`}
-                                    alt="Uploaded Preview"
-                                    width={40}
-                                    height={40}
-                                    className="w-10 h-10 rounded-full object-cover"
-                                />
-                            ) : (
-                                value
-                                    ?.split(" ")
-                                    ?.map((n) => n[0])
-                                    ?.join("")
-                            )}
-                        </span>
-                    </div>
-                    <span className="text-sm font-medium text-blackColor">{value}</span>
-                </Link>
-            ),
-        },
-        {
-            label: "Email Address",
-            accessor: "email_address",
-            width: "250px",
-            formatter: (value: string) => (
-                <Link href="/clients" className="text-sm text-blackColor">
-                    {value}
-                </Link>
-            ),
-        },
-        {
-            label: "Phone Number",
-            accessor: "mobile_number",
-            width: "150px",
             formatter: (value: string) => (
                 <span className="text-sm text-blackColor">{value}</span>
             ),
         },
         {
-            label: "Registration Date",
+            label: "Timestamp",
             accessor: "createdAt",
             width: "180px",
             formatter: (value: string) => (
@@ -123,29 +66,14 @@ export default function RelationshipLog() {
                 </div>
             ),
         },
-        // {
-        //     label: "Status",
-        //     accessor: "status",
-        //     width: "150px",
-        //     formatter: (value: string, record: any) => (
-        //         <DashboardStatuse
-        //             value={value}
-        //             record={record}
-        //             loadingStatusId={loadingStatusId}
-        //         />
-        //     ),
-        // },
-        // {
-        //     label: (
-        //         <div className="text-right">
-        //             <button className="flex items-center cursor-pointer justify-end gap-2">
-        //                 <IoSettingsSharp size={18} />
-        //             </button>
-        //         </div>
-        //     ),
-        //     accessor: "action",
-        //     width: "50px",
-        // },
+        {
+            label: "Details",
+            accessor: "details",
+            width: "400px",
+            formatter: (value: string) => (
+                <span className="text-sm text-blackColor">{value}</span>
+            ),
+        },
     ];
 
     // Filter columns based on visibility
