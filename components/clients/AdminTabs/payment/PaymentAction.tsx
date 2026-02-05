@@ -126,13 +126,13 @@ function PaymentAction({ value }: { value: any }) {
             className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
           >
             {value.is_default ? (
-              <button
-                onClick={handlePartialSystem}
+              <Link
+                href={`/clients/partial-payment`}
                 className="flex w-full items-center gap-2 cursor-pointer "
               >
                 <PartialPaymentIcon className="group-hover:text-whiteColor group-hover:fill-white" />
                 Manage Partial Payments
-              </button>
+              </Link>
             ) : (
               <button
                 onClick={handleRecordSystem}

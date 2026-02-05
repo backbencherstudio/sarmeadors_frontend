@@ -112,7 +112,11 @@ function PartialPaymentForm({
                 <Label htmlFor="r1">Credit Card</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="record_off_payment" id="r2" className="" />
+                <RadioGroupItem
+                  value="record_off_payment"
+                  id="r2"
+                  className=""
+                />
                 <Label htmlFor="r2">Record Off Payment</Label>
               </div>
             </RadioGroup>

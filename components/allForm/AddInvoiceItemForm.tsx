@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import ReusableInput from "../common/InputFiled/ReusableInput";
-import RootDrawer from "../common/RootDrawer";
+import RootDialog from "../common/RootDialog";
 import ButtonReuseable from "../reusable/CustomButton";
 
 type FormValues = {
@@ -43,8 +43,8 @@ export default function AddInvoiceItemForm({
   };
 
   return (
-    <RootDrawer open={open} setOpen={onClose}>
-      <form onSubmit={handleSubmit(submit)} className="">
+    <RootDialog open={open} setOpen={onClose}>
+      <form onSubmit={handleSubmit(submit)} className="p-4 md:p-6 w-full">
         <h3 className="text-xl md:text-2xl text-headerColor font-semibold mb-4">
           Add new Item
         </h3>
@@ -126,6 +126,6 @@ export default function AddInvoiceItemForm({
           />
         </div>
       </form>
-    </RootDrawer>
+    </RootDialog>
   );
 }
