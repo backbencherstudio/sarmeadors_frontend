@@ -56,10 +56,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                                 <div>
                                     <Select>
                                         <SelectTrigger
-                                            className={`flex items-center gap-2 px-4 pt-2 rounded-none ${isActive('/clients/more/jobs') ||
+                                            className={`flex items-center gap-2 px-4 py-6 rounded-none ${isActive('/clients/more/jobs') ||
                                                 isActive('/clients/more/email_sms_log') ||
                                                 isActive('/clients/more/records')
-                                                ? 'border-x-0 border-t-0 border-b-2 border-gray-800'
+                                                ? 'border-x-0 border-t-0 border-b-2 border-gray-800 font-semibold'
                                                 : 'border-transparent'
                                                 } cursor-pointer focus-visible:ring-0 focus-visible:ring-offset-0  shadow-none`}
                                         >
@@ -105,21 +105,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                                 </div>
                             </div>
                         </div>
-                        {/* <TabsContent value="admin" className="mt-4">
-                            <AdminTabs />
-                        </TabsContent>
-                        <TabsContent value="profile" className="mt-4">
-                            <ProfileTabs />
-                        </TabsContent>
-                        <TabsContent value="jobs" className="mt-4">
-                            <JobList />
-                        </TabsContent>
-                        <TabsContent value="email/sms log" className="mt-4">
-                            <EmailOrSmsLog />
-                        </TabsContent>
-                        <TabsContent value="records" className="mt-4">
-                            <Records />
-                        </TabsContent> */}
                     </div>
                     {/* children */}
                     <div className='py-4'>

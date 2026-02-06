@@ -131,7 +131,7 @@ const getStatusColor = (status: string) => {
     }
 }
 
-export default function JobListAccordion() {
+export default function JobList() {
     const [searchQuery, setSearchQuery] = useState("")
 
     return (
