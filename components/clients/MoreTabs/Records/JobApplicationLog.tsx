@@ -9,23 +9,17 @@ import Link from 'next/link';
 import { LuCalendarRange } from 'react-icons/lu';
 import dayjs from 'dayjs';
 
-
 export default function JobApplicationLog() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [loadingStatusId, setLoadingStatusId] = useState<string | null>(null);
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filteredData, setFilteredData] = useState(false);
     const [filterModalOpen, setFilterModalOpen] = useState(false);
     const [visibleColumns, setVisibleColumns] = useState({
         full_name: true,
-        email_address: true,
-        mobile_number: true,
         createdAt: true,
-        status: true,
         details: true,
-        action: true,
     });
     const toggleSelectAll = () => {
         if (selectedRows.length === demoData.length) {
