@@ -40,14 +40,14 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                         <div className="w-full border-b border-gray-200">
                             <div className="bg-transparent h-auto p-0 gap-5 rounded-none flex justify-start items-center whitespace-nowrap">
                                 <Link
-                                    href="/clients/admin"
+                                    href="/clients/admin/list"
                                     className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${isActive('/clients/admin') ? 'border-gray-800 text-gray-900 font-semibold' : 'border-transparent text-gray-700'} hover:text-gray-900 cursor-pointer`}
                                 >
                                     <UserSettingsIcon />
                                     <span>Admin</span>
                                 </Link>
                                 <Link
-                                    href="/clients/profile"
+                                    href="/clients/profile/contact-and-address"
                                     className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${isActive('/clients/profile') ? 'border-gray-800 text-gray-900 font-semibold' : 'border-transparent text-gray-700'} hover:text-gray-900 cursor-pointer`}
                                 >
                                     <UserIcon />
