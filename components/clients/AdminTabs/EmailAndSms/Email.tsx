@@ -1,3 +1,5 @@
+"use client"
+
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { RichTextEditor } from "@/components/reusable/Editor";
 import HoverInfo from "@/components/reusable/HoverInfo";

@@ -14,7 +14,6 @@ import { IoSettingsSharp } from 'react-icons/io5';
 export default function RelationshipLog() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [loadingStatusId, setLoadingStatusId] = useState<string | null>(null);
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filteredData, setFilteredData] = useState(false);

@@ -1,3 +1,5 @@
+"use client"
+
 import ClientEmail from "@/components/icon/ClientEmail";
 import ReloadIcon from "@/components/icon/ReloadIcon";
 import ShowIcon from "@/components/icon/ShowIcon";
