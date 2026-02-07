@@ -91,8 +91,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                                             </Link>
 
                                             <Link
-                                                href="/clients/more/records"
-                                                className={`flex items-center gap-2 px-4 py-2 rounded-[8px] text-sm cursor-pointer ${isActive('/clients/more/records')
+                                                href="/clients/more/records/reviews"
+                                                className={`flex items-center gap-2 px-4 py-2 rounded-[8px] text-sm cursor-pointer ${isActive('/clients/more/records/reviews')
                                                     ? 'bg-[#111927] text-white'
                                                     : 'text-{#111927} hover:bg-gray-100'
                                                     }`}
