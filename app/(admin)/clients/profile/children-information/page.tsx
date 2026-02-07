@@ -1,7 +1,8 @@
-import React from 'react'
+import ChildrenInformation from '@/components/clients/ProfileTabs/ChildrenInformation/ChildrenInformation'
+
 
 export default function page() {
     return (
-        <div>page</div>
+        <div><ChildrenInformation /></div>
     )
 }

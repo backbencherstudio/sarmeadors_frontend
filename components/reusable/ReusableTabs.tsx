@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 
-export default function ReusableTabs({ tabs }: { tabs: { label: string, link: string, icon?: React.ReactNode, component?: React.ReactNode }[] }) {
+export default function ReusableTabs({ tabs }: { tabs: { label: string, link: string, icon?: React.ReactNode }[] }) {
     const path = usePathname()
     const isActive = (href: string) => {
         if (!path) return false
@@ -25,11 +25,6 @@ export default function ReusableTabs({ tabs }: { tabs: { label: string, link: st
                         </Link>
                     ))}
                 </div>
-                {/* {tabs.map((tab) => (
-                    <Link key={tab.link} href={tab.link} className="mt-4">
-                        {tab?.component}
-                    </Link>
-                ))} */}
             </div>
         </div>
     )

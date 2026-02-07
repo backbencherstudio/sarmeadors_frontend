@@ -1,7 +1,8 @@
+import RelationshipLog from '@/components/clients/MoreTabs/Records/RelationshipLog'
 import React from 'react'
 
 export default function page() {
     return (
-        <div>page</div>
+        <div><RelationshipLog /></div>
     )
 }

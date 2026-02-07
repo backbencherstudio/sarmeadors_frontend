@@ -1,5 +1,4 @@
 
-import { AdminTabs } from '@/components/clients/AdminTabs/AdminTabs'
 import Records from '@/components/clients/MoreTabs/Records/Records'
 import React from 'react'
 

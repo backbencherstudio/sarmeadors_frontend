@@ -1,7 +1,7 @@
-import React from 'react'
+import AdditionalInformation from '@/components/clients/ProfileTabs/AdditionalInformation/AdditionalInformation'
 
 export default function page() {
     return (
-        <div>page</div>
+        <div><AdditionalInformation /></div>
     )
 }

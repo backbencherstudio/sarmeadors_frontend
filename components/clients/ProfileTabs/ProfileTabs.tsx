@@ -9,22 +9,18 @@ export default function ProfileTabs() {
         {
             label: "Contact & Address",
             link: "/clients/profile/contact-and-address",
-            component: <ContactAndAddress />
         },
         {
             label: "Children Information",
             link: "/clients/profile/children-information",
-            component: <ChildrenInformation />
         },
         {
             label: "Requirements",
             link: "/clients/profile/requirements",
-            component: <Requirements />
         },
         {
             label: "Additional Information",
             link: "/clients/profile/additional-information",
-            component: <AdditionalInformation />
         },
     ]
     return (

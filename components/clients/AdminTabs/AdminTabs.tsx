@@ -27,43 +27,36 @@ export function AdminTabs() {
             label: "Lists",
             link: "/clients/admin/list",
             icon: <HiOutlineMenu className="w-5 h-5" />,
-            component: <List />
         },
         {
             label: "Notes",
             link: "/clients/admin/notes",
             icon: <HiOutlineDocumentText className="w-5 h-5" />,
-            component: <Notes />
         },
         {
             label: "Email and SMS",
             link: "/clients/admin/email-sms",
             icon: <MdSms className="w-5 h-5" />,
-            component: <EmailAndSms />
         },
         {
             label: "Events",
             link: "/clients/admin/events",
             icon: <FaTrophy className="w-5 h-5" />,
-            component: <Events />
         },
         {
             label: "Password",
             link: "/clients/admin/password",
             icon: <HiOutlineLockClosed className="w-5 h-5" />,
-            component: <Password />
         },
         {
             label: "Documents",
             link: "/clients/admin/documents",
             icon: <HiOutlineDocument className="w-5 h-5" />,
-            component: <Documents />
         },
         {
             label: "Payments",
             link: "/clients/admin/payments",
             icon: <HiOutlineCreditCard className="w-5 h-5" />,
-            component: <PaymentPage />
         },
     ]
 
