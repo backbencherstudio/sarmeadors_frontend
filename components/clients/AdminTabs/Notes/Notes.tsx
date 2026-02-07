@@ -1,3 +1,5 @@
+"use client"
+
 import { RichTextEditor } from "@/components/reusable/Editor";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
