@@ -1,7 +1,8 @@
+import JobApplicationLog from '@/components/clients/MoreTabs/Records/JobApplicationLog'
 import React from 'react'
 
 export default function page() {
     return (
-        <div>page</div>
+        <div><JobApplicationLog /></div>
     )
 }
