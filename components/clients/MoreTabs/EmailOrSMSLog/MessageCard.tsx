@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import ClientEmail from "@/components/icon/ClientEmail";
+import ClientMessageIcon from "@/components/icon/ClientMessageIcon";
 import ReloadIcon from "@/components/icon/ReloadIcon";
 import ShowIcon from "@/components/icon/ShowIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
@@ -15,22 +16,24 @@ function MessageCard({ value, isShow }) {
       <div className=" gap-4">
         <div className=" justify-between flex items-start">
           <div className="w-11 h-11 rounded-full bg-grayColor1 flex items-center justify-center">
-            <ClientEmail className="w-5 h-5 text-headerColor" />
+            {isShow ? (
+              <ClientEmail className="w-5 h-5 " />
+            ) : (
+              <ClientMessageIcon className="w-5 h-5 text-headerColor" />
+            )}
           </div>
-          {
-            isShow && (
-              <div className=" flex flex-col items-end gap-2">
-                <div
-                  className={`text-xs px-6 py-1 inline rounded-sm font-semibold ${value.statusClass}`}
-                >
-                  {value.status}
-                </div>
-                <div className="text-sm text-lightblackColor ">
-                  Tue Dec 09 2025 at AM
-                </div>
+          {isShow && (
+            <div className=" flex flex-col items-end gap-2">
+              <div
+                className={`text-xs px-6 py-1 inline rounded-sm font-semibold ${value.statusClass}`}
+              >
+                {value.status}
               </div>
-            )
-          }
+              <div className="text-sm text-lightblackColor ">
+                Tue Dec 09 2025 at AM
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex-1">
           <div className="mt-6 space-y-3 text-base">
@@ -57,12 +60,12 @@ function MessageCard({ value, isShow }) {
               icon={<ShowIcon className="w-3.5 h-3.5" />}
               onClick={() => setOpen(true)}
               title="View Details"
-              className="px-3! py-2! text-sm! font-semibold bg-bgColor! shadow-none! text-headerColor! border!"
+              className="px-3! py-2! text-sm! font-semibold bg-white! shadow-none! text-headerColor! border!"
             />
             <ButtonReuseable
               icon={<ReloadIcon className="w-3.5 h-3.5" />}
               title="Re-Send"
-              className="px-3! py-2! text-sm! font-semibold bg-bgColor! shadow-none! text-headerColor! border!"
+              className="px-3! py-2! text-sm! font-semibold bg-white! shadow-none! text-headerColor! border!"
             />
           </div>
         </div>
