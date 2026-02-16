@@ -1,8 +1,12 @@
+import CreateNewInvoiceForm from "@/components/allForm/CreateNewInvoiceForm";
+import PartialPaymentForm from "@/components/allForm/PartialPaymentForm";
+import RecordPaymentForm from "@/components/allForm/RecorndPymentForm";
 import DeleteIcon from "@/components/icon/DeleteIcon";
 import DuplicateIcon from "@/components/icon/DuplicateIcon";
 import EditeIcon from "@/components/icon/EditeIcon";
 import InvoiceIcon from "@/components/icon/InvoiceIcon";
 import MessageIcon from "@/components/icon/MessageIcon";
+import PartialPaymentIcon from "@/components/icon/PartialPaymentIcon";
 import RecordIcon from "@/components/icon/RecordIcon";
 import ViewInvoiceIcon from "@/components/icon/ViewInvoiceIcon";
 import {
@@ -12,12 +16,44 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
+import DeleteInvoice from "./DeleteInvoice";
 
-function PaymentAction() {
+function PaymentAction({ value }: { value: any }) {
+  const [isDialogOpen, setDialogIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [recordPaymentOpen, setRecordPaymentOpen] = useState(false);
+  const [partialPaymentOpen, setPartialPaymentOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleEdit = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setDialogIsOpen(true);
+    }, 10);
+  };
+  const handleRecordSystem = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setRecordPaymentOpen(true);
+    }, 10);
+  };
+  const handlePartialSystem = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setPartialPaymentOpen(true);
+    }, 10);
+  };
+  const handleDelete = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      setDeleteOpen(true);
+    }, 10);
+  };
+
   return (
     <div>
-      <DropdownMenu>
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger className="flex items-center gap-3 cursor-pointer hover:opacity-90">
           <button className="text-sm w-8 h-8 rounded-sm border bg-bgColor underline text-headerColor flex items-center justify-center cursor-pointer">
             <HiDotsVertical />
@@ -33,51 +69,117 @@ function PaymentAction() {
             className="px-3 py-2 group rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition "
           >
             <Link
-              href="/clients/Manage-invoice"
+              href="/clients/manage-invoice"
               className="flex w-full items-center gap-2 cursor-pointer "
             >
               <InvoiceIcon className="group-hover:text-whiteColor group-hover:fill-white" />
               Manage Invoice Items
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
+            <Link
+              href={`/clients/manage-invoice/send-invoice`}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <MessageIcon className="group-hover:text-whiteColor group-hover:stroke-white" />
               Send Invoice
-            </button>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
+            <Link
+              href={`/clients/manage-invoice/view-invoice`}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <ViewInvoiceIcon className="group-hover:text-whiteColor group-hover:stroke-white" />
               View Invoice Page
-            </button>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
+            <button
+              onClick={handleEdit}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <EditeIcon className="group-hover:text-whiteColor group-hover:fill-white" />
               Edit Invoice
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
             <button className="flex w-full items-center gap-2 cursor-pointer ">
               <DuplicateIcon className="group-hover:text-whiteColor group-hover:stroke-white" />
               Duplicate Invoice
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
-              <RecordIcon className="group-hover:text-whiteColor group-hover:fill-white" />
-              Record System Payment
-            </button>
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-headerColor hover:bg-blackColor! hover:text-whiteColor! transition"
+          >
+            {value.is_default ? (
+              <Link
+                href={`/clients/partial-payment`}
+                className="flex w-full items-center gap-2 cursor-pointer "
+              >
+                <PartialPaymentIcon className="group-hover:text-whiteColor group-hover:fill-white" />
+                Manage Partial Payments
+              </Link>
+            ) : (
+              <button
+                onClick={handleRecordSystem}
+                className="flex w-full items-center gap-2 cursor-pointer "
+              >
+                <RecordIcon className="group-hover:text-whiteColor group-hover:fill-white" />
+                Record System Payment
+              </button>
+            )}
           </DropdownMenuItem>
-          <DropdownMenuItem className=" group px-3 py-2 rounded-md text-sm font-medium text-redColor hover:bg-redColor! hover:text-whiteColor! transition">
-            <button className="flex w-full items-center gap-2 cursor-pointer ">
+          <DropdownMenuItem
+            asChild
+            className=" group px-3 py-2 rounded-md text-sm font-medium text-redColor hover:bg-redColor! hover:text-whiteColor! transition"
+          >
+            <button
+              onClick={handleDelete}
+              className="flex w-full items-center gap-2 cursor-pointer "
+            >
               <DeleteIcon className="group-hover:text-whiteColor group-hover:fill-white" />
               Delete Invoice
             </button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      {isDialogOpen && (
+        <CreateNewInvoiceForm
+          open={isDialogOpen}
+          setOpen={setDialogIsOpen}
+          data={value}
+        />
+      )}
+      {recordPaymentOpen && (
+        <RecordPaymentForm
+          open={recordPaymentOpen}
+          setOpen={setRecordPaymentOpen}
+        />
+      )}
+      {partialPaymentOpen && (
+        <PartialPaymentForm
+          open={partialPaymentOpen}
+          setOpen={setPartialPaymentOpen}
+        />
+      )}
+      {deleteOpen && (
+        <DeleteInvoice open={deleteOpen} setOpen={setDeleteOpen} />
+      )}
     </div>
   );
 }

@@ -8,23 +8,19 @@ export default function ProfileTabs() {
     const tabs = [
         {
             label: "Contact & Address",
-            value: "Contact & Address",
-            component: <ContactAndAddress />
+            link: "/clients/profile/contact-and-address",
         },
         {
             label: "Children Information",
-            value: "Children Information",
-            component: <ChildrenInformation />
+            link: "/clients/profile/children-information",
         },
         {
             label: "Requirements",
-            value: "Requirements",
-            component: <Requirements />
+            link: "/clients/profile/requirements",
         },
         {
             label: "Additional Information",
-            value: "Additional Information",
-            component: <AdditionalInformation />
+            link: "/clients/profile/additional-information",
         },
     ]
     return (

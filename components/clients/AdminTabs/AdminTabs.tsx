@@ -21,53 +21,42 @@ import Password from "./Password/Password";
 import Documents from "./Documents/Documents";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 
-
-
 export function AdminTabs() {
-
-
     const tabs = [
         {
             label: "Lists",
-            value: "lists",
+            link: "/clients/admin/list",
             icon: <HiOutlineMenu className="w-5 h-5" />,
-            component: <List />
         },
         {
             label: "Notes",
-            value: "notes",
+            link: "/clients/admin/notes",
             icon: <HiOutlineDocumentText className="w-5 h-5" />,
-            component: <Notes />
         },
         {
             label: "Email and SMS",
-            value: "email-sms",
+            link: "/clients/admin/email-sms",
             icon: <MdSms className="w-5 h-5" />,
-            component: <EmailAndSms />
         },
         {
             label: "Events",
-            value: "events",
+            link: "/clients/admin/events",
             icon: <FaTrophy className="w-5 h-5" />,
-            component: <Events />
         },
         {
             label: "Password",
-            value: "password",
+            link: "/clients/admin/password",
             icon: <HiOutlineLockClosed className="w-5 h-5" />,
-            component: <Password />
         },
         {
             label: "Documents",
-            value: "documents",
+            link: "/clients/admin/documents",
             icon: <HiOutlineDocument className="w-5 h-5" />,
-            component: <Documents />
         },
         {
             label: "Payments",
-            value: "payments",
+            link: "/clients/admin/payments",
             icon: <HiOutlineCreditCard className="w-5 h-5" />,
-            component: <PaymentPage />
         },
     ]
 

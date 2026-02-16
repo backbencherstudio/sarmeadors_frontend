@@ -1,10 +1,9 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
+import ReusableInput from "../common/InputFiled/ReusableInput";
+import RootDialog from "../common/RootDialog";
 import ButtonReuseable from "../reusable/CustomButton";
-import { Dialog, DialogContent } from "../ui/dialog";
 
 type FormValues = {
   item: string;
@@ -44,96 +43,89 @@ export default function AddInvoiceItemForm({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="p-6 max-w-2xl! w-full">
-        <form onSubmit={handleSubmit(submit)} className="">
-          <h3 className="text-xl md:text-2xl text-headerColor font-semibold mb-4">
-            Add new Item
-          </h3>
+    <RootDialog open={open} setOpen={onClose}>
+      <form onSubmit={handleSubmit(submit)} className="p-4 md:p-6 w-full">
+        <h3 className="text-xl md:text-2xl text-headerColor font-semibold mb-4">
+          Add new Item
+        </h3>
 
-          <div className="space-y-4">
-            <div>
-              <Label className="text-sm font-medium text-headerColor">
-                Item <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                {...register("item", { required: true })}
-                className="mt-1 h-11 md:h-12! bg-bgColor"
-              />
-            </div>
-
-            <div>
-              <Label className="text-sm font-medium text-headerColor">
-                Rate <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                type="number"
-                {...register("rate", { valueAsNumber: true })}
-                className="mt-1 h-11 md:h-12! bg-bgColor"
-              />
-            </div>
-
-            <div>
-              <Label className="text-sm font-medium text-headerColor">
-                Quantity <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                type="number"
-                {...register("quantity", { valueAsNumber: true })}
-                className="mt-1 h-11 md:h-12! bg-bgColor"
-              />
-            </div>
-
-            <div>
-              <Label className="text-sm font-medium text-headerColor">
-                Discount Value
-              </Label>
-              <Input
-                type="number"
-                {...register("discountValue", { valueAsNumber: true })}
-                className="mt-1 h-11 md:h-12! bg-bgColor"
-              />
-            </div>
-
-            <div>
-              <Label className="text-sm font-medium text-headerColor">
-                Discount Percent
-              </Label>
-              <Input
-                type="number"
-                {...register("discountPercent", { valueAsNumber: true })}
-                className="mt-1 h-11 md:h-12! bg-bgColor"
-              />
-            </div>
-
-            <div>
-              <Label className="text-sm font-medium text-headerColor">
-                Tax Percent
-              </Label>
-              <Input
-                type="number"
-                {...register("taxPercent", { valueAsNumber: true })}
-                className="mt-1 h-11 md:h-12! bg-bgColor"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 pt-5 border-t mt-6">
-            <ButtonReuseable
-              type="submit"
-              title="Submit"
-              sendingMsg="Creating..."
-              className="bg-black text-white"
-            />
-            <ButtonReuseable
-              type="button"
-              title="Cancel"
-              onClick={() => onClose && onClose(false)}
-              className="bg-bgColor! text-black! border"
+        <div className="space-y-4">
+          <div>
+            <ReusableInput
+              {...register("item", { required: true })}
+              label="Item"
+              placeholder="Enter item name"
+              error={errors.item ? "Item is required" : undefined}
+              type="text"
+              required={true}
             />
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+
+          <div>
+            <ReusableInput
+              placeholder="Enter your rate"
+              type="number"
+              {...register("rate", { valueAsNumber: true })}
+              label="Rate"
+              required={true}
+              error={errors.rate ? "Rate is required" : undefined}
+            />
+          </div>
+
+          <div>
+            <ReusableInput
+              label="Quantity"
+              placeholder="Enter quantity"
+              required={true}
+              type="number"
+              {...register("quantity", { valueAsNumber: true })}
+              error={errors.quantity ? "Quantity is required" : undefined}
+            />
+          </div>
+
+          <div>
+            <ReusableInput
+              label="Discount Value"
+              placeholder="Enter discount value"
+              type="number"
+              {...register("discountValue", { valueAsNumber: true })}
+            />
+          </div>
+
+          <div>
+            <ReusableInput
+              placeholder="Enter discount percent"
+              label="Discount Percent"
+              type="number"
+              {...register("discountPercent", { valueAsNumber: true })}
+            />
+          </div>
+
+          <div>
+            <ReusableInput
+              placeholder="Enter tax percent"
+              label="Tax Percent"
+              type="number"
+              {...register("taxPercent", { valueAsNumber: true })}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 pt-5 border-t mt-6">
+          <ButtonReuseable
+            type="submit"
+            title="Submit"
+            sendingMsg="Creating..."
+            className="bg-black text-white"
+          />
+          <ButtonReuseable
+            type="button"
+            title="Cancel"
+            onClick={() => onClose && onClose(false)}
+            className="bg-bgColor! text-black! border"
+          />
+        </div>
+      </form>
+    </RootDialog>
   );
 }

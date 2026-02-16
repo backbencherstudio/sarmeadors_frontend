@@ -14,6 +14,7 @@ interface SelecteInputFieldProps {
   options: Option[];
   placeholder?: string;
   className?: string;
+  id?: string;
   disabled?: boolean;
 }
 
@@ -23,12 +24,14 @@ export default function SelecteInputField({
   options,
   placeholder = "Select",
   className = "",
+  id,
   disabled = false,
 }: SelecteInputFieldProps) {
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger
-        className={`${className} h-11! md:h-12! bg-bgColor w-full`}
+        id={id}
+        className={`${className} h-12! md:h-13! bg-bgColor w-full`}
         disabled={disabled}
       >
         <SelectValue placeholder={placeholder} />
