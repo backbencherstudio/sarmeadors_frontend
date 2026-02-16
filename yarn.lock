@@ -2573,13 +2573,6 @@ react-color@^2.19.3:
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
 
-react-credit-cards@^0.8.3:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/react-credit-cards/-/react-credit-cards-0.8.3.tgz#608a8ee8bf3a88857fc83023ffba1ad536ba8c7e"
-  integrity sha512-88XJErkkdDjeFevOxfWYV2dUs4ddNNXJMIgutqTlUH2pYfcaDeFv9MXNGCcJKvBv4+6GEnxbCToymNRNbEt/uw==
-  dependencies:
-    payment "^2.3.0"
-
 react-datepicker@^8.3.0:
   version "8.3.0"
   resolved "https://registry.npmjs.org/react-datepicker/-/react-datepicker-8.3.0.tgz"

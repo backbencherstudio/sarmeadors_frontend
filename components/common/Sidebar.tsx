@@ -46,7 +46,7 @@ const navItems: NavItem[] = [
   {
     icon: menu2,
     label: "Candidates",
-    href: "/dashboard/Candidates",
+    href: "/candidates",
   },
   {
     icon: menu3,
