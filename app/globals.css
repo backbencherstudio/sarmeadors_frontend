@@ -74,7 +74,7 @@
   --secondaryColor: #778593;
   --blackColor: #111927;
   --whiteColor: #fff;
-  --ratingColor: #ffc52e;
+  --ratingColor: #e5b400;
   --headerColor: #1d1f2c;
   --grayColor1: #f3f4f6;
   --bgColor: #f9fafb;
@@ -245,7 +245,8 @@ input:checked ~ .checkmark {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 5px;
+  height: 5px;
 }
 
 /* Track */
