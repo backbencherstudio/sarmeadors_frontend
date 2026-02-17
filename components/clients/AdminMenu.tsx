@@ -80,7 +80,7 @@ function AdminTopMenu({ title, id }: { title?: string; id?: string }) {
               href={
                 title == "clients"
                   ? "/clients/profile/contact-and-address"
-                  : `/candidates/${id}/profile`
+                  : `/candidates/${id}/profile/my-profile`
               }
               className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activeProfilePath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
             >

@@ -68,7 +68,7 @@ function CandidatesListTable() {
       width: "250px",
       formatter: (value: string, record: any) => (
         <Link
-          href={`/candidates/${record.id}/admin`}
+          href={`/candidates/${record.id}/admin/list`}
           className="flex items-center gap-3"
         >
           <input
@@ -87,7 +87,7 @@ function CandidatesListTable() {
       width: "250px",
       formatter: (value: string, record: any) => (
         <Link
-          href={`/candidates/${record.id}/admin`}
+          href={`/candidates/${record.id}/admin/list`}
           className="text-sm text-blackColor"
         >
           {value}

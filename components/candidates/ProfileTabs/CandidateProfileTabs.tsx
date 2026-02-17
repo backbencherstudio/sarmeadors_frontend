@@ -1,40 +1,36 @@
 import ReusableTabs from "@/components/reusable/ReusableTabs";
-import LongTermJob from "./LongTermJob/LongTermJob";
-import Schedule from "./LongTermJob/Schedule";
-import MyProfile from "./MyProfile/MyProfile";
-import ShortTermJob from "./ShortTermJob/ShortTermJob";
 
-export default function ProfileTabs() {
+export default function CandidateProfileTabs({ id }: { id: string }) {
   const tabs = [
     {
       label: "My profile",
       value: "My profile",
-      component: <MyProfile />,
+      link: `/candidates/${id}/profile/my-profile`,
     },
     {
       label: "Short-Term Job",
       value: "Short-Term Job",
-      component: <ShortTermJob />,
+      link: `/candidates/${id}/profile/short-term-job`,
     },
     {
       label: "Long-Term Job",
       value: "Long-Term Job",
-      component: <LongTermJob />,
+      link: `/candidates/${id}/profile/long-term-job`,
     },
     {
       label: "My Schedule",
+      link: `/candidates/${id}/profile/my-schedule`,
       value: "My Schedule",
-      component: <Schedule />,
     },
     {
       label: "MY Jobs",
+      link: `/candidates/${id}/profile/my-jobs`,
       value: "MY Jobs",
-      component: <p>MY Jobs</p>,
     },
     {
       label: "My Families",
+      link: `/candidates/${id}/profile/my-families`,
       value: "My Families",
-      component: <p>My Families</p>,
     },
   ];
   return (
