@@ -8,7 +8,6 @@ interface LayoutProps {
 }
 async function CandidatesProfilelayout({ children, params }: LayoutProps) {
   const resolvedParams = await params;
-
   const { id } = resolvedParams;
 
   return (
