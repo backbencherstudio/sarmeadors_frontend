@@ -1,10 +1,9 @@
 import AdminTopMenu from "@/components/clients/AdminMenu";
-import AdminMenu from "@/components/clients/AdminMenu";
 import ProfileInfo from "@/components/clients/ProfileInfo/ProfileInfo";
 
 import React from "react";
 
-export default function ClientLayout({
+export default function CandidatesLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -17,7 +16,7 @@ export default function ClientLayout({
         </div>
         <div className=" bg-white lg:col-span-9 2xl:col-span-10 p-4 lg:p-6">
           <div>
-            <AdminTopMenu title="Client" />
+            <AdminTopMenu title="Candidates" />
           </div>
           {/* children */}
           <div className="py-4">{children}</div>
