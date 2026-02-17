@@ -1,20 +1,15 @@
 "use client";
 
-import { candidateListData , candidatesStatuse } from "@/demoData/DashboardData";
+import { candidateListData, candidatesStatuse } from "@/demoData/DashboardData";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
-import { FiPlus } from "react-icons/fi";
-import { HiOutlineFilter } from "react-icons/hi";
 import { IoSettingsSharp } from "react-icons/io5";
-import { LuCalendarRange } from "react-icons/lu";
 import ClientCreateForm from "../allForm/ClientCreateForm";
 import StatuseChange from "../clients/AdminTabs/payment/StatuseChange";
 import DynamicTableTwo from "../common/DynamicTableTwo";
-import Search from "../common/Search";
+import FilterHeader from "../common/FilterHeader";
 import TableColAscDsc from "../dashboard/TableColAscDsc";
-import ClientDashboardFilter from "../filter/ClientDashboardFilter";
-import ButtonReuseable from "../reusable/CustomButton";
 
 function CandidatesListTable() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -115,7 +110,6 @@ function CandidatesListTable() {
       width: "170px",
       formatter: (value: string) => (
         <div className="flex items-center gap-2 text-sm text-blackColor">
-          <LuCalendarRange size={16} className="text-gray3Color" />
           {dayjs(value).format("ddd MMM DD YYYY")}
         </div>
       ),
@@ -133,7 +127,11 @@ function CandidatesListTable() {
       accessor: "status",
       width: "150px",
       formatter: (value: string, record: any) => (
-        <StatuseChange setData={setData} row={record} statuse={candidatesStatuse} />
+        <StatuseChange
+          setData={setData}
+          row={record}
+          statuse={candidatesStatuse}
+        />
       ),
     },
     {
@@ -154,54 +152,22 @@ function CandidatesListTable() {
     (col) => visibleColumns[col.accessor as keyof typeof visibleColumns],
   );
 
-  const handleFilter = () => {
-    setFilteredData((prev) => !prev);
-  };
-
   const handleOpenModal = () => {
     // Logic to open the modal
     setIsModalOpen(true);
-  };
-  const handleStatuseSetting = () => {
-    setFilterModalOpen(true);
   };
 
   return (
     <section>
       <div className="bg-white shadow md:p-5 p-3 rounded-md">
-        <div className="mb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center md:justify-between gap-4 w-full mb-4">
-            <div>
-              <h4 className="text-2xl font-bold text-gray-800">
-                Candidate List
-              </h4>
-              <p className="text-base text-secondaryColor mt-0.5">
-                List of all current candidates and their details.
-              </p>
-            </div>
-            <div className="flex flex-col md:flex-row w-full md:justify-end  md:items-center gap-3 md:gap-2 h-full">
-              <Search />
-              <div className="flex items-center  gap-3 md:gap-2  ">
-                <div>
-                  <ButtonReuseable
-                    onClick={handleFilter}
-                    title="Filter"
-                    className="bg-white !text-blackColor border border-gray2Color"
-                    icon={<HiOutlineFilter className="w-4 h-4" />}
-                  />
-                </div>
-                <div>
-                  <ButtonReuseable
-                    onClick={handleOpenModal}
-                    title="Add Client"
-                    icon={<FiPlus className="w-4 h-4" />}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        <div>
+          <FilterHeader
+            title="Candidate List"
+            description="List of all current candidates and their details."
+            handleOpenModal={handleOpenModal}
+            buttonTitle="Add Candidates"
+          />
         </div>
-        <div>{filteredData && <ClientDashboardFilter />}</div>
         <DynamicTableTwo
           columns={visibleColumnsArray}
           data={data || []}

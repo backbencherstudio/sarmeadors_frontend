@@ -5,16 +5,12 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { FiPlus } from "react-icons/fi";
-import { HiOutlineFilter } from "react-icons/hi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSettingsSharp } from "react-icons/io5";
 import { LuCalendarRange } from "react-icons/lu";
 import ClientCreateForm from "../allForm/ClientCreateForm";
 import DynamicTableTwo from "../common/DynamicTableTwo";
-import Search from "../common/Search";
-import ClientDashboardFilter from "../filter/ClientDashboardFilter";
-import ButtonReuseable from "../reusable/CustomButton";
+import FilterHeader from "../common/FilterHeader";
 import DashboardStatuse from "./DashboardStatuse";
 
 function DashboardUserTable() {
@@ -174,37 +170,14 @@ function DashboardUserTable() {
   return (
     <section>
       <div className="bg-white shadow md:p-5 p-3 rounded-md">
-        <div className="mb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center md:justify-between gap-4 w-full mb-4">
-            <div>
-              <h4 className="text-2xl font-bold text-gray-800">Client List</h4>
-              <p className="text-base text-secondaryColor mt-0.5">
-                List of all current clients and their details.
-              </p>
-            </div>
-            <div className="flex flex-col md:flex-row w-full md:justify-end  md:items-center gap-3 md:gap-2 h-full">
-              <Search />
-              <div className="flex items-center  gap-3 md:gap-2  ">
-                <div>
-                  <ButtonReuseable
-                    onClick={handleFilter}
-                    title="Filter"
-                    className="bg-white !text-blackColor border border-gray2Color"
-                    icon={<HiOutlineFilter className="w-4 h-4" />}
-                  />
-                </div>
-                <div>
-                  <ButtonReuseable
-                    onClick={handleOpenModal}
-                    title="Add Client"
-                    icon={<FiPlus className="w-4 h-4" />}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        <div>
+          <FilterHeader
+            title="Client List"
+            description="List of all current clients and their details."
+            handleOpenModal={handleOpenModal}
+            buttonTitle="Add Client"
+          />
         </div>
-        <div>{filteredData && <ClientDashboardFilter />}</div>
         <DynamicTableTwo
           columns={visibleColumnsArray}
           data={demoData || []}

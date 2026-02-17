@@ -426,6 +426,7 @@ export const candidatesStatuse = [
     value: "application_started",
     label: "Application Started",
   },
+  { value: "applied", label: "Applied" },
   { value: "interview_complete", label: "Interview Complete" },
   { value: "profile_complete", label: "Profile Complete" },
 ];
