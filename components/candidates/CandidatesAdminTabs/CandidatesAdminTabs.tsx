@@ -1,9 +1,3 @@
-import Documents from "@/components/clients/AdminTabs/Documents/Documents";
-import EmailAndSms from "@/components/clients/AdminTabs/EmailAndSms/EmailAndSms";
-import Events from "@/components/clients/AdminTabs/Events/Events";
-import List from "@/components/clients/AdminTabs/List/List";
-import Notes from "@/components/clients/AdminTabs/Notes/Notes";
-import Password from "@/components/clients/AdminTabs/Password/Password";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 import { FaTrophy } from "react-icons/fa6";
 import {
@@ -14,43 +8,43 @@ import {
 } from "react-icons/hi";
 import { MdSms } from "react-icons/md";
 
-export default function AdminTabs() {
+export default async function CandidatesAdminTabs({ id }) {
   const tabs = [
     {
       label: "Lists",
       value: "lists",
+      link: `/candidates/${id}/admin/list`,
       icon: <HiOutlineMenu className="w-5 h-5" />,
-      component: <List />,
     },
     {
       label: "Notes",
       value: "notes",
+      link: `/candidates/${id}/admin/notes`,
       icon: <HiOutlineDocumentText className="w-5 h-5" />,
-      component: <Notes />,
     },
     {
       label: "Email and SMS",
       value: "email-sms",
+      link: `/candidates/${id}/admin/email-sms`,
       icon: <MdSms className="w-5 h-5" />,
-      component: <EmailAndSms />,
     },
     {
       label: "Events",
       value: "events",
+      link: `/candidates/${id}/admin/events`,
       icon: <FaTrophy className="w-5 h-5" />,
-      component: <Events />,
     },
     {
       label: "Password",
       value: "password",
+      link: `/candidates/${id}/admin/password`,
       icon: <HiOutlineLockClosed className="w-5 h-5" />,
-      component: <Password />,
     },
     {
       label: "Documents",
       value: "documents",
+      link: `/candidates/${id}/admin/documents`,
       icon: <HiOutlineDocument className="w-5 h-5" />,
-      component: <Documents />,
     },
   ];
   return (

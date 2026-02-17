@@ -21,7 +21,7 @@ export default function ReusableTabs({
             <Link
               key={tab.link}
               href={tab.link}
-              className={`flex items-center justify-center w-full gap-2 px-3 py-2 lg:px-4 lg:py-2.5 rounded-lg text-sm lg:text-base border-0 data-[state=active]:text-white data-[state=active]:shadow-none text-gray-400 font-normal cursor-pointer  ${isActive(tab.link) ? "bg-[#111927] text-white" : ""} `}
+              className={`flex items-center justify-center w-full gap-2 px-3 py-2 lg:px-4 lg:py-3 rounded-lg text-sm lg:text-base border-0 data-[state=active]:text-white data-[state=active]:shadow-none text-gray-400 font-normal cursor-pointer  ${isActive(tab.link) ? "bg-[#111927] text-white" : ""} `}
             >
               {tab?.icon}
               <span>{tab.label}</span>

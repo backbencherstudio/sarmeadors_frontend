@@ -3,19 +3,12 @@ import CreateNewInvoiceForm from "@/components/allForm/CreateNewInvoiceForm";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 
 import ButtonReuseable from "@/components/reusable/CustomButton";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { invoiceStatusOptions } from "@/demoData/DashboardData";
 import { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
-import { IoIosArrowDown } from "react-icons/io";
 import PaymentAction from "./PaymentAction";
+import StatuseChange from "./StatuseChange";
 
 type InvoiceRow = {
   id: string | number;
@@ -110,33 +103,11 @@ export default function InvoiceInfo() {
       width: "232px",
       formatter: (_value: any, row: InvoiceRow) => {
         return (
-          <div className="w-40 change-arrow">
-            <Select
-              value={row.status}
-              onValueChange={(v: string) => {
-                setData((prev) =>
-                  prev.map((r) => (r.id === row.id ? { ...r, status: v } : r)),
-                );
-              }}
-            >
-              <SelectTrigger className="flex items-center gap-1.5 p-1 !h-9 w-full justify-between">
-                <div
-                  className={`px-2 cursor-pointer flex items-center  py-2.5!  h-full w-full text-xs justify-start focus-visible:ring-0 font-medium rounded-sm border-0 bg-borderColor  text-lightblackColor`}
-                >
-                  <SelectValue />
-                </div>
-                <div>
-                  <IoIosArrowDown />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="not_sent">Not Sent</SelectItem>
-                <SelectItem value="scheduled">Scheduled</SelectItem>
-                <SelectItem value="paid">Paid</SelectItem>
-                <SelectItem value="sent">Sent</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <StatuseChange
+            row={row}
+            setData={setData}
+            statuse={invoiceStatusOptions}
+          />
         );
       },
     },

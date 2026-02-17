@@ -1,3 +1,4 @@
+"use client";
 import EditContactInfo from "@/components/clients/ProfileTabs/Contact&Address/EditContactInfo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

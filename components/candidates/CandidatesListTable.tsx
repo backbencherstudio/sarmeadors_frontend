@@ -1,20 +1,19 @@
 "use client";
 
-import { demoData } from "@/demoData/DashboardData";
+import { candidateListData, candidatesStatuse } from "@/demoData/DashboardData";
 import dayjs from "dayjs";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSettingsSharp } from "react-icons/io5";
-import { LuCalendarRange } from "react-icons/lu";
 import ClientCreateForm from "../allForm/ClientCreateForm";
+import StatuseChange from "../clients/AdminTabs/payment/StatuseChange";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import FilterHeader from "../common/FilterHeader";
-import DashboardStatuse from "./DashboardStatuse";
+import TableColAscDsc from "../dashboard/TableColAscDsc";
 
-function DashboardUserTable() {
+function CandidatesListTable() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState(candidateListData);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [loadingStatusId, setLoadingStatusId] = useState<string | null>(null);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
@@ -25,15 +24,17 @@ function DashboardUserTable() {
     full_name: true,
     email_address: true,
     mobile_number: true,
-    createdAt: true,
+    position: true,
+    last_login: true,
+    location: true,
     status: true,
     action: true,
   });
   const toggleSelectAll = () => {
-    if (selectedRows.length === demoData.length) {
+    if (selectedRows.length === data.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(demoData.map((row) => row.id));
+      setSelectedRows(data.map((row) => row.id));
     }
   };
 
@@ -45,53 +46,37 @@ function DashboardUserTable() {
     );
   };
 
+  const handleColShort = () => {
+    console.log("Column sorting clicked");
+  };
+
   const columns = [
     {
       label: (
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
-            checked={
-              selectedRows.length === demoData.length && demoData.length > 0
-            }
+            checked={selectedRows.length === data.length && data.length > 0}
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
           />
           <span>Name</span>
-          <button className="flex flex-col cursor-pointer">
-            <IoMdArrowDropdown className=" rotate-180" />
-            <IoMdArrowDropdown />
-          </button>
+          <TableColAscDsc onClick={handleColShort} />
         </div>
       ),
       accessor: "full_name",
       width: "250px",
       formatter: (value: string, record: any) => (
-        <Link href="/clients" className="flex items-center gap-3">
+        <Link
+          href={`/candidates/${record.id}/admin/list`}
+          className="flex items-center gap-3"
+        >
           <input
             type="checkbox"
             checked={selectedRows.includes(record.id)}
             onChange={() => toggleRowSelection(record.id)}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
           />
-          <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-            <span className="text-xs font-medium text-gray-600">
-              {record?.image_name ? (
-                <Image
-                  src={record?.image_name || `/empty-user.png`}
-                  alt="Uploaded Preview"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              ) : (
-                value
-                  ?.split(" ")
-                  ?.map((n) => n[0])
-                  ?.join("")
-              )}
-            </span>
-          </div>
           <span className="text-sm font-medium text-blackColor">{value}</span>
         </Link>
       ),
@@ -100,8 +85,11 @@ function DashboardUserTable() {
       label: "Email Address",
       accessor: "email_address",
       width: "250px",
-      formatter: (value: string) => (
-        <Link href="/clients" className="text-sm text-blackColor">
+      formatter: (value: string, record: any) => (
+        <Link
+          href={`/candidates/${record.id}/admin/list`}
+          className="text-sm text-blackColor"
+        >
           {value}
         </Link>
       ),
@@ -115,14 +103,29 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Registration Date",
-      accessor: "createdAt",
-      width: "180px",
+      label: "Position(s) Applying For",
+      accessor: "position",
+      width: "220px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
+      ),
+    },
+    {
+      label: "Last Login",
+      accessor: "last_login",
+      width: "170px",
       formatter: (value: string) => (
         <div className="flex items-center gap-2 text-sm text-blackColor">
-          <LuCalendarRange size={16} className="text-gray3Color" />
-          {dayjs(value).format("M/D/YY")}
+          {dayjs(value).format("ddd MMM DD YYYY")}
         </div>
+      ),
+    },
+    {
+      label: "Locations",
+      accessor: "location",
+      width: "220px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
       ),
     },
     {
@@ -130,10 +133,10 @@ function DashboardUserTable() {
       accessor: "status",
       width: "150px",
       formatter: (value: string, record: any) => (
-        <DashboardStatuse
-          value={value}
-          record={record}
-          loadingStatusId={loadingStatusId}
+        <StatuseChange
+          setData={setData}
+          row={record}
+          statuse={candidatesStatuse}
         />
       ),
     },
@@ -155,16 +158,9 @@ function DashboardUserTable() {
     (col) => visibleColumns[col.accessor as keyof typeof visibleColumns],
   );
 
-  const handleFilter = () => {
-    setFilteredData((prev) => !prev);
-  };
-
   const handleOpenModal = () => {
     // Logic to open the modal
     setIsModalOpen(true);
-  };
-  const handleStatuseSetting = () => {
-    setFilterModalOpen(true);
   };
 
   return (
@@ -172,15 +168,15 @@ function DashboardUserTable() {
       <div className="bg-white shadow md:p-5 p-3 rounded-md">
         <div>
           <FilterHeader
-            title="Client List"
-            description="List of all current clients and their details."
+            title="Candidate List"
+            description="List of all current candidates and their details."
             handleOpenModal={handleOpenModal}
-            buttonTitle="Add Client"
+            buttonTitle="Add Candidates"
           />
         </div>
         <DynamicTableTwo
           columns={visibleColumnsArray}
-          data={demoData || []}
+          data={data || []}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={(page) => setCurrentPage(page)}
@@ -189,7 +185,7 @@ function DashboardUserTable() {
             setCurrentPage(1); // Reset to page 1 when items per page changes
           }}
           loading={false}
-          totalItems={10}
+          totalItems={data.length}
           totalpage={2}
         />
       </div>
@@ -200,4 +196,4 @@ function DashboardUserTable() {
   );
 }
 
-export default DashboardUserTable;
+export default CandidatesListTable;
