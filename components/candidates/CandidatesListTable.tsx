@@ -67,7 +67,10 @@ function CandidatesListTable() {
       accessor: "full_name",
       width: "250px",
       formatter: (value: string, record: any) => (
-        <Link href="/clients" className="flex items-center gap-3">
+        <Link
+          href={`/candidates/${record.id}/admin`}
+          className="flex items-center gap-3"
+        >
           <input
             type="checkbox"
             checked={selectedRows.includes(record.id)}
@@ -82,8 +85,11 @@ function CandidatesListTable() {
       label: "Email Address",
       accessor: "email_address",
       width: "250px",
-      formatter: (value: string) => (
-        <Link href="/clients" className="text-sm text-blackColor">
+      formatter: (value: string, record: any) => (
+        <Link
+          href={`/candidates/${record.id}/admin`}
+          className="text-sm text-blackColor"
+        >
           {value}
         </Link>
       ),
