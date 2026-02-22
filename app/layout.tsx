@@ -1,7 +1,7 @@
 import ClientLayout from "@/components/common/ClientLayout";
 import { AppConfig } from "@/config/app.config";
 import type { Metadata } from "next";
-import { Archivo } from "next/font/google";
+import { Archivo, Changa } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
@@ -9,6 +9,11 @@ import "./globals.css";
 const archivo = Archivo({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+const change = Changa({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-changa",
 });
 export const metadata: Metadata = {
   title: AppConfig().app.name,
@@ -25,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${archivo.className} top-0!`}>
+      <body className={`${archivo.className} ${change.variable} top-0!`}>
         <ToastContainer />
         <ClientLayout>{children}</ClientLayout>
       </body>

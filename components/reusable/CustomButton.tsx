@@ -3,6 +3,7 @@ type ButtonProps = {
   className?: string;
   onClick?: () => void;
   icon?: any;
+  rightIcon?: any;
   loading?: boolean;
   sendingMsg?: string;
   type?: "button" | "submit" | "reset";
@@ -13,6 +14,7 @@ export default function ButtonReuseable({
   className,
   onClick,
   icon,
+  rightIcon,
   loading,
   sendingMsg,
   type,
@@ -28,7 +30,7 @@ export default function ButtonReuseable({
         sendingMsg
       ) : (
         <div className=" flex  h-full items-center gap-1.5">
-          {icon} {title}{" "}
+          {icon} {title} {rightIcon}
         </div>
       )}
     </button>

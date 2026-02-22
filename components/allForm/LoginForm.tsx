@@ -4,10 +4,15 @@ import { Label } from "@/components/ui/label";
 import { CookieHelper } from "@/helper/cookie.helper";
 import { UserService } from "@/service/user/user.service";
 import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import LoginHeader from "../auth/LoginHeader";
+import ArrowRightIcon from "../icon/ArrowRightIcon";
+import ButtonReuseable from "../reusable/CustomButton";
+import { Checkbox } from "../ui/checkbox";
 type LoginFormInputs = {
   email: string;
   password: string;
@@ -54,10 +59,14 @@ export default function LoginForm() {
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
-      <div className="w-full max-w-md  p-6 space-y-6  ">
-        <h2 className="text-2xl font-bold text-center text-white mt-6">
-          Admin Login
-        </h2>
+      <div className="w-full max-w-lg   space-y-4 ">
+        <div>
+          <LoginHeader
+            title=" Family Login"
+            heading="COAST TO COAST NANNIES"
+            subtitle="Submit your email and password for login."
+          />
+        </div>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -68,7 +77,7 @@ export default function LoginForm() {
               htmlFor="email"
               className="text-[14px] font-medium text-headerColor "
             >
-              Email Address
+              Email<span className="text-redColor">*</span>
             </Label>
             <Input
               id="email"
@@ -80,7 +89,7 @@ export default function LoginForm() {
                 },
               })}
               placeholder="example@example.com"
-              className="rounded-md !h-[45px] text-[14px] text-whiteColor "
+              className="rounded-md !h-[52px] text-[14px] text-blackColor bg-bgColor "
             />
             {errors.email && (
               <span className="text-sm text-red-500">
@@ -94,7 +103,7 @@ export default function LoginForm() {
               htmlFor="password"
               className="text-[14px] font-medium text-headerColor "
             >
-              Password
+              Password<span className="text-redColor">*</span>
             </Label>
             <div className="relative">
               <Input
@@ -108,7 +117,7 @@ export default function LoginForm() {
                 })}
                 type={showPassword ? "text" : "password"}
                 placeholder="Your password"
-                className="rounded-md !h-[45px] text-[14px] pr-10 text-whiteColor "
+                className="rounded-md !h-[52px] text-[14px] pr-10 text-blackColor bg-bgColor "
               />
               <button
                 type="button"
@@ -129,19 +138,41 @@ export default function LoginForm() {
               </span>
             )}
           </div>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <Checkbox id="remember-me" className=" cursor-pointer" />{" "}
+              <label
+                htmlFor="remember-me"
+                className="text-base text-lightblackColor"
+              >
+                Remember me
+              </label>
+            </div>
+            <div>
+              <Link
+                href="#"
+                className="text-base font-semibold text-headerColor underline  mt-2"
+              >
+                Forgot password?
+              </Link>
+            </div>
+          </div>
           <div className="w-full gap-3 mt-6">
-            <button
+            <ButtonReuseable
               type="submit"
               aria-label="log-in-button"
-              className={`w-full py-2 rounded-md transition-all duration-200 ${
-                isDisable
-                  ? "bg-gray-400  cursor-not-allowed text-white"
-                  : "bg-primaryColor hover:bg-primaryColor/90 active:bg-primaryColor/80  text-white"
-              }`}
-              disabled={isDisable}
-            >
-              {isDisable ? "Sending..." : "Login"}
-            </button>
+              loading={isDisable}
+              sendingMsg="Sending..."
+              className="w-full py-4!"
+              title="Next"
+              rightIcon={<ArrowRightIcon />}
+            />
+          </div>
+          <div>
+            <p className="text-base text-secondaryColor text-center md:px-20">
+              First time logging in? Please try your email address as your
+              password!
+            </p>
           </div>
         </form>
       </div>
