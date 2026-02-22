@@ -1,20 +1,17 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ArrowRightIcon from "../icon/ArrowRightIcon";
 import ButtonReuseable from "../reusable/CustomButton";
-import { Checkbox } from "../ui/checkbox";
-type LoginFormInputs = {
-  email: string;
-  password: string;
+type NewPasswordFormInputs = {
+  new_password: string;
+  confirm_password: string;
 };
-export default function LoginForm() {
+export default function NewPasswordForm() {
   const [isDisable, setIsDisable] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -24,14 +21,14 @@ export default function LoginForm() {
     reset,
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      new_password: "",
+      confirm_password: "",
     },
   });
   const [rememberMe, setRememberMe] = useState("123456");
   const router = useRouter();
 
-  const onSubmit = async (data: LoginFormInputs) => {
+  const onSubmit = async (data: NewPasswordFormInputs) => {
     setIsDisable(true);
     try {
       // const response = await UserService.login(data);
@@ -62,87 +59,60 @@ export default function LoginForm() {
     >
       <div className="space-y-2">
         <Label
-          htmlFor="email"
+          htmlFor="new_password"
           className="text-[14px] font-medium text-headerColor "
         >
-          Email<span className="text-redColor">*</span>
+          New password<span className="text-redColor">*</span>
         </Label>
         <Input
-          id="email"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: "Please enter a valid email address",
+          id="new_password"
+          {...register("new_password", {
+            required: "New Password is required",
+            minLength: {
+              value: 6,
+              message: "New Password must be at least 6 characters",
             },
           })}
-          placeholder="example@example.com"
+          placeholder="New Password"
+          type="password"
           className="rounded-md !h-[52px] text-[14px] text-blackColor bg-bgColor "
         />
-        {errors.email && (
-          <span className="text-sm text-red-500">{errors.email.message}</span>
+        {errors.new_password && (
+          <span className="text-sm text-red-500">
+            {errors.new_password.message}
+          </span>
         )}
       </div>
 
       <div className="space-y-2">
         <Label
-          htmlFor="password"
+          htmlFor="confirm_password"
           className="text-[14px] font-medium text-headerColor "
         >
-          Password<span className="text-redColor">*</span>
+          Confirm password<span className="text-redColor">*</span>
         </Label>
         <div className="relative">
           <Input
-            id="password"
-            {...register("password", {
-              required: "Password is required",
+            id="confirm_password"
+            {...register("confirm_password", {
+              required: "Confirm Password is required",
               minLength: {
                 value: 6,
-                message: "Password must be at least 6 characters",
+                message: "Confirm Password must be at least 6 characters",
               },
             })}
-            type={showPassword ? "text" : "password"}
-            placeholder="Your password"
+            type="password"
+            placeholder="Confirm password"
             className="rounded-md !h-[52px] text-[14px] pr-10 text-blackColor bg-bgColor "
           />
-          <button
-            type="button"
-            aria-label="toggle-password-visibility"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-100  hover:text-gray-300  focus:outline-none transition-colors duration-200"
-          >
-            {showPassword ? (
-              <EyeOff className="h-4 w-4" />
-            ) : (
-              <Eye className="h-4 w-4" />
-            )}
-          </button>
         </div>
-        {errors.password && (
+        {errors.confirm_password && (
           <span className="text-sm text-red-500">
-            {errors.password.message}
+            {errors.confirm_password.message}
           </span>
         )}
       </div>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Checkbox id="remember-me" className=" cursor-pointer" />{" "}
-          <label
-            htmlFor="remember-me"
-            className="text-base text-lightblackColor"
-          >
-            Remember me
-          </label>
-        </div>
-        <div>
-          <Link
-            href="#"
-            className="text-base font-semibold text-headerColor underline  mt-2"
-          >
-            Forgot password?
-          </Link>
-        </div>
-      </div>
+
       <div className="w-full gap-3 mt-6">
         <ButtonReuseable
           type="submit"
@@ -153,11 +123,6 @@ export default function LoginForm() {
           title="Next"
           rightIcon={<ArrowRightIcon />}
         />
-      </div>
-      <div>
-        <p className="text-base text-secondaryColor text-center md:px-20">
-          First time logging in? Please try your email address as your password!
-        </p>
       </div>
     </form>
   );
