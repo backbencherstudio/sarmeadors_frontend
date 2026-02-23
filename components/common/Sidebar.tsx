@@ -7,7 +7,6 @@ import {
 import { clearBiodataData } from "@/helper/biodataStorage.helper";
 import { CookieHelper } from "@/helper/cookie.helper";
 import JobsIcon from "@/public/icon/JobsIcon";
-import menu10 from "@/public/icon/logout.svg";
 import mainLogo from "@/public/icon/mainlogo.png";
 import MoreIcon from "@/public/icon/MoreIcon";
 import { ChevronRight, X } from "lucide-react";
@@ -22,6 +21,7 @@ import ClientIcon from "../icon/ClientIcon";
 import DashboardIcon from "../icon/DashboardIcon";
 import DocumentIcon from "../icon/DocumentIcon";
 import InterviewIcon from "../icon/InterviewIcon";
+import LogoutIcon from "../icon/LogoutIcon";
 import PaymentIcon from "../icon/PaymentIcon";
 import PlatFormIcon from "../icon/PlatFormIcon";
 import SettingIcon from "../icon/SettingIcon";
@@ -81,37 +81,37 @@ const navItems: NavItem[] = [
   {
     label: "Dashboard",
     icon: DashboardIcon,
-    href: "/clients/dashboard",
+    href: "/client/dashboard",
     type: "client",
   },
   {
     label: "My Jobs",
     icon: JobsIcon,
-    href: "/clients/my-jobs",
+    href: "/client/client-my-jobs",
     type: "client",
   },
   {
     label: "My Candidates",
     icon: CandidateIcon,
-    href: "/clients/my-candidates",
+    href: "/client/client-candidates",
     type: "client",
   },
   {
     label: "Interviews",
     icon: InterviewIcon,
-    href: "/clients/interviews",
+    href: "/client/client-interviews",
     type: "client",
   },
   {
     label: "Documents",
     icon: DocumentIcon,
-    href: "/clients/documents",
+    href: "/client/client-documents",
     type: "client",
   },
   {
     label: "Payments",
     icon: PaymentIcon,
-    href: "/clients/payments",
+    href: "/client/client-payments",
     type: "client",
   },
 ];
@@ -481,7 +481,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             title={isCollapsed ? "Log Out Account" : ""}
           >
             <div className="w-[30px] h-[30px] flex justify-center items-center flex-shrink-0">
-              <Image src={menu10} alt="Log Out" width={20} height={20} />
+              <LogoutIcon />
             </div>
             <span
               className={`text-base font-normal  whitespace-nowrap ${
