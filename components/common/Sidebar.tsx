@@ -6,28 +6,32 @@ import {
 } from "@/components/ui/collapsible";
 import { clearBiodataData } from "@/helper/biodataStorage.helper";
 import { CookieHelper } from "@/helper/cookie.helper";
-import menu7 from "@/public/icon/billing.svg";
-import menu3 from "@/public/icon/calendar 01.svg";
-import menu2 from "@/public/icon/candidates.svg";
-import menuOne from "@/public/icon/client.svg";
-import menu4 from "@/public/icon/jobs.svg";
+import JobsIcon from "@/public/icon/JobsIcon";
 import menu10 from "@/public/icon/logout.svg";
-import menu9 from "@/public/icon/main_setting.svg";
 import mainLogo from "@/public/icon/mainlogo.png";
-import menu6 from "@/public/icon/more.svg";
-import menu5 from "@/public/icon/setting.svg";
-import menu8 from "@/public/icon/support.svg";
+import MoreIcon from "@/public/icon/MoreIcon";
 import { ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
+import CalenderIcon from "../icon/CalenderIcon";
+import CandidateIcon from "../icon/CandidateIcon";
+import ClientIcon from "../icon/ClientIcon";
+import DashboardIcon from "../icon/DashboardIcon";
+import DocumentIcon from "../icon/DocumentIcon";
+import InterviewIcon from "../icon/InterviewIcon";
+import PaymentIcon from "../icon/PaymentIcon";
+import PlatFormIcon from "../icon/PlatFormIcon";
+import SettingIcon from "../icon/SettingIcon";
+import SupportIcon from "../icon/SupportIcon";
 
 interface NavItem {
   icon: any;
   label: string;
   href: string;
+  type?: "client" | "admin" | "candidate";
 }
 
 interface SidebarProps {
@@ -39,50 +43,92 @@ interface SidebarProps {
 
 const navItems: NavItem[] = [
   {
-    icon: menuOne,
+    icon: ClientIcon,
     label: "Clients",
     href: "/clients/admin/list",
+    type: "admin",
   },
   {
-    icon: menu2,
+    icon: CandidateIcon,
     label: "Candidates",
     href: "/candidates",
+    type: "admin",
   },
   {
-    icon: menu3,
+    icon: CalenderIcon,
     label: "Shift Job calendar",
     href: "/dashboard/shift-job-calendar",
+    type: "admin",
   },
   {
-    icon: menu4,
+    icon: JobsIcon,
     label: "Placement Jobs",
     href: "/dashboard/placement-jobs",
+    type: "admin",
   },
   {
-    icon: menu5,
+    icon: PlatFormIcon,
     label: "Platform settings",
     href: "/dashboard/platform-settings",
+    type: "admin",
   },
   {
-    icon: menu6,
+    icon: MoreIcon,
     label: "More",
     href: "/dashboard/more",
+    type: "admin",
+  },
+  {
+    label: "Dashboard",
+    icon: DashboardIcon,
+    href: "/clients/dashboard",
+    type: "client",
+  },
+  {
+    label: "My Jobs",
+    icon: JobsIcon,
+    href: "/clients/my-jobs",
+    type: "client",
+  },
+  {
+    label: "My Candidates",
+    icon: CandidateIcon,
+    href: "/clients/my-candidates",
+    type: "client",
+  },
+  {
+    label: "Interviews",
+    icon: InterviewIcon,
+    href: "/clients/interviews",
+    type: "client",
+  },
+  {
+    label: "Documents",
+    icon: DocumentIcon,
+    href: "/clients/documents",
+    type: "client",
+  },
+  {
+    label: "Payments",
+    icon: PaymentIcon,
+    href: "/clients/payments",
+    type: "client",
   },
 ];
 
 const moreItems = [
   {
-    icon: menu7,
+    icon: PaymentIcon,
     label: "Billing",
     href: "/dashboard/billing",
   },
   {
-    icon: menu8,
+    icon: SupportIcon,
     label: "Help & Support",
     href: "/dashboard/help-support",
   },
   {
-    icon: menu9,
+    icon: SettingIcon,
     label: "Settings",
     href: "/dashboard/settings",
   },
@@ -90,17 +136,17 @@ const moreItems = [
 
 const otherItems = [
   {
-    icon: menu7,
+    icon: PaymentIcon,
     label: "Billing",
     href: "/dashboard/billing",
   },
   {
-    icon: menu8,
+    icon: SupportIcon,
     label: "Help & Support",
     href: "/dashboard/help-support",
   },
   {
-    icon: menu9,
+    icon: SettingIcon,
     label: "Settings",
     href: "/dashboard/settings",
   },
@@ -117,10 +163,18 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [moreOpen, setMoreOpen] = useState<boolean>(() =>
     moreItems.some((m) => pathname.startsWith(m.href)),
   );
+  const [isLoggedIn, setIsLoggedIn] = useState("admin");
+  const mainItems = navItems.filter((item) => item.type === isLoggedIn);
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(isLoggedIn || "admin");
+  }, [pathname]);
+
+  console.log("login type", isLoggedIn);
 
   const isActive = (href: string): boolean => {
     if (href === "/") {
-      return pathname === "/dashboard";
+      return pathname === "/";
     }
     return pathname.startsWith(href);
   };
@@ -142,9 +196,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Sidebar container */}
       <div
         className={`
-          ${isOpen
-            ? "z-50 h-full overflow-hidden absolute top-0 left-0"
-            : "h-full"
+          ${
+            isOpen
+              ? "z-50 h-full overflow-hidden absolute top-0 left-0"
+              : "h-full"
           }
           flex flex-col
           min-h-[calc(100vh-100px)] 
@@ -157,17 +212,19 @@ const Sidebar: React.FC<SidebarProps> = ({
         {/* Header with Logo and Toggle */}
         <div className="flex items-center justify-between mb-6">
           <Link
-            href={"/dashboard"}
-            className={`text-white flex items-center transition-all duration-300 ${isCollapsed ? "xl:justify-center hidden xl:w-full" : ""
-              }`}
+            href={"/"}
+            className={`text-white flex items-center transition-all duration-300 ${
+              isCollapsed ? "xl:justify-center hidden xl:w-full" : ""
+            }`}
           >
             <Image
               src={mainLogo}
               alt="main logo"
               width={118}
               height={29}
-              className={`transition-all duration-300 ${isCollapsed ? "xl:w-8 xl:h-8 " : "w-20 md:w-[100px]"
-                }`}
+              className={`transition-all duration-300 ${
+                isCollapsed ? "xl:w-8 xl:h-8 " : "w-20 md:w-[100px]"
+              }`}
             />
           </Link>
 
@@ -199,7 +256,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         {/* Navigation Section */}
         <div className="flex-1">
           <div className="space-y-2">
-            {navItems.map((item, idx) => {
+            {mainItems.map((item, idx) => {
               const active = isActive(item.href);
               const isMore = item.label === "More";
               if (isMore) {
@@ -220,18 +277,16 @@ const Sidebar: React.FC<SidebarProps> = ({
                     >
                       <div className="flex gap-2 items-center">
                         <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                          <Image
-                            src={item.icon}
-                            alt={item.label}
-                            width={20}
-                            height={20}
-                            className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? "opacity-100" : ""
-                              }`}
+                          <item.icon
+                            className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                              active ? "opacity-100" : ""
+                            }`}
                           />
                         </div>
                         <span
-                          className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${isCollapsed ? "xl:hidden" : ""
-                            }`}
+                          className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                            isCollapsed ? "xl:hidden" : ""
+                          }`}
                         >
                           {item.label}
                         </span>
@@ -252,9 +307,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                         className={`
                           w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
                           hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
-                          ${isCollapsed
-                            ? "xl:justify-center"
-                            : "justify-between"
+                          ${
+                            isCollapsed
+                              ? "xl:justify-center"
+                              : "justify-between"
                           }
                         `}
                         title={item.label}
@@ -262,25 +318,24 @@ const Sidebar: React.FC<SidebarProps> = ({
                       >
                         <div className="flex gap-2 items-center">
                           <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                            <Image
-                              src={item.icon}
-                              alt={item.label}
-                              width={20}
-                              height={20}
-                              className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? "opacity-100" : ""
-                                }`}
+                            <item.icon
+                              className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                                active ? "opacity-100" : ""
+                              }`}
                             />
                           </div>
                           <span
-                            className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${isCollapsed ? "xl:hidden" : ""
-                              }`}
+                            className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                              isCollapsed ? "xl:hidden" : ""
+                            }`}
                           >
                             {item.label}
                           </span>
                         </div>
                         <ChevronRight
-                          className={`transition-transform duration-200 ${moreOpen ? "rotate-90" : ""
-                            }`}
+                          className={`transition-transform duration-200 ${
+                            moreOpen ? "rotate-90" : ""
+                          }`}
                           size={18}
                         />
                       </button>
@@ -297,31 +352,31 @@ const Sidebar: React.FC<SidebarProps> = ({
                               className={`
                                 ml-10 flex items-center group gap-3 px-3 py-1.5 lg:py-2 rounded-lg 
                                 hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
-                                ${subActive
-                                  ? "bg-white opacity-100 text-blackColor"
-                                  : ""
+                                ${
+                                  subActive
+                                    ? "bg-white opacity-100 text-blackColor"
+                                    : ""
                                 }
-                                ${isCollapsed
-                                  ? "xl:justify-center"
-                                  : "justify-start"
+                                ${
+                                  isCollapsed
+                                    ? "xl:justify-center"
+                                    : "justify-start"
                                 }
                               `}
                               title={isCollapsed ? sub.label : ""}
                             >
                               <div className="flex gap-2 items-center">
                                 <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                                  <Image
-                                    src={sub.icon}
-                                    alt={sub.label}
-                                    width={20}
-                                    height={20}
-                                    className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${subActive ? "opacity-100" : ""
-                                      }`}
+                                  <sub.icon
+                                    className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                                      subActive ? "opacity-100" : ""
+                                    }`}
                                   />
                                 </div>
                                 <span
-                                  className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${isCollapsed ? "xl:hidden" : ""
-                                    }`}
+                                  className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                                    isCollapsed ? "xl:hidden" : ""
+                                  }`}
                                 >
                                   {sub.label}
                                 </span>
@@ -349,18 +404,16 @@ const Sidebar: React.FC<SidebarProps> = ({
                 >
                   <div className="flex gap-2 items-center">
                     <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                      <Image
-                        src={item.icon}
-                        alt={item.label}
-                        width={20}
-                        height={20}
-                        className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? "opacity-100" : ""
-                          }`}
+                      <item.icon
+                        className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                          active ? "opacity-100" : ""
+                        }`}
                       />
                     </div>
                     <span
-                      className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${isCollapsed ? "xl:hidden" : ""
-                        }`}
+                      className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                        isCollapsed ? "xl:hidden" : ""
+                      }`}
                     >
                       {item.label}
                     </span>
@@ -372,49 +425,49 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Other Section */}
-        <div className="pt-4 border-t border-white/10">
-          <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">
-            Other
-          </p>
-          <div className="space-y-2">
-            {otherItems.map((item, idx) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={idx}
-                  href={item.href}
-                  onClick={onClose}
-                  className={`
+        {isLoggedIn == "admin" && (
+          <div className="pt-4 border-t border-white/10">
+            <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">
+              Other
+            </p>
+            <div className="space-y-2">
+              {otherItems.map((item, idx) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    onClick={onClose}
+                    className={`
                     flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
                     hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
                     ${active ? "bg-white opacity-100 text-blackColor" : ""}
                     ${isCollapsed ? "xl:justify-center" : "justify-start"}
                   `}
-                  title={isCollapsed ? item.label : ""}
-                >
-                  <div className="flex gap-2 items-center">
-                    <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                      <Image
-                        src={item.icon}
-                        alt={item.label}
-                        width={20}
-                        height={20}
-                        className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${active ? "opacity-100" : ""
+                    title={isCollapsed ? item.label : ""}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                        <item.icon
+                          className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
+                            active ? "opacity-100" : ""
                           }`}
-                      />
-                    </div>
-                    <span
-                      className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${isCollapsed ? "xl:hidden" : ""
+                        />
+                      </div>
+                      <span
+                        className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                          isCollapsed ? "xl:hidden" : ""
                         }`}
-                    >
-                      {item.label}
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
+                      >
+                        {item.label}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Log out section */}
         <div className="pt-4">
@@ -431,8 +484,9 @@ const Sidebar: React.FC<SidebarProps> = ({
               <Image src={menu10} alt="Log Out" width={20} height={20} />
             </div>
             <span
-              className={`text-base font-normal  whitespace-nowrap ${isCollapsed ? "xl:hidden" : ""
-                }`}
+              className={`text-base font-normal  whitespace-nowrap ${
+                isCollapsed ? "xl:hidden" : ""
+              }`}
             >
               Log Out Account
             </span>

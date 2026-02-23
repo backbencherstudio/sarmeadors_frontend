@@ -17,18 +17,20 @@ type LoginFormInputs = {
 export default function LoginForm() {
   const [isDisable, setIsDisable] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  const [rememberMe, setRememberMe] = useState("123456");
+  const passwordValue = watch("password");
   const router = useRouter();
 
   const onSubmit = async (data: LoginFormInputs) => {
@@ -48,7 +50,8 @@ export default function LoginForm() {
       //   reset();
       //   setIsDisable(false);
       // }
-      router.push(rememberMe == "123456" ? "/new-password" : "/");
+      router.push(data.password === "123456" ? "/new-password" : "/");
+      localStorage.setItem("isLoggedIn", "client");
     } catch (error) {
       toast.error("Wrong Email or Password");
       setIsDisable(false);
@@ -126,7 +129,12 @@ export default function LoginForm() {
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Checkbox id="remember-me" className=" cursor-pointer" />{" "}
+          <Checkbox
+            id="remember-me"
+            className="cursor-pointer"
+            checked={rememberMe}
+            onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+          />{" "}
           <label
             htmlFor="remember-me"
             className="text-base text-lightblackColor"

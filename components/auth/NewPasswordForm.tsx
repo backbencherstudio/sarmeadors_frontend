@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -13,19 +13,20 @@ type NewPasswordFormInputs = {
 };
 export default function NewPasswordForm() {
   const [isDisable, setIsDisable] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm({
     defaultValues: {
       new_password: "",
       confirm_password: "",
     },
   });
-  const [rememberMe, setRememberMe] = useState("123456");
+  const newPassword = watch("new_password");
   const router = useRouter();
 
   const onSubmit = async (data: NewPasswordFormInputs) => {
@@ -45,7 +46,9 @@ export default function NewPasswordForm() {
       //   reset();
       //   setIsDisable(false);
       // }
-      router.push(rememberMe == "123456" ? "/new-password" : "/");
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("new_password", data.new_password);
+      router.push(`/clients?${params.toString()}`);
     } catch (error) {
       toast.error("Wrong Email or Password");
       setIsDisable(false);
@@ -100,6 +103,8 @@ export default function NewPasswordForm() {
                 value: 6,
                 message: "Confirm Password must be at least 6 characters",
               },
+              validate: (value) =>
+                value === newPassword || "Password doesn't match",
             })}
             type="password"
             placeholder="Confirm password"
