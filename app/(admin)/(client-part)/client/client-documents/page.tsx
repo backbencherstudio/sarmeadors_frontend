@@ -69,8 +69,8 @@ export default function DocumentsPage() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row gap-4 md:items-end justify-between items-start">
         <div className="space-y-4 w-full">
-          <h1 className="text-2xl font-bold text-gray-900">Documents to Sign</h1>
-          <Select>
+          <h1 className="text-2xl font-bold text-gray-900">Agreements</h1>
+          {/* <Select>
             <SelectTrigger className="w-full md:w-1/2 h-12!">
               <SelectValue placeholder="Select template to add" />
             </SelectTrigger>
@@ -79,12 +79,12 @@ export default function DocumentsPage() {
               <SelectItem value="template2">Template 2</SelectItem>
               <SelectItem value="template3">Template 3</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
-        <ButtonReuseable
+        {/* <ButtonReuseable
           title="Manage and edit Templates"
           className=" px-4 py-2 cursor-pointer text-nowrap"
-        />
+        /> */}
       </div>
 
       {/* Document Cards */}
