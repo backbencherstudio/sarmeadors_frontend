@@ -1,24 +1,14 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import {
     HiOutlineMenu,
     HiOutlineDocumentText,
     HiOutlineLockClosed,
     HiOutlineCreditCard,
-    HiOutlineDocument,
-    HiOutlineUserGroup
+    HiOutlineDocument
 } from "react-icons/hi"
 import { MdSms } from "react-icons/md"
 import { FaTrophy } from "react-icons/fa"
-import List from "./List/List"
-import Notes from "./Notes/Notes"
-import EmailAndSms from "./EmailAndSms/EmailAndSms"
-import PaymentPage from "./payment/PaymentPage";
-import Events from "./Events/Events";
-import Password from "./Password/Password";
-import Documents from "./Documents/Documents";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 
 export function AdminTabs() {
