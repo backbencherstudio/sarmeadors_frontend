@@ -16,32 +16,32 @@ export function ShortTermJobTabs() {
         {
             label: "Running (1)",
             link: "/client/client-my-jobs/short-term-job/running",
-            icon: <HiOutlineMenu className="w-5 h-5" />,
+            // icon: <HiOutlineMenu className="w-5 h-5" />,
         },
         {
             label: "Pending (0) ",
             link: "/client/client-my-jobs/short-term-job/pending",
-            icon: <HiOutlineDocumentText className="w-5 h-5" />,
+            // icon: <HiOutlineDocumentText className="w-5 h-5" />,
         },
         {
             label: "Marketplace (1)",
             link: "/client/client-my-jobs/short-term-job/marketplace",
-            icon: <MdSms className="w-5 h-5" />,
+            // icon: <MdSms className="w-5 h-5" />,
         },
         {
             label: "Completed (9)",
             link: "/client/client-my-jobs/short-term-job/completed",
-            icon: <FaTrophy className="w-5 h-5" />,
+            // icon: <FaTrophy className="w-5 h-5" />,
         },
         {
             label: "Canceled (1)",
             link: "/client/client-my-jobs/short-term-job/canceled",
-            icon: <HiOutlineLockClosed className="w-5 h-5" />,
+            // icon: <HiOutlineLockClosed className="w-5 h-5" />,
         },
         {
             label: "Rejected (1)",
             link: "/client/client-my-jobs/short-term-job/rejected",
-            icon: <HiOutlineDocument className="w-5 h-5" />,
+            // icon: <HiOutlineDocument className="w-5 h-5" />,
         },
         // {
         //     label: "Payments",

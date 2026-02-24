@@ -1,9 +1,6 @@
 "use client";
 
-import EmailAndSMSIcon from "@/public/icon/EmailAndSMSIcon";
-import JobsIcon from "@/public/icon/JobsIcon";
-import ListIcon from "@/public/icon/ListIcon";
-import { Plus, Settings } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
