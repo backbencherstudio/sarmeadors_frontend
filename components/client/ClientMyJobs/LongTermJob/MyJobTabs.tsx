@@ -23,7 +23,7 @@ function MyJobTopMenu({ title, id }: { title?: string; id?: string }) {
                     <h1 className="font-semibold capitalize leading-[160%]">
                         My Jobs
                     </h1>
-                    <p>List of all current clients and their details.</p>
+                    <p className="text-gray-500">List of all current clients and their details.</p>
                 </div>
                 <button className=" flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
                     <Plus /> Post a Job

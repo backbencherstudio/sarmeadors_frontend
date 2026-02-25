@@ -1,3 +1,4 @@
+import CancelModal from "@/components/client/ClientMyJobs/ShortTermJob/Common/CancelModal";
 
 export default function Page() {
     return (
@@ -31,8 +32,8 @@ export default function Page() {
                                         <h3 className="text-lg font-semibold text-gray-800">
                                             After School Nanny
                                         </h3>
-                                        <span className="px-2 py-1 text-sm bg-amber-400 text-white rounded-md">
-                                            Pending for Approval
+                                        <span className="px-2 py-1 text-sm bg-blue-600 text-white rounded-md">
+                                            Approved
                                         </span>
                                     </div>
 
@@ -75,15 +76,51 @@ export default function Page() {
                             {/* Divider */}
                             <div className="border-t border-gray-200 my-4"></div>
 
-                            {/* Buttons */}
-                            <div className="flex gap-3">
-                                <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                    View Details
-                                </button>
+                            {/* Bottom Section */}
+                            <div className="flex items-center justify-between">
 
-                                <button className="px-4 py-2 text-sm border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition">
-                                    Cancel Job ●
-                                </button>
+                                {/* Buttons */}
+                                <div className="flex gap-3">
+                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                        View Applicants
+                                    </button>
+
+                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                        ✏️
+                                    </button>
+
+                                    {/* Cancel Modal */}
+                                    <CancelModal />
+                                </div>
+
+                                {/* Candidates */}
+                                <div className="flex flex-col items-end">
+                                    <span className="text-xs text-gray-500 mb-2">
+                                        Applicant Candidates
+                                    </span>
+
+                                    <div className="flex items-center">
+                                        {[
+                                            "https://randomuser.me/api/portraits/women/44.jpg",
+                                            "https://randomuser.me/api/portraits/men/32.jpg",
+                                            "https://randomuser.me/api/portraits/women/68.jpg",
+                                            "https://randomuser.me/api/portraits/men/75.jpg",
+                                            "https://randomuser.me/api/portraits/women/12.jpg",
+                                        ].map((img, index) => (
+                                            <img
+                                                key={index}
+                                                src={img}
+                                                alt="candidate"
+                                                className="w-8 h-8 rounded-full border-2 border-white -ml-2 first:ml-0 object-cover"
+                                            />
+                                        ))}
+
+                                        {/* Extra Count */}
+                                        <div className="w-8 h-8 rounded-full bg-gray-200 text-xs font-medium flex items-center justify-center border-2 border-white -ml-2">
+                                            +5
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -108,8 +145,8 @@ export default function Page() {
                                         <h3 className="text-lg font-semibold text-gray-800">
                                             After School Nanny
                                         </h3>
-                                        <span className="px-2 py-1 text-sm bg-amber-400 text-white rounded-md">
-                                            Pending for Approval
+                                        <span className="px-2 py-1 text-sm bg-blue-600 text-white rounded-md">
+                                            Approved
                                         </span>
                                     </div>
 
@@ -152,16 +189,54 @@ export default function Page() {
                             {/* Divider */}
                             <div className="border-t border-gray-200 my-4"></div>
 
-                            {/* Buttons */}
-                            <div className="flex gap-3">
-                                <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                    View Details
-                                </button>
+                            {/* Bottom Section */}
+                            <div className="flex items-center justify-between">
 
-                                <button className="px-4 py-2 text-sm border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition">
-                                    Cancel Job ●
-                                </button>
+                                {/* Buttons */}
+                                <div className="flex gap-3">
+                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                        View Applicants
+                                    </button>
+
+                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                        ✏️
+                                    </button>
+
+                                    {/* Cancel Modal */}
+                                    <CancelModal />
+                                </div>
+
+                                {/* Candidates */}
+                                <div className="flex flex-col items-end">
+                                    <span className="text-xs text-gray-500 mb-2">
+                                        Applicant Candidates
+                                    </span>
+
+                                    <div className="flex items-center">
+                                        {[
+                                            "https://randomuser.me/api/portraits/women/44.jpg",
+                                            "https://randomuser.me/api/portraits/men/32.jpg",
+                                            "https://randomuser.me/api/portraits/women/68.jpg",
+                                            "https://randomuser.me/api/portraits/men/75.jpg",
+                                            "https://randomuser.me/api/portraits/women/12.jpg",
+                                        ].map((img, index) => (
+                                            <img
+                                                key={index}
+                                                src={img}
+                                                alt="candidate"
+                                                className="w-8 h-8 rounded-full border-2 border-white -ml-2 first:ml-0 object-cover"
+                                            />
+                                        ))}
+
+                                        {/* Extra Count */}
+                                        <div className="w-8 h-8 rounded-full bg-gray-200 text-xs font-medium flex items-center justify-center border-2 border-white -ml-2">
+                                            +5
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+
                         </div>
 
                     </div>
