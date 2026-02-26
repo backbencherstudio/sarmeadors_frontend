@@ -1,4 +1,5 @@
 import CancelModal from "@/components/client/ClientMyJobs/ShortTermJob/Common/CancelModal";
+import Link from "next/link";
 
 export default function Page() {
     return (
@@ -81,9 +82,10 @@ export default function Page() {
 
                                 {/* Buttons */}
                                 <div className="flex gap-3">
-                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                        View Applicants
-                                    </button>
+                                    {/* Details Link */}
+                                    <Link href={'/client/marketplace-view-details/job-description'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                        View Details
+                                    </Link>
 
                                     <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                                         ✏️
@@ -194,9 +196,10 @@ export default function Page() {
 
                                 {/* Buttons */}
                                 <div className="flex gap-3">
-                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                        View Applicants
-                                    </button>
+                                    {/* Details Link */}
+                                    <Link href={'/client/marketplace-view-details/job-description'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                        View Details
+                                    </Link>
 
                                     <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                                         ✏️

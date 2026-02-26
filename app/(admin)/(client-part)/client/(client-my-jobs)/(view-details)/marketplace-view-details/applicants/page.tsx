@@ -1,7 +1,7 @@
 import ApplicantsTable from '@/components/client/ClientMyJobs/ShortTermJob/Pending/ViewDetails/Applicants/ApplicantsTable'
 
 export default function page() {
-    const isData = false
+    const isData = true
     return (
         <div>
             {
