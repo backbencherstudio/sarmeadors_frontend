@@ -8,7 +8,7 @@ import CandidatesListTable from "./CandidatesListTable";
 async function CandidatesDashboard() {
   const cookieStore = await cookies();
   const token = cookieStore?.get("jobtoken")?.value;
- const statCards = [
+  const statCards = [
     {
       title: "Pre Application",
       value: 195,

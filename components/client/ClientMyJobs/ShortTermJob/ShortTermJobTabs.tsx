@@ -43,11 +43,6 @@ export function ShortTermJobTabs() {
             link: "/client/client-my-jobs/short-term-job/rejected",
             // icon: <HiOutlineDocument className="w-5 h-5" />,
         },
-        // {
-        //     label: "Payments",
-        //     link: "/clients/admin/payments",
-        //     icon: <HiOutlineCreditCard className="w-5 h-5" />,
-        // },
     ]
 
 

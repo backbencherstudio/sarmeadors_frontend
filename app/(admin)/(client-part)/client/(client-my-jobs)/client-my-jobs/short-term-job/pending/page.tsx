@@ -80,7 +80,7 @@ export default function Page() {
                             {/* Buttons */}
                             <div className="flex gap-3">
                                 {/* Details Link */}
-                                <Link href={'/client/pending-view-details'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                <Link href={'/client/pending-view-details/job-description'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                                     View Details
                                 </Link>
 
@@ -157,7 +157,7 @@ export default function Page() {
                             {/* Buttons */}
                             <div className="flex gap-3">
                                 {/* Details Link */}
-                                <Link href={'/client/pending-view-details'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                <Link href={'/client/pending-view-details/job-description'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                                     View Details
                                 </Link>
 

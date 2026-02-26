@@ -3,16 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+type Tabs = { label: string; link: string; icon?: React.ReactNode }[]
+
 export default function ReusableTabs({
   tabs,
-}: {
-  tabs: { label: string; link: string; icon?: React.ReactNode }[];
-}) {
+}: { tabs: Tabs }) {
+
   const path = usePathname();
   const isActive = (href: string) => {
     if (!path) return false;
     return path === href || path.startsWith(`${href}/`);
   };
+
   return (
     <div className="w-full">
       <div className="w-full overflow-x-auto">
