@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const PROFILES = [
   {
@@ -69,7 +70,7 @@ export default function NewCandidatesPage() {
       {PROFILES?.map((profile) => (
         <div
           key={profile?.id}
-          className="p-6 border border-[#E5E7EB] rounded-[24px]"
+          className="p-6 border flex flex-col justify-between h-full border-[#E5E7EB] rounded-[24px]"
         >
           <div className="flex items-start gap-x-6">
             <div>
@@ -103,11 +104,14 @@ export default function NewCandidatesPage() {
           </div>
           <div className="mt-10">
             <p className="text-[#384250] text-[16px]">{profile?.description}</p>
-            <div className="mt-auto pt-6">
-              <button className="text-[16px] text-[#111927] font-semibold px-6 py-4 border border-[#384250] rounded-[12px] w-full cursor-pointer">
-                View profile
-              </button>
-            </div>
+          </div>
+          <div className="mt-10 w-full">
+            <Link
+              href={"/client/client-my-candidates/new-candidates/1"}
+              className="text-[16px] text-[#111927] font-semibold px-6 py-4 border border-[#384250] rounded-[12px] block w-full cursor-pointer text-center"
+            >
+              View profile
+            </Link>
           </div>
         </div>
       ))}
