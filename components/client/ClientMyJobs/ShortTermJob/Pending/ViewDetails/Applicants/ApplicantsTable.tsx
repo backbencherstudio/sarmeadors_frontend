@@ -5,6 +5,8 @@ import Link from "next/link";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 import TableColAscDsc from "@/components/dashboard/TableColAscDsc";
 import { Eye, Video } from "lucide-react";
+import HireCandidateModal from "../../../Marketplace/ViewDetails/Applicants/HireCandidateModal";
+import ScheduleInterviewModal from "../../../Marketplace/ViewDetails/Applicants/ScheduleInterviewModla";
 
 function ApplicantsTable() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -136,7 +138,7 @@ function ApplicantsTable() {
             width: "200px",
             formatter: (value: string, record: any) => (
                 <Link
-                    href={`/candidates/${record.id}/admin/list`}
+                    href={`/client/marketplace-view-details/applicants/${record.id}/personal-information`}
                     className="flex items-center gap-3"
                 >
                     <input
@@ -173,17 +175,16 @@ function ApplicantsTable() {
             ),
             accessor: "action",
             width: "120px",
-            formatter: () => (
+            formatter: (_: any, record: any) => (
                 <div className="flex items-center gap-2 justify-end">
-                    <div className="p-2 rounded-[10px] border">
+                    <Link href={`/client/marketplace-view-details/applicants/${record?.id}/personal-information`} className="p-2 rounded-[10px] border">
                         <Eye />
-                    </div>
-                    <div className="p-2 rounded-[10px] border">
-                        <Video />
-                    </div>
-                    <button className="bg-[#111927] text-white text-base font-medium px-4 py-2 rounded-[8px] transition-colors cursor-pointer">
-                        Hire Candidate
-                    </button>
+                    </Link>
+
+                    {/* Schedule Interview Modal */}
+                    <ScheduleInterviewModal />
+                    {/* Modal */}
+                    <HireCandidateModal />
                 </div>
             ),
         },
