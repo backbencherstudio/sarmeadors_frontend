@@ -5,8 +5,8 @@ import Link from "next/link";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 import TableColAscDsc from "@/components/dashboard/TableColAscDsc";
 import { Eye, Video } from "lucide-react";
-import HireCandidateModal from "../../../Marketplace/ViewDetails/Applicants/HireCandidateModal";
-import ScheduleInterviewModal from "../../../Marketplace/ViewDetails/Applicants/ScheduleInterviewModla";
+import HireCandidateModal from "../../../Marketplace/Applicants/HireCandidateModal";
+import ScheduleInterviewModal from "../../../Marketplace/Applicants/ScheduleInterviewModla";
 
 function ApplicantsTable() {
     const [currentPage, setCurrentPage] = useState(1);
