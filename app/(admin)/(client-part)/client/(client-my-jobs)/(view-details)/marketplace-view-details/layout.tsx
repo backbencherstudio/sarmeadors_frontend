@@ -1,3 +1,4 @@
+import BroadcastRequestModal from "@/components/client/ClientMyJobs/ShortTermJob/Marketplace/ViewDetails/Applicants/BroadcastRequestModal"
 import ReusableLineTabs from "@/components/reusable/ReusableLineTabs"
 import { Edit } from "lucide-react"
 
@@ -15,9 +16,8 @@ export default function PendingViewDetailsLayout({ children }) {
                         Job Details
                     </h1>
                 </div>
-                <button className=" flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]">
-                    <Edit /> Edit Job
-                </button>
+                {/* Broadcast Request Modal */}
+                <BroadcastRequestModal />
             </div>
             {/* Reusable Line Tabs */}
             <ReusableLineTabs tabs={TabsData} />
