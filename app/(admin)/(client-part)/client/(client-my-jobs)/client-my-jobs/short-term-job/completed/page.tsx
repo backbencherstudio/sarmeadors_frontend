@@ -1,4 +1,4 @@
-import { MessageSquareIcon } from "lucide-react";
+import CandidatesReviewModal from "@/components/client/ClientMyJobs/ShortTermJob/Marketplace/Applicants/(view-details)/CandidatesReviewModal";
 
 export default function Page() {
     return (
@@ -80,16 +80,11 @@ export default function Page() {
                             <div className="flex items-center justify-between">
 
                                 {/* Buttons */}
-                                <div className="flex items-center gap-3">
-                                    <MessageSquareIcon />
-                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                        Leave Review
-                                    </button>
-                                </div>
+                                <CandidatesReviewModal />
 
                                 {/* Candidates */}
                                 <button className="px-4 py-2 text-sm text-white rounded-lg bg-black transition">
-                                    Leave Review
+                                    View Invoice
                                 </button>
                             </div>
                         </div>
@@ -163,16 +158,11 @@ export default function Page() {
                             <div className="flex items-center justify-between">
 
                                 {/* Buttons */}
-                                <div className="flex items-center gap-3">
-                                    <MessageSquareIcon />
-                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                        Leave Review
-                                    </button>
-                                </div>
+                                <CandidatesReviewModal />
 
                                 {/* Candidates */}
                                 <button className="px-4 py-2 text-sm text-white rounded-lg bg-black transition">
-                                    Leave Review
+                                    View Invoice
                                 </button>
                             </div>
 
