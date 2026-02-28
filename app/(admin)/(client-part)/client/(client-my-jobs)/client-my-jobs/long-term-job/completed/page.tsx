@@ -1,3 +1,4 @@
+import ViewInvoiceModal from "@/components/client/ClientMyJobs/LongTermJob/Completed/ViewInvoiceModal";
 import CandidatesReviewModal from "@/components/client/ClientMyJobs/ShortTermJob/Marketplace/Applicants/(view-details)/CandidatesReviewModal";
 
 export default function Page() {
@@ -83,9 +84,7 @@ export default function Page() {
                                 <CandidatesReviewModal />
 
                                 {/* Candidates */}
-                                <button className="px-4 py-2 text-sm text-white rounded-lg bg-black transition">
-                                    View Invoice
-                                </button>
+                                <ViewInvoiceModal />
                             </div>
                         </div>
 

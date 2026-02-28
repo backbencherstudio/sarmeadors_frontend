@@ -87,7 +87,7 @@ const navItems: NavItem[] = [
   {
     label: "My Jobs",
     icon: JobsIcon,
-    href: "/client/client-my-jobs/short-term-job/running",
+    href: "/client/client-my-jobs/long-term-job/running",
     type: "client",
   },
   {
