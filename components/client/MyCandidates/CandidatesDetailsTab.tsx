@@ -1,8 +1,12 @@
 "use client";
 
+import ReviewIcon from "@/components/icon/ReviewIcon";
 import SendIcon from "@/components/icon/SendIcon";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 import Image from "next/image";
+import { useState } from "react";
+import HireRequestModal from "./HireRequestModal";
+import ReviewModal from "./ReviewModal";
 
 export function CandidatesDetailsTab() {
   const tabs = [
@@ -33,6 +37,9 @@ export function CandidatesDetailsTab() {
     },
   ];
 
+  const [open, setOpen] = useState(false);
+  const [hireModalOpen, setHireModalOpen] = useState(false);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -53,14 +60,30 @@ export function CandidatesDetailsTab() {
             </p>
           </div>
         </div>
-        <div>
-          <button className="flex items-center text-white gap-1.5 p-4 bg-[#111927] hover:bg-[#111927]/90 border border-[#384250] rounded-[12px] cursor-pointer">
+        <div className="flex items-center gap-x-4">
+          <button
+            onClick={() => setOpen(true)}
+            className="flex items-center text-[#111927] gap-1.5 p-4 bg-white border border-[#384250] rounded-[12px] cursor-pointer"
+          >
+            <ReviewIcon />
+            <span>Review</span>
+          </button>
+          <button
+            onClick={() => setHireModalOpen(true)}
+            className="flex items-center text-white gap-1.5 p-4 bg-[#111927] hover:bg-[#111927]/90 border border-[#384250] rounded-[12px] cursor-pointer"
+          >
             <SendIcon />
             <span>Hire Request</span>
           </button>
         </div>
       </div>
       <ReusableTabs tabs={tabs} />
+
+      <ReviewModal isOpen={open} onClose={() => setOpen(false)} />
+      <HireRequestModal
+        isHireModalOpen={hireModalOpen}
+        onClose={() => setHireModalOpen(false)}
+      />
     </div>
   );
 }
