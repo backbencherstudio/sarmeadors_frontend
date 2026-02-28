@@ -132,7 +132,7 @@ export default function Page() {
     )
 }
 
-/* ---------- Reusable Components ---------- */
+/* Reusable Components */
 
 function FormSection({
     title,
