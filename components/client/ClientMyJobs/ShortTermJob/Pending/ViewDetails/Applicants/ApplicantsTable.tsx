@@ -183,6 +183,7 @@ function ApplicantsTable() {
 
                     {/* Schedule Interview Modal */}
                     <ScheduleInterviewModal />
+
                     {/* Modal */}
                     <HireCandidateModal />
                 </div>

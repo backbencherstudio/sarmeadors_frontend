@@ -22,15 +22,15 @@ import { useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { DialogClose } from "@radix-ui/react-dialog"
 
-export default function ScheduleInterviewModal() {
+export default function ScheduleInterviewModal({ text = '' }) {
     const [date, setDate] = useState<Date>()
 
     return (
         <div>
             <Dialog>
                 <DialogTrigger>
-                    <div className="p-2 rounded-[10px] border cursor-pointer">
-                        <Video />
+                    <div className="flex items-center gap-2 p-2 rounded-[10px] border cursor-pointer">
+                        <Video /> {text}
                     </div>
                 </DialogTrigger>
 

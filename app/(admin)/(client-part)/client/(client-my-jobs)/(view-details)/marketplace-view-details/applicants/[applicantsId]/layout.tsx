@@ -1,5 +1,6 @@
 "use client"
 
+import ProfileAndReview from '@/components/client/ClientMyJobs/ShortTermJob/Marketplace/Applicants/(view-details)/ProfileAndReview'
 import ReusableTabs from '@/components/reusable/ReusableTabs'
 import { useParams } from 'next/navigation'
 
@@ -27,6 +28,7 @@ export default function SingleAplicantsLayout({ children }) {
     ]
     return (
         <div className='space-y-4'>
+            <ProfileAndReview />
             <ReusableTabs tabs={tabs} />
             {children}
         </div>

@@ -23,103 +23,101 @@ export default function Page() {
                 </div>
             </div>
 
-            <h1 className="text-2xl font-bold mb-3 text-gray-900">Children Information</h1>
+            <h1 className="text-xl font-semibold mb-3 text-[#111927]">Children Information</h1>
 
-            <div className="mb-6 font-sans p-6 border border-gray-200 rounded-[16px]">
-
-
+            <div className="mb-4 font-sans p-6 border border-gray-200 rounded-[16px]">
                 {/* First Child */}
                 <div className="mb-4">
                     <div className="space-y-4">
                         <div>
-                            <span className="text-base font-bold text-gray-900">Name</span>
-                            <div className="text-base mt-1">Savannah Nguyen</div>
+                            <span className="text-base  text-[#778593]">Name</span>
+                            <div className="text-lg  mt-1 text-[#111927]">Savannah Nguyen</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Date of Birth</span>
-                            <div className="text-base text-[#384250] mt-1">1 Feb, 2020</div>
+                            <span className="text-base  text-[#778593]">Date of Birth</span>
+                            <div className="text-lg  mt-1 text-[#111927]">1 Feb, 2020</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Gender</span>
-                            <div className="text-base text-[#384250] mt-1">Female</div>
+                            <span className="text-base  text-[#778593]">Gender</span>
+                            <div className="text-lg  mt-1 text-[#111927]">Female</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Likes, dislikes, and interests.</span>
-                            <div className="text-base text-[#384250] mt-1">Loves outdoor activities, especially riding a scooter and playing at the park. They enjoy drawing, building with LEGO, and listening to storybooks.</div>
+                            <span className="text-base  text-[#778593]">Likes, dislikes, and interests.</span>
+                            <div className="text-lg  mt-1 text-[#111927]">Loves outdoor activities, especially riding a scooter and playing at the park. They enjoy drawing, building with LEGO, and listening to storybooks.</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Allergies or special needs we need to be made aware of.</span>
+                            <span className="text-base  text-[#778593]">Allergies or special needs we need to be made aware of.</span>
 
-                            <div className="text-base text-[#384250] mt-1">Has a mild allergy to peanuts, which causes hives if ingested. We carry an antihistamine as advised by our doctor. They also wear glasses for reading. No other medical conditions or special needs at this time.</div>
+                            <div className="text-lg  mt-1 text-[#111927]">Has a mild allergy to peanuts, which causes hives if ingested. We carry an antihistamine as advised by our doctor. They also wear glasses for reading. No other medical conditions or special needs at this time.</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <h1 className="text-2xl font-bold mb-3 text-gray-900">Booking Date & Time</h1>
+            <h1 className="text-xl font-semibold mb-3 text-[#111927]">Booking Date & Time</h1>
             <div className=" font-sans ">
                 {/* Booking Date & Time */}
                 <section className="mb-4 p-6 border border-gray-200 rounded-[16px]">
 
                     <div className="flex justify-between">
                         <div>
-                            <span className="text-base font-bold text-gray-900">Booking Date & Time</span>
-                            <div className="text-base text-[#384250] mt-1">12/02/2025 (8:45 AM - 6:00 PM)</div>
+                            <span className="text-base  text-[#778593]">Booking Date & Time</span>
+                            <div className="text-lg  mt-1 text-[#111927]">12/02/2025 (8:45 AM - 6:00 PM)</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Additional Dates & Time</span>
-                            <div className="text-base text-[#384250] mt-1">03/12/2025 (8:45 AM - 6:00 PM)</div>
-                            <div className="text-base text-[#384250]">02/12/2025 (8:45 AM - 6:00 PM)</div>
+                            <span className="text-base  text-[#778593]">Additional Dates & Time</span>
+                            <div className="text-lg  mt-1 text-[#111927]">03/12/2025 (8:45 AM - 6:00 PM)</div>
+                            <div className="text-lg  mt-1 text-[#111927]">02/12/2025 (8:45 AM - 6:00 PM)</div>
                         </div>
                     </div>
                 </section>
 
 
-                <h1 className="text-2xl font-bold mb-3 text-gray-900">Job Address</h1>
+                <h1 className="text-xl font-semibold mb-3 text-[#111927]">Job Address</h1>
                 {/* Job Address */}
                 <section className="mb-4 p-6 border border-gray-200 rounded-[16px]">
 
                     <div className="flex justify-between">
                         <div>
-                            <span className="text-base font-bold text-gray-900">Street Address</span>
-                            <div className="text-base text-[#384250] mt-1">26 Berkshire Ave.</div>
+                            <span className="text-base  text-[#778593]">Street Address</span>
+                            <div className="text-lg mt-1 text-[#111927]">26 Berkshire Ave.</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">City</span>
-                            <div className="text-base text-[#384250] mt-1">Atlantic City</div>
+                            <span className="text-base  text-[#778593]">City</span>
+                            <div className="text-lg mt-1 text-[#111927]">Atlantic City</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Province/State</span>
-                            <div className="text-base text-[#384250] mt-1">NJ</div>
+                            <span className="text-base  text-[#778593]">Province/State</span>
+                            <div className="text-lg mt-1 text-[#111927]">NJ</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Postal Code</span>
-                            <div className="text-base text-[#384250] mt-1">08401</div>
+                            <span className="text-base  text-[#778593]">Postal Code</span>
+                            <div className="text-lg mt-1 text-[#111927]">08401</div>
                         </div>
 
                         <div>
-                            <span className="text-base font-bold text-gray-900">Country</span>
-                            <div className="text-base text-[#384250] mt-1">USA</div>
+                            <span className="text-base  text-[#778593]">Country</span>
+                            <div className="text-lg mt-1 text-[#111927]">USA</div>
                         </div>
                     </div>
                 </section>
 
 
-                <h1 className="text-2xl font-bold mb-3 text-gray-900">Set Budget</h1>
+                <h1 className="text-xl font-semibold mb-3 text-[#111927]">Set Budget</h1>
                 {/* Set Budget */}
                 <section className="mb-4 p-6 border border-gray-200 rounded-[16px]">
 
                     <div>
-                        <span className="text-base font-bold text-gray-900">Budget</span>
-                        <div className="text-base text-[#384250] mt-1">$40/Hr</div>
+                        <span className="text-base  text-[#778593]">Budget</span>
+                        <div className="text-lg mt-1 text-[#111927]">$40/Hr</div>
                     </div>
                 </section>
 
@@ -130,7 +128,7 @@ export default function Page() {
                         <h3 className="text-xl font-semibold">
                             Delete Post Permanently
                         </h3>
-                        <p>This action is irreversible; we cannot recover your data after account deletion.</p>
+                        <p className="text-base  text-[#778593]">This action is irreversible; we cannot recover your data after account deletion.</p>
                     </div>
                     <button className="text-red-600 font-medium cursor-pointer">Delete Job Post </button>
                 </div>
