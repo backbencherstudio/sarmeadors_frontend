@@ -1,4 +1,5 @@
 import { CopyIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function Page() {
     return (
@@ -74,12 +75,10 @@ export default function Page() {
 
                             {/* Buttons */}
                             <div className="flex justify-between gap-3">
-                                <div className="flex items-center gap-3">
-                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                        View Details
-                                    </button>
-                                    <CopyIcon className="text-gray-400" />
-                                </div>
+                                {/* Details Link */}
+                                <Link href={'/client/canceled-view-details'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                    View Details
+                                </Link>
 
                                 <button className="px-4 py-2 text-sm border text-white rounded-lg bg-black transition cursor-pointer">
                                     Request for Refund
