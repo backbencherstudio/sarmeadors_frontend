@@ -107,7 +107,9 @@ export default function NewCandidatesPage() {
           </div>
           <div className="mt-10 w-full">
             <Link
-              href={"/client/client-my-candidates/new-candidates/1"}
+              href={
+                "/client/client-my-candidates/new-candidates/1/personal-information"
+              }
               className="text-[16px] text-[#111927] font-semibold px-6 py-4 border border-[#384250] rounded-[12px] block w-full cursor-pointer text-center"
             >
               View profile

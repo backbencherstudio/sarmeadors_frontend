@@ -59,6 +59,44 @@ export default function PersonalInfoemation() {
             </div>
           </div>
         </div>
+        <div className="flex items-center justify-between w-full mt-4">
+          <div>
+            <p className="text-[#778593] text-sm leading-[142.857%]">
+              Street Address
+            </p>
+            <p className="text-[#384250] text-[16px] leading-[137.5%] font-medium">
+              26 Berkshire Ave.
+            </p>
+          </div>
+          <div>
+            <p className="text-[#778593] text-sm leading-[142.857%]">City</p>
+            <p className="text-[#384250] text-[16px] leading-[137.5%] font-medium">
+              Atlantic City
+            </p>
+          </div>
+          <div>
+            <p className="text-[#778593] text-sm leading-[142.857%]">
+              Province/State
+            </p>
+            <p className="text-[#384250] text-[16px] leading-[137.5%] font-medium">
+              NJ
+            </p>
+          </div>
+          <div>
+            <p className="text-[#778593] text-sm leading-[142.857%]">
+              Postal Code
+            </p>
+            <p className="text-[#384250] text-[16px] leading-[137.5%] font-medium">
+              08401
+            </p>
+          </div>
+          <div>
+            <p className="text-[#778593] text-sm leading-[142.857%]">Country</p>
+            <p className="text-[#384250] text-[16px] leading-[137.5%] font-medium">
+              USA
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
