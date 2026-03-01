@@ -1,28 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card } from "@/components/ui/card"
-import {
-  Pencil,
-  Eye,
-  Copy,
-} from "lucide-react"
-import { cn } from "@/lib/utils"
-import ListGreenIcon from "@/public/icon/ListGreenIcon"
-import ListBlackIcon from "@/public/icon/ListBlackIcon"
-import Link from "next/link"
+import { Card } from "@/components/ui/card";
+import ListBlackIcon from "@/public/icon/ListBlackIcon";
+import ListGreenIcon from "@/public/icon/ListGreenIcon";
+import Link from "next/link";
+import { useState } from "react";
 
-import { toast } from "react-toastify"
-import ButtonReuseable from "@/components/reusable/CustomButton"
+import { toast } from "react-toastify";
 
 interface Document {
-  id: string
-  title: string
-  addedDate: string
-  signedDate?: string
-  isSigned: boolean
+  id: string;
+  title: string;
+  addedDate: string;
+  signedDate?: string;
+  isSigned: boolean;
 }
 
 export default function DocumentsPage() {
@@ -31,38 +22,38 @@ export default function DocumentsPage() {
       id: "1",
       title: "Client - Agency Agreement Placement Fee & Refund Policy",
       addedDate: "Please review and sign this agreement.",
-      isSigned: false
+      isSigned: false,
     },
     {
       id: "2",
       title: "Client - Agency Agreement Placement Fee & Refund Policy",
       addedDate: "Please review and sign this agreement.",
       signedDate: "Tue Dec 02 2025",
-      isSigned: true
-    }
-  ])
+      isSigned: true,
+    },
+  ]);
 
   const toggleDocumentStatus = (id: string) => {
-    setDocuments(prev =>
-      prev.map(doc =>
-        doc.id === id ? { ...doc, isSigned: !doc.isSigned } : doc
-      )
-    )
-  }
+    setDocuments((prev) =>
+      prev.map((doc) =>
+        doc.id === id ? { ...doc, isSigned: !doc.isSigned } : doc,
+      ),
+    );
+  };
 
   const handleAction = (id: string, action: string) => {
-    console.log(`Action: ${action} for document ${id}`)
-  }
+    console.log(`Action: ${action} for document ${id}`);
+  };
 
   const handleCopyLink = async (documentId: string) => {
     try {
-      const documentUrl = `${window.location.origin}/clients/document/document-details?id=${documentId}`
-      await navigator.clipboard.writeText(documentUrl)
-      toast.success("Link copied to clipboard!")
+      const documentUrl = `${window.location.origin}/clients/document/document-details?id=${documentId}`;
+      await navigator.clipboard.writeText(documentUrl);
+      toast.success("Link copied to clipboard!");
     } catch (error) {
-      toast.error("Failed to copy link. Please try again.")
+      toast.error("Failed to copy link. Please try again.");
     }
-  }
+  };
 
   return (
     <div className="w-full space-y-6 p-6">
@@ -94,14 +85,11 @@ export default function DocumentsPage() {
             key={document.id}
             className="relative p-6 gap-0 bg-white border border-gray-200 shadow-sm"
           >
-
             {/* Document Icon */}
             <div className="flex justify-center mb-6 mt-2">
               <div className="relative">
                 {/* Document Stack */}
-                {
-                  document.isSigned ? <ListGreenIcon /> : <ListBlackIcon />
-                }
+                {document.isSigned ? <ListGreenIcon /> : <ListBlackIcon />}
               </div>
             </div>
 
@@ -131,5 +119,5 @@ export default function DocumentsPage() {
         ))}
       </div>
     </div>
-  )
+  );
 }

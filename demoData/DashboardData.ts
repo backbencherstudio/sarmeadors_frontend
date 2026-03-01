@@ -507,6 +507,7 @@ export const paymentHistoryTableData = [
 
 export const advancedInvoiceTableData = [
   {
+    id: 1,
     invoiceId: "5833",
     name: "Invoice#",
     invoiceTotal: "$2018.25",
@@ -515,6 +516,7 @@ export const advancedInvoiceTableData = [
     dueDate: "Tue Dec 30 2025",
   },
   {
+    id: 2,
     invoiceId: "5833",
     name: "Bill sanders",
     invoiceTotal: "$2018.25",
@@ -523,6 +525,7 @@ export const advancedInvoiceTableData = [
     dueDate: "Tue Dec 30 2025",
   },
   {
+    id: 3,
     invoiceId: "5833",
     name: "Georgia young",
     invoiceTotal: "$2018.25",
@@ -531,6 +534,7 @@ export const advancedInvoiceTableData = [
     dueDate: "Tue Dec 30 2025",
   },
   {
+    id: 4,
     invoiceId: "5833",
     name: "Jessica hanson",
     invoiceTotal: "$2018.25",
@@ -539,6 +543,7 @@ export const advancedInvoiceTableData = [
     dueDate: "Tue Dec 30 2025",
   },
   {
+    id: 5,
     invoiceId: "5833",
     name: "Nathan roberts",
     invoiceTotal: "$2018.25",
@@ -547,6 +552,7 @@ export const advancedInvoiceTableData = [
     dueDate: "Tue Dec 30 2025",
   },
   {
+    id: 6,
     invoiceId: "5833",
     name: "Tanya hill",
     invoiceTotal: "$2018.25",
@@ -555,6 +561,7 @@ export const advancedInvoiceTableData = [
     dueDate: "Tue Dec 30 2025",
   },
   {
+    id: 7,
     invoiceId: "5833",
     name: "Nathan roberts",
     invoiceTotal: "$2018.25",
