@@ -1,9 +1,5 @@
 function page() {
-  return (
-    <div>
-      <div>Client Payments</div>
-    </div>
-  );
+  return <div className="p-6">client-payment</div>;
 }
 
 export default page;

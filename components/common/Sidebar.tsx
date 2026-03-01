@@ -111,7 +111,7 @@ const navItems: NavItem[] = [
   {
     label: "Payments",
     icon: PaymentIcon,
-    href: "/client/client-payments",
+    href: "/client/client-payments/payment",
     type: "client",
   },
 ];
