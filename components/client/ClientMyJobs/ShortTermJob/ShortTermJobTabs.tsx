@@ -3,6 +3,7 @@
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 
 export function ShortTermJobTabs() {
+<<<<<<< HEAD
   const tabs = [
     {
       label: "Running (1)",
@@ -40,6 +41,34 @@ export function ShortTermJobTabs() {
     //     icon: <HiOutlineCreditCard className="w-5 h-5" />,
     // },
   ];
+=======
+    const tabs = [
+        {
+            label: "Running (1)",
+            link: "/client/client-my-jobs/long-term-job/running",
+        },
+        {
+            label: "Pending (0) ",
+            link: "/client/client-my-jobs/long-term-job/pending",
+        },
+        {
+            label: "Marketplace (1)",
+            link: "/client/client-my-jobs/long-term-job/marketplace",
+        },
+        {
+            label: "Completed (9)",
+            link: "/client/client-my-jobs/long-term-job/completed",
+        },
+        {
+            label: "Canceled (1)",
+            link: "/client/client-my-jobs/long-term-job/canceled",
+        },
+        {
+            label: "Rejected (1)",
+            link: "/client/client-my-jobs/long-term-job/rejected",
+        },
+    ]
+>>>>>>> d4287e6794e39bd38cc028458c8cbd74e1fbe306
 
   return (
     <div>

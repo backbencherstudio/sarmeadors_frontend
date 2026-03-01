@@ -15,11 +15,8 @@ function CandidatesListTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(candidateListData);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [loadingStatusId, setLoadingStatusId] = useState<string | null>(null);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filteredData, setFilteredData] = useState(false);
-  const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState({
     full_name: true,
     email_address: true,

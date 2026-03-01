@@ -1,4 +1,5 @@
 import { CopyIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function Page() {
     return (
@@ -15,7 +16,7 @@ export default function Page() {
                 <div className="border border-blue-400 rounded-xl p-5">
                     <div className="flex flex-col lg:flex-row gap-6">
                         {/* Date */}
-                        <div className=" min-w-[100px]">
+                        <div className="min-w-[100px]">
                             <h3 className="text-2xl font-bold text-gray-800">18</h3>
                             <p className="text-xs text-gray-500 uppercase">
                                 Jan, Sun
@@ -32,8 +33,8 @@ export default function Page() {
                                         <h3 className="text-lg font-semibold text-gray-800">
                                             After School Nanny
                                         </h3>
-                                        <span className="px-2 py-1 text-sm text-white bg-red-600 rounded-md">
-                                            Rejected
+                                        <span className="px-2 py-1 text-sm bg-red-200 text-red-600 rounded-md">
+                                            Canceled
                                         </span>
                                     </div>
 
@@ -74,12 +75,10 @@ export default function Page() {
 
                             {/* Buttons */}
                             <div className="flex justify-between gap-3">
-                                <div className="flex items-center gap-3">
-                                    <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                                        View Details
-                                    </button>
-                                    <CopyIcon className="text-gray-400" />
-                                </div>
+                                {/* Details Link */}
+                                <Link href={'/client/canceled-view-details'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                    View Details
+                                </Link>
 
                                 <button className="px-4 py-2 text-sm border text-white rounded-lg bg-black transition cursor-pointer">
                                     Request for Refund
