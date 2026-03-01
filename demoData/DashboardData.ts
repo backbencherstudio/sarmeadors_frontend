@@ -421,6 +421,7 @@ export const invoiceStatusOptions = [
 
   { value: "sent", label: "Sent" },
 ];
+
 export const candidatesStatuse = [
   {
     value: "application_started",
@@ -429,4 +430,77 @@ export const candidatesStatuse = [
   { value: "applied", label: "Applied" },
   { value: "interview_complete", label: "Interview Complete" },
   { value: "profile_complete", label: "Profile Complete" },
+];
+
+export const paymentHistoryTableData = [
+  {
+    id: "1",
+    invoices: "GSV567489240UI",
+    description: "Cash payment received for job placement service fee",
+    amount: "$11,000.00",
+    paymentMethod: "Cash",
+  },
+  {
+    id: "2",
+    invoices: "GSV567489241UI",
+    description: "Manual payment recorded for recruitment subscription plan",
+    amount: "$10,800.00",
+    paymentMethod: "Bank Transfer",
+  },
+  {
+    id: "3",
+    invoices: "GSV567489242UI",
+    description: "Check payment received for candidate sourcing services",
+    amount: "$37,500.00",
+    paymentMethod: "Cheque",
+  },
+  {
+    id: "4",
+    invoices: "GSV567489239UI",
+    description: "Offline payment collected for premium hiring package",
+    amount: "$29,000.00",
+    paymentMethod: "Cheque",
+  },
+  {
+    id: "5",
+    invoices: "GSV567489242UI",
+    description: "Cash payment for monthly employer platform access",
+    amount: "$17,500.00",
+    paymentMethod: "Cash",
+  },
+  {
+    id: "6",
+    invoices: "GSV5674892421UI",
+    description: "Manual payment received for featured job listing upgrade",
+    amount: "$5,400.00",
+    paymentMethod: "Cheque",
+  },
+  {
+    id: "7",
+    invoices: "GSV5674892241UI",
+    description: "Check payment processed for executive search service",
+    amount: "$4,200.00",
+    paymentMethod: "Bank Transfer",
+  },
+  {
+    id: "8",
+    invoices: "GSV56748941UI",
+    description: "Offline payment recorded for talent acquisition consultation",
+    amount: "$7,200.00",
+    paymentMethod: "Cash",
+  },
+  {
+    id: "9",
+    invoices: "GSV567489243UI",
+    description: "Cash payment for recruitment campaign management fee",
+    amount: "$15,000.00",
+    paymentMethod: "Bank Transfer",
+  },
+  {
+    id: "10",
+    invoices: "GSV567489241UI",
+    description: "Manual payment received for hiring support services",
+    amount: "$28,125.00",
+    paymentMethod: "Cash",
+  },
 ];
