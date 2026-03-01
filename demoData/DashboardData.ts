@@ -25,7 +25,7 @@ export const demoData = [
     image_name: j1,
   },
   {
-    id: "2",
+    invoiceId: "5833",
     full_name: "Devon Lane",
     email_address: "bill.sanders@example.com",
     actor: "Sarah Meadors",
@@ -238,7 +238,7 @@ export const candidateListData = [
     status: "Application Started",
   },
   {
-    id: "2",
+    invoiceId: "5833",
     full_name: "Marvin McKinney",
     email_address: "bill.sanders@example.com",
     mobile_number: "+16102458249",
@@ -502,5 +502,64 @@ export const paymentHistoryTableData = [
     description: "Manual payment received for hiring support services",
     amount: "$28,125.00",
     paymentMethod: "Cash",
+  },
+];
+
+export const advancedInvoiceTableData = [
+  {
+    invoiceId: "5833",
+    name: "Invoice#",
+    invoiceTotal: "$2018.25",
+    status: "Scheduled",
+    createdAt: "Sat Nov 29 2025 at 14:58:20",
+    dueDate: "Tue Dec 30 2025",
+  },
+  {
+    invoiceId: "5833",
+    name: "Bill sanders",
+    invoiceTotal: "$2018.25",
+    status: "Scheduled",
+    createdAt: "Sat Nov 29 2025 at 15:27:14",
+    dueDate: "Tue Dec 30 2025",
+  },
+  {
+    invoiceId: "5833",
+    name: "Georgia young",
+    invoiceTotal: "$2018.25",
+    status: "Paid",
+    createdAt: "Sat Nov 29 2025 at 15:27:14",
+    dueDate: "Tue Dec 30 2025",
+  },
+  {
+    invoiceId: "5833",
+    name: "Jessica hanson",
+    invoiceTotal: "$2018.25",
+    status: "Paid",
+    createdAt: "Sat Nov 29 2025 at 15:27:14",
+    dueDate: "Tue Dec 30 2025",
+  },
+  {
+    invoiceId: "5833",
+    name: "Nathan roberts",
+    invoiceTotal: "$2018.25",
+    status: "Paid",
+    createdAt: "Sat Nov 29 2025 at 15:27:14",
+    dueDate: "Tue Dec 30 2025",
+  },
+  {
+    invoiceId: "5833",
+    name: "Tanya hill",
+    invoiceTotal: "$2018.25",
+    status: "Paid",
+    createdAt: "Sat Nov 29 2025 at 15:27:14",
+    dueDate: "Tue Dec 30 2025",
+  },
+  {
+    invoiceId: "5833",
+    name: "Nathan roberts",
+    invoiceTotal: "$2018.25",
+    status: "Paid",
+    createdAt: "Sat Nov 29 2025 at 15:27:14",
+    dueDate: "Tue Dec 30 2025",
   },
 ];

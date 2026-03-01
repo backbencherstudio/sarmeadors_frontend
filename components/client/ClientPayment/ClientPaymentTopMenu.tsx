@@ -14,7 +14,7 @@ function ClientPaymentTopMenu({ title, id }: { title?: string; id?: string }) {
     isActive("/clients/admin") || isActive(`/client/client-payments/payment`);
   const activeProfilePath =
     isActive("/clients/profile") ||
-    isActive(`/client/client-my-candidates/previous-candidates`);
+    isActive(`/client/client-payments/advanced-invoice`);
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -53,7 +53,7 @@ function ClientPaymentTopMenu({ title, id }: { title?: string; id?: string }) {
               href={
                 title == "clients"
                   ? "/clients/profile/contact-and-address"
-                  : `/client/client-my-candidates/previous-candidates`
+                  : `/client/client-payments/advanced-invoice`
               }
               className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activeProfilePath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
             >
