@@ -4,6 +4,7 @@ import TableColAscDsc from "@/components/dashboard/TableColAscDsc";
 import DateIcon from "@/components/icon/DateIcon";
 import LinkSquareIcon from "@/components/icon/LinkSquareIcon";
 import { advancedInvoiceTableData } from "@/demoData/DashboardData";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function AdvancedInvoiceTable() {
@@ -120,9 +121,12 @@ export default function AdvancedInvoiceTable() {
       accessor: "action",
       width: "50px",
       formatter: (value: string, record: any) => (
-        <div className="p-3 bg-[#F3F4F6] hover:bg-[#111927] hover:border hover:border-[#384250] hover:text-white border border-[#E5E7EB] rounded-[8px] flex items-center justify-center cursor-pointer">
+        <Link
+          href={`/client/client-payments/advanced-invoice/invoice-details?id=${record?.id}`}
+          className="p-3 bg-[#F3F4F6] hover:bg-[#111927] hover:border hover:border-[#384250] hover:text-white border border-[#E5E7EB] rounded-[8px] flex items-center justify-center cursor-pointer"
+        >
           <LinkSquareIcon />
-        </div>
+        </Link>
       ),
     },
   ];
