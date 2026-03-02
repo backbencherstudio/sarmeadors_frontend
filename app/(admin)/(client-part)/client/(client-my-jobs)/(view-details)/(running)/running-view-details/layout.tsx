@@ -1,9 +1,10 @@
 import ReusableLineTabs from "@/components/reusable/ReusableLineTabs"
+import Link from "next/link"
 
 export default function PendingViewDetailsLayout({ children }) {
     const TabsData = [
         { label: "Job Description", link: "/client/running-view-details/job-description" },
-        { label: "Candidate Profile", link: "/client/running-view-details/candidate-profile" },
+        { label: "Candidate Profile", link: "/client/running-view-details/candidate-profile/personal-information" },
         { label: "Message(13)", link: "/client/running-view-details/message" }
     ]
 
@@ -57,9 +58,9 @@ export default function PendingViewDetailsLayout({ children }) {
                     </div>
 
                     {/* Invoice Button */}
-                    <button className="bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition">
+                    <Link href={'/client/Invoice-details'} className="bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition">
                         Invoice
-                    </button>
+                    </Link>
 
                 </div>
             </div>
