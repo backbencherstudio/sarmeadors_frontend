@@ -1,4 +1,5 @@
 "use client";
+
 import Header from "@/components/common/Header";
 import Sidebar from "@/components/common/Sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -8,6 +9,7 @@ interface AdminLayoutProps {
   children: React.ReactNode;
 }
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const queryClient = new QueryClient();
