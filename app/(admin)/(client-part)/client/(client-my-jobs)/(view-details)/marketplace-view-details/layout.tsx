@@ -1,6 +1,5 @@
 import BroadcastRequestModal from "@/components/client/ClientMyJobs/ShortTermJob/Marketplace/Applicants/BroadcastRequestModal"
 import ReusableLineTabs from "@/components/reusable/ReusableLineTabs"
-import { Edit } from "lucide-react"
 
 export default function PendingViewDetailsLayout({ children }) {
     const TabsData = [
