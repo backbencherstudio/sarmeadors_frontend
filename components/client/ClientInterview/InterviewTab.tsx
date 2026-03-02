@@ -8,7 +8,7 @@ export default function InterviewTab() {
   const pathname = usePathname();
 
   const isCalendar = pathname === "/client/client-interviews/calendar";
-  const isList = pathname === "/list";
+  const isList = pathname === "/client/client-interviews/calendar-list";
   return (
     <div className="inline-flex p-1 bg-white border border-[#E5E7EB] rounded-[10px]">
       <Link
@@ -24,7 +24,7 @@ export default function InterviewTab() {
       </Link>
 
       <Link
-        href="/list"
+        href="/client/client-interviews/calendar-list"
         className={`flex items-center gap-2 px-5 py-2 rounded-lg font-medium transition-all ${
           isList
             ? "bg-[#F3F4F6] text-[#111927] text-sm font-semibold leading-[142.857%] border border-[#E5E7EB] rounded-[8px]"
