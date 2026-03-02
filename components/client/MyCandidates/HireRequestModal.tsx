@@ -76,9 +76,9 @@ export default function HireRequestModal({
                 {/* LONG TERM */}
                 {jobType === "long-term" && (
                   <div>
-                    <p className="bg-[#E6F0FF] text-[#2B7FFF] leading-[142.857%] text-sm px-2 py-1.5 rounded-sm">
+                    <button className="bg-[#E6F0FF] text-[#2B7FFF] leading-[142.857%] text-sm px-2 py-1.5 rounded-sm">
                       For long-term booking you need to schedule an interview.
-                    </p>
+                    </button>
                     <div className="flex justify-end mt-8">
                       <button
                         onClick={onClose}
