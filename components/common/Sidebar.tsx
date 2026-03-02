@@ -99,7 +99,7 @@ const navItems: NavItem[] = [
   {
     label: "Interviews",
     icon: InterviewIcon,
-    href: "/client/client-interviews",
+    href: "/client/client-interviews/calendar",
     type: "client",
   },
   {
