@@ -1,3 +1,4 @@
+import PaymentSuccessfulModal from "@/components/client/ClientMyJobs/LongTermJob/Running/PaymentSuccessfulModal";
 import Image from "next/image";
 
 export default function InvoicePage() {
@@ -41,10 +42,8 @@ export default function InvoicePage() {
                     </select>
                 </div>
 
-                {/* Button */}
-                <button className="w-full mt-6 bg-black text-white font-medium py-3 rounded-lg text-sm hover:bg-gray-800">
-                    Confirm Payment
-                </button>
+                {/* Modal */}
+                <PaymentSuccessfulModal />
             </div>
         </div>
     );
