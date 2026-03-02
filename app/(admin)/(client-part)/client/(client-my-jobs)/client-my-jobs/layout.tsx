@@ -6,7 +6,7 @@ export default function MyJobsLayout({ children }: { children: React.ReactNode }
 
     const TabsData = [
         { label: "Short-Term Job", link: "/client/client-my-jobs/short-term-job/running" },
-        { label: "Long-Term Job", link: "/client/client-my-jobs/long-term-job" },
+        { label: "Long-Term Job", link: "/client/client-my-jobs/long-term-job/running" },
     ]
 
     return (

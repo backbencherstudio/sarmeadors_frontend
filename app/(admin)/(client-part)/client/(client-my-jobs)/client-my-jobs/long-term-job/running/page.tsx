@@ -1,4 +1,5 @@
 import CancelModal from "@/components/client/ClientMyJobs/ShortTermJob/Common/CancelModal";
+import Link from "next/link";
 
 export default function Page() {
     return (
@@ -78,9 +79,10 @@ export default function Page() {
 
                             {/* Buttons */}
                             <div className="flex gap-3">
-                                <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                {/* Details Link */}
+                                <Link href={'/client/running-view-details/job-description'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                                     View Details
-                                </button>
+                                </Link>
 
                                 {/* Cancel Modal */}
                                 <CancelModal />
