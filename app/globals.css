@@ -309,3 +309,13 @@ input:checked ~ .checkmark {
 .scrollbar-show-on-scroll:hover::-webkit-scrollbar-thumb:hover {
   background-color: rgb(156, 163, 175);
 }
+
+.fc-h-event {
+  background-color: transparent;
+  border: 1px solid black;
+  display: block;
+  text-align: center;
+}
+.fc-h-event .fc-event-title {
+  color: black !important;
+}
