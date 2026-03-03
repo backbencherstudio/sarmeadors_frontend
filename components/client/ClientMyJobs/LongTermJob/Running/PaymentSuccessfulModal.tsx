@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog"
 
 export default function PaymentSuccessfulModal() {
+
     return (
         <div>
             <Dialog>
