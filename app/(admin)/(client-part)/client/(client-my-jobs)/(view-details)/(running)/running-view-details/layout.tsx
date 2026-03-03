@@ -3,6 +3,7 @@ import Link from "next/link"
 
 export default function PendingViewDetailsLayout({ children }) {
     const TabsData = [
+        { label: "Attendance Calendar", link: "/client/running-view-details/attendance-calendar" },
         { label: "Job Description", link: "/client/running-view-details/job-description" },
         { label: "Candidate Profile", link: "/client/running-view-details/candidate-profile/personal-information" },
         { label: "Message(13)", link: "/client/running-view-details/message" }
