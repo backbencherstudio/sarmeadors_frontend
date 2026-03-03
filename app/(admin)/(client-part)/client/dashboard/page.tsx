@@ -1,4 +1,5 @@
 import StatCards from "@/components/dashboard/StatCards";
+import ProgressAvatar from "@/components/ProgressAvatar";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { PlusIcon, SearchIcon } from "lucide-react";
 import { cookies } from "next/headers";
@@ -62,9 +63,13 @@ async function CandidatesDashboard() {
     <div className="p-6">
       {/* Welcome Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold">
-          70%
-        </div>
+        <ProgressAvatar
+          src="/profile.png"
+          alt="User Avatar"
+          percentage={70}
+          width={66}
+          height={66}
+        />
         <div>
           <p className="text-sm text-gray-600">Welcome back, Alex</p>
           <p className="text-lg font-semibold text-blackColor">
@@ -73,7 +78,6 @@ async function CandidatesDashboard() {
         </div>
       </div>
 
-      {/* Hero Section */}
       <div className="bg-gradient-to-t px-8 from-[#049EC0]/5 to-[#049EC0]/30 rounded-2xl  mb-8 flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-blackColor mb-2">
