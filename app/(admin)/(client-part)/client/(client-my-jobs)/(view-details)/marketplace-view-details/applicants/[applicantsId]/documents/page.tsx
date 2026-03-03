@@ -1,6 +1,7 @@
 import DocumentIcon from "@/components/icon/DocumentIcon";
 
 export default function page() {
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="border rounded-[16px] px-12 py-10 text-center">
