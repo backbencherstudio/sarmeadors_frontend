@@ -1,11 +1,14 @@
 import ClientJobList from "@/components/client/ClientMyJobs/ClientJobList";
 import StatCards from "@/components/dashboard/StatCards";
+import SearchIcon from "@/components/icon/SearchIcon";
 import ProgressAvatar from "@/components/ProgressAvatar";
 import ButtonReuseable from "@/components/reusable/CustomButton";
-import { PlusIcon, SearchIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
+
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import NewCandidatesPage from "../client-my-candidates/new-candidates/page";
 
 async function CandidatesDashboard() {
   const cookieStore = await cookies();
@@ -61,7 +64,7 @@ async function CandidatesDashboard() {
   }
 
   return (
-    <div className="p-6">
+    <div className="md:p-6 p-3">
       {/* Welcome Header */}
       <div className="flex items-center gap-3 mb-6">
         <ProgressAvatar
@@ -79,9 +82,9 @@ async function CandidatesDashboard() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-t px-8 from-[#049EC0]/5 to-[#049EC0]/30 rounded-2xl  mb-8 flex items-center justify-between">
+      <div className="bg-gradient-to-t px-3 lg:px-8 from-[#049EC0]/5 to-[#049EC0]/30 rounded-2xl  mb-8 flex items-center justify-between">
         <div>
-          <h2 className="text-xl lg:text-2xl font-bold text-blackColor mb-2">
+          <h2 className="md:text-xl text-lg lg:text-2xl font-bold text-blackColor mb-2">
             All your nannies needs in one place
           </h2>
           <p className="text-gray-600 mb-6">
@@ -124,6 +127,21 @@ async function CandidatesDashboard() {
         <h3 className="text-lg font-semibold text-blackColor mb-4">My Job</h3>
         <div className="space-y-4">
           <ClientJobList />
+        </div>
+      </div>
+      <div className="mb-8">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-blackColor mb-4">
+            Recommended Candidates
+          </h3>
+          <ButtonReuseable
+            title="Discover Candidates"
+            icon={<SearchIcon className="w-4 h-4" />}
+            className=""
+          />
+        </div>
+        <div className="space-y-4">
+          <NewCandidatesPage />
         </div>
       </div>
     </div>

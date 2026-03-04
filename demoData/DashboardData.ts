@@ -570,3 +570,66 @@ export const advancedInvoiceTableData = [
     dueDate: "Tue Dec 30 2025",
   },
 ];
+
+export const PROFILES = [
+  {
+    id: 1,
+    image: "/candidates/candidates.png",
+    name: "Cameron Williamson",
+    locations: ["Miami", "New York", "Other Locations"],
+    roles: ["Nanny", "House Manager"],
+    experience: "08 Years",
+    description:
+      "I have cared for children from infancy through early adolescence, with a strong passion and focus on early childhood development.",
+  },
+  {
+    id: 2,
+    image: "/candidates/candidates-1.png",
+    name: "Darrell Steward",
+    locations: ["New York", "Miami"],
+    roles: ["Nanny", "House Manager"],
+    experience: "04 Years",
+    description:
+      "I have experience providing structured childcare, supporting developmental milestones, and creating engaging, age-appropriate activities.",
+  },
+  {
+    id: 3,
+    image: "/candidates/candidates-2.png",
+    name: "Darlene Robertson",
+    locations: ["Miami", "New York", "Other Locations"],
+    roles: ["Nanny", "Baby/Night Nurse"],
+    experience: "05 Years",
+    description:
+      "I have 8 years of experience as a nanny and house manager, working with children from infancy to school age.",
+  },
+  {
+    id: 4,
+    image: "/candidates/candidates.png",
+    name: "Darlene Robertson",
+    locations: ["Miami", "New York", "Other Locations"],
+    roles: ["Nanny", "Baby/Night Nurse"],
+    experience: "05 Years",
+    description:
+      "I have 8 years of experience as a nanny and house manager, working with children from infancy to school age.",
+  },
+  {
+    id: 5,
+    image: "/candidates/candidates-1.png",
+    name: "Cameron Williamson",
+    locations: ["Miami", "New York", "Other Locations"],
+    roles: ["Nanny", "House Manager"],
+    experience: "08 Years",
+    description:
+      "I have cared for children from infancy through early adolescence, with a strong passion and focus on early childhood development.",
+  },
+  {
+    id: 6,
+    image: "/candidates/candidates-2.png",
+    name: "Darrell Steward",
+    locations: ["New York", "Miami"],
+    roles: ["Nanny", "House Manager"],
+    experience: "04 Years",
+    description:
+      "I have experience providing structured childcare, supporting developmental milestones, and creating engaging, age-appropriate activities.",
+  },
+];
