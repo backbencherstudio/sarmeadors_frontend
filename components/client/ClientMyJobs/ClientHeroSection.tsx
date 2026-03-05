@@ -3,16 +3,16 @@ import { PlusIcon, SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
-function ClientHeroSection() {
+function ClientHeroSection({title, description}: {title?: string, description?: string}) {
   return (
     <div>
       <div className="bg-gradient-to-t px-3 lg:px-8 from-[#049EC0]/5 to-[#049EC0]/30 rounded-2xl  mb-8 flex items-center justify-between">
         <div>
           <h2 className="md:text-xl text-lg lg:text-2xl font-bold text-blackColor mb-2">
-            All your nannies needs in one place
+            {title || "All your nannies needs in one place"}
           </h2>
           <p className="text-gray-600 mb-6">
-            Source, discover, manage, and pay your flexible workforce.
+            {description || "Source, discover, manage, and pay your flexible workforce."}
           </p>
           <div className="flex gap-4">
             <ButtonReuseable
