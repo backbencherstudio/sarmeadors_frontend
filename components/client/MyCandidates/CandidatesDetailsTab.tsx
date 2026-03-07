@@ -17,7 +17,7 @@ export function CandidatesDetailsTab() {
     },
     {
       label: "Professional Information",
-      link: "/client/client-my-candidates/new-candidates/1/2",
+      link: "/client/client-my-candidates/new-candidates/1/professional-information",
       // icon: <HiOutlineDocumentText className="w-5 h-5" />,
     },
     {
