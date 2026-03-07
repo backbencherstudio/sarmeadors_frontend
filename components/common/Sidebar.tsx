@@ -114,6 +114,42 @@ const navItems: NavItem[] = [
     href: "/client/client-payments/payment",
     type: "client",
   },
+  {
+    label: "Dashboard",
+    icon: DashboardIcon,
+    href: "/candidate/dashboard",
+    type: "candidate",
+  },
+  {
+    label: "My Jobs",
+    icon: JobsIcon,
+    href: "/candidate/candidate-my-jobs/long-term-job/running",
+    type: "candidate",
+  },
+  {
+    label: "My Candidates",
+    icon: CandidateIcon,
+    href: "/candidate/candidate-my-candidates/new-candidates",
+    type: "candidate",
+  },
+  {
+    label: "Interviews",
+    icon: InterviewIcon,
+    href: "/candidate/candidate-interviews/calendar",
+    type: "candidate",
+  },
+  {
+    label: "Documents",
+    icon: DocumentIcon,
+    href: "/candidate/candidate-documents",
+    type: "candidate",
+  },
+  {
+    label: "Payments",
+    icon: PaymentIcon,
+    href: "/candidate/candidate-payments/payment",
+    type: "candidate",
+  }
 ];
 
 const moreItems = [

@@ -16,7 +16,6 @@ export default function Page() {
                     <div className="space-y-1">
                         <span className="font-bold">Job Description</span>
                         <p className="text-[#384250]">Two loving, hands-on parents are looking for a warm and attentive ROTA nanny to join their fully-staffed home to help care for their extremely bright and energetic 4 year old son and sweet and active 11 month old daughter. The ideal candidate is a positive, energetic, and intelligent person with excellent communication skills, who can demonstrate continuing interest and education in Early Childhood Education. The family will be homeschooling their children, and are looking for a nanny who ideally has a teaching background to assist in homeschooling.
-
                             The work schedule can be flexible for the ideal candidate – the nanny may choose to work 40-72 hours/week every other week on the ROTA schedule (for example, Monday-Friday every other week or Monday-Saturday every other week). There are currently two nannies, and the family is looking to add a third: the current ROTA nanny works 6am-6pm (7 days on, 7 days off), and the current second nanny works Mondays-Fridays (full-time, flexible schedule). Living-in during the on-duty weeks is a possible option for the right candidate... See more</p>
                     </div>
 
