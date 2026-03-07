@@ -8,6 +8,7 @@ import InformationIcon from "@/public/icon/InformationIcon";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { CancelModal } from "./CancelModal";
+import RescheduleModal from "./RescheduleModal";
 
 interface Interview {
   id: string;
@@ -27,6 +28,7 @@ interface Interview {
 
 export default function InterviewCard({ interview }: { interview: Interview }) {
   const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <div
       className={`rounded-xl border p-6 ${
@@ -84,7 +86,10 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
                 <button className="px-4 py-2 border border-[#E5E7EB] rounded-[8px] hover:bg-blue-100 cursor-pointer">
                   <LinkIcon />
                 </button>
-                <button className="flex items-center gap-x-1.5 px-4 py-2 border border-[#E5E7EB] hover:bg-green-100 rounded-[8px] cursor-pointer">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="flex items-center gap-x-1.5 px-4 py-2 border border-[#E5E7EB] hover:bg-green-100 rounded-[8px] cursor-pointer"
+                >
                   <TimeRescheduleIcon />
                   <span className="text-[#111927] font-medium text-sm leading-[142.857%]">
                     Reschedule
@@ -148,6 +153,7 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
             }}
           />
         )}
+        <RescheduleModal open={open} onClose={() => setOpen(false)} />
       </div>
     </div>
   );
