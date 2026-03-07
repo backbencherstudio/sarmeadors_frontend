@@ -12,7 +12,7 @@ function CandidateJobsAvailable() {
       location: "Miami, New York, Other Locations",
       price: "$34/hr",
       status: "Pending",
-      jobType: "short-term",
+      jobType: "Short-term",
       image: jobImage,
     },
     {
@@ -23,7 +23,7 @@ function CandidateJobsAvailable() {
       location: "Miami, New York, Other Locations",
       price: "$34/hr",
       status: "Pending",
-      jobType: "long-term",
+      jobType: "Long-term",
       image: jobImage,
     },
   ];
@@ -36,7 +36,7 @@ function CandidateJobsAvailable() {
         <ButtonReuseable
           title="Discover Candidates"
           icon={<SearchIcon className="w-4 h-4" />}
-          className=""
+          className="bg-blackColor text-white"
         />
       </div>
       <div className="space-y-4">
