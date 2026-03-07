@@ -1,5 +1,6 @@
 import UserInfo from "../clients/UserInfo";
 import StatCards from "../dashboard/StatCards";
+import CandidateCurrentJob from "./CandidateCurrentJob";
 import CandidateHeroSection from "./CandidateHeroSection";
 import CandidateJobsAvailable from "./CandidateJobsAvailable";
 
@@ -34,6 +35,9 @@ function CandidateDashboard() {
             Status Statistics
           </h3>
           <StatCards statCards={statCards} />
+        </div>
+        <div>
+          <CandidateCurrentJob />
         </div>
         <div className="mb-8">
           <CandidateJobsAvailable />
