@@ -221,7 +221,7 @@ export default function PaymentPage() {
             </div>
 
             {/* CTA Button */}
-            <button className="px-6 py-4 bg-[#111927] border border-[#384250] rounded-[12px] text-lg text-[#FCFCFD] font-semibold leading-[100%] w-full">
+            <button className="px-6 py-4 bg-[#111927] border border-[#384250] rounded-[12px] text-lg text-[#FCFCFD] font-semibold leading-[100%] w-full cursor-pointer hover:bg-[#111927]/90">
               Confirm & Pay $40
             </button>
 

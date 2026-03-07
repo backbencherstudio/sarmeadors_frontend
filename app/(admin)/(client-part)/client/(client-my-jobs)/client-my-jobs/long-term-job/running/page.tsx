@@ -1,7 +1,9 @@
 import CancelModal from "@/components/client/ClientMyJobs/ShortTermJob/Common/CancelModal";
 import ClockICon from "@/components/icon/ClockICon";
 import LocationIcon from "@/components/icon/LocationIcon";
+import MessageIcon from "@/components/icon/MessageIcon";
 import Link from "next/link";
+import { HiExternalLink } from "react-icons/hi";
 
 export default function Page() {
   return (
@@ -81,16 +83,20 @@ export default function Page() {
               </div>
 
               {/* Divider */}
-              <div className="border-t border-gray-200 my-4"></div>
+              <div className="border-t border-gray-200 my-4" />
 
               {/* Buttons */}
-              <div className="flex gap-3">
+              <div className="flex items-center gap-3">
+                <button className="px-4 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                  <MessageIcon />
+                </button>
                 {/* Details Link */}
                 <Link
                   href={"/client/running-view-details/job-description"}
-                  className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                  className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center gap-x-1.5 font-semibold"
                 >
-                  View Details
+                  <span>View Details</span>
+                  <HiExternalLink />
                 </Link>
 
                 {/* Cancel Modal */}

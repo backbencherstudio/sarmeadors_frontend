@@ -6,7 +6,7 @@ import { PROFILES } from "@/demoData/DashboardData";
 export default function NewCandidatesPage() {
   return (
     <div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-4">
         <h3 className="text-lg font-semibold text-blackColor mb-4">
           Recommended Candidates
         </h3>
