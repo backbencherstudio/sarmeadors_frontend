@@ -22,17 +22,13 @@ export default function ButtonReuseable({
   return (
     <button
       disabled={loading}
-      className={`md:py-3 disabled:bg-grayColor1 text-nowrap disabled:text-white/50 disabled:cursor-not-allowed md:px-4 text-sm md:text-base justify-center flex items-center gap-2 py-2.5 px-3 rounded-md md:rounded-lg cursor-pointer text-white bg-blackColor h-full hover:scale-105 transition-all  duration-200 ${className}`}
+      className={`md:py-3 disabled:bg-grayColor1! text-nowrap disabled:text-secondaryColor! disabled:cursor-not-allowed md:px-4 text-sm md:text-base justify-center flex items-center gap-2 py-2.5 px-3 rounded-md md:rounded-lg cursor-pointer bg-blackColor text-white h-full hover:scale-105 transition-all  duration-200 ${className}`}
       onClick={onClick}
       type={type}
     >
-      {loading ? (
-        sendingMsg
-      ) : (
-        <div className=" flex  h-full items-center gap-1.5">
-          {icon} {title} {rightIcon}
-        </div>
-      )}
+      <div className=" flex  h-full items-center gap-1.5">
+        {icon} {loading ? sendingMsg : title} {rightIcon}
+      </div>
     </button>
   );
 }

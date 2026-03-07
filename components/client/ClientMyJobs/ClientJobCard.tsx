@@ -28,7 +28,12 @@ function ClientJobCard({ job, loading }: ClientJobCardProps) {
         </div>
         <div>
           <h4 className="text-lg font-semibold text-blackColor leading-6">
-            {job.candidateName}
+            {job.candidateName}{" "}
+            <span
+              className={` px-2 py-1 text-sm rounded-sm ${job?.jobType === "long-term" ? "bg-blueColor/20 text-blueColor" : "bg-greenColor/20 text-greenColor"}`}
+            >
+              {job?.jobType && job?.jobType}
+            </span>
           </h4>
           <p className="text-base text-descriptionColor mt-1">
             {job.position} | {job.roles.join(" | ")}
