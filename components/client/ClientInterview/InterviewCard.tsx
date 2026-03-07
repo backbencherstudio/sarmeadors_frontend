@@ -1,3 +1,4 @@
+"use client";
 import LinkIcon from "@/components/icon/LinkIcon";
 import LocationIcon from "@/components/icon/LocationIcon";
 import MeetIcon from "@/components/icon/MeetIcon";
@@ -5,6 +6,9 @@ import TimeRescheduleIcon from "@/components/icon/TimeRescheduleIcon";
 import ZoomIcon from "@/components/icon/ZoomIcon";
 import InformationIcon from "@/public/icon/InformationIcon";
 import { X } from "lucide-react";
+import { useState } from "react";
+import { CancelModal } from "./CancelModal";
+import RescheduleModal from "./RescheduleModal";
 
 interface Interview {
   id: string;
@@ -23,6 +27,8 @@ interface Interview {
 }
 
 export default function InterviewCard({ interview }: { interview: Interview }) {
+  const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <div
       className={`rounded-xl border p-6 ${
@@ -77,22 +83,28 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
               </p>
 
               <div className="flex items-center gap-x-2">
-                <button className="px-4 py-2 border border-[#E5E7EB] rounded-[8px] cursor-pointer">
+                <button className="px-4 py-2 border border-[#E5E7EB] rounded-[8px] hover:bg-blue-100 cursor-pointer">
                   <LinkIcon />
                 </button>
-                <button className="flex items-center gap-x-1.5 px-4 py-2 border border-[#E5E7EB] rounded-[8px] cursor-pointer">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="flex items-center gap-x-1.5 px-4 py-2 border border-[#E5E7EB] hover:bg-green-100 rounded-[8px] cursor-pointer"
+                >
                   <TimeRescheduleIcon />
                   <span className="text-[#111927] font-medium text-sm leading-[142.857%]">
                     Reschedule
                   </span>
                 </button>
-                <button className="flex items-center px-4 py-2 border border-[#E5E7EB] rounded-[8px] cursor-pointer">
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className="flex items-center px-4 py-2 border border-[#E5E7EB] hover:bg-red-50 rounded-[8px] cursor-pointer"
+                >
                   <X className="h-5 text-[#CB121D]" />
                   <span className="text-[#CB121D] font-medium text-sm leading-[142.857%]">
                     Cancel
                   </span>
                 </button>
-                <button>
+                <button className="cursor-pointer">
                   <InformationIcon className="text-[#2B7FFF]" />
                 </button>
               </div>
@@ -132,6 +144,16 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
             </div>
           </div>
         </div>
+        {openModal && (
+          <CancelModal
+            onClose={() => setOpenModal(false)}
+            onDelete={() => {
+              console.log("Interview Deleted");
+              setOpenModal(false);
+            }}
+          />
+        )}
+        <RescheduleModal open={open} onClose={() => setOpen(false)} />
       </div>
     </div>
   );

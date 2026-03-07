@@ -3,7 +3,7 @@ import SearchIcon from "@/components/icon/SearchIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { PROFILES } from "@/demoData/DashboardData";
 
-export default function NewCandidatesPage() {
+export default function page() {
   return (
     <div>
       <div className="flex justify-between items-center mt-4">
@@ -13,9 +13,9 @@ export default function NewCandidatesPage() {
         <ButtonReuseable
           title="Discover Candidates"
           icon={<SearchIcon className="w-4 h-4" />}
-          className=""
         />
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
         {PROFILES?.map((profile) => (
           <CandidateCard key={profile.id} profile={profile} />
