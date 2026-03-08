@@ -15,7 +15,7 @@ function ClientJobCard({ job, loading }: ClientJobCardProps) {
   }
 
   return (
-    <div className="border flex flex-col md:flex-row justify-between border-borderColor p-5 rounded-lg">
+    <div className="border flex flex-col md:flex-row justify-between border-borderColor hover:shadow-xl transition-all duration-200 p-5 rounded-lg">
       <div className="flex gap-4 flex-col md:flex-row items-center">
         <div className="w-full md:w-[220px] md:h-[160px] lg:w-[280px] lg:h-[204px] h-[204px] rounded-lg overflow-hidden ">
           <Image

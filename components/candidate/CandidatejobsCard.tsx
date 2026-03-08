@@ -15,7 +15,7 @@ function CandidatejobsCard({ job }: { job: any }) {
 
   return (
     <div>
-      <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-5 space-y-4">
+      <div className="bg-white  border-l-4 border-white hover:shadow-xl  hover:border-[#6BA6FF] transition-all duration-200 shadow rounded-lg p-4 md:p-5 space-y-4">
         <div className="">
           <div className="flex justify-between items-center">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-2 mb-2">
