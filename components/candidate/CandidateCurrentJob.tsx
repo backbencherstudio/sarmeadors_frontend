@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, Clock, MapPin } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import CandidatejobsCard from "./CandidatejobsCard";
 
 interface CurrentJob {
@@ -48,13 +48,15 @@ const currentJobs: CurrentJob[] = [
     description:
       "Full responsibility for three energetic children, ages 5, 6, and 7, including crafting delicious and...",
     location: "71 Raglan Street, CROWNTHORP, Queensville(QLO), 4805",
-    startDate: "JAN 28, 2025",
-    endDate: "FEB 26, 2025",
+    startDate: "Mar 08, 2026",
+    endDate: "Mar 07, 2026",
     startTime: "10:00AM",
     endTime: "11:00PM",
     hourlyRate: "$35/hr",
     status: "scheduled",
-    checkIn: "JAN 29, 2025",
+    checkOut: "8:02 PM",
+    checkIn: "8:00 AM",
+    total: "12h 02m",
   },
   {
     id: 3,
@@ -65,13 +67,13 @@ const currentJobs: CurrentJob[] = [
     description:
       "Full responsibility for three energetic children, ages 5, 6, and 7, including crafting delicious and...",
     location: "71 Raglan Street, CROWNTHORP, Queensville(QLO), 4805",
-    startDate: "JAN 28, 2025",
+    startDate: "Mar 28, 2026",
     endDate: "FEB 26, 2025",
     startTime: "10:00AM",
     endTime: "11:00PM",
     hourlyRate: "$35/hr",
     status: "completed",
-    checkIn: "6:02 PM",
+    checkIn: "Mar 28, 2026",
     checkOut: "8:02 PM",
     total: "2h 05m",
   },
@@ -86,9 +88,8 @@ function CandidateCurrentJob() {
       </div>
 
       {currentJobs.map((job) => (
-       <CandidatejobsCard key={job.id} job={job} />
+        <CandidatejobsCard key={job.id} job={job} />
       ))}
-     
     </div>
   );
 }
