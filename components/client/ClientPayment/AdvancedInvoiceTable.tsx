@@ -50,7 +50,7 @@ export default function AdvancedInvoiceTable() {
             type="checkbox"
             checked={selectedRows.length === data.length && data.length > 0}
             onChange={toggleSelectAll}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300 accent-gray-900"
+            className="w-4 h-4 cursor-pointer rounded border-gray-300 accent-gray-9000"
           />
           <span>Invoice ID</span>
           <TableColAscDsc onClick={handleColShort} />
