@@ -315,4 +315,8 @@ input:checked ~ .checkmark {
   border: 1px solid var(--borderColor) !important;
   border-radius: 5px !important;
   display: block;
+  text-align: center;
+}
+.fc-h-event .fc-event-title {
+  color: black !important;
 }

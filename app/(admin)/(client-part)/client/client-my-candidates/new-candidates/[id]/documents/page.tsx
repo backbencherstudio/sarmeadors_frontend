@@ -1,5 +1,4 @@
 "use client";
-
 import DocumentCard from "@/components/client/Documents/DocumentCard";
 import { useState } from "react";
 
@@ -12,22 +11,39 @@ interface Document {
   linkText: string;
 }
 
-export default function DocumentsPage() {
+export default function page() {
   const [documents] = useState<Document[]>([
     {
       id: "1",
-      title: "Client - Agency Agreement Placement Fee & Refund Policy",
-      addedDate: "Please review and sign this agreement.",
+      title: "Nanny Resume",
+      addedDate:
+        "Make sure highlights your nanny and other childcare experience",
       isSigned: false,
-      linkText: "Sign Agreement",
+      linkText: "View",
     },
     {
       id: "2",
-      title: "Client - Agency Agreement Placement Fee & Refund Policy",
-      addedDate: "Please review and sign this agreement.",
+      title: "Driver's License or government issued card",
+      addedDate: "You've already signed this agreement.",
       signedDate: "Tue Dec 02 2025",
       isSigned: true,
-      linkText: "Sign Agreement",
+      linkText: "View",
+    },
+    {
+      id: "3",
+      title: "Letter(S) of recommendation",
+      addedDate: "You've already signed this agreement.",
+      signedDate: "Tue Dec 02 2025",
+      isSigned: true,
+      linkText: "View",
+    },
+    {
+      id: "4",
+      title: "Letter(S) of recommendation",
+      addedDate: "You've already signed this agreement.",
+      signedDate: "Tue Dec 02 2025",
+      isSigned: true,
+      linkText: "View",
     },
   ]);
 
@@ -36,15 +52,7 @@ export default function DocumentsPage() {
   };
 
   return (
-    <div className="w-full space-y-6 p-6">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row gap-4 md:items-end justify-between items-start">
-        <div className="space-y-4 w-full">
-          <h1 className="text-2xl font-bold text-gray-900">Agreements</h1>
-        </div>
-      </div>
-
-      {/* Cards */}
+    <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {documents.map((doc) => (
           <DocumentCard

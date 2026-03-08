@@ -47,7 +47,7 @@ export default function PaymentHistoryTable() {
             type="checkbox"
             checked={selectedRows.length === data.length && data.length > 0}
             onChange={toggleSelectAll}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300"
+            className="w-4 h-4 cursor-pointer rounded border-gray-300 accent-gray-900"
           />
           <span>Invoices</span>
           <TableColAscDsc onClick={handleColShort} />
@@ -61,7 +61,7 @@ export default function PaymentHistoryTable() {
             type="checkbox"
             checked={selectedRows.includes(record.id)}
             onChange={() => toggleRowSelection(record.id)}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300 gap-x-1.5"
+            className="w-4 h-4 cursor-pointer rounded border-gray-300 gap-x-1.5 accent-gray-900"
           />
           <span className="text-sm font-medium text-blackColor">{value}</span>
         </div>
