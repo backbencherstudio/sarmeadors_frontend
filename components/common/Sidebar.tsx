@@ -123,7 +123,7 @@ const navItems: NavItem[] = [
   {
     label: "My Jobs",
     icon: JobsIcon,
-    href: "/candidate/candidate-my-jobs/long-term-job/running",
+    href: "/candidate/candidate-my-jobs",
     type: "candidate",
   },
   {
@@ -149,7 +149,7 @@ const navItems: NavItem[] = [
     icon: PaymentIcon,
     href: "/candidate/candidate-payments/payment",
     type: "candidate",
-  }
+  },
 ];
 
 const moreItems = [
