@@ -22,18 +22,18 @@ function CandidateHeroSection({
               {description ||
                 "Source, discover, manage, and pay your flexible workforce."}
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-2 sm:gap-4">
               <ButtonReuseable
                 title="My Applications"
                 icon={<JobsIcon className="inline w-4 h-4 lg:w-4.5 lg:h-4.5" />}
-                className="px-4! py-2.5! lg:px-5! lg:py-3 lg:rounded-lg! rounded-sm! text-sm! lg:text-base! font-medium transition"
+                className="px-2! py-2.5! lg:px-5! lg:py-3 lg:rounded-lg! rounded-sm! text-sm! lg:text-base! font-medium transition"
               />
               <ButtonReuseable
                 title=" Discover Candaidates"
                 icon={
                   <GiftIcon className="inline w-4 h-4 lg:w-4.5 lg:h-4.5 " />
                 }
-                className=" text-blackColor! px-4! py-2.5! lg:px-5! lg:py-3 lg:rounded-lg! text-sm! lg:text-base! rounded-sm! font-medium bg-whiteColor! transition"
+                className=" text-blackColor! px-2! py-2.5! lg:px-5! lg:py-3 lg:rounded-lg! text-sm! lg:text-base! rounded-sm! font-medium bg-whiteColor! transition"
               />
             </div>
           </div>
