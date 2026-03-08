@@ -65,13 +65,16 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="focus:right-0 focus-visible:border-0 w-full">
                     <SelectValue placeholder="Select Type" />
                   </SelectTrigger>
 
                   <SelectContent>
-                    <SelectItem value="email">Email</SelectItem>
-                    <SelectItem value="notification">Notification</SelectItem>
+                    <SelectItem value="candidate">Candidate</SelectItem>
+                    <SelectItem value="job">Job</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                    <SelectItem value="reference">Reference</SelectItem>
+                    <SelectItem value="event-care">Event Care</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -87,13 +90,29 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full focus:right-0">
+                  <SelectTrigger className="w-full focus:right-0 focus-visible:border-0">
                     <SelectValue placeholder="Select Status" />
                   </SelectTrigger>
 
                   <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
+                    <SelectItem value="pre-application">
+                      Pre Application
+                    </SelectItem>
+                    <SelectItem value="application-started">
+                      Application Started
+                    </SelectItem>
+                    <SelectItem value="applied">Applied</SelectItem>
+                    <SelectItem value="rejected">Rejected</SelectItem>
+                    <SelectItem value="application-approved">
+                      Application Approved
+                    </SelectItem>
+                    <SelectItem value="interview-complete">
+                      Interview Complete
+                    </SelectItem>
+                    <SelectItem value="profile-complete">
+                      Profile Complete
+                    </SelectItem>
+                    <SelectItem value="hired">Hired</SelectItem>
                   </SelectContent>
                 </Select>
               )}
