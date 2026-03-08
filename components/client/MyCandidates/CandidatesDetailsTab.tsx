@@ -22,18 +22,13 @@ export function CandidatesDetailsTab() {
     },
     {
       label: "Documents",
-      link: "/client/client-my-jobs/short-term-job/marketplace",
+      link: "/client/client-my-candidates/new-candidates/1/documents",
       // icon: <MdSms className="w-5 h-5" />,
     },
     {
       label: "Additional Information",
-      link: "/client/client-my-jobs/short-term-job/completed",
+      link: "/client/client-my-candidates/new-candidates/1/additional-information",
       // icon: <FaTrophy className="w-5 h-5" />,
-    },
-    {
-      label: "Reviews",
-      link: "/client/client-my-jobs/short-term-job/canceled",
-      // icon: <HiOutlineLockClosed className="w-5 h-5" />,
     },
   ];
 
