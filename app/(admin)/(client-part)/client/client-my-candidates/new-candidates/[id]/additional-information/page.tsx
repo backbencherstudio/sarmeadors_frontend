@@ -1,7 +1,9 @@
+import { NannyForm } from "@/components/client/AdditionalInformation/NannyForm";
+
 export default function AdditionalInformation() {
   return (
-    <div>
-      <h1>jddjdjdjdjdj</h1>
+    <div className="p-6 border border-gray-300 rounded-xl">
+      <NannyForm />
     </div>
   );
 }
