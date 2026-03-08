@@ -1,7 +1,9 @@
+import CandidateJobCalender from "@/components/candidate/CandidateJobCalender";
+
 function page() {
   return (
     <div>
-      <div>sdkfjals;k</div>
+      <CandidateJobCalender />
     </div>
   );
 }
