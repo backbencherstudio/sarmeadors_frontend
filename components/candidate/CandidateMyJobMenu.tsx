@@ -26,7 +26,7 @@ function CandidateMyJobMenu() {
   return (
     <div className=" flex justify-between gap-3 items-center">
       <h2 className="md:text-xl text-lg font-semibold ">My Jobs</h2>
-      <div className="flex max-w-[220px] border border-borderColor justify-between w-full p-1 gap-1 items-center rounded-sm bg-transparent ">
+      <div className="grid grid-cols-2 max-w-[220px] border border-borderColor  w-full p-1 gap-1 items-center rounded-sm bg-transparent ">
         {menuItems.map((item) => (
           <LinkReuseable
             key={item.href}
