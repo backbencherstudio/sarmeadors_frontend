@@ -1,3 +1,4 @@
+import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import {
   Select,
   SelectContent,
@@ -42,11 +43,10 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
             Name <span className="text-red-500">*</span>
           </label>
 
-          <input
-            type="text"
-            placeholder='Name this template for internal use, e.g., "Ask candidate to schedule first interview."'
-            {...register("name", { required: "Name is required" })}
-            className="w-full rounded-md border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-gray-400"
+          <ReusableInput
+            {...register("name")}
+            placeholder="Name this template for internal use, e.g., Ask candidate to schedule first interview."
+            className="w-full"
           />
 
           {errors.name && (
@@ -65,7 +65,7 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="focus:right-0 focus-visible:border-0 w-full">
+                  <SelectTrigger className="w-full py-5">
                     <SelectValue placeholder="Select Type" />
                   </SelectTrigger>
 
@@ -90,7 +90,7 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full focus:right-0 focus-visible:border-0">
+                  <SelectTrigger className="w-full py-5">
                     <SelectValue placeholder="Select Status" />
                   </SelectTrigger>
 

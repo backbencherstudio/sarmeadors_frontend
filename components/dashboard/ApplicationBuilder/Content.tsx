@@ -1,5 +1,6 @@
 "use client";
 
+import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import { Eye, Info, Trash2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 
@@ -32,16 +33,14 @@ export default function ContentStep({ onBack }: { onBack?: () => void }) {
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium">Subject</label>
 
-          <div className="flex gap-3">
-            <input
-              {...register("subject")}
-              placeholder="Hello"
-              className="flex-1 border rounded-md px-4 py-2 text-sm"
-            />
+          <div className="flex gap-3 w-full">
+            <div className="w-full">
+              <ReusableInput {...register("subject")} placeholder="Hello" />
+            </div>
 
             <button
               type="button"
-              className="px-4 py-2 rounded-md border text-sm hover:bg-gray-50"
+              className="px-4 py-2 rounded-md border text-sm hover:bg-gray-50 text-nowrap cursor-pointer"
             >
               Add Tag
             </button>
