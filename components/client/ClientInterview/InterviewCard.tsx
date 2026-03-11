@@ -31,11 +31,7 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className={`rounded-xl border p-6 ${
-        interview.isHighlighted
-          ? "border-l-[#96C0FF] border-l-4 border-[#96C0FF]"
-          : "bg-[#F9FAFB]"
-      }`}
+      className={`rounded-xl p-6 border-l-4 hover:border-l-[#96C0FF] border  hover:border-[#96C0FF] bg-[#F9FAFB] hover:shadow-lg`}
     >
       <div>
         <div className="flex items-start gap-x-6">
@@ -77,7 +73,7 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
               </div>
               <p className="text-sm text-[#778593] leading-[142.857%] mb-3">
                 {interview.description}{" "}
-                <button className="text-[#0065FF] hover:underline">
+                <button className="text-[#0065FF] hover:underline cursor-pointer">
                   View details
                 </button>
               </p>
