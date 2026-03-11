@@ -312,8 +312,10 @@ input:checked ~ .checkmark {
 }
 
 .fc-h-event {
-  background-color: transparent;
-  border: 1px solid black;
+  border: 1px solid var(--borderColor) !important;
+  border-radius: 5px !important;
+  display: block;
+  text-align: center;
 }
 .fc-h-event .fc-event-title {
   color: black !important;
@@ -329,4 +331,11 @@ input:checked ~ .checkmark {
 .fc .fc-daygrid-day-top {
   display: block;
   padding: 10px;
+}
+
+.fc-h-event {
+  background-color: transparent;
+  border: 1px solid var(--fc-event-border-color);
+  display: block;
+  margin: 5px 0;
 }
