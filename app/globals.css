@@ -337,5 +337,13 @@ input:checked ~ .checkmark {
   background-color: transparent;
   border: 1px solid var(--fc-event-border-color);
   display: block;
-  margin: 5px 0;
+  padding: 3px 10px;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+  font-weight: 700;
+  background: #111927;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
