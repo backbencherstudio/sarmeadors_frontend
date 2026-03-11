@@ -1,12 +1,11 @@
-import React from 'react'
+import CandidateListJobs from "@/components/candidate/CandidateListJobs";
 
 function page() {
   return (
     <div>
-      asdfasfd
-      <div>afdsasd</div>
+      <CandidateListJobs />
     </div>
-  )
+  );
 }
 
-export default page
+export default page;

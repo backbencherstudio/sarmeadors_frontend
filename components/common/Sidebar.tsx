@@ -211,6 +211,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   );
   const [isLoggedIn, setIsLoggedIn] = useState("admin");
   const mainItems = navItems.filter((item) => item.type === isLoggedIn);
+
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     setIsLoggedIn(isLoggedIn || "admin");
@@ -231,22 +232,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
   return (
     <div className="h-screen  ">
-      {/* Overlay for mobile */}
-      {isOpen && (
-        <div
-          className="absolute top-0 left-0 w-full h-full z-40 md:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Sidebar container */}
       <div
         className={`
-          ${
-            isOpen
-              ? "z-50 h-full overflow-hidden absolute top-0 left-0"
-              : "h-full"
-          }
+          h-full
           flex flex-col
           min-h-[calc(100vh-100px)] 
           bg-grayColor1 
