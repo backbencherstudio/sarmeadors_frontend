@@ -1,7 +1,8 @@
+import LinkIcon from "@/components/icon/LinkIcon";
 import MeetIcon from "@/components/icon/MeetIcon";
 import TimeRescheduleIcon from "@/components/icon/TimeRescheduleIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
-import { Ellipsis, Link, X } from "lucide-react";
+import { Ellipsis, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 function InterviewScheduleInfoDialog({
@@ -66,7 +67,7 @@ function InterviewScheduleInfoDialog({
                   className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => alert("Copy Link clicked")}
                 >
-                  <Link size={16} />
+                  <LinkIcon />
                   Copy Link
                 </button>
                 <button

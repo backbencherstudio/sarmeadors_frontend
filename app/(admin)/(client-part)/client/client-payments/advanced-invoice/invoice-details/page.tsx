@@ -9,7 +9,7 @@ export default function InvoiceDetails() {
     <div className="p-6">
       <div className="mb-6">
         <Link
-          href="/client/client-payments/advanced-invoice/view-invoice"
+          href="/client/client-payments/advanced-invoice/invoice-details"
           className="text-lg font-semibold flex items-center gap-3 w-fit"
         >
           <ArrowLeftIcon />
