@@ -314,9 +314,19 @@ input:checked ~ .checkmark {
 .fc-h-event {
   background-color: transparent;
   border: 1px solid black;
-  display: block;
-  text-align: center;
 }
 .fc-h-event .fc-event-title {
   color: black !important;
+}
+
+.fc .fc-daygrid-day-number {
+  padding: 4px;
+  z-index: 4;
+  font-weight: 600;
+  justify-content: flex-start;
+  font-size: large;
+}
+.fc .fc-daygrid-day-top {
+  display: block;
+  padding: 10px;
 }
