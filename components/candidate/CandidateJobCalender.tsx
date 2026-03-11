@@ -7,197 +7,207 @@ import FullCalendar from "@fullcalendar/react";
 import { Search } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import ArrowRightIcon from "../icon/ArrowRightIcon";
-
-type JobFilter = "all" | "short" | "long";
+import CandidateScheduleInfoDialog from "./CandidateScheduleInfoDialog";
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
+const toCurrentMonthDate = (day: number) =>
+  `${currentYear}-${currentMonth}-${String(day).padStart(2, "0")}`;
 
 const jobEvents: EventInput[] = [
   {
     id: "1",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-01",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(1),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "2",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-02",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(2),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "3",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-03",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(3),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "4",
-    title: "Jacob Jones - 4:23 pm",
-    start: "2026-01-03",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(4),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
   },
   {
     id: "5",
-    title: "Courtney He... - 3:25 pm",
-    start: "2026-01-03",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(3),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
   {
     id: "6",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-07",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(7),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "7",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-08",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(8),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "8",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-09",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(9),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "9",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-10",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(10),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "10",
-    title: "Jacob Jones - 4:23 pm",
-    start: "2026-01-10",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(10),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
   },
   {
     id: "11",
-    title: "Courtney He... - 3:25 pm",
-    start: "2026-01-10",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(11),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
   {
     id: "12",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-14",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(14),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "13",
-    title: "Jacob Jones - 4:23 pm",
-    start: "2026-01-14",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(14),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
   },
   {
     id: "14",
-    title: "Courtney He... - 3:25 pm",
-    start: "2026-01-14",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(14),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
   {
     id: "15",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-17",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(17),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "16",
-    title: "Jacob Jones - 4:23 pm",
-    start: "2026-01-17",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(17),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
   },
   {
     id: "17",
-    title: "Courtney He... - 3:25 pm",
-    start: "2026-01-17",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(17),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
   {
     id: "18",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-21",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(21),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "19",
-    title: "Jacob Jones - 4:23 pm",
-    start: "2026-01-21",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(21),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
   },
   {
     id: "20",
-    title: "Courtney He... - 3:25 pm",
-    start: "2026-01-21",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(21),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
   {
     id: "21",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-23",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(23),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "22",
-    title: "Jacob Jones - 4:23 pm",
-    start: "2026-01-23",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(23),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
   },
   {
     id: "23",
-    title: "Courtney He... - 3:25 pm",
-    start: "2026-01-24",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(24),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
   {
     id: "24",
-    title: "Darlene Rob... - 3:35 pm",
-    start: "2026-01-30",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(30),
     allDay: true,
-    extendedProps: { type: "long", dotColor: "#3B82F6" },
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
   },
   {
     id: "25",
-    title: "Jacob Jones - 4:23 pm",
-    start: "2026-01-31",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(31),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
   },
   {
     id: "26",
-    title: "Courtney He... - 3:25 pm",
-    start: "2026-01-31",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(31),
     allDay: true,
-    extendedProps: { type: "short", dotColor: "#16A34A" },
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
 ];
 
+type JobFilter = "all" | "short" | "long";
+
 function CandidateJobCalender() {
   const calendarRef = useRef<FullCalendar | null>(null);
-  const [currentTitle, setCurrentTitle] = useState("January 2026");
+  const [currentTitle, setCurrentTitle] = useState(
+    new Date().toLocaleString("en-US", { month: "long", year: "numeric" }),
+  );
+  const [scheduledData, setScheduledData] = useState<any>(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState<JobFilter>("all");
   const filterOptions: {
     key: JobFilter;
@@ -211,7 +221,9 @@ function CandidateJobCalender() {
 
   const filteredEvents = useMemo(() => {
     if (filter === "all") return jobEvents;
-    return jobEvents.filter((event) => event.extendedProps?.type === filter);
+    return jobEvents.filter(
+      (event) => (event.extendedProps as any)?.type === filter,
+    );
   }, [filter]);
 
   const syncTitle = () => {
@@ -240,17 +252,45 @@ function CandidateJobCalender() {
     api.today();
     syncTitle();
   };
+  const handleOpen = (event: any) => {
+    console.log(event, "CHECK");
+    // Handle event click to open details
+    setScheduledData(event);
+    setIsOpen(true);
+  };
 
   const renderEvent = (eventInfo: EventContentArg) => {
-    const dotColor = eventInfo.event.extendedProps.dotColor || "#fff";
+    const event = eventInfo.event;
+    const { type, dotColor, jobTime } = event.extendedProps as {
+      type: string;
+      dotColor: string;
+      jobTime: string;
+    };
+
+    // Full object access
+    const fullEventObject = {
+      id: event.id,
+      title: event.title,
+      start: event.start ? new Date(event.start).toISOString() : null,
+      allDay: event.allDay,
+      type,
+      dotColor,
+      jobTime,
+    };
+
     return (
-      <div className="flex items-center gap-1.5 py-1! text-[12px] bg-whiteColor! px-2! border border-borderColor! leading-4 text-headerColor w-full truncate">
+      <button
+        onClick={() => handleOpen(fullEventObject)}
+        className="flex items-center cursor-pointer gap-1.5 py-1! text-[12px] bg-whiteColor! px-2! border border-borderColor! leading-4 text-headerColor w-full truncate"
+      >
         <span
           className="w-2.5 h-2.5 rounded-full shrink-0"
-          style={{ backgroundColor: dotColor }}
+          style={{ backgroundColor: dotColor || "#fff" }}
         />
-        <span className="truncate">{eventInfo.event.title}</span>
-      </div>
+        <span className="truncate">
+          {event.title} ({jobTime})
+        </span>
+      </button>
     );
   };
 
@@ -285,26 +325,28 @@ function CandidateJobCalender() {
             <ArrowRightIcon className="h-4 w-4" />
           </button>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 flex-col gap-3 md:flex-row md:items-center">
           <div className="rounded-md border border-borderColor px-4 py-3">
             <Search className="h-5 w-5 text-blackColor" />
           </div>
-          <div className="flex items-center gap-3 rounded-md border border-borderColor px-2 py-1.5">
-            {filterOptions.map((item) => (
-              <button
-                key={item.key}
-                type="button"
-                onClick={() => setFilter(item.key)}
-                className={`flex items-center gap-1 cursor-pointer rounded-sm text-blackColor py-2 px-3 text-sm font-medium ${
-                  filter === item.key
-                    ? "bg-bgColor border border-borderColor"
-                    : "text-secondaryColor"
-                }`}
-              >
-                <span className={`h-3 w-3 rounded-full ${item.dotClass}`} />
-                {item.label}
-              </button>
-            ))}
+          <div className="min-w-0 max-w-full overflow-x-auto rounded-md border border-borderColor px-2 py-1.5 md:w-[411px]">
+            <div className="flex w-max min-w-max flex-nowrap items-center gap-3">
+              {filterOptions.map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => setFilter(item.key)}
+                  className={`flex shrink-0 items-center gap-1 cursor-pointer rounded-sm py-2 px-3 text-sm font-medium ${
+                    filter === item.key
+                      ? "bg-bgColor border border-borderColor"
+                      : "text-secondaryColor"
+                  }`}
+                >
+                  <span className={`h-3 w-3 rounded-full ${item.dotClass}`} />
+                  {item.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -314,7 +356,7 @@ function CandidateJobCalender() {
           ref={calendarRef}
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
-          initialDate="2026-01-01"
+          initialDate={new Date()}
           headerToolbar={false}
           events={filteredEvents}
           eventContent={renderEvent}
@@ -324,6 +366,14 @@ function CandidateJobCalender() {
           datesSet={syncTitle}
         />
       </div>
+
+      {isOpen && scheduledData && (
+        <CandidateScheduleInfoDialog
+          isOpen={isOpen}
+          setOpen={() => setIsOpen(false)}
+          data={scheduledData}
+        />
+      )}
     </div>
   );
 }

@@ -320,3 +320,12 @@ input:checked ~ .checkmark {
 .fc-h-event .fc-event-title {
   color: black !important;
 }
+
+.fc-scrollgrid-sync-inner {
+  padding: 16px 0px;
+}
+
+.\[\&_\.fc-daygrid-day\]\:border-borderColor .fc-daygrid-day {
+  border-color: #e5e7eb;
+  padding: 5px !important;
+}
