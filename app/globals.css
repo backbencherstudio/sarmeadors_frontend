@@ -321,11 +321,29 @@ input:checked ~ .checkmark {
   color: black !important;
 }
 
-.fc-scrollgrid-sync-inner {
-  padding: 16px 0px;
+.fc .fc-daygrid-day-number {
+  padding: 4px;
+  z-index: 4;
+  font-weight: 600;
+  justify-content: flex-start;
+  font-size: large;
+}
+.fc .fc-daygrid-day-top {
+  display: block;
+  padding: 10px;
 }
 
-.\[\&_\.fc-daygrid-day\]\:border-borderColor .fc-daygrid-day {
-  border-color: #e5e7eb;
-  padding: 5px !important;
+.fc-h-event {
+  background-color: transparent;
+  border: 1px solid var(--fc-event-border-color);
+  display: block;
+  padding: 3px 10px;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+  font-weight: 700;
+  background: #111927;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
