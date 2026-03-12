@@ -1,11 +1,12 @@
 "use client";
 import { Skeleton } from "../ui/skeleton";
+interface StatCard {
+  title: string;
+  value: number;
+  percentage?: string;
+}
 
-export default function StatCards({
-  statCards,
-}: {
-  statCards: { title: string; value: number; percentage: string }[];
-}) {
+export default function StatCards({ statCards }: { statCards: StatCard[] }) {
   const isLoading = false;
 
   return (
@@ -37,7 +38,7 @@ export default function StatCards({
                   {card.value}
                 </div>
                 <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
-                  ({card.percentage})
+                  {card.percentage ? <span>{card.percentage}</span> : null}
                 </span>
               </div>
 

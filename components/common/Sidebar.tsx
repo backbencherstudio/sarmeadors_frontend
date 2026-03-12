@@ -93,7 +93,7 @@ const navItems: NavItem[] = [
   {
     label: "My Candidates",
     icon: CandidateIcon,
-    href: "/client/client-my-candidates/new-candidates",
+    href: "/client/client-my-candidates/new-candidates/new-candidates",
     type: "client",
   },
   {
@@ -114,22 +114,68 @@ const navItems: NavItem[] = [
     href: "/client/client-payments/payment",
     type: "client",
   },
+  {
+    label: "Dashboard",
+    icon: DashboardIcon,
+    href: "/candidate/dashboard",
+    type: "candidate",
+  },
+  {
+    label: "My Jobs",
+    icon: JobsIcon,
+    href: "/candidate/candidate-my-jobs",
+    type: "candidate",
+  },
+  {
+    label: "My Candidates",
+    icon: CandidateIcon,
+    href: "/candidate/candidate-my-candidates/new-candidates",
+    type: "candidate",
+  },
+  {
+    label: "Interviews",
+    icon: InterviewIcon,
+    href: "/candidate/candidate-interviews/calendar",
+    type: "candidate",
+  },
+  {
+    label: "Documents",
+    icon: DocumentIcon,
+    href: "/candidate/candidate-documents",
+    type: "candidate",
+  },
+  {
+    label: "Payments",
+    icon: PaymentIcon,
+    href: "/candidate/candidate-payments/payment",
+    type: "candidate",
+  },
 ];
 
 const moreItems = [
   {
-    icon: PaymentIcon,
-    label: "Billing",
+    // icon: PaymentIcon,
+    label: "Templates",
     href: "/dashboard/billing",
   },
   {
-    icon: SupportIcon,
-    label: "Help & Support",
+    // icon: SupportIcon,
+    label: "Settings",
     href: "/dashboard/help-support",
   },
   {
-    icon: SettingIcon,
-    label: "Settings",
+    // icon: SettingIcon,
+    label: "Application Builder",
+    href: "/dashboard/application-builder?step=configuration",
+  },
+  {
+    // icon: SettingIcon,
+    label: "Records",
+    href: "/dashboard/settings",
+  },
+  {
+    // icon: SettingIcon,
+    label: "Sub menu",
     href: "/dashboard/settings",
   },
 ];
@@ -367,11 +413,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                             >
                               <div className="flex gap-2 items-center">
                                 <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                                  <sub.icon
+                                  {/* <sub.icon
                                     className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
                                       subActive ? "opacity-100" : ""
                                     }`}
-                                  />
+                                  /> */}
                                 </div>
                                 <span
                                   className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${

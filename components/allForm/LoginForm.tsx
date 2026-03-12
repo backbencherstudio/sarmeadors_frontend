@@ -30,7 +30,7 @@ export default function LoginForm() {
       password: "",
     },
   });
-  const passwordValue = watch("password");
+
   const router = useRouter();
 
   const onSubmit = async (data: LoginFormInputs) => {
@@ -50,8 +50,21 @@ export default function LoginForm() {
       //   reset();
       //   setIsDisable(false);
       // }
-      router.push(data.password === "123456" ? "/new-password" : "/");
-      localStorage.setItem("isLoggedIn", "client");
+      router.push(
+        data.email === "client@gmail.com"
+          ? "/client/dashboard"
+          : data.email === "candidate@gmail.com"
+            ? "/candidate/dashboard"
+            : "/",
+      );
+      localStorage.setItem(
+        "isLoggedIn",
+        data.email === "client@gmail.com"
+          ? "client"
+          : data.email === "candidate@gmail.com"
+            ? "candidate"
+            : "admin",
+      );
     } catch (error) {
       toast.error("Wrong Email or Password");
       setIsDisable(false);

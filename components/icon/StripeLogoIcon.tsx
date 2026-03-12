@@ -7,7 +7,7 @@ export default function StripeLogoIcon() {
       viewBox="0 0 16 16"
       fill="none"
     >
-      <g clip-path="url(#clip0_7795_17606)">
+      <g clipPath="url(#clip0_7795_17606)">
         <mask
           id="mask0_7795_17606"
           maskUnits="userSpaceOnUse"
@@ -20,7 +20,7 @@ export default function StripeLogoIcon() {
             d="M2 0.75H14C14.6904 0.75 15.25 1.30964 15.25 2V14C15.25 14.6904 14.6904 15.25 14 15.25H2C1.30964 15.25 0.75 14.6904 0.75 14V2C0.75 1.30964 1.30964 0.75 2 0.75Z"
             fill="white"
             stroke="white"
-            stroke-width="1.5"
+            strokeWidth="1.5"
           />
         </mask>
         <g mask="url(#mask0_7795_17606)">
