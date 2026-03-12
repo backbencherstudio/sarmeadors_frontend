@@ -665,7 +665,7 @@ export const currentJobs = [
     startTime: "10:00AM",
     endTime: "11:00PM",
     hourlyRate: "$35/hr",
-    status: "scheduled",
+    status: "cancel",
     checkOut: "8:02 PM",
     checkIn: "8:00 AM",
     total: "12h 02m",

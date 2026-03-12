@@ -15,6 +15,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
+import AppliedJobIcon from "../icon/ApplideJobIcon";
 import CalenderIcon from "../icon/CalenderIcon";
 import CandidateIcon from "../icon/CandidateIcon";
 import ClientIcon from "../icon/ClientIcon";
@@ -22,10 +23,12 @@ import DashboardIcon from "../icon/DashboardIcon";
 import DocumentIcon from "../icon/DocumentIcon";
 import InterviewIcon from "../icon/InterviewIcon";
 import LogoutIcon from "../icon/LogoutIcon";
+import MultiPleUserIcon from "../icon/MultiPleUserIcon";
 import PaymentIcon from "../icon/PaymentIcon";
 import PlatFormIcon from "../icon/PlatFormIcon";
 import SettingIcon from "../icon/SettingIcon";
 import SupportIcon from "../icon/SupportIcon";
+import MyAvailabilityIcon from "../icon/MyAvailabilityIcon";
 
 interface NavItem {
   icon: any;
@@ -126,28 +129,36 @@ const navItems: NavItem[] = [
     href: "/candidate/candidate-my-jobs",
     type: "candidate",
   },
-  {
-    label: "My Candidates",
-    icon: CandidateIcon,
-    href: "/candidate/candidate-my-candidates/new-candidates",
-    type: "candidate",
-  },
+
   {
     label: "Interviews",
     icon: InterviewIcon,
     href: "/candidate/candidate-interviews/calendar",
     type: "candidate",
   },
+
+  {
+    label: "Applied Job",
+    icon: AppliedJobIcon,
+    href: "/candidate/candidate-applied-job",
+    type: "candidate",
+  },
+  {
+    label: "My Clients",
+    icon: MultiPleUserIcon,
+    href: "/candidate/my-clients",
+    type: "candidate",
+  },
+  {
+    label: "My Availability",
+    icon: MyAvailabilityIcon,
+    href: "/candidate/my-availability",
+    type: "candidate",
+  },
   {
     label: "Documents",
     icon: DocumentIcon,
     href: "/candidate/candidate-documents",
-    type: "candidate",
-  },
-  {
-    label: "Payments",
-    icon: PaymentIcon,
-    href: "/candidate/candidate-payments/payment",
     type: "candidate",
   },
 ];

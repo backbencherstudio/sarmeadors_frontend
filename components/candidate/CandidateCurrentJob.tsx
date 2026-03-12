@@ -30,10 +30,11 @@ function CandidateCurrentJob() {
         <AlertCircle className="w-5 h-5 text-gray-700" />
         <h2 className="text-lg font-semibold text-blackColor">Running Job</h2>
       </div>
-
-      {currentJobs.map((job) => (
-        <CandidatejobsCard key={job.id} job={job} />
-      ))}
+      <div className="">
+        {currentJobs.map((job) => (
+          <CandidatejobsCard key={job.id} job={job} />
+        ))}
+      </div>
     </div>
   );
 }

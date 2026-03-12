@@ -1,18 +1,26 @@
 "use client";
 
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { currentJobs } from "@/demoData/DashboardData";
 import dayjs, { Dayjs } from "dayjs";
-import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import ArrowRightIcon from "../icon/ArrowRightIcon";
+import SelecteInputField from "../common/InputFiled/SelecteInputField";
+import DateIcon from "../icon/DateIcon";
 import CandidatejobsCard from "./CandidatejobsCard";
 
 type JobFilter = "all" | "short" | "long";
+type JobStatusFilter = "all" | "running" | "cancel" | "complete";
 
 function CandidateListJobs() {
-  const jobs = currentJobs;
   const [filter, setFilter] = useState<JobFilter>("all");
-  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+  const [statusFilter, setStatusFilter] = useState<JobStatusFilter>("all");
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const filterOptions: {
     key: JobFilter;
@@ -24,14 +32,23 @@ function CandidateListJobs() {
     { key: "long", label: "Long-Term Jobs", dotClass: "bg-blueColor" },
   ];
 
+  const statusOptions = [
+    { value: "all", label: "All Status" },
+    { value: "running", label: "Running Job" },
+    { value: "cancel", label: "Cancel Job" },
+    { value: "complete", label: "Complete Job" },
+  ];
+
   const filteredJobs = useMemo(() => {
-    let filtered = jobs;
-    const formattedDate = selectedDate.format("YYYY-MM-DD");
+    let filtered = currentJobs;
 
-    // Filter by selected date
-    filtered = filtered.filter((job) => job.startDate === formattedDate);
+    if (selectedDate) {
+      filtered = filtered.filter((job) => {
+        const jobDay = dayjs(job.startDate);
+        return jobDay.isValid() && jobDay.isSame(selectedDate, "day");
+      });
+    }
 
-    // Filter by job type
     if (filter !== "all") {
       filtered = filtered.filter(
         (job) =>
@@ -39,30 +56,47 @@ function CandidateListJobs() {
           (filter === "long" && job.jobType === "Long-term"),
       );
     }
+
+    if (statusFilter !== "all") {
+      if (statusFilter === "complete") {
+        filtered = filtered.filter((job) => job.status === "completed");
+      } else if (statusFilter === "cancel") {
+        filtered = filtered.filter(
+          (job) => job.status === "cancel" || job.status === "cancelled",
+        );
+      } else {
+        filtered = filtered.filter((job) => job.status === statusFilter);
+      }
+    }
+
     return filtered;
-  }, [filter, selectedDate]);
-
-  const handleToday = () => {
-    setSelectedDate(dayjs());
-  };
-
-  const handlePrev = () => {
-    setSelectedDate(selectedDate.subtract(1, "day"));
-  };
-
-  const handleNext = () => {
-    setSelectedDate(selectedDate.add(1, "day"));
-  };
+  }, [filter, selectedDate, statusFilter]);
 
   return (
     <div className="w-full rounded-xl border border-borderColor bg-white p-3 sm:p-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        
+        <h2 className="text-lg font-semibold text-blackColor">All Jobs</h2>
         <div className="flex flex-col md:flex-row md:items-center gap-3">
-          <div className="rounded-md border border-borderColor px-4 py-3">
-            <Search className="h-5 w-5 text-blackColor" />
-          </div>
-          <div className="min-w-0 max-w-full overflow-x-auto rounded-md border border-borderColor px-2 py-1.5 md:w-[411px]">
+          <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+            <PopoverTrigger asChild>
+              <button className="rounded-md cursor-pointer border border-borderColor px-4 py-3.5">
+                <DateIcon className="h-5 w-5 text-blackColor" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={selectedDate ? selectedDate.toDate() : undefined}
+                onSelect={(date) => {
+                  setSelectedDate(date ? dayjs(date) : null);
+                  setCalendarOpen(false);
+                }}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+
+          <div className="min-w-0 max-w-full overflow-x-auto rounded-md border border-borderColor px-2 py-1.5 md:w-[425px]">
             <div className="flex w-max min-w-max flex-nowrap items-center gap-3">
               {filterOptions.map((item) => (
                 <button
@@ -81,17 +115,23 @@ function CandidateListJobs() {
               ))}
             </div>
           </div>
+          <SelecteInputField
+            value={statusFilter}
+            onValueChange={(value) => setStatusFilter(value as JobStatusFilter)}
+            options={statusOptions}
+            className="h-10! bg-white! w-[150px]! px-3 py-2 text-sm text-blackColor"
+          />
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-6">
         {filteredJobs.length > 0 ? (
           filteredJobs.map((job, index) => (
             <CandidatejobsCard key={index} job={job} />
           ))
         ) : (
           <div className="text-center py-8 text-secondaryColor">
-            No jobs found for {selectedDate.format("MMM DD, YYYY")}.
+            No jobs found for selected filters.
           </div>
         )}
       </div>
