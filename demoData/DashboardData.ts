@@ -640,7 +640,7 @@ export const currentJobs = [
     title: "After School Nanny",
     jobType: "Short-term",
     name: "Ariana McCoy",
-    avatar: "/candidate/avatar-1.jpg",
+    avatar: "/jobImage/j1.png",
     description:
       "Full responsibility for three energetic children, ages 5, 6, and 7, including crafting delicious and...",
     location: "71 Raglan Street, CROWNTHORP, Queensville(QLO), 4805",
@@ -656,7 +656,7 @@ export const currentJobs = [
     title: "After School Nanny",
     jobType: "Long-term",
     name: "Ariana McCoy",
-    avatar: "/candidate/avatar-1.jpg",
+    avatar: "/jobImage/j2.png",
     description:
       "Full responsibility for three energetic children, ages 5, 6, and 7, including crafting delicious and...",
     location: "71 Raglan Street, CROWNTHORP, Queensville(QLO), 4805",
@@ -675,7 +675,7 @@ export const currentJobs = [
     title: "After School Nanny",
     jobType: "Long-term",
     name: "Ariana McCoy",
-    avatar: "/candidate/avatar-1.jpg",
+    avatar: "/jobImage/j3.png",
     description:
       "Full responsibility for three energetic children, ages 5, 6, and 7, including crafting delicious and...",
     location: "71 Raglan Street, CROWNTHORP, Queensville(QLO), 4805",

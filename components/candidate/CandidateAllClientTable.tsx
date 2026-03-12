@@ -112,12 +112,7 @@ const clientListData: ClientRow[] = [
   },
 ];
 
-const statusFilterOptions = [
-  { value: "all", label: "All Status" },
-  { value: "running", label: "Running Job" },
-  { value: "completed", label: "Completed" },
-  { value: "canceled", label: "Canceled" },
-];
+
 
 function CandidateAllClientTable() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -185,7 +180,7 @@ function CandidateAllClientTable() {
             onChange={() => toggleRowSelection(record.id)}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
           />
-          <Link href={`#`} className=" flex items-center justify-center gap-2">
+          <Link href={`/candidate/my-clients/${record.id}`} className=" flex items-center justify-center gap-2">
             <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
               <span className="text-xs font-medium text-gray-600">
                 {record?.image_name ? (
