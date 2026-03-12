@@ -54,6 +54,7 @@
     "next": "16.0.7",
     "nookies": "^2.5.2",
     "postcss": "^8.5.3",
+    "radix-ui": "^1.4.3",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",
     "react-color": "^2.19.3",
