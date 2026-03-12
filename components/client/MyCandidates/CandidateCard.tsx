@@ -1,8 +1,12 @@
+"use client";
 import { Clock, EyeIcon, FileIcon, Trash } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import ClientNoteModal from "./ClientNoteModal";
 import { Toggle } from "./Toggle";
 
 function CandidateCard({ profile }: any) {
+  const [open, setOpen] = useState(false);
   return (
     <div>
       <div className="border flex flex-col justify-between h-full border-[#E5E7EB] rounded-2xl md:rounded-[24px]">
@@ -89,7 +93,10 @@ function CandidateCard({ profile }: any) {
                 <EyeIcon size={15} />
                 <span>View Details</span>
               </button>
-              <button className="flex items-center gap-1 text-nowrap p-1 rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer mx-auto">
+              <button
+                onClick={() => setOpen(true)}
+                className="flex items-center gap-1 text-nowrap p-1 rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer mx-auto"
+              >
                 <FileIcon size={15} />
                 <span>Add Note</span>
               </button>
@@ -103,6 +110,7 @@ function CandidateCard({ profile }: any) {
               </button>
             </div>
           </div>
+          <ClientNoteModal open={open} setOpen={setOpen} />
         </div>
       </div>
     </div>
