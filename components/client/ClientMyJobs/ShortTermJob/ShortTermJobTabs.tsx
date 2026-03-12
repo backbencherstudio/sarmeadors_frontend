@@ -6,27 +6,27 @@ export function ShortTermJobTabs() {
   const tabs = [
     {
       label: "Running (1)",
-      link: "/client/client-my-jobs/long-term-job/running",
+      link: "/client/client-my-jobs/short-term-job/running",
     },
     {
       label: "Pending (0) ",
-      link: "/client/client-my-jobs/long-term-job/pending",
+      link: "/client/client-my-jobs/short-term-job/pending",
     },
     {
       label: "Marketplace (1)",
-      link: "/client/client-my-jobs/long-term-job/marketplace",
+      link: "/client/client-my-jobs/short-term-job/marketplace",
     },
     {
       label: "Completed (9)",
-      link: "/client/client-my-jobs/long-term-job/completed",
+      link: "/client/client-my-jobs/short-term-job/completed",
     },
     {
       label: "Canceled (1)",
-      link: "/client/client-my-jobs/long-term-job/canceled",
+      link: "/client/client-my-jobs/short-term-job/canceled",
     },
     {
       label: "Rejected (1)",
-      link: "/client/client-my-jobs/long-term-job/rejected",
+      link: "/client/client-my-jobs/short-term-job/rejected",
     },
   ];
 

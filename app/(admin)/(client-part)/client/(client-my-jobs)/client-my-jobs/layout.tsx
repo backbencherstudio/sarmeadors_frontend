@@ -1,6 +1,5 @@
 import ReusableLineTabs from '@/components/reusable/ReusableLineTabs'
 import { Plus } from 'lucide-react'
-import React from 'react'
 
 export default function MyJobsLayout({ children }: { children: React.ReactNode }) {
 
