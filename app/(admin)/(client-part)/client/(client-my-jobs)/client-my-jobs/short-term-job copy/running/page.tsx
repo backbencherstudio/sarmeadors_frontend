@@ -1,3 +1,4 @@
+import CancelModal from "@/components/client/ClientMyJobs/ShortTermJob/Common/CancelModal";
 import Link from "next/link";
 
 export default function Page() {
@@ -10,11 +11,12 @@ export default function Page() {
                     <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
                     <h2 className="text-gray-700 font-medium">Running Job</h2>
                 </div>
+
                 {/* Job Card */}
                 <div className="border border-blue-400 rounded-xl p-5">
                     <div className="flex flex-col lg:flex-row gap-6">
                         {/* Date */}
-                        <div className="min-w-[100px]">
+                        <div className=" min-w-[100px]">
                             <h3 className="text-2xl font-bold text-gray-800">18</h3>
                             <p className="text-xs text-gray-500 uppercase">
                                 Jan, Sun
@@ -31,8 +33,8 @@ export default function Page() {
                                         <h3 className="text-lg font-semibold text-gray-800">
                                             After School Nanny
                                         </h3>
-                                        <span className="px-2 py-1 text-sm bg-red-200 text-red-600 rounded-md">
-                                            Canceled
+                                        <span className="px-2 py-1 text-sm bg-gray-800 text-white rounded-md">
+                                            Running
                                         </span>
                                     </div>
 
@@ -65,6 +67,10 @@ export default function Page() {
                                     <p className="text-sm font-medium text-gray-700">
                                         10:00AM - 11:00AM
                                     </p>
+
+                                    <div className="bg-gray-100 text-sm px-3 py-2 rounded-lg text-gray-600">
+                                        Check In <span className="font-semibold text-gray-800">5:02 PM</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -72,15 +78,14 @@ export default function Page() {
                             <div className="border-t border-gray-200 my-4"></div>
 
                             {/* Buttons */}
-                            <div className="flex justify-between gap-3">
+                            <div className="flex gap-3">
                                 {/* Details Link */}
-                                <Link href={'/client/canceled-view-details'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                <Link href={'/client/running-view-details/job-description'} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                                     View Details
                                 </Link>
 
-                                <button className="px-4 py-2 text-sm border text-white rounded-lg bg-black transition cursor-pointer">
-                                    Request for Refund
-                                </button>
+                                {/* Cancel Modal */}
+                                <CancelModal />
                             </div>
                         </div>
 

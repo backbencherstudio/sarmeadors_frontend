@@ -1,9 +1,8 @@
 import ButtonReuseable from '@/components/reusable/CustomButton'
 import { PlusIcon, SearchIcon } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
 
-function ClientHeroSection({title, description}: {title?: string, description?: string}) {
+function ClientHeroSection({ title, description }: { title?: string, description?: string }) {
   return (
     <div>
       <div className="bg-gradient-to-t px-3 lg:px-8 from-[#049EC0]/5 to-[#049EC0]/30 rounded-2xl  mb-8 flex items-center justify-between">

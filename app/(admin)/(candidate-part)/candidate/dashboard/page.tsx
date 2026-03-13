@@ -3,9 +3,7 @@ import CandidateDashboard from "@/components/candidate/CandidateDashboard";
 function page() {
   return (
     <div>
-      <div>
-        <CandidateDashboard />
-      </div>
+      <CandidateDashboard />
     </div>
   );
 }
