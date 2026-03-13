@@ -1,8 +1,10 @@
 "use client";
+
 import { usePathname } from "next/navigation";
 import CalenderIcon from "../icon/CalenderIcon";
 import ListViewIcon from "../icon/ListViewIcon";
 import LinkReuseable from "../reusable/CustomLink";
+
 function CandidateMyJobMenu() {
   const pathName = usePathname();
 
@@ -33,11 +35,10 @@ function CandidateMyJobMenu() {
             icon={item.icon}
             title={item.title}
             href={item.href}
-            className={`lg:px-2.5 !h-9.5 hover:bg-grayColor1 border border-transparent hover:border duration-200 cursor-pointer rounded-sm text-[13px] md:text-sm font-semibold transition ${
-              isActive(item.href)
-                ? "bg-grayColor1 border border-transparent"
-                : ""
-            }`}
+            className={`lg:px-2.5 !h-9.5 hover:bg-grayColor1 border border-transparent hover:border duration-200 cursor-pointer rounded-sm text-[13px] md:text-sm font-semibold transition ${isActive(item.href)
+              ? "bg-grayColor1 border border-transparent"
+              : ""
+              }`}
           />
         ))}
       </div>

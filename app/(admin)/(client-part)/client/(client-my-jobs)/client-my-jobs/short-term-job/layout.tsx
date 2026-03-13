@@ -1,4 +1,3 @@
-
 import { ShortTermJobTabs } from '@/components/client/ClientMyJobs/ShortTermJob/ShortTermJobTabs'
 import React from 'react'
 

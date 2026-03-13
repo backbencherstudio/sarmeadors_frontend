@@ -1,5 +1,4 @@
 "use client";
-
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 
 export function LognTermJobTabs() {
