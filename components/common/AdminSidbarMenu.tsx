@@ -42,7 +42,7 @@ const AdminSidbarMenu: React.FC<AdminSidbarMenuProps> = ({ children }) => {
           {/* Overlay for mobile */}
           {sidebarOpen && (
             <div
-              className="fixed inset-0 backdrop-blur-[1.5px] bg-black/50 lg:hidden z-20"
+              className="fixed inset-0 backdrop-blur-[1.5px] w-full h-full bg-black/50 xl:hidden z-20"
               onClick={closeSidebar}
             />
           )}
