@@ -5,6 +5,7 @@ import ClockICon from "../icon/ClockICon";
 import LocationIcon from "../icon/LocationIcon";
 import SmsIcon from "../icon/SmsIcon";
 import ButtonReuseable from "../reusable/CustomButton";
+import CandidateJobsReviewAction from "./CandidateJobsReviewAction";
 
 function CandidatejobsCard({ job }: { job: any }) {
   const today = dayjs();
@@ -105,6 +106,18 @@ function CandidatejobsCard({ job }: { job: any }) {
               </div>
             )}
           </div>
+          <div>
+            {job.status === "cancel" && (
+              <div className="">
+                <h4 className="text-lightblackColor text-sm font-semibold">
+                  Cancel Reason
+                </h4>
+                <p className="px-3 py-4 mt-2 text-secondaryColor border border-borderColor  bg-grayColor1 rounded-sm ">
+                  {job.cancelReason || "No reason provided"}
+                </p>
+              </div>
+            )}
+          </div>
           <div className="pt-3 mt-3 border-t flex justify-between items-center border-borderColor">
             <div className="flex items-center h-full gap-2">
               <ButtonReuseable
@@ -118,15 +131,19 @@ function CandidatejobsCard({ job }: { job: any }) {
               />
             </div>
             <div className="text-right ml-4">
-              <div className="flex flex-col items-end gap-1">
-                <ButtonReuseable
-                  title="Check In"
-                  icon={<ClockICon />}
-                  loading={job.status !== "running"}
-                  sendingMsg="Check In"
-                  className={`bg-blackColor text-white`}
-                />
-              </div>
+              {job.status === "cancel" || job.status === "completed" ? (
+                <CandidateJobsReviewAction />
+              ) : (
+                <div className="flex flex-col items-end gap-1">
+                  <ButtonReuseable
+                    title="Check In"
+                    icon={<ClockICon />}
+                    loading={job.status !== "running"}
+                    sendingMsg="Check In"
+                    className={`bg-blackColor text-white`}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

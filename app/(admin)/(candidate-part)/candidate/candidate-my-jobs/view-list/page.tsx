@@ -1,10 +1,11 @@
+import CandidateListJobs from "@/components/candidate/CandidateListJobs";
 
 function page() {
   return (
     <div>
-      <div>afdsasd</div>
+      <CandidateListJobs />
     </div>
-  )
+  );
 }
 
-export default page
+export default page;
