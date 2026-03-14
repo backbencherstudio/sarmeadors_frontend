@@ -10,6 +10,7 @@ export default function Page() {
                     <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
                     <h2 className="text-gray-700 font-medium">Running Job</h2>
                 </div>
+
                 {/* Job Card */}
                 <div className="border border-blue-400 rounded-xl p-5">
                     <div className="flex flex-col lg:flex-row gap-6">

@@ -1,6 +1,16 @@
+"use client";
 import InterviewCard from "@/components/client/ClientInterview/InterviewCard";
+import IconDatePicker from "@/components/common/DatePicker";
 import ClockICon from "@/components/icon/ClockICon";
-import { ChevronDown, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Interview {
   id: string;
@@ -98,6 +108,7 @@ const interviews: Interview[] = [
 ];
 
 export default function CalendarList() {
+  const [startDate, setStartDate] = useState<Date | null>(null);
   function groupInterviews(list: Interview[]) {
     const groups: { label: string; items: Interview[] }[] = [];
     const seen = new Map<string, number>();
@@ -123,30 +134,27 @@ export default function CalendarList() {
   return (
     <div className="p-6 border border-[#E5E7EB] rounded-2xl mt-3">
       <div className="flex items-center justify-between px-6 py-3 bg-white">
-        <div className="flex items-center gap-3">
-          <button className="text-[16px] leading-[137.5%] font-semibold  text-[#111927] px-4 py-3 bg-[#F3F4F6] border border-[#E5E7EB] rounded-[8px] cursor-pointer">
-            Today
-          </button>
-          <button className="text-[#111927]">
-            <ChevronLeft size={16} />
-          </button>
-          <span className="text-[16px] font-semibold leading-[137.5%] text-[#111927]">
-            January 2026
-          </span>
-          <button className="text-[#111927]">
-            <ChevronRight size={16} />
-          </button>
+        <div>
+          <h1 className="text-lg text-[#111927] leading-[111.111%] font-medium">
+            All Interviews
+          </h1>
         </div>
         <div className="flex items-center gap-3">
-          <button className="text-[#111927] p-4 border border-[#E5E7EB] rounded-[8px]">
-            <Search size={17} />
-          </button>
-          <button className="flex items-center gap-1.5 text-sm text-[#111927] border border-[#E5E7EB] rounded-[8px] p-4 cursor-pointer">
-            <span className="text-[#111927] leading-[137.5%] text-[16px] font-medium">
-              All Interviews
-            </span>
-            <ChevronDown size={14} />
-          </button>
+          <IconDatePicker />
+          <div>
+            <Select defaultValue="all">
+              <SelectTrigger className="flex items-center gap-1.5 text-sm text-[#111927] border border-[#E5E7EB] rounded-[8px] p-4.5 cursor-pointer">
+                <SelectValue placeholder="All Interviews" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem className="cursor-pointer" value="all">All Interviews</SelectItem>
+                <SelectItem className="cursor-pointer" value="scheduled">Scheduled</SelectItem>
+                <SelectItem className="cursor-pointer" value="completed">Completed</SelectItem>
+                <SelectItem className="cursor-pointer" value="cancelled">Cancelled</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 

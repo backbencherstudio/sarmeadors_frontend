@@ -581,6 +581,10 @@ export const PROFILES = [
     experience: "08 Years",
     description:
       "I have cared for children from infancy through early adolescence, with a strong passion and focus on early childhood development.",
+    status: "Interested",
+    linked: "Mon Nov 18 2024 at 21 46 04",
+    clientInterviewPrefeRence: "In person",
+    clientInterviewAvailability: "Any time after 5pm on 11/18,11/19,11/20",
   },
   {
     id: 2,
@@ -591,6 +595,8 @@ export const PROFILES = [
     experience: "04 Years",
     description:
       "I have experience providing structured childcare, supporting developmental milestones, and creating engaging, age-appropriate activities.",
+    status: "Interested",
+    linked: "Mon Nov 18 2024 at 21 46 04",
   },
   {
     id: 3,
@@ -601,6 +607,8 @@ export const PROFILES = [
     experience: "05 Years",
     description:
       "I have 8 years of experience as a nanny and house manager, working with children from infancy to school age.",
+    status: "Not Interested",
+    linked: "Mon Nov 18 2024 at 21 46 04",
   },
   {
     id: 4,
@@ -611,6 +619,8 @@ export const PROFILES = [
     experience: "05 Years",
     description:
       "I have 8 years of experience as a nanny and house manager, working with children from infancy to school age.",
+    status: "Not Interested",
+    linked: "Mon Nov 18 2024 at 21 46 04",
   },
   {
     id: 5,
@@ -621,6 +631,8 @@ export const PROFILES = [
     experience: "08 Years",
     description:
       "I have cared for children from infancy through early adolescence, with a strong passion and focus on early childhood development.",
+    status: "Interested",
+    linked: "Mon Nov 18 2024 at 21 46 04",
   },
   {
     id: 6,
@@ -631,6 +643,8 @@ export const PROFILES = [
     experience: "04 Years",
     description:
       "I have experience providing structured childcare, supporting developmental milestones, and creating engaging, age-appropriate activities.",
+    status: "Under Consideration",
+    linked: "Mon Nov 18 2024 at 21 46 04",
   },
 ];
 
