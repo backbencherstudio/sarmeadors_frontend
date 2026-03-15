@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import TextAlign from "@tiptap/extension-text-align";
+import { Color } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -23,6 +24,7 @@ export default function ClientNoteModal({ open, setOpen }) {
         types: ["heading", "paragraph"],
       }),
       Underline,
+      Color,
     ],
     content: `<p>
     Coast to Coast Nannies will refer All Applicants to the Client...
@@ -41,27 +43,27 @@ export default function ClientNoteModal({ open, setOpen }) {
         <div className="flex gap-2 border rounded-md p-2 mb-3 bg-gray-50">
           <button
             onClick={() => editor?.chain().focus().toggleBold().run()}
-            className="p-2 rounded hover:bg-gray-200"
+            className="p-2 rounded hover:bg-gray-200 cursor-pointer"
           >
             <Bold size={16} />
           </button>
-
           <button
             onClick={() => editor?.chain().focus().toggleItalic().run()}
-            className="p-2 rounded hover:bg-gray-200"
+            className="p-2 rounded hover:bg-gray-200 cursor-pointer"
           >
             <Italic size={16} />
           </button>
-
           <button
             onClick={() => editor?.chain().focus().toggleUnderline().run()}
-            className={`p-2 rounded hover:bg-gray-200 ${
+            className={`p-2 rounded hover:bg-gray-200 cursor-pointer ${
               editor?.isActive("underline") ? "bg-gray-300" : ""
             }`}
           >
             <FiUnderline size={18} />
           </button>
-
+          <div className="h-full border-l-2 mx-2" />
+          Clolor
+          <div className="h-full border-l-2 mx-2" />
           <button
             onClick={() => editor?.chain().focus().setTextAlign("left").run()}
             className={`p-2 rounded hover:bg-gray-200 ${
@@ -96,6 +98,7 @@ export default function ClientNoteModal({ open, setOpen }) {
           >
             <FiAlignJustify size={18} />
           </button>
+          <div className="h-full border-l-2 mx-2" />
         </div>
 
         {/* Editor */}
