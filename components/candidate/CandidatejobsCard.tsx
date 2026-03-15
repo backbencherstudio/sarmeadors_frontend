@@ -127,7 +127,7 @@ function CandidatejobsCard({ job }: { job: any }) {
               />
               <LinkReuseable
                 title="View Details"
-                href="/candidate/candidate-my-jobs/view-list/1"
+                href="/candidate/candidate-job-details/1"
                 rightIcon={<ArrowTopBoxIcon />}
                 className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
               />
