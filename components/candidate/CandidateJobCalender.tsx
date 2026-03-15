@@ -351,20 +351,22 @@ function CandidateJobCalender() {
         </div>
       </div>
 
-      <div className="calendar-wrapper [&_.fc]:text-sm [&_.fc-toolbar]:hidden [&_.fc-scrollgrid]:border-borderColor [&_.fc-scrollgrid-section-header_td]:border-borderColor [&_.fc-col-header-cell]:bg-grayColor1 [&_.fc-col-header-cell]:py-2 [&_.fc-col-header-cell-cushion]:text-xs [&_.fc-col-header-cell-cushion]:font-medium [&_.fc-col-header-cell-cushion]:text-secondaryColor [&_.fc-daygrid-day]:border-borderColor [&_.fc-daygrid-day-number]:text-xs [&_.fc-daygrid-day-number]:text-secondaryColor [&_.fc-daygrid-day-number]:font-medium [&_.fc-daygrid-day-number]:p-2 [&_.fc-daygrid-day-frame]:min-h-[88px] [&_.fc-daygrid-day-events]:mt-0 [&_.fc-daygrid-event]:bg-transparent [&_.fc-daygrid-event]:border-0 [&_.fc-daygrid-event]:p-0 [&_.fc-daygrid-event]:mx-1 [&_.fc-daygrid-event]:my-0.5 [&_.fc-daygrid-day.fc-day-today]:bg-transparent [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:bg-blackColor [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:text-white [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:rounded-md [&_.fc-daygrid-more-link]:text-[10px] [&_.fc-daygrid-more-link]:text-blueColor [&_.fc-daygrid-more-link]:font-medium">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          initialDate={new Date()}
-          headerToolbar={false}
-          events={filteredEvents}
-          eventContent={renderEvent}
-          dayMaxEvents={3}
-          fixedWeekCount={true}
-          showNonCurrentDates={true}
-          datesSet={syncTitle}
-        />
+      <div className="overflow-x-auto">
+        <div className="calendar-wrapper min-w-[1200px] [&_.fc]:text-sm [&_.fc-toolbar]:hidden [&_.fc-scrollgrid]:border-borderColor [&_.fc-scrollgrid-section-header_td]:border-borderColor [&_.fc-col-header-cell]:bg-grayColor1 [&_.fc-col-header-cell]:py-2 [&_.fc-col-header-cell-cushion]:text-sm [&_.fc-col-header-cell-cushion]:font-medium [&_.fc-col-header-cell-cushion]:text-blackColor [&_.fc-daygrid-day]:border-borderColor [&_.fc-daygrid-day-frame]:min-h-[116px] [&_.fc-daygrid-day-number]:p-3 [&_.fc-daygrid-day-number]:text-sm [&_.fc-daygrid-day-number]:font-medium [&_.fc-daygrid-day-number]:text-blackColor [&_.fc-daygrid-day-events]:space-y-1 [&_.fc-daygrid-day-events]:px-2 [&_.fc-daygrid-day-events]:pb-2 [&_.fc-daygrid-event]:m-0 [&_.fc-daygrid-event]:border-0 [&_.fc-daygrid-event]:bg-transparent [&_.fc-daygrid-event]:p-0 [&_.fc-daygrid-day.fc-day-today]:bg-transparent [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:rounded-md [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:bg-blackColor [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:text-white">
+          <FullCalendar
+            ref={calendarRef}
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            initialDate={new Date()}
+            headerToolbar={false}
+            events={filteredEvents}
+            eventContent={renderEvent}
+            dayMaxEvents={3}
+            fixedWeekCount={true}
+            showNonCurrentDates={true}
+            datesSet={syncTitle}
+          />
+        </div>
       </div>
 
       {isOpen && scheduledData && (
