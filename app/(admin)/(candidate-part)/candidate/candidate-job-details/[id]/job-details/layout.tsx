@@ -9,8 +9,8 @@ function CandidateJobDetailsLayout({
 }) {
   return (
     <div>
-      <div className="flex border border-borderColor rounded-xl overflow-hidden ">
-        <div className="max-w-[200px] bg-grayColor1 border-r border-borderColor  p-4">
+      <div className="flex flex-col lg:flex-row border border-borderColor rounded-xl overflow-hidden ">
+        <div className="lg:max-w-[200px] bg-grayColor1 border-b lg:border-r border-borderColor  p-4">
           <CandidateSingleJobsDetailsSidebar />
         </div>
         <div className="p-4 md:p-6">{children}</div>

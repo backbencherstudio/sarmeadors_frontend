@@ -1,10 +1,7 @@
+import CandidateSingleJobRequirement from "@/components/candidate/myJobs/CandidateSingleJobRequirement";
+
 function page() {
-  return (
-    <div>
-      update requirements
-      <div>requirements</div>
-    </div>
-  );
+  return <CandidateSingleJobRequirement />;
 }
 
 export default page;
