@@ -5,6 +5,7 @@ import ClockICon from "../icon/ClockICon";
 import LocationIcon from "../icon/LocationIcon";
 import SmsIcon from "../icon/SmsIcon";
 import ButtonReuseable from "../reusable/CustomButton";
+import LinkReuseable from "../reusable/CustomLink";
 import CandidateJobsReviewAction from "./CandidateJobsReviewAction";
 
 function CandidatejobsCard({ job }: { job: any }) {
@@ -124,10 +125,11 @@ function CandidatejobsCard({ job }: { job: any }) {
                 rightIcon={<SmsIcon className="w-5 h-5" />}
                 className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
               />
-              <ButtonReuseable
+              <LinkReuseable
                 title="View Details"
+                href="/candidate/candidate-job-details/1/attendance-calendar"
                 rightIcon={<ArrowTopBoxIcon />}
-                className="bg-grayColor1! font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
+                className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
               />
             </div>
             <div className="text-right ml-4">

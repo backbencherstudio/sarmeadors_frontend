@@ -31,7 +31,7 @@ export default function SelecteInputField({
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger
         id={id}
-        className={`${className} h-12! md:h-13! bg-bgColor w-full`}
+        className={` h-12! md:h-13! ${className} bg-bgColor w-full`}
         disabled={disabled}
       >
         <SelectValue placeholder={placeholder} />

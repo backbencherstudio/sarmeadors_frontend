@@ -1,12 +1,10 @@
 "use client";
 
 import { Switch } from "@/components/ui/switch";
-import { Copy, PlusIcon } from "lucide-react";
+import { Copy } from "lucide-react";
 import { useState } from "react";
 import SelecteInputField from "../common/InputFiled/SelecteInputField";
-import RootDialog from "../common/RootDialog";
-import ButtonReuseable from "../reusable/CustomButton";
-import CandidateAvailabilityCreateFrom from "./CandidateAvailabilityCreateFrom";
+import CandidateTemporaryUnavailable from "./CandidateTemporaryUnavailable";
 
 const DAYS = [
   "Sunday",
@@ -99,7 +97,7 @@ function AvailabilityPage() {
   }));
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-5 max-w-3xl w-full ">
       <h2 className="text-xl font-semibold text-blackColor">My Availability</h2>
 
       {/* Time Zone */}
@@ -142,7 +140,7 @@ function AvailabilityPage() {
                 </span>
 
                 {d.enabled ? (
-                  <div className="ml-auto flex change-arrow items-center gap-1 justify-between w-full md:gap-2">
+                  <div className="ml-auto flex change-arrow items-center gap-1 justify-between md:justify-end w-full md:gap-2">
                     <SelecteInputField
                       value={d.start}
                       onValueChange={(value) =>
@@ -180,25 +178,8 @@ function AvailabilityPage() {
           })}
         </div>
       </div>
-
-      {/* Temporary Unavailable */}
-      <div className="space-y-3">
-        <h3 className="text-base font-semibold text-blackColor">
-          Temporary unavailable?
-        </h3>
-        <ButtonReuseable
-          type="button"
-          title="Add dates"
-          icon={<PlusIcon size={16} />}
-          onClick={() => setModalOpen(true)}
-          className=" rounded-md border border-borderColor  bg-white! px-4 py-2 text-sm font-semibold text-blackColor! hover:bg-bgColor!"
-        />
-      </div>
-
-      {/* Modal */}
-      <RootDialog open={modalOpen} setOpen={setModalOpen}>
-        <CandidateAvailabilityCreateFrom onClose={() => setModalOpen(false)} />
-      </RootDialog>
+      {/* Temporary Unavailable component */}
+      <CandidateTemporaryUnavailable />
     </section>
   );
 }

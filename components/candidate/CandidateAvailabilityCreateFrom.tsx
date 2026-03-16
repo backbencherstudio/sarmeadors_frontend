@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -12,12 +11,19 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon, ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import ButtonReuseable from "../reusable/CustomButton";
+
+interface CandidateAvailabilityCreateFromProps {
+  onClose?: () => void;
+  createDateData?: any;
+  setCreateDateData?: any;
+}
 
 function CandidateAvailabilityCreateFrom({
   onClose,
-}: {
-  onClose?: () => void;
-}) {
+  createDateData,
+  setCreateDateData,
+}: CandidateAvailabilityCreateFromProps) {
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [startOpen, setStartOpen] = useState(false);
@@ -39,6 +45,7 @@ function CandidateAvailabilityCreateFrom({
 
   const handleCreate = () => {
     console.log({ startDate, endDate, title });
+    setCreateDateData((prev: any) => [...prev, { startDate, endDate, title }]);
     onClose?.();
   };
 
@@ -60,12 +67,11 @@ function CandidateAvailabilityCreateFrom({
 
       {/* Date Pickers */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {/* Start Date */}
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-blackColor">
             Start Date
           </label>
-          <Popover open={startOpen} onOpenChange={setStartOpen}>
+          <Popover modal open={startOpen} onOpenChange={setStartOpen}>
             <PopoverTrigger asChild>
               <button
                 type="button"
@@ -83,6 +89,7 @@ function CandidateAvailabilityCreateFrom({
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
+                required
                 selected={startDate}
                 onSelect={handleSelectStartDate}
                 initialFocus
@@ -96,7 +103,7 @@ function CandidateAvailabilityCreateFrom({
           <label className="text-sm font-medium text-blackColor">
             End Date
           </label>
-          <Popover open={endOpen} onOpenChange={setEndOpen}>
+          <Popover modal open={endOpen} onOpenChange={setEndOpen}>
             <PopoverTrigger asChild>
               <button
                 type="button"
@@ -112,6 +119,7 @@ function CandidateAvailabilityCreateFrom({
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
+                required
                 selected={endDate}
                 onSelect={handleSelectEndDate}
                 initialFocus
@@ -134,13 +142,15 @@ function CandidateAvailabilityCreateFrom({
       </div>
 
       {/* Create Button */}
-      <Button
-        type="button"
-        onClick={handleCreate}
-        className="h-11 w-36 bg-blackColor text-white hover:bg-blackColor/90"
-      >
-        Create
-      </Button>
+      <div>
+        <ButtonReuseable
+          type="button"
+          onClick={handleCreate}
+          title="Create"
+          sendingMsg="Creating..."
+          className=" px-6! bg-blackColor text-white hover:bg-blackColor/90"
+        />
+      </div>
     </div>
   );
 }
