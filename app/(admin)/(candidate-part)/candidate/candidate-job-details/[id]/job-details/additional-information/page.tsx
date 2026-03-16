@@ -64,8 +64,8 @@ const items = [
 
 function page() {
   return (
-    <div className="max-w-[680px] space-y-2 text-blackColor">
-      <p className="mb-4 text-xl font-semibold">Theresa Webb</p>
+    <div className=" space-y-2 text-blackColor">
+      <p className="text-lg font-medium">Theresa Webb</p>
 
       <Accordion
         type="multiple"
@@ -76,11 +76,11 @@ function page() {
           <AccordionItem
             key={index}
             value={`item-${index}`}
-            className="border-b border-borderColor py-1"
+            className="border-b-0! py-1"
           >
             <div>
-              <AccordionTrigger className="group py-3 text-left text-base font-medium text-blackColor hover:no-underline [&>svg.removed-arrow]:hidden">
-                <div className="flex items-start gap-2">
+              <AccordionTrigger className="group py-3 text-left text-base  font-medium text-lightblackColor hover:no-underline [&>svg.removed-arrow]:hidden">
+                <div className="flex items-center gap-2">
                   <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-sm border border-borderColor">
                     <ArrowDownIcon className="h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </div>
