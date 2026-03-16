@@ -25,7 +25,7 @@ function CandidateSingleJobsDetailsSidebar() {
     return pathName === href;
   };
   return (
-    <div className="flex flex-col w-[200px]!   items-start  bg-grayColor1 border-r border-borderColor  p-4  lg:max-w-[200px]">
+    <div className="flex flex-col w-[200px]!   items-start    lg:max-w-[200px]">
       {jobDetailsSidebar.map((item) => (
         <div key={item.id} className="mb-4 ">
           <LinkReuseable
