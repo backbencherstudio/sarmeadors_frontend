@@ -25,7 +25,10 @@ function CandidateSingleJobsMenus() {
   ];
   const pathName = usePathname();
   const isActive = (href: string): boolean => {
-    return pathName === href;
+    if (href === "/") {
+      return pathName === "/";
+    }
+    return pathName.startsWith(href);
   };
   return (
     <div className="">
