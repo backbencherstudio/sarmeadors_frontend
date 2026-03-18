@@ -1,8 +1,11 @@
 "use client";
-
 import EmojIcon from "@/components/icon/EmojIcon";
-import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+import { EmojiStyle } from "emoji-picker-react";
+import dynamic from "next/dynamic";
 import { CSSProperties, useState } from "react";
+const EmojiPicker = dynamic(() => import("emoji-picker-react"), {
+  ssr: false,
+});
 
 function MessageReactEmojiAction({
   setSelectedEmoji,
