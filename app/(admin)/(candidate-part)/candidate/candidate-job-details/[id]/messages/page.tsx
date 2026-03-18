@@ -6,6 +6,8 @@ import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import MessageReactEmojiAction from "@/components/common/message/MessageReactEmojiAction";
+import AttachIcon from "@/components/icon/AttachIcon";
+import SendIcon from "@/components/icon/SendIcon";
 import { FaBars } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 
@@ -60,12 +62,12 @@ function page() {
   const [selectedId, setSelectedId] = useState(chatMessages[0].id);
   const [inputValue, setInputValue] = useState("");
   const [selectedEmoji, setSelectedEmoji] = useState({ emoji: "", id: null });
+  const [sidarOpen, setSiderOpen] = useState(false);
   const handleUserSelect = (id) => {
     setSelectedId(id);
     setSiderOpen(false);
   };
   const activeChat = chatMessages.find((c) => c.id === selectedId)!;
-  const [sidarOpen, setSiderOpen] = useState(false);
   return (
     <div>
       <div>
@@ -73,18 +75,8 @@ function page() {
           <div
             className={`fixed z-50 top-0 left-0 h-full  bg-black/50 w-full backdrop-blur-sm border md:hidden transition-transform duration-400 ${sidarOpen ? "translate-x-0" : "-translate-x-full"}`}
           >
-            <div
-              className={`fixed z-50 top-0 left-0 h-full  bg-white w-[300px]  border  md:hidden `}
-            >
-              <div className="pt-10!">
-                <MessageUserSection
-                  chatMessages={chatMessages}
-                  setSelectedId={handleUserSelect}
-                  selectedId={selectedId}
-                  user={"client"}
-                />
-              </div>
-              <div className="absolute left-0 top-2 w-full flex items-center justify-between px-4">
+            <div className={` h-full  bg-white w-[300px]  border  md:hidden  `}>
+              <div className=" w-full pt-3! flex items-center justify-between px-4">
                 <h4 className="text-lg font-medium">Messages</h4>
                 <button
                   onClick={() => setSiderOpen(false)}
@@ -92,6 +84,14 @@ function page() {
                 >
                   <IoClose className="text-base" />
                 </button>
+              </div>
+              <div className="pt-2!">
+                <MessageUserSection
+                  chatMessages={chatMessages}
+                  setSelectedId={handleUserSelect}
+                  selectedId={selectedId}
+                  user={"client"}
+                />
               </div>
             </div>
           </div>
@@ -143,19 +143,19 @@ function page() {
             <div className="h-[540px] border-t overflow-y-auto p-3! md:p-6! space-y-4">
               {activeChat.message.map((msg, index) =>
                 msg.type === "sender" ? (
-                  <div className="flex group items-center gap-2">
+                  <div className="flex group/message items-center gap-2">
                     <div
                       key={index}
                       className="max-w-xs relative bg-bgColor border border-[#F3F4F6]! p-3 rounded-b-xl rounded-tr-xl text-sm"
                     >
                       {msg.content}
                       {selectedEmoji.id === msg.id && (
-                        <p className="p-0.5 rounded-full shadow-md absolute -bottom-3 -right-2 bg-whiteColor">
+                        <p className="p-0.5  rounded-full shadow-md absolute -bottom-3 -right-2 bg-whiteColor">
                           {selectedEmoji.emoji}
                         </p>
                       )}
                     </div>
-                    <div>
+                    <div className="opacity-100 md:opacity-0 md:group-hover/message:opacity-100 transition-opacity duration-200">
                       <MessageReactEmojiAction
                         setSelectedEmoji={setSelectedEmoji}
                         id={msg.id}
@@ -163,9 +163,9 @@ function page() {
                     </div>
                   </div>
                 ) : (
-                  <div className="max-w-xs ml-auto">
+                  <div className="max-w-xs group/message ml-auto">
                     <div className="flex items-center justify-end w-full   gap-2">
-                      <div>
+                      <div className="opacity-100 md:opacity-0 md:group-hover/message:opacity-100 transition-opacity duration-200">
                         <MessageReactEmojiAction
                           setSelectedEmoji={setSelectedEmoji}
                           id={msg.id}
@@ -177,7 +177,7 @@ function page() {
                       >
                         {msg.content}
                         {selectedEmoji.id === msg.id && (
-                          <p className="p-0.5 rounded-full shadow-md absolute -bottom-3 -left-2 bg-whiteColor">
+                          <p className="p-0.5  rounded-full shadow-md absolute -bottom-3 -left-2 bg-whiteColor">
                             {selectedEmoji.emoji}
                           </p>
                         )}
@@ -190,6 +190,9 @@ function page() {
 
             {/* Input */}
             <div className="p-3 border-t flex items-center gap-3 mt-auto">
+              <button>
+                <AttachIcon />
+              </button>
               <input
                 type="text"
                 value={inputValue}
@@ -197,8 +200,8 @@ function page() {
                 placeholder="Write message here..."
                 className="flex-1 px-4 py-2 focus:outline-none rounded-lg"
               />
-              <button className="bg-black text-white px-4 py-2 rounded-lg">
-                Send
+              <button className="bg-black text-white px-3 py-3 rounded-sm cursor-pointer">
+                <SendIcon />
               </button>
             </div>
           </div>
