@@ -1,10 +1,15 @@
 "use client";
 
 import MessageUserSection from "@/components/common/message/MessageUserSection";
-import EmojIcon from "@/components/icon/EmojIcon";
 import Image from "next/image";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+
+import MessageReactEmojiAction from "@/components/common/message/MessageReactEmojiAction";
+import dynamic from "next/dynamic";
+const EmojiPicker = dynamic(() => import("emoji-picker-react"), {
+  ssr: false,
+});
 
 const chatMessages = [
   {
@@ -13,15 +18,24 @@ const chatMessages = [
     avatar: "https://i.pravatar.cc/40?img=5",
     last_seen: "Last Seen 09:40",
     message: [
-      { type: "sender", content: "Hi" },
-      { type: "receiver", content: "Hello " },
-      { type: "sender", content: "How are you?" },
+      { type: "sender", content: "Hi", id: 1 },
+      { type: "receiver", content: "Hello ", id: 2 },
+      { type: "sender", content: "How are you?", id: 3 },
       {
         type: "receiver",
         content: "I'm doing well, thank you! How about you?",
+        id: 4,
       },
-      { type: "sender", content: "Fames eros urna, felis morbi a est est." },
-      { type: "receiver", content: "Fames eros urna, felis morbi a est est." },
+      {
+        type: "sender",
+        content: "Fames eros urna, felis morbi a est est.",
+        id: 5,
+      },
+      {
+        type: "receiver",
+        content: "Fames eros urna, felis morbi a est est.",
+        id: 6,
+      },
     ],
   },
   {
@@ -30,8 +44,16 @@ const chatMessages = [
     avatar: "https://i.pravatar.cc/40?img=10",
     last_seen: "Last Seen 10:20",
     message: [
-      { type: "sender", content: "Fames eros urna, felis morbi a est est." },
-      { type: "receiver", content: "Fames eros urna, felis morbi a est est." },
+      {
+        type: "sender",
+        content: "Fames eros urna, felis morbi a est est.",
+        id: 7,
+      },
+      {
+        type: "receiver",
+        content: "Fames eros urna, felis morbi a est est.",
+        id: 8,
+      },
     ],
   },
 ];
@@ -39,7 +61,7 @@ const chatMessages = [
 function page() {
   const [selectedId, setSelectedId] = useState(chatMessages[0].id);
   const [inputValue, setInputValue] = useState("");
-
+  const [selectedEmoji, setSelectedEmoji] = useState({ emoji: "", id: null });
   const activeChat = chatMessages.find((c) => c.id === selectedId)!;
 
   return (
@@ -85,28 +107,44 @@ function page() {
           <div className="h-[540px] border-t overflow-y-auto p-6 space-y-4">
             {activeChat.message.map((msg, index) =>
               msg.type === "sender" ? (
-                <div className="flex items-center gap-2">
+                <div className="flex group items-center gap-2">
                   <div
                     key={index}
-                    className="max-w-xs bg-bgColor border border-[#F3F4F6]! p-3 rounded-b-xl rounded-tr-xl text-sm"
+                    className="max-w-xs relative bg-bgColor border border-[#F3F4F6]! p-3 rounded-b-xl rounded-tr-xl text-sm"
                   >
                     {msg.content}
+                    {selectedEmoji.id === msg.id && (
+                      <p className="p-0.5 rounded-full shadow-md absolute -bottom-3 -right-2 bg-whiteColor">
+                        {selectedEmoji.emoji}
+                      </p>
+                    )}
                   </div>
-                  <button className=" cursor-pointer">
-                    <EmojIcon className="stroke-bgColor!" />
-                  </button>
+                  <div>
+                    <MessageReactEmojiAction
+                      setSelectedEmoji={setSelectedEmoji}
+                      id={msg.id}
+                    />
+                  </div>
                 </div>
               ) : (
                 <div className="max-w-xs ml-auto">
                   <div className="flex items-center justify-end w-full   gap-2">
-                    <button className=" cursor-pointer">
-                      <EmojIcon className="stroke-bgColor!" />
-                    </button>
+                    <div>
+                      <MessageReactEmojiAction
+                        setSelectedEmoji={setSelectedEmoji}
+                        id={msg.id}
+                      />
+                    </div>
                     <div
                       key={index}
-                      className="  border border-[#E5E7EB] bg-[#F3F4F6] text-headerColor p-3 rounded-b-xl rounded-tl-xl text-sm"
+                      className="  border relative border-[#E5E7EB] bg-[#F3F4F6] text-headerColor p-3 rounded-b-xl rounded-tl-xl text-sm"
                     >
                       {msg.content}
+                      {selectedEmoji.id === msg.id && (
+                        <p className="p-0.5 rounded-full shadow-md absolute -bottom-3 -left-2 bg-whiteColor">
+                          {selectedEmoji.emoji}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
