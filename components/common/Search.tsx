@@ -4,7 +4,7 @@ import { CircleHelp } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Search() {
+export default function Search({ placeholder }: { placeholder?: string }) {
   const [search, setSearch] = useState<string>("");
   const [product, setProduct] = useState<any>({ results: [] });
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
@@ -99,14 +99,14 @@ export default function Search() {
   };
 
   return (
-    <div className="w-full md:w-80 lg:w-90 relative">
+    <div className="w-full md:max-w-80 lg:max-w-90 relative">
       <input
         type="text"
         name="search"
         value={search}
         onChange={handleChange}
         className="w-full text-sm  bg-whiteColor border border-gray2Color rounded-md md:rounded-lg py-3 md:py-3.5 px-4 pl-10 focus:outline-none focus:border-dark-500"
-        placeholder="Search by Name, Email or Phone Number"
+        placeholder={placeholder || "Search by Name, Email or Phone Number"}
       />
       <button
         onClick={handleSearch}

@@ -349,6 +349,13 @@ input:checked ~ .checkmark {
 }
 
 .\[\&_\.fc-col-header-cell-cushion\]\:text-sm .fc-col-header-cell-cushion {
-    
-    padding: 18px !important;
+  padding: 18px !important;
+}
+
+.custom-emoji .EmojiPickerReact {
+  width: 150px !important;
+}
+
+.epr_-1g1rx8 {
+  padding: 0 0px !important;
 }
