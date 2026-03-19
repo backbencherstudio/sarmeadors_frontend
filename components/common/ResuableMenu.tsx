@@ -17,8 +17,8 @@ function ResuableMenu({
     return pathName.startsWith(href);
   };
   return (
-    <div>
-      <div className=" mt-2 flex items-center  border-b border-borderColor">
+    <div className=" overflow-x-auto">
+      <div className=" mt-2 max-w-[100%] md:max-w-auto w-full flex items-center  border-b border-borderColor">
         {menuData.map((menu) => (
           <LinkReuseable
             key={menu.id}
