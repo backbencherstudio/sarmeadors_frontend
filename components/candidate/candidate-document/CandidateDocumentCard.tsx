@@ -11,14 +11,25 @@ export type CandidateDocumentItem = {
   title: string;
   subtitle: string;
   isUploaded: boolean;
+  previewUrl?: string;
+  previewName?: string;
+  previewType?: string;
 };
 
 function CandidateDocumentCard({
   item,
   isLoading = false,
+  onView,
+  onEdit,
+  onDelete,
+  onUpload,
 }: {
   item: CandidateDocumentItem;
   isLoading?: boolean;
+  onView?: (item: CandidateDocumentItem) => void;
+  onEdit?: (item: CandidateDocumentItem) => void;
+  onDelete?: (item: CandidateDocumentItem) => void;
+  onUpload?: (item: CandidateDocumentItem) => void;
 }) {
   if (isLoading) return <CandidateDocumentCardSkeleton />;
 
@@ -38,18 +49,26 @@ function CandidateDocumentCard({
         </h3>
         <p className="mt-1 text-base text-secondaryColor">{item.subtitle}</p>
 
+        {item.previewUrl && !item.previewType?.startsWith("image/") && (
+          <p className="mt-2 max-w-[240px] truncate text-sm text-secondaryColor">
+            {item.previewName}
+          </p>
+        )}
+
         <div className="mt-5 flex items-center gap-2">
           {item.isUploaded ? (
             <>
               <ButtonReuseable
                 type="button"
                 title=" View"
+                onClick={() => onView?.(item)}
                 className=" rounded-lg bg-headerColor px-6! py-2.5! text-sm! font-medium text-whiteColor hover:bg-headerColor/90"
               />
 
               <ButtonReuseable
                 type="button"
                 icon={<EditeIcon className="w-4 h-4 !text-headerColor" />}
+                onClick={() => onEdit?.(item)}
                 className="px-6! py-3! rounded-lg border border-borderColor bg-whiteColor text-headerColor"
               />
 
@@ -58,6 +77,7 @@ function CandidateDocumentCard({
                 icon={
                   <DeleteIcon className="w-4 h-4 text-redColor fill-headerColor " />
                 }
+                onClick={() => onDelete?.(item)}
                 className="px-6! py-3! rounded-lg border border-borderColor bg-whiteColor "
               />
             </>
@@ -65,6 +85,7 @@ function CandidateDocumentCard({
             <ButtonReuseable
               type="button"
               title="Upload"
+              onClick={() => onUpload?.(item)}
               className="px-6! py-2.5! "
             />
           )}

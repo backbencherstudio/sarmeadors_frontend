@@ -1,8 +1,10 @@
+import CandidateAdditionalPage from "@/components/candidate/candidate-document/CandidateAdditionalPage";
+
 function page() {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-bold mb-4">Additional Documents</h1>
+        <CandidateAdditionalPage />
       </div>
     </div>
   );
