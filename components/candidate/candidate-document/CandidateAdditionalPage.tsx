@@ -72,9 +72,7 @@ function CandidateAdditionalPage() {
   };
 
   const handleView = (item: CandidateDocumentItem) => {
-    if (item.previewUrl) {
-      window.open(item.previewUrl, "_blank", "noopener,noreferrer");
-    }
+    console.log("view open ");
   };
 
   return (
