@@ -4,8 +4,8 @@ import FullCalenderCustomize from "@/components/common/FullCalenderCustomize";
 import { jobEvents } from "@/demoData/DashboardData";
 import { EventContentArg } from "@fullcalendar/core/index.js";
 import { useState } from "react";
-import CandidateJobTypeFilter from "../myJobs/CandidateJobTypeFilter";
 import CandidateInterviewDialog from "./CandidateInterviewDialog";
+import CandidateInterviewFilter from "./CandidateInterviewFilter";
 import CandidateInterviewRender from "./CandidateInterviewRender";
 
 function CandidateJobInterviewsDate() {
@@ -25,7 +25,7 @@ function CandidateJobInterviewsDate() {
     <div className="w-full rounded-xl bg-white ">
       <div>
         <FullCalenderCustomize
-          filterSection={<CandidateJobTypeFilter />}
+          filterSection={<CandidateInterviewFilter />}
           renderEvent={renderInterviewEvent}
           data={jobEvents}
         />
