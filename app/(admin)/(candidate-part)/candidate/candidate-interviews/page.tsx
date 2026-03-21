@@ -1,7 +1,9 @@
+import CandidateJobInterviewsDate from "@/components/candidate/interviews-jobs/CandidateJobInterviewsDate";
+
 function page() {
   return (
     <div>
-      <div>Candidate Interviews</div>
+      <CandidateJobInterviewsDate />
     </div>
   );
 }

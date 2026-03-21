@@ -1,9 +1,10 @@
+"use client";
 import { useCalendarLogic } from "@/hooks/useCalendarLogic";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import React from "react";
 import FullCalenderHeader from "./FullCalenderHeader";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
 function FullCalenderCustomize({
   filterSection,
   renderEvent,
