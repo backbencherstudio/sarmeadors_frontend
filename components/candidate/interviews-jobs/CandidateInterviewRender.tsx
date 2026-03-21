@@ -1,7 +1,8 @@
 "use client";
 import { EventContentArg } from "@fullcalendar/core/index.js";
+import Image from "next/image";
 
-const CandidateJobRenderSection = ({
+const CandidateInterviewRender = ({
   eventInfo,
   onOpen,
 }: {
@@ -25,16 +26,18 @@ const CandidateJobRenderSection = ({
     dotColor,
     jobTime,
   };
-
   return (
     <div>
       <button
         onClick={() => onOpen(fullEventObject)}
         className="flex items-center cursor-pointer gap-1.5 py-1! text-[12px] bg-whiteColor! px-2! border border-borderColor! leading-4 text-headerColor w-full truncate"
       >
-        <span
-          className="w-2.5 h-2.5 rounded-full shrink-0"
-          style={{ backgroundColor: dotColor || "#fff" }}
+        <Image
+          src={"/profile.png"}
+          alt="Profile"
+          width={20}
+          height={20}
+          className="w-5 h-5 rounded-full "
         />
         <span className="truncate">
           {event.title} ({jobTime})
@@ -44,4 +47,4 @@ const CandidateJobRenderSection = ({
   );
 };
 
-export default CandidateJobRenderSection;
+export default CandidateInterviewRender;
