@@ -4,8 +4,8 @@ import FullCalenderCustomize from "@/components/common/FullCalenderCustomize";
 import { jobEvents } from "@/demoData/DashboardData";
 import { EventContentArg } from "@fullcalendar/core/index.js";
 import { useState } from "react";
-import CandidateScheduleInfoDialog from "../CandidateScheduleInfoDialog";
 import CandidateJobTypeFilter from "../myJobs/CandidateJobTypeFilter";
+import CandidateInterviewDialog from "./CandidateInterviewDialog";
 import CandidateInterviewRender from "./CandidateInterviewRender";
 
 function CandidateJobInterviewsDate() {
@@ -31,7 +31,7 @@ function CandidateJobInterviewsDate() {
         />
 
         {isOpen && scheduledData && (
-          <CandidateScheduleInfoDialog
+          <CandidateInterviewDialog
             isOpen={isOpen}
             setOpen={() => setIsOpen(false)}
             data={scheduledData}
