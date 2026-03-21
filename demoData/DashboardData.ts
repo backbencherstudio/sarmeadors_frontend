@@ -2,6 +2,7 @@ import j1 from "@/public/jobImage/j1.png";
 import j2 from "@/public/jobImage/j2.png";
 import j3 from "@/public/jobImage/j3.png";
 import j4 from "@/public/jobImage/j4.png";
+import { EventInput } from "@fullcalendar/core/index.js";
 
 export const demoData = [
   {
@@ -702,5 +703,196 @@ export const currentJobs = [
     checkIn: "Mar 28, 2026",
     checkOut: "8:02 PM",
     total: "2h 05m",
+  },
+];
+
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
+const toCurrentMonthDate = (day: number) =>
+  `${currentYear}-${currentMonth}-${String(day).padStart(2, "0")}`;
+
+export const jobEvents: EventInput[] = [
+  {
+    id: "1",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(1),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "2",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(2),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "3",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(3),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "4",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(4),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
+  },
+  {
+    id: "5",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(3),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
+  },
+  {
+    id: "6",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(7),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "7",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(8),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "8",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(9),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "9",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(10),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "10",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(10),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
+  },
+  {
+    id: "11",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(11),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
+  },
+  {
+    id: "12",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(14),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "13",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(14),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
+  },
+  {
+    id: "14",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(14),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
+  },
+  {
+    id: "15",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(17),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "16",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(17),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
+  },
+  {
+    id: "17",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(17),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
+  },
+  {
+    id: "18",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(21),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "19",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(21),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
+  },
+  {
+    id: "20",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(21),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
+  },
+  {
+    id: "21",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(23),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "22",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(23),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
+  },
+  {
+    id: "23",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(24),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
+  },
+  {
+    id: "24",
+    title: "Darlene Rob...",
+    start: toCurrentMonthDate(30),
+    allDay: true,
+    extendedProps: { type: "long", dotColor: "#3B82F6", jobTime: "3:35 pm" },
+  },
+  {
+    id: "25",
+    title: "Jacob Jones",
+    start: toCurrentMonthDate(31),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "4:23 pm" },
+  },
+  {
+    id: "26",
+    title: "Courtney He...",
+    start: toCurrentMonthDate(31),
+    allDay: true,
+    extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
   },
 ];
