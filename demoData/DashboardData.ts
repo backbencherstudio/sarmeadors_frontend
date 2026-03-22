@@ -2,8 +2,8 @@ import j1 from "@/public/jobImage/j1.png";
 import j2 from "@/public/jobImage/j2.png";
 import j3 from "@/public/jobImage/j3.png";
 import j4 from "@/public/jobImage/j4.png";
+import jobImage from "@/public/jobs/Rectangle 856.png";
 import { EventInput } from "@fullcalendar/core/index.js";
-
 export const demoData = [
   {
     id: "1",
@@ -894,5 +894,30 @@ export const jobEvents: EventInput[] = [
     start: toCurrentMonthDate(31),
     allDay: true,
     extendedProps: { type: "short", dotColor: "#16A34A", jobTime: "3:25 pm" },
+  },
+];
+
+export const jobs = [
+  {
+    id: 1,
+    candidateName: "Darlene Robertson",
+    position: "Nanny",
+    roles: ["House Manager", "Baby/Night Nurse"],
+    location: "Miami, New York, Other Locations",
+    price: "$34/hr",
+    status: "Pending",
+    start: "Mar 28, 2026",
+    image: jobImage,
+  },
+  {
+    id: 2,
+    candidateName: "Darlene Robertson",
+    position: "Nanny",
+    roles: ["House Manager", "Baby/Night Nurse"],
+    location: "Miami, New York, Other Locations",
+    price: "$34/hr",
+    status: "Pending",
+    start: "Mar 28, 2026",
+    image: jobImage,
   },
 ];

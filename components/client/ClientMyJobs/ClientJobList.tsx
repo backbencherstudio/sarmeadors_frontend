@@ -2,14 +2,21 @@
 import { useState } from "react";
 import ClientJobCard from "./ClientJobCard";
 import JobNotFound from "./JobNotFound";
+import JobsCardSkeleton from "./JobsCardSkeleton";
 
-function ClientJobList({ jobs }: { jobs?: any[] }) {
+function ClientJobList({
+  jobs,
+  userType,
+}: {
+  jobs?: any[];
+  userType?: string;
+}) {
   const [loading, setLoading] = useState(false);
   if (loading) {
     return (
-      <div className="space-y-3">
+      <div className="space-y-5">
         {[1, 2, 3].map((index) => (
-          <ClientJobCard key={index} loading={true} />
+          <JobsCardSkeleton key={index} />
         ))}
       </div>
     );
@@ -19,9 +26,9 @@ function ClientJobList({ jobs }: { jobs?: any[] }) {
 
   return (
     <div>
-      <div className="space-y-3">
+      <div className="space-y-5">
         {jobs.map((job) => (
-          <ClientJobCard key={job.id} job={job} />
+          <ClientJobCard key={job.id} job={job} userType={userType} />
         ))}
       </div>
     </div>
