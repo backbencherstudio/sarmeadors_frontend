@@ -1,9 +1,9 @@
-import CandidateListJobs from "@/components/candidate/CandidateListJobs";
+import CandidateInterviewList from "@/components/candidate/interviews-jobs/CandidateInterviewList";
 
 function page() {
   return (
     <div>
-      <CandidateListJobs />
+      <CandidateInterviewList />
     </div>
   );
 }

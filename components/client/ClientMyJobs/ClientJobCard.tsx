@@ -1,19 +1,20 @@
-import ArrowRightUp from "@/components/icon/ArrowRightUp";
 import LocationIcon from "@/components/icon/LocationIcon";
-import ButtonReuseable from "@/components/reusable/CustomButton";
 import Image from "next/image";
-import JobsCardSkeleton from "./JobsCardSkeleton";
+import { useState } from "react";
+import ClientJobcardAction from "./ClientJobcardAction";
 
 interface ClientJobCardProps {
   job?: any;
   loading?: boolean;
+  userType?: string;
 }
 
-function ClientJobCard({ job, loading }: ClientJobCardProps) {
-  if (loading) {
-    return <JobsCardSkeleton />;
-  }
-
+function ClientJobCard({ job, userType }: ClientJobCardProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleInterview = () => {
+    // Handle interview button click
+    console.log("Interview button clicked for job:", job);
+  };
   return (
     <div className="border flex flex-col md:flex-row justify-between border-borderColor hover:shadow-xl transition-all duration-200 p-5 rounded-lg">
       <div className="flex gap-4 flex-col md:flex-row items-center">
@@ -32,7 +33,7 @@ function ClientJobCard({ job, loading }: ClientJobCardProps) {
             <span
               className={` px-2 py-1 text-sm rounded-sm ${job?.jobType === "long-term" ? "bg-blueColor/20 text-blueColor" : "bg-greenColor/20 text-greenColor"}`}
             >
-              {job?.jobType && job?.jobType}
+              {(job?.jobType && job?.jobType) || "Long-Term"}
             </span>
           </h4>
           <p className="text-base text-descriptionColor mt-1">
@@ -42,12 +43,8 @@ function ClientJobCard({ job, loading }: ClientJobCardProps) {
             <LocationIcon className="w-4 h-4" />
             {job.location}
           </p>
-          <div className="mt-8">
-            <ButtonReuseable
-              title="View Details"
-              rightIcon={<ArrowRightUp />}
-              className="bg-grayColor1! border border-borderColor text-blackColor!"
-            />
+          <div>
+            <ClientJobcardAction job={job} userType={userType} />
           </div>
         </div>
       </div>

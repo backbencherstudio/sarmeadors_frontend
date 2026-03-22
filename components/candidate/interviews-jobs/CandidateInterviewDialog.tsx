@@ -1,7 +1,18 @@
 import RootDialog from "@/components/common/RootDialog";
+import ClockICon from "@/components/icon/ClockICon";
+import LinkIcon from "@/components/icon/LinkIcon";
 import MeetingZoomIcon from "@/components/icon/MeetingZoomIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import dayjs from "dayjs";
+import { X } from "lucide-react";
+import { useState } from "react";
+import { BsThreeDots } from "react-icons/bs";
 
 interface ScheduleData {
   id?: string;
@@ -28,6 +39,8 @@ function CandidateInterviewDialog({
   setOpen: () => void;
   data: ScheduleData | null;
 }) {
+  const [isActionOpen, setIsActionOpen] = useState(false);
+
   if (!data) return null;
 
   // Format date from ISO string
@@ -57,20 +70,20 @@ function CandidateInterviewDialog({
     <RootDialog open={isOpen} setOpen={setOpen}>
       <div className="w-full  rounded-2xl  p-6">
         {/* Header Section */}
-        <div className="mb-2">
-          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 mb-2">
+        <div className="mb-2 ">
+          <div className="flex relative flex-col md:flex-row md:items-start gap-2 md:gap-3 mb-2">
             <div>
               <h2 className="text-lg font-medium text-blackColor">
-                {data.title}
+                {data.title || "Interview with Arlene McCoy"}
               </h2>
             </div>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <span
                 className={` px-2 py-1 text-sm font-medium rounded-sm ${data?.type === "long" ? "bg-blueColor/20 text-blueColor" : "bg-greenColor/20 text-greenColor"}`}
               >
                 {data?.type === "long" ? "Long-term" : "Short-term"}
               </span>
-              {/* Today Badge */}
+              
               {!isScheduled && (
                 <div
                   className={`${isEqualDay ? "text-blackColor" : "text-secondaryColor"} text-sm flex items-center gap-1.5 bg-bgColor px-2 py-1 font-medium rounded-sm `}
@@ -81,6 +94,37 @@ function CandidateInterviewDialog({
                   <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${formatDate(data.start)}`}</p>
                 </div>
               )}
+            </div> */}
+            <div className=" absolute right-6 -top-[7px]">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="ml-auto">
+                  <ButtonReuseable
+                    icon={<BsThreeDots />}
+                    className="bg-transparent! hover:bg-bgColor! p-1.5! text-blackColor!"
+                  />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="min-w-35">
+                  <DropdownMenuItem
+                    onSelect={() => console.log("Reschedule")}
+                    className="cursor-pointer"
+                  >
+                    <LinkIcon /> Copy Link
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onSelect={() => console.log("Cancel")}
+                    className="cursor-pointer"
+                  >
+                    <ClockICon className="fill-blackColor! text-blackColor!" />{" "}
+                    Reschedule
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onSelect={() => console.log("Cancel")}
+                    className="text-redColor cursor-pointer"
+                  >
+                    <X className=" text-redColor!" /> Cancel
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
@@ -114,9 +158,9 @@ function CandidateInterviewDialog({
         {/* Date and Time */}
         <div className="flex items-center justify-between  border-borderColor mt-6">
           <div>
-            {/* <p className="text-base font-semibold text-blackColor">
+            <p className="text-base font-semibold text-blackColor">
               {formatDate(data.start)}
-            </p> */}
+            </p>
             <p className="text-sm text-headerColor">10:00AM - 11:00AM</p>
           </div>
           <div>
@@ -124,7 +168,8 @@ function CandidateInterviewDialog({
               title="Join"
               icon={<MeetingZoomIcon />}
               loading={isEqualDay ? false : true}
-              sendingMsg="Check In"
+              sendingMsg="Join"
+              className="py-2!"
             />
           </div>
         </div>
