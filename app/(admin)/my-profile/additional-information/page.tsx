@@ -1,11 +1,11 @@
-import React from 'react'
+import ProfileAdditionalInformation from "@/components/profile/ProfileAdditionalInformation";
 
 function page() {
   return (
     <div>
-      <div>Additional Information</div>
+      <ProfileAdditionalInformation />
     </div>
-  )
+  );
 }
 
-export default page
+export default page;
