@@ -1,4 +1,4 @@
-export default function LinkIcon() {
+export default function LinkIcon({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,10 +6,11 @@ export default function LinkIcon() {
       height="14"
       viewBox="0 0 14 14"
       fill="none"
+      className={className}
     >
       <path
         d="M5.54167 8.45833L8.45833 5.54167M9.82701 8.52223L11.3492 7C12.5503 5.79899 12.5503 3.85177 11.3492 2.65076C10.1482 1.44975 8.20101 1.44975 7 2.65076L5.47776 4.17299M8.52223 9.82701L7 11.3492C5.79899 12.5503 3.85177 12.5503 2.65076 11.3492C1.44975 10.1482 1.44975 8.20101 2.65076 7L4.17299 5.47776"
-        stroke="#111927"
+        stroke="currentColor"
         strokeWidth="1.33"
         strokeLinecap="round"
       />
