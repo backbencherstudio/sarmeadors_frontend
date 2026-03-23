@@ -1,11 +1,11 @@
-import React from 'react'
+import ProfilePasswordChange from "@/components/profile/ProfilePasswordChange";
 
 function page() {
   return (
     <div>
-      <div>Additional Information</div>
+      <ProfilePasswordChange />
     </div>
-  )
+  );
 }
 
-export default page
+export default page;
