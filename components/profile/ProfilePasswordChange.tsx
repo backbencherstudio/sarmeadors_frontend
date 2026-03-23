@@ -105,7 +105,6 @@ function ProfilePasswordChange() {
           )}
         </div>
       </div>
-
       <div className="mt-6 flex justify-end">
         <ButtonReuseable
           type="submit"
