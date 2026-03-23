@@ -1,4 +1,5 @@
 "use client";
+import LinkReuseable from "@/components/reusable/CustomLink";
 import { Clock, EyeIcon, FileIcon, Trash } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -89,10 +90,13 @@ function CandidateCard({ profile }: any) {
               View profile
             </Link> */}
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1">
-              <button className="flex items-center gap-1 text-nowrap p-1 rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer mx-auto">
-                <EyeIcon size={15} />
-                <span>View Details</span>
-              </button>
+              <LinkReuseable
+                href={`/client/client-my-candidates/new-candidates/1/personal-information`}
+                title="View Details"
+                icon={<EyeIcon size={15} />}
+                className="flex items-center  text-nowrap px-2 text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer mx-auto"
+              />
+
               <button
                 onClick={() => setOpen(true)}
                 className="flex items-center gap-1 text-nowrap p-1 rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer mx-auto"

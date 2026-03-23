@@ -150,7 +150,10 @@ const Header: React.FC<HeaderProps> = ({
                   </DropdownMenuItem>
 
                   <DropdownMenuItem asChild>
-                    <Link href="/admin/dashboard" className="cursor-pointer">
+                    <Link
+                      href="/my-profile/personal-information"
+                      className="cursor-pointer"
+                    >
                       Profile Settings
                     </Link>
                   </DropdownMenuItem>

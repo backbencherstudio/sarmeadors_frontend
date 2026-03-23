@@ -6,7 +6,7 @@ type ButtonProps = {
   onClick?: () => void;
   icon?: any;
   rightIcon?: any;
-  href?: string;
+  href: string;
   sendingMsg?: string;
   type?: "button" | "submit" | "reset";
 };
