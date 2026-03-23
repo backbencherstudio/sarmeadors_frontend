@@ -119,7 +119,7 @@ function CandidateListJobs() {
             value={statusFilter}
             onValueChange={(value) => setStatusFilter(value as JobStatusFilter)}
             options={statusOptions}
-            className="h-10! bg-white! w-[150px]! px-3 py-2 text-sm text-blackColor"
+            className="h-10! bg-white! w-[150px]! shadow-none! px-3 py-2 text-sm text-blackColor"
           />
         </div>
       </div>

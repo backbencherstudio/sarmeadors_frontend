@@ -1,9 +1,7 @@
-import NewCandidatesPage from "@/app/(admin)/(client-part)/client/client-my-candidates/new-candidates/page";
-
-import ClientJobList from "./ClientJobList";
+import NewCandidatesPage from "@/app/(admin)/(client-part)/client/client-my-candidates/page";
 import { jobs } from "@/demoData/DashboardData";
+import ClientJobList from "./ClientJobList";
 function ClientCandiateInfo() {
-  
   return (
     <div>
       <h3 className="text-lg font-semibold text-blackColor mb-4">My Job</h3>

@@ -1,9 +1,11 @@
 import ProfilePersonalInformation from "@/components/profile/ProfilePersonalInformation";
 
-export default function PersonalInfoemation() {
+function page() {
   return (
-    <div className="mt-6">
+    <div>
       <ProfilePersonalInformation />
     </div>
   );
 }
+
+export default page;
