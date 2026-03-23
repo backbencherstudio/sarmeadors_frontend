@@ -1,4 +1,17 @@
+"use client";
+import { useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import ButtonReuseable from "../reusable/CustomButton";
+
 function ProfilePersonalInformation() {
+  const [isHidden, setIsHidden] = useState(false);
+  const [hiddenField, setHiddenField] = useState("");
+
+  const handleHidden = (field: string) => {
+    setHiddenField(field);
+    setIsHidden(!isHidden);
+  };
+
   return (
     <div>
       <div className="p-4 sm:p-5 md:p-6 border border-[#E5E7EB] rounded-[20px]">
@@ -59,42 +72,106 @@ function ProfilePersonalInformation() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-6">
-          <div>
-            <p className="text-secondaryColor text-sm leading-[142.857%]">
-              Street Address
-            </p>
-            <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-              26 Berkshire Ave.
-            </p>
-          </div>
-          <div>
-            <p className="text-secondaryColor text-sm leading-[142.857%]">City</p>
-            <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-              Atlantic City
-            </p>
-          </div>
-          <div>
-            <p className="text-secondaryColor text-sm leading-[142.857%]">
-              Province/State
-            </p>
-            <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-              NJ
-            </p>
-          </div>
-          <div>
-            <p className="text-secondaryColor text-sm leading-[142.857%]">
-              Postal Code
-            </p>
-            <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-              08401
-            </p>
-          </div>
-          <div>
-            <p className="text-secondaryColor text-sm leading-[142.857%]">Country</p>
-            <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-              USA
-            </p>
+        <div>
+          <h2 className="text-lg text-headerColor font-semibold leading-[20px] mt-6">
+            Address
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-4 ">
+            <div>
+              <div className="text-secondaryColor flex items-center gap-1 text-sm leading-[142.857%]">
+                <span>Street Address</span>{" "}
+                <ButtonReuseable
+                  onClick={() => handleHidden("street")}
+                  icon={
+                    isHidden && hiddenField === "street" ? (
+                      <FiEyeOff className="text-sm" size={18} />
+                    ) : (
+                      <FiEye className="text-sm" size={18} />
+                    )
+                  }
+                  className="bg-transparent  text-lightblackColor! px-1! py-0! text-sm!"
+                />
+              </div>
+              <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
+                26 Berkshire Ave.
+              </p>
+            </div>
+            <div>
+              <div className="text-secondaryColor flex items-center gap-1 text-sm leading-[142.857%]">
+                <span>City</span>{" "}
+                <ButtonReuseable
+                  onClick={() => handleHidden("city")}
+                  icon={
+                    isHidden && hiddenField === "city" ? (
+                      <FiEyeOff className="text-sm" size={18} />
+                    ) : (
+                      <FiEye className="text-sm" size={18} />
+                    )
+                  }
+                  className="bg-transparent  text-lightblackColor! px-1! py-0! text-sm!"
+                />
+              </div>
+              <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
+                Atlantic City
+              </p>
+            </div>
+            <div>
+              <div className="text-secondaryColor flex items-center gap-1 text-sm leading-[142.857%]">
+                <span>Province/State</span>{" "}
+                <ButtonReuseable
+                  onClick={() => handleHidden("province")}
+                  icon={
+                    isHidden && hiddenField === "province" ? (
+                      <FiEyeOff className="text-sm" size={18} />
+                    ) : (
+                      <FiEye className="text-sm" size={18} />
+                    )
+                  }
+                  className="bg-transparent  text-lightblackColor! px-1! py-0! text-sm!"
+                />
+              </div>
+              <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
+                NJ
+              </p>
+            </div>
+            <div>
+              <div className="text-secondaryColor flex items-center gap-1 text-sm leading-[142.857%]">
+                <span>Postal Code</span>{" "}
+                <ButtonReuseable
+                  onClick={() => handleHidden("postalCode")}
+                  icon={
+                    isHidden && hiddenField === "postalCode" ? (
+                      <FiEyeOff className="text-sm" size={18} />
+                    ) : (
+                      <FiEye className="text-sm" size={18} />
+                    )
+                  }
+                  className="bg-transparent  text-lightblackColor! px-1! py-0! text-sm!"
+                />
+              </div>
+              <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
+                08401
+              </p>
+            </div>
+            <div>
+              <div className="text-secondaryColor flex items-center gap-1 text-sm leading-[142.857%]">
+                <span>Country</span>{" "}
+                <ButtonReuseable
+                  onClick={() => handleHidden("country")}
+                  icon={
+                    isHidden && hiddenField === "country" ? (
+                      <FiEyeOff className="text-sm" size={18} />
+                    ) : (
+                      <FiEye className="text-sm" size={18} />
+                    )
+                  }
+                  className="bg-transparent  text-lightblackColor! px-1! py-0! text-sm!"
+                />
+              </div>
+              <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
+                USA
+              </p>
+            </div>
           </div>
         </div>
       </div>
