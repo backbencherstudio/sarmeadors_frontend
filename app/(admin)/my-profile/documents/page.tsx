@@ -1,11 +1,11 @@
-import React from 'react'
+import CandidateDocumentPage from "@/components/candidate/candidate-document/CandidateDocumentPage";
 
 function page() {
   return (
     <div>
-      <div>Additional Information</div>
+      <CandidateDocumentPage />
     </div>
-  )
+  );
 }
 
-export default page
+export default page;
