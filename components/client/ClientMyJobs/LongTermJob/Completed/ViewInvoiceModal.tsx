@@ -14,7 +14,7 @@ export default function ViewInvoiceModal() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <button className="px-4 py-2 text-sm text-white rounded-lg bg-black cursor-pointer">
+                <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer">
                     View Invoice
                 </button>
             </DialogTrigger>
