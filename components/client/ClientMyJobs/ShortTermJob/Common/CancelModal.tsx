@@ -17,8 +17,8 @@ export default function CancelModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="px-4 py-2 text-sm border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition cursor-pointer flex items-center gap-1 font-semibold">
-          Cancel Job <span className="text-red-400 text-lg leading-4">●</span>
+        <button className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-red-600">
+          Cancel Job <span className="text-lg leading-4">●</span>
         </button>
       </DialogTrigger>
 
