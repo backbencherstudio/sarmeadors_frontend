@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-function JobsCardSkeleton() {
+function ClientJobsCardSkeleton() {
   return (
     <div>
       <div className="border flex flex-col lg:flex-row justify-between border-borderColor p-5 rounded-lg">
@@ -22,4 +22,4 @@ function JobsCardSkeleton() {
   );
 }
 
-export default JobsCardSkeleton;
+export default ClientJobsCardSkeleton;

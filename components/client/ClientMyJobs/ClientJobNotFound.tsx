@@ -3,7 +3,7 @@ import notfound from "@/public/jobs/not-found.png";
 import { PlusIcon } from "lucide-react";
 import Image from "next/image";
 
-function JobNotFound() {
+function ClientJobNotFound() {
   return (
     <div className="text-center py-10 rounded-2xl border-dashed border-borderColor border-2 bg-bgColor">
       <div>
@@ -30,4 +30,4 @@ function JobNotFound() {
   );
 }
 
-export default JobNotFound;
+export default ClientJobNotFound;
