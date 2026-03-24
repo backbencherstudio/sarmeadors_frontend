@@ -1,6 +1,7 @@
 "use client";
-import DocumentCard from "@/components/client/Documents/DocumentCard";
+
 import { useState } from "react";
+import DocumentCard from "./DocumentCard";
 interface Document {
   id: string;
   title: string;
