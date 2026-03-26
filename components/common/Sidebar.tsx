@@ -58,6 +58,12 @@ const navItems: NavItem[] = [
     type: "admin",
   },
   {
+    icon: InterviewIcon,
+    label: "Interviews",
+    href: "/interviews",
+    type: "admin",
+  },
+  {
     icon: CalenderIcon,
     label: "Shift Job calendar",
     href: "/dashboard/shift-job-calendar",
