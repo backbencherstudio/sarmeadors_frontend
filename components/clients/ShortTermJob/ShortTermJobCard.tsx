@@ -1,8 +1,7 @@
-import ViewInvoiceModal from "@/components/client/ClientMyJobs/LongTermJob/Completed/ViewInvoiceModal";
-import CandidatesReviewModal from "@/components/client/ClientMyJobs/ShortTermJob/Marketplace/Applicants/(view-details)/CandidatesReviewModal";
 import ArrowTopBoxIcon from "@/components/icon/ArrowTopBoxIcon";
 import CalenderIcon from "@/components/icon/CalenderIcon";
 import ClockICon from "@/components/icon/ClockICon";
+import InvoiceIcon from "@/components/icon/InvoiceIcon";
 import LinkIcon from "@/components/icon/LinkIcon";
 import LocationIcon from "@/components/icon/LocationIcon";
 import SmsIcon from "@/components/icon/SmsIcon";
@@ -179,7 +178,9 @@ function ShortTermJobCard({ job }: { job: any }) {
                       className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
                     />
                     <ButtonReuseable
-                      rightIcon={<DeleteIcon className="w-4 h-4 text-[#D12F39]" />}
+                      rightIcon={
+                        <DeleteIcon className="w-4 h-4 text-[#D12F39]" />
+                      }
                       className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
                     />
                   </div>
@@ -216,6 +217,29 @@ function ShortTermJobCard({ job }: { job: any }) {
                   </div>
                 )}
               </div>
+            </div>
+            <div className="flex items-center justify-between">
+              {job.status === "completed" && (
+                <div className="flex items-center gap-[8px]">
+                  <ButtonReuseable
+                    rightIcon={<SmsIcon className="w-5 h-5" />}
+                    className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
+                  />
+                  <ButtonReuseable
+                    title="⭐ View Review"
+                    className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
+                  />
+                </div>
+              )}
+              {job.status === "completed" && (
+                <div>
+                  <ButtonReuseable
+                    title="View Invoice"
+                    icon={<InvoiceIcon className="text-white" />}
+                    className="bg-black! text-white! h-full border border-borderColor"
+                  />
+                </div>
+              )}
             </div>
             <div className="flex items-center h-full gap-2 w-full">
               <div className="flex items-center gap-[8px]">
@@ -270,31 +294,7 @@ function ShortTermJobCard({ job }: { job: any }) {
                   </div>
                 )}
               </div>
-
-              {job.status === "completed" && (
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center justify-between">
-                    {/* Buttons */}
-                    <CandidatesReviewModal />
-                  </div>
-                </div>
-              )}
             </div>
-
-            {/* Candidates */}
-            {job.status === "completed" && <ViewInvoiceModal />}
-          </div>
-          <div>
-            {job.status === "cancel" && (
-              <div className="">
-                <h4 className="text-lightblackColor text-sm font-semibold">
-                  Cancel Reason
-                </h4>
-                <p className="px-3 py-4 mt-2 text-secondaryColor border border-borderColor  bg-grayColor1 rounded-sm ">
-                  {job.cancelReason || "No reason provided"}
-                </p>
-              </div>
-            )}
           </div>
         </div>
       </div>

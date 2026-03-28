@@ -14,6 +14,9 @@ export default function ShortTermViewListMenu() {
   const activeMarketplacePath = isActive(
     "/short-term-job/view-list/marketplace",
   );
+  const activeCompletedPath = isActive(
+    "/short-term-job/view-list/completed",
+  );
   return (
     <div>
       <div className="w-full">
@@ -36,6 +39,12 @@ export default function ShortTermViewListMenu() {
               className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activeMarketplacePath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
             >
               Marketplace (1)
+            </Link>
+            <Link
+              href={"/short-term-job/view-list/completed"}
+              className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activeCompletedPath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
+            >
+              Completed (9)
             </Link>
           </div>
         </div>
