@@ -18,6 +18,11 @@
   --color-secondaryColor: var(--secondaryColor);
   --color-skyColor: #45ccd2;
   --color-blackColor: var(--blackColor);
+  --color-requestedColor: #ad0afd;
+  --color-scheduledColor: #2b7fff;
+  --color-rescheduledColor: #e5b400;
+  --color-completeddColor: #04a755;
+  --color-cancledColor: #ff3d49;
   --color-whiteColor: var(--whiteColor);
   --color-ratingColor: var(--ratingColor);
   --color-headerColor: var(--headerColor);
