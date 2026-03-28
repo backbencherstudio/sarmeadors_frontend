@@ -30,7 +30,7 @@ function ClientjobsCard({ job }: { job: any }) {
         <div>
             <div className="hover:bg-white bg-bgColor  border-l-4 border-bgColor hover:shadow-xl  hover:border-[#6BA6FF] transition-all duration-200 shadow rounded-lg p-4 md:p-5 space-y-4">
                 <div className="">
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col md:flex-row md:justify-between items-start gap-4 md:gap-0">
                         <div className="flex flex-col items-start gap-2 mb-2">
                             <div className="flex  md:items-center gap-2 ">
                                 <h3 className="md:text-lg text-base font-semibold text-blackColor">
@@ -60,7 +60,7 @@ function ClientjobsCard({ job }: { job: any }) {
                                     {job.status}
                                 </p>
                             </div>
-                            <div className="md:flex  flex-col md:flex-row md:justify-between items-center">
+                            <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-4 md:gap-6">
                                 <div>
                                     <div className="flex items-center gap-2 mb-3">
                                         <div className="w-8 h-8 rounded-full bg-[#96C0FF] flex items-center justify-center text-xs font-semibold text-headerColor">
@@ -96,8 +96,8 @@ function ClientjobsCard({ job }: { job: any }) {
                                         }
                                     </div>
                                 </div>
-                                {isEqualDay && (
-                                    <div className="md:space-y-1 flex justify-between md:flex-col md:items-end w-full  text-right text-xs items-center md:text-sm">
+                                {/* {isEqualDay && (
+                                    <div className="space-y-1 flex flex-col md:flex-col md:items-end items-start w-full text-left md:text-right text-xs md:text-sm">
                                         <div>
                                             <p className="text-blackColor w-full py-1.5 px-2 bg-bgColor rounded-sm font-medium">
                                                 <span className="text-greenColor">Check In</span>{" "}
@@ -118,10 +118,10 @@ function ClientjobsCard({ job }: { job: any }) {
                                             </p>
                                         </div>
                                     </div>
-                                )}
+                                )} */}
                             </div>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-4 md:text-right">
                             {
                                 job.status === "completed" ||
                                 <div className="flex items-center gap-2">
@@ -177,9 +177,9 @@ function ClientjobsCard({ job }: { job: any }) {
                             </div>
                         )}
                     </div>
-                    <div className="pt-3 mt-3 border-t flex justify-between items-center border-borderColor">
+                    <div className="pt-3 mt-3 border-t flex flex-col md:flex-row md:justify-between items-start md:items-center gap-3 border-borderColor">
 
-                        <div className="flex items-center h-full gap-2">
+                        <div className="flex flex-wrap items-center h-full gap-2">
                             <ButtonReuseable
                                 rightIcon={<SmsIcon className="w-5 h-5" />}
                                 className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
@@ -232,7 +232,7 @@ function ClientjobsCard({ job }: { job: any }) {
 
                         {
                             job.status === "marketplace" &&
-                            <div className="flex flex-col items-end">
+                            <div className="flex flex-col md:items-end items-start w-full md:w-auto">
                                 <span className="text-xs text-gray-500 mb-2">
                                     Applicant Candidates
                                 </span>
