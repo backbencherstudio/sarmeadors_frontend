@@ -10,6 +10,7 @@ export default function ShortTermViewListMenu() {
     return path === href || path.startsWith(`${href}/`);
   };
   const activeRunningPath = isActive("/short-term-job/view-list/running");
+  const activePendingPath = isActive("/short-term-job/view-list/pending");
   return (
     <div>
       <div className="w-full">
@@ -20,6 +21,12 @@ export default function ShortTermViewListMenu() {
               className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activeRunningPath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
             >
               Running (1)
+            </Link>
+            <Link
+              href={"/short-term-job/view-list/pending"}
+              className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activePendingPath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
+            >
+              Pending (0)
             </Link>
           </div>
         </div>
