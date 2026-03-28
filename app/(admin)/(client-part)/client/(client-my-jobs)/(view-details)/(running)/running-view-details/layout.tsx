@@ -13,7 +13,7 @@ export default function PendingViewDetailsLayout({ children }) {
         <div className="p-6">
             {/* Job Details */}
             <div className="w-full bg-[#e9f3f5] p-4 rounded-xl mb-6">
-                <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
 
                     {/* Left Side Info */}
                     <div className="flex flex-wrap items-center gap-6 w-full">
@@ -59,7 +59,7 @@ export default function PendingViewDetailsLayout({ children }) {
                     </div>
 
                     {/* Invoice Button */}
-                    <Link href={'/client/Invoice-details'} className="bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition">
+                    <Link href={'/client/Invoice-details'} className="w-fit bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition">
                         Invoice
                     </Link>
 
