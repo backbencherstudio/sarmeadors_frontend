@@ -23,7 +23,7 @@ export default function ShortTermJobMenu({
     },
     {
       title: "List View",
-      href: ShortTermJobs ? "/short-term-job/view-list" : "/short-term-job/view-list",
+      href: ShortTermJobs ? "/short-term-job/view-list/running" : "/short-term-job/view-list/running",
       icon: <ListViewIcon />,
     },
   ];

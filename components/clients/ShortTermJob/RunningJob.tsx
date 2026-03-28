@@ -1,28 +1,18 @@
 "use client";
 import CandidatejobsCard from "@/components/candidate/CandidatejobsCard";
 import { currentJobs } from "@/demoData/DashboardData";
-import dayjs, { Dayjs } from "dayjs";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
-export default function ShortTermJobViewList() {
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-
+export default function RunningJob({ title }: { title: string }) {
   const filteredJobs = useMemo(() => {
     let filtered = currentJobs;
 
-    if (selectedDate) {
-      filtered = filtered.filter((job) => {
-        const jobDay = dayjs(job.startDate);
-        return jobDay.isValid() && jobDay.isSame(selectedDate, "day");
-      });
-    }
-
     return filtered;
-  }, [selectedDate]);
+  }, []);
   return (
     <div className="w-full rounded-xl border border-borderColor bg-white p-3 sm:p-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold text-blackColor">All Jobs</h2>
+        <h2 className="text-lg font-semibold text-blackColor">{title}</h2>
       </div>
 
       <div className="space-y-6">
