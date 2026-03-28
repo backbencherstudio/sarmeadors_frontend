@@ -9,14 +9,14 @@ export default function ClientJobDescription() {
                 alt={"img"}
                 width={166}
                 height={128}
-                className="mb-8 object-cover"
+                className="mb-8 object-cover w-full max-w-[166px] h-auto"
             />
             {/* Customer Information */}
             <div className="mb-6">
                 <h1 className="text-lg text-[#111927] font-semibold mb-1">Darlene Robertson</h1>
 
                 <div className="space-y-2">
-                    <div className="flex gap-2 text-sm mb-6">
+                    <div className="flex flex-wrap items-center gap-2 text-sm mb-6">
                         <span className="font-medium">Service Type:</span>
                         <span className="text-[#384250]">House Manager</span>
                         |
@@ -104,7 +104,7 @@ export default function ClientJobDescription() {
                 {/* Booking Date & Time */}
                 <section className="mb-4 p-6 border border-gray-200 rounded-[12px]">
 
-                    <div className="flex justify-between">
+                    <div className="flex flex-col md:flex-row md:justify-between gap-4">
                         <div>
                             <span className="text-sm  text-[#778593]">Booking Date & Time</span>
                             <div className="text-sm font-medium mt-1 text-[#384250]">12/02/2025 (8:45 AM - 6:00 PM)</div>
@@ -123,28 +123,28 @@ export default function ClientJobDescription() {
                 {/* Job Address */}
                 <section className="mb-4 p-6 border border-gray-200 rounded-[12px]">
 
-                    <div className="flex justify-between">
-                        <div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div className="">
                             <span className="text-sm  text-[#778593]">Street Address</span>
                             <div className="text-sm font-medium mt-1 text-[#384250]">26 Berkshire Ave.</div>
                         </div>
 
-                        <div>
+                        <div className="">
                             <span className="text-sm  text-[#778593]">City</span>
                             <div className="text-sm font-medium mt-1 text-[#384250]">Atlantic City</div>
                         </div>
 
-                        <div>
+                        <div className="">
                             <span className="text-sm  text-[#778593]">Province/State</span>
                             <div className="text-sm font-medium mt-1 text-[#384250]">NJ</div>
                         </div>
 
-                        <div>
+                        <div className="">
                             <span className="text-sm  text-[#778593]">Postal Code</span>
                             <div className="text-sm font-medium mt-1 text-[#384250]">08401</div>
                         </div>
 
-                        <div>
+                        <div className="">
                             <span className="text-sm  text-[#778593]">Country</span>
                             <div className="text-sm font-medium mt-1 text-[#384250]">USA</div>
                         </div>
@@ -164,14 +164,14 @@ export default function ClientJobDescription() {
 
                 <hr />
 
-                <div className="flex justify-between pt-5">
-                    <div>
+                <div className="flex flex-col md:flex-row md:justify-between gap-3 pt-5">
+                    <div className="md:max-w-[70%]">
                         <h3 className="text-lg font-medium">
                             Delete Post Permanently
                         </h3>
                         <p className="text-sm  text-[#778593]">This action is irreversible; we cannot recover your data after account deletion.</p>
                     </div>
-                    <button className="text-red-600 font-medium cursor-pointer">Delete Job Post </button>
+                    <button className="text-red-600 font-medium cursor-pointer self-start md:self-auto">Delete Job Post </button>
                 </div>
 
             </div>
