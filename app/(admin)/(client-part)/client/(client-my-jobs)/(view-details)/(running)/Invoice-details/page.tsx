@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function InvoicePage() {
     return (
-        <div className="min-h-screen flex items-center justify-center p-10">
+        <div className="h-full flex items-center justify-center p-10">
             <div className="w-full max-w-lg  rounded-2xl p-6 border border-gray-200">
                 {/* Header */}
                 <div className="flex items-center gap-3 pb-4 border-b">
@@ -44,6 +44,7 @@ export default function InvoicePage() {
 
                 {/* Modal */}
                 <PaymentSuccessfulModal />
+
             </div>
         </div>
     );

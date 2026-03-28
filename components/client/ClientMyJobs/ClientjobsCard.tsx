@@ -186,11 +186,10 @@ function ClientjobsCard({ job }: { job: any }) {
                             />
                             {
                                 job.status === "completed" &&
-                                <div className="flex items-center justify-between w-full">
-                                    <div className="flex items-center justify-between">
-                                        {/* Buttons */}
-                                        <CandidatesReviewModal />
-                                    </div>
+                                <div>
+                                    {/* Buttons */}
+                                    <CandidatesReviewModal />
+
                                 </div>
 
                             }
