@@ -6,9 +6,9 @@ import SmsIcon from "@/components/icon/SmsIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import LinkReuseable from "@/components/reusable/CustomLink";
 import dayjs from "dayjs";
+import ViewInvoiceModal from "./LongTermJob/Completed/ViewInvoiceModal";
 import CancelModal from "./ShortTermJob/Common/CancelModal";
 import CandidatesReviewModal from "./ShortTermJob/Marketplace/Applicants/(view-details)/CandidatesReviewModal";
-import ViewInvoiceModal from "./LongTermJob/Completed/ViewInvoiceModal";
 
 function ClientjobsCard({ job }: { job: any }) {
     const today = dayjs();
@@ -30,37 +30,36 @@ function ClientjobsCard({ job }: { job: any }) {
         <div>
             <div className="hover:bg-white bg-bgColor  border-l-4 border-bgColor hover:shadow-xl  hover:border-[#6BA6FF] transition-all duration-200 shadow rounded-lg p-4 md:p-5 space-y-4">
                 <div className="">
-                    <div className="flex flex-col md:flex-row md:justify-between items-start gap-4 md:gap-0">
+                    <div className="flex justify-between items-start">
                         <div className="flex flex-col items-start gap-2 mb-2">
                             <div className="flex  md:items-center gap-2 ">
                                 <h3 className="md:text-lg text-base font-semibold text-blackColor">
                                     {job.title}
                                 </h3>
                                 <p
-                                    className={`text-xs md:text-sm px-2 py-1  rounded-sm font-semibold capitalize ${job.status === "running"
-                                        && "bg-black text-white"
+                                    className={`text-xs md:text-sm px-2 py-1  rounded-sm font-semibold capitalize ${job.status === "running" && "bg-black text-white"
                                         }
-                                        ${job.status === "pending"
-                                        && "px-2 py-1 text-sm bg-amber-400 text-white rounded-md"
+                                        ${job.status === "pending" &&
+                                        "px-2 py-1 text-sm bg-amber-400 text-white rounded-md"
                                         }
-                                        ${job.status === "marketplace"
-                                        && "px-2 py-1 text-sm bg-blue-600 text-white rounded-md"
+                                        ${job.status === "marketplace" &&
+                                        "px-2 py-1 text-sm bg-blue-600 text-white rounded-md"
                                         }
-                                        ${job.status === "completed"
-                                        && "px-2 py-1 text-sm bg-green-600 text-white rounded-md"
+                                        ${job.status === "completed" &&
+                                        "px-2 py-1 text-sm bg-green-600 text-white rounded-md"
                                         }
-                                        ${job.status === "canceled"
-                                        && "px-2 py-1 text-sm bg-red-200 text-red-600 rounded-md"
+                                        ${job.status === "canceled" &&
+                                        "px-2 py-1 text-sm bg-red-200 text-red-600 rounded-md"
                                         }
-                                        ${job.status === "rejected"
-                                        && "px-2 py-1 text-sm text-white bg-red-600 rounded-md"
+                                        ${job.status === "rejected" &&
+                                        "px-2 py-1 text-sm text-white bg-red-600 rounded-md"
                                         }
                                         `}
                                 >
                                     {job.status}
                                 </p>
                             </div>
-                            <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-4 md:gap-6">
+                            <div className="md:flex  flex-col md:flex-row md:justify-between items-center">
                                 <div>
                                     <div className="flex items-center gap-2 mb-3">
                                         <div className="w-8 h-8 rounded-full bg-[#96C0FF] flex items-center justify-center text-xs font-semibold text-headerColor">
@@ -69,7 +68,9 @@ function ClientjobsCard({ job }: { job: any }) {
                                                 .map((n) => n[0])
                                                 .join("")}
                                         </div>
-                                        <span className="text-sm text-lightblackColor">{job.name}</span>
+                                        <span className="text-sm text-lightblackColor">
+                                            {job.name}
+                                        </span>
                                     </div>
                                     <p className="text-sm text-secondaryColor mb-3">
                                         {job.description}
@@ -79,25 +80,25 @@ function ClientjobsCard({ job }: { job: any }) {
                                             <LocationIcon className="w-4 h-4" />
                                             <span>{job.location}</span>
                                         </div>
-                                        {
-                                            (job.status === "pending" || job.status === "marketplace") &&
-                                            <div className="flex gap-3 items-center">
-                                                <div className="flex items-center gap-2">
-                                                    <CalenderIcon className="w-4 h-4" />
-                                                    <span>{job.startDate}</span>
+                                        {(job.status === "pending" ||
+                                            job.status === "marketplace") && (
+                                                <div className="flex gap-3 items-center">
+                                                    <div className="flex items-center gap-2">
+                                                        <CalenderIcon className="w-4 h-4" />
+                                                        <span>{job.startDate}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <ClockICon className="w-4 h-4 fill-secondaryColor" />
+                                                        <span>
+                                                            {job.startTime} - {job.endTime}
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                                <div className="flex items-center gap-2">
-                                                    <ClockICon className="w-4 h-4 fill-secondaryColor" />
-                                                    <span>
-                                                        {job.startTime} - {job.endTime}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        }
+                                            )}
                                     </div>
                                 </div>
-                                {/* {isEqualDay && (
-                                    <div className="space-y-1 flex flex-col md:flex-col md:items-end items-start w-full text-left md:text-right text-xs md:text-sm">
+                                {isEqualDay && (
+                                    <div className="md:space-y-1 flex justify-between md:flex-col md:items-end w-full  text-right text-xs items-center md:text-sm">
                                         <div>
                                             <p className="text-blackColor w-full py-1.5 px-2 bg-bgColor rounded-sm font-medium">
                                                 <span className="text-greenColor">Check In</span>{" "}
@@ -118,21 +119,19 @@ function ClientjobsCard({ job }: { job: any }) {
                                             </p>
                                         </div>
                                     </div>
-                                )} */}
+                                )}
                             </div>
                         </div>
-                        <div className="space-y-4 md:text-right">
-                            {
-                                job.status === "completed" ||
+                        <div className="space-y-4">
+                            {job.status === "completed" || (
                                 <div className="flex items-center gap-2">
                                     {/* <ClockICon className="w-4 h-4 fill-secondaryColor" /> */}
                                     <span className="font-medium">
                                         {job.startTime} - {job.endTime}
                                     </span>
                                 </div>
-                            }
-                            {
-                                job.status === "completed" &&
+                            )}
+                            {job.status === "completed" && (
                                 <div className="flex flex-col justify-end items-end">
                                     <div className="flex items-center gap-2">
                                         <p className="text-lg font-semibold text-blackColor mb-3">
@@ -154,14 +153,15 @@ function ClientjobsCard({ job }: { job: any }) {
                                         </div>
                                     </div>
                                 </div>
-                            }
-                            {
-                                job.status === "running" && (
-                                    <div className="bg-[#F3F4F6] rounded-lg px-4 py-3">
-                                        <p className="font-medium"><span className="text-[#778593] text-sm">Check In:</span> {job.checkIn}</p>
-                                    </div>
-                                )
-                            }
+                            )}
+                            {job.status === "running" && (
+                                <div className="bg-[#F3F4F6] rounded-lg px-4 py-3">
+                                    <p className="font-medium">
+                                        <span className="text-[#778593] text-sm">Check In:</span>{" "}
+                                        {job.checkIn}
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -177,24 +177,21 @@ function ClientjobsCard({ job }: { job: any }) {
                             </div>
                         )}
                     </div>
-                    <div className="pt-3 mt-3 border-t flex flex-col md:flex-row md:justify-between items-start md:items-center gap-3 border-borderColor">
-
-                        <div className="flex flex-wrap items-center h-full gap-2">
+                    <div className="pt-3 mt-3 border-t flex justify-between items-center border-borderColor">
+                        <div className="flex items-center h-full gap-2">
                             <ButtonReuseable
                                 rightIcon={<SmsIcon className="w-5 h-5" />}
                                 className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
                             />
-                            {
-                                job.status === "completed" &&
-                                <div>
-                                    {/* Buttons */}
-                                    <CandidatesReviewModal />
-
+                            {job.status === "completed" && (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center justify-between">
+                                        {/* Buttons */}
+                                        <CandidatesReviewModal />
+                                    </div>
                                 </div>
-
-                            }
-                            {
-                                job.status === "completed" ||
+                            )}
+                            {job.status === "completed" || (
                                 <>
                                     <LinkReuseable
                                         title="View Details"
@@ -203,14 +200,12 @@ function ClientjobsCard({ job }: { job: any }) {
                                         className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
                                     />
 
-                                    {
-                                        (job.status === "canceled" || job.status === "rejected") ||
+                                    {job.status === "canceled" || job.status === "rejected" || (
                                         <CancelModal />
-                                    }
+                                    )}
                                 </>
-                            }
+                            )}
                         </div>
-
 
                         {/* <div className="text-right ml-4">
                             {job.status === "cancel" || job.status === "completed" ? (
@@ -229,9 +224,8 @@ function ClientjobsCard({ job }: { job: any }) {
 
                         </div> */}
 
-                        {
-                            job.status === "marketplace" &&
-                            <div className="flex flex-col md:items-end items-start w-full md:w-auto">
+                        {job.status === "marketplace" && (
+                            <div className="flex flex-col items-end">
                                 <span className="text-xs text-gray-500 mb-2">
                                     Applicant Candidates
                                 </span>
@@ -258,30 +252,25 @@ function ClientjobsCard({ job }: { job: any }) {
                                     </div>
                                 </div>
                             </div>
-                        }
+                        )}
 
                         {/* Candidates */}
-                        {
-                            job.status === "completed" &&
-                            <ViewInvoiceModal />
-                        }
+                        {job.status === "completed" && <ViewInvoiceModal />}
 
-                        {
-                            job.status === "canceled" &&
+                        {job.status === "canceled" && (
                             <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer">
                                 Request for Refund
                             </button>
-                        }
-                        {
-                            job.status === "rejected" &&
+                        )}
+                        {job.status === "rejected" && (
                             <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer">
                                 Edit & Resubmit
                             </button>
-                        }
+                        )}
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
