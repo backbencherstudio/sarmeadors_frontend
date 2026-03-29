@@ -3,7 +3,7 @@ import jobImage from "@/public/jobs/Rectangle 856.png";
 
 export default function ClientJobDescription() {
     return (
-        <div className="max-w-full mx-auto bg-white font-sans p-5">
+        <div className="max-w-full mx-auto bg-white font-sans">
             <Image
                 src={jobImage}
                 alt={"img"}
