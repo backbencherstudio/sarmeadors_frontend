@@ -1,5 +1,5 @@
 "use client";
-import ShortTermJobCard from "@/components/clients/ShortTermJob/AgencyShortTermJobCard";
+import ShortTermJobCard from "@/components/clients/AgencyShortTermJob/AgencyShortTermJobCard";
 import { adminCurrentJobs } from "@/demoData/DashboardData";
 import { Clock } from "lucide-react";
 import { usePathname } from "next/navigation";

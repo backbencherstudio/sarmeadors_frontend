@@ -1,5 +1,5 @@
 "use client";
-import RejectModal from "@/components/clients/ShortTermJob/RejectModal";
+import RejectModal from "@/components/clients/AgencyShortTermJob/RejectModal";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import ReusableLineTabs from "@/components/reusable/ReusableLineTabs";
 import { Check, X } from "lucide-react";
