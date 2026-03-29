@@ -1,8 +1,10 @@
 "use client";
+import RejectModal from "@/components/clients/ShortTermJob/RejectModal";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import ReusableLineTabs from "@/components/reusable/ReusableLineTabs";
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
 export default function PandingLayout({
@@ -21,6 +23,7 @@ export default function PandingLayout({
     },
   ];
   const router = useRouter();
+  const [open, setOpen] = useState(false);
   return (
     <div className="p-6">
       {/* Job Details */}
@@ -36,6 +39,7 @@ export default function PandingLayout({
         </div>
         <div className="flex items-center gap-[8px]">
           <ButtonReuseable
+            onClick={() => setOpen(true)}
             title="Reject"
             icon={<X className="h-4 w-4 text-[#CB121D]" />}
             className="bg-grayColor1! px-4 font-semibold rounded-md tex-sm py-[10.5px]! border border-borderColor text-[#CB121D]!"
@@ -51,6 +55,7 @@ export default function PandingLayout({
       <ReusableLineTabs tabs={TabsData} />
       {/* Children */}
       <div className="pt-5">{children}</div>
+      <RejectModal open={open} setOpen={setOpen} />
     </div>
   );
 }
