@@ -1,6 +1,6 @@
 "use client";
 import ShortTermJobCard from "@/components/clients/ShortTermJob/ShortTermJobCard";
-import { clientCurrentJobs } from "@/demoData/DashboardData";
+import { adminCurrentJobs } from "@/demoData/DashboardData";
 import { Clock } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -16,7 +16,7 @@ export default function page() {
         </h2>
       </div>
       <div className="space-y-5">
-        {clientCurrentJobs.map((job) => (
+        {adminCurrentJobs.map((job) => (
           <>
             {job.status === lastPathText && (
               <ShortTermJobCard key={job.id} job={job} />

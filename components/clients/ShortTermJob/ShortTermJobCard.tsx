@@ -8,19 +8,15 @@ import SmsIcon from "@/components/icon/SmsIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import LinkReuseable from "@/components/reusable/CustomLink";
 import DeleteIcon from "@/public/icon/DeleteIcon";
-import dayjs from "dayjs";
 import { Check, X } from "lucide-react";
 
 function ShortTermJobCard({ job }: { job: any }) {
-  const today = dayjs();
-  const jobDate = dayjs(job.startDate);
-
   const viewDetailsHrefByStatus: Record<string, string> = {
     running: "/short-term-job/view-list/running/job-description",
     pending: "/short-term-job/view-list/pending/job-description",
     marketplace: "/short-term-job/view-list/pending/job-description",
-    canceled: "/client/canceled-view-details",
-    rejected: "/client/rejected-view-details",
+    completed:
+      "/short-term-job/view-list/completed/view-details/invoice-active/job-description",
   };
   const viewDetailsHref = viewDetailsHrefByStatus[job.status];
 
@@ -233,10 +229,11 @@ function ShortTermJobCard({ job }: { job: any }) {
               )}
               {job.status === "completed" && (
                 <div>
-                  <ButtonReuseable
+                  <LinkReuseable
                     title="View Invoice"
+                    href={viewDetailsHref}
                     icon={<InvoiceIcon className="text-white" />}
-                    className="bg-black! text-white! h-full border border-borderColor"
+                    className="bg-[#111927]! text-white! px-4 font-semibold rounded-md tex-sm py-[10.5px]! border border-borderColor"
                   />
                 </div>
               )}

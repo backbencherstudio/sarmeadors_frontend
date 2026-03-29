@@ -1,5 +1,5 @@
 "use client";
-import { clientCurrentJobs } from "@/demoData/DashboardData";
+import { adminCurrentJobs } from "@/demoData/DashboardData";
 import { AlertCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import ShortTermJobCard from "./ShortTermJobCard";
@@ -16,7 +16,7 @@ export default function RunningJob({ title }: { title: string }) {
         </h2>
       </div>
       <div className="space-y-5">
-        {clientCurrentJobs.map((job) => (
+        {adminCurrentJobs.map((job) => (
           <>
             {job.status === lastPathText && (
               <ShortTermJobCard key={job.id} job={job} />
