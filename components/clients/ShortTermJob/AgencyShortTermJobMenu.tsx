@@ -18,12 +18,12 @@ export default function ShortTermJobMenu({
   const menuItems = [
     {
       title: "Calendar",
-      href: ShortTermJobs ? "/short-term-job" : "/short-term-job",
+      href: ShortTermJobs ? "/agency-short-term-job" : "/agency-short-term-job",
       icon: <CalenderIcon />,
     },
     {
       title: "List View",
-      href: ShortTermJobs ? "/short-term-job/view-list/running" : "/short-term-job/view-list/running",
+      href: ShortTermJobs ? "/agency-short-term-job/view-list/running" : "/agency-short-term-job/view-list/running",
       icon: <ListViewIcon />,
     },
   ];

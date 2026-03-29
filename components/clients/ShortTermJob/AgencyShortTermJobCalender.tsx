@@ -4,10 +4,10 @@ import { shortTermJobEvents } from "@/demoData/DashboardData";
 import { EventContentArg } from "@fullcalendar/core/index.js";
 import { useState } from "react";
 import InterviewRequestDialog from "../Interviews/InterviewRequestDialog";
-import ShortTermJobFilterType from "./ShortTermJobFilterType";
-import ShortTermJobRenderSection from "./ShortTermJobRenderSection";
+import ShortTermJobFilterType from "./AgencyShortTermJobFilterType";
+import ShortTermJobRenderSection from "./AgencyShortTermJobRenderSection";
 import CandidateScheduleInfoDialog from "@/components/candidate/CandidateScheduleInfoDialog";
-import ShortTermJobInfoDialog from "./ShortTermJobInfoDialog";
+import ShortTermJobInfoDialog from "./AgencyShortTermJobInfoDialog";
 
 export default function ShortTermJobCalender() {
   const [shortTermJobData, setShortTermJobData] = useState<any>(null);

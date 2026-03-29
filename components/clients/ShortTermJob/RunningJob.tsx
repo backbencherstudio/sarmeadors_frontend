@@ -2,7 +2,7 @@
 import { adminCurrentJobs } from "@/demoData/DashboardData";
 import { AlertCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
-import ShortTermJobCard from "./ShortTermJobCard";
+import ShortTermJobCard from "./AgencyShortTermJobCard";
 
 export default function RunningJob({ title }: { title: string }) {
   const pathname = usePathname();
