@@ -12,11 +12,10 @@ import { Check, X } from "lucide-react";
 
 function ShortTermJobCard({ job }: { job: any }) {
   const viewDetailsHrefByStatus: Record<string, string> = {
-    running: "/short-term-job/view-list/running/job-description",
-    pending: "/short-term-job/view-list/pending/job-description",
-    marketplace: "/short-term-job/view-list/pending/job-description",
-    completed:
-      "/short-term-job/view-list/completed/view-details/invoice-active/job-description",
+    running: "/running-view-details/job-description",
+    pending: "/pending-view-details/job-description",
+    marketplace: "/view-list/pending/job-description",
+    completed: "/completed-view-details/invoice-active/job-description",
   };
   const viewDetailsHref = viewDetailsHrefByStatus[job.status];
 

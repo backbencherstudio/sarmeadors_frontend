@@ -1,4 +1,4 @@
-import ShortTermViewListMenu from "@/components/clients/ShortTermJob/ShortTermViewListMenu";
+import AgencyShortTermViewListMenu from "@/components/clients/ShortTermJob/AgencyShortTermViewListMenu";
 
 export default function ShortTermViewListLayout({
   children,
@@ -8,7 +8,7 @@ export default function ShortTermViewListLayout({
   return (
     <div className=" bg-white lg:col-span-9 2xl:col-span-10 p-4 lg:p-6">
       <div>
-        <ShortTermViewListMenu />
+        <AgencyShortTermViewListMenu />
       </div>
       {/* children */}
       <div className="py-4">{children}</div>

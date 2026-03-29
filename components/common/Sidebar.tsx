@@ -66,7 +66,7 @@ const navItems: NavItem[] = [
   {
     icon: JobsIcon,
     label: "Short-term Job",
-    href: "/short-term-job",
+    href: "/agency-short-term-job",
     type: "admin",
   },
   {
