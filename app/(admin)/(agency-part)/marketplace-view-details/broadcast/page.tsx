@@ -1,4 +1,5 @@
 "use client";
+import BroadcastButtonSection from "@/components/clients/AgencyShortTermJob/BroadcastButtonSection";
 import { BroadcastChannels } from "@/components/clients/AgencyShortTermJob/BroadcastChannels";
 import BroadcastForm from "@/components/clients/AgencyShortTermJob/BroadcastForm";
 import BroadcastTable from "@/components/clients/AgencyShortTermJob/BroadcastTable";
@@ -25,7 +26,8 @@ export default function page() {
         </div>
       </div>
       <BroadcastForm />
-      <BroadcastChannels/>
+      <BroadcastChannels />
+      <BroadcastButtonSection />
     </div>
   );
 }
