@@ -1,4 +1,4 @@
-import AgencyShortTermViewListMenu from "@/components/clients/ShortTermJob/AgencyShortTermViewListMenu";
+import AgencyShortTermViewListMenu from "@/components/clients/AgencyShortTermJob/AgencyShortTermViewListMenu";
 
 export default function ShortTermViewListLayout({
   children,

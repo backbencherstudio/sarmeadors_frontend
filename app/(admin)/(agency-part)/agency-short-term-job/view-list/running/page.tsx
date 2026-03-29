@@ -1,4 +1,4 @@
-import RunningJob from "@/components/clients/ShortTermJob/RunningJob";
+import RunningJob from "@/components/clients/AgencyShortTermJob/RunningJob";
 
 export default function page() {
   return (

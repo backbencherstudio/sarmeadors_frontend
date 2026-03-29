@@ -14,7 +14,7 @@ function ShortTermJobCard({ job }: { job: any }) {
   const viewDetailsHrefByStatus: Record<string, string> = {
     running: "/running-view-details/job-description",
     pending: "/pending-view-details/job-description",
-    marketplace: "/view-list/pending/job-description",
+    marketplace: "/marketplace-view-details/broadcast",
     completed: "/completed-view-details/invoice-active/job-description",
   };
   const viewDetailsHref = viewDetailsHrefByStatus[job.status];

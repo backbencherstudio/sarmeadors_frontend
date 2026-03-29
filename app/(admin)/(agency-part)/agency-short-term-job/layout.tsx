@@ -1,4 +1,4 @@
-import ShortTermJobMenu from "@/components/clients/ShortTermJob/AgencyShortTermJobMenu";
+import ShortTermJobMenu from "@/components/clients/AgencyShortTermJob/AgencyShortTermJobMenu";
 import React from "react";
 
 export default function ShortTermJobLayout({

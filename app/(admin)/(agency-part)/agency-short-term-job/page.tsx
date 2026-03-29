@@ -1,4 +1,4 @@
-import ShortTermJobCalender from "@/components/clients/ShortTermJob/AgencyShortTermJobCalender";
+import ShortTermJobCalender from "@/components/clients/AgencyShortTermJob/AgencyShortTermJobCalender";
 
 export default function page() {
   return (
