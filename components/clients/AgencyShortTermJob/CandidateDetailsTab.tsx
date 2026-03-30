@@ -14,11 +14,11 @@ export default function CandidateDetailsTab() {
     },
     {
       label: "Professional Information",
-      link: "/clients/admin/notes",
+      link: "/marketplace-view-details/candidate-details/professional-information",
     },
     {
       label: "Documents",
-      link: "/clients/admin/email-sms",
+      link: "/marketplace-view-details/candidate-details/document",
     },
     {
       label: "Additional Information",
