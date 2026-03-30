@@ -1,4 +1,5 @@
 import ApplicantsFilter from "@/components/clients/AgencyShortTermJob/ApplicantsFilter";
+import ApplicantsTable from "@/components/clients/AgencyShortTermJob/ApplicantsTable";
 import ApplicantTopBar from "@/components/clients/AgencyShortTermJob/ApplicantTopBar";
 import StatCards from "@/components/dashboard/StatCards";
 
@@ -53,6 +54,7 @@ export default function page() {
         <StatCards statCards={statCards} />
       </div>
       <ApplicantsFilter />
+      <ApplicantsTable />
     </div>
   );
 }
