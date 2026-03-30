@@ -12,7 +12,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { BiEditAlt } from "react-icons/bi";
 import { IoIosArrowBack } from "react-icons/io";
-import { MdKeyboardArrowUp } from "react-icons/md";
 
 export default function ApplicantTopBar() {
   const router = useRouter();
@@ -28,30 +27,23 @@ export default function ApplicantTopBar() {
 
       <div className="p-6 border rounded-[12px] mt-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-start gap-6">
-            <div>
-              <button className="p-2 bg-[#F3F4F6] rounded-lg cursor-pointer">
-                <MdKeyboardArrowUp className="h-5 w-5" />
+          <div>
+            <h1 className="text-[#111927] text-xl font-semibold">
+              Full-Time Housekeeper / Family Assistant (Cooking + Deep Cleaning
+              Focus)
+            </h1>
+            <div className="flex items-center gap-3 mt-3">
+              <Image
+                src={"/candidates/candidates-profile.png"}
+                alt="profile image"
+                height={100}
+                width={100}
+                className="h-8 w-8"
+              />
+              <h6 className="text-[#778593] text-lg">Robart Fox</h6>
+              <button className="px-4 py-1 bg-[#E6F0FF] rounded-[4px] text-[#0065FF] font-semibold cursor-pointer">
+                Broadcast
               </button>
-            </div>
-            <div>
-              <h1 className="text-[#111927] text-xl font-semibold">
-                Full-Time Housekeeper / Family Assistant (Cooking + Deep
-                Cleaning Focus)
-              </h1>
-              <div className="flex items-center gap-3 mt-3">
-                <Image
-                  src={"/candidates/candidates-profile.png"}
-                  alt="profile image"
-                  height={100}
-                  width={100}
-                  className="h-8 w-8"
-                />
-                <h6 className="text-[#778593] text-lg">Robart Fox</h6>
-                <button className="px-4 py-1 bg-[#E6F0FF] rounded-[4px] text-[#0065FF] font-semibold">
-                  Broadcast
-                </button>
-              </div>
             </div>
           </div>
           <div className="flex items-center gap-2">

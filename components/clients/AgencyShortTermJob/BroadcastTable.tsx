@@ -58,10 +58,7 @@ export default function BroadcastTable() {
       accessor: "full_name",
       width: "250px",
       formatter: (value: string, record: any) => (
-        <Link
-          href={`/candidates/${record.id}/admin/list`}
-          className="flex items-center gap-3"
-        >
+        <Link href={``} className="flex items-center gap-3">
           <input
             type="checkbox"
             checked={selectedRows.includes(record.id)}
@@ -86,10 +83,7 @@ export default function BroadcastTable() {
       accessor: "email_address",
       width: "250px",
       formatter: (value: string, record: any) => (
-        <Link
-          href={`/candidates/${record.id}/admin/list`}
-          className="text-sm text-blackColor"
-        >
+        <Link href={``} className="text-sm text-blackColor">
           {value}
         </Link>
       ),
@@ -127,9 +121,16 @@ export default function BroadcastTable() {
       accessor: "action",
       width: "150px",
       formatter: (value: string) => (
-        <button className="text-sm px-4 py-3 text-[#111927] border rounded-[8px] bg-[#F3F4F6] font-semibold cursor-pointer">
-          {value}
-        </button>
+        <div>
+          <Link
+            href={
+              "/marketplace-view-details/candidate-details/personal-information"
+            }
+            className="text-sm px-4 py-3 text-[#111927] border rounded-[8px] bg-[#F3F4F6] font-semibold cursor-pointer"
+          >
+            {value}
+          </Link>
+        </div>
       ),
     },
     {
