@@ -14,11 +14,12 @@ import { useState } from "react";
 import { AiOutlineDownload } from "react-icons/ai";
 import { IoMailOutline } from "react-icons/io5";
 import { MdOutlineFilterAlt } from "react-icons/md";
+import AddApplicantModal from "./AddApplicantModal";
 
 export default function ApplicantsFilter() {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedStatuses, setSelectedStatuses] = useState("");
-
+  const [open, setOpen] = useState(false);
   const handleChange = (value) => {
     setSelectedStatus(value);
   };
@@ -48,7 +49,10 @@ export default function ApplicantsFilter() {
           <button className="p-3.5 border rounded-[12px] cursor-pointer">
             <IoMailOutline className="h-5 w-5" />
           </button>
-          <button className="p-3.5 border rounded-[12px] flex items-center gap-1 bg-[#111927] hover:bg-[#111927]/90 text-white cursor-pointer text-nowrap">
+          <button
+            onClick={() => setOpen(true)}
+            className="p-3.5 border rounded-[12px] flex items-center gap-1 bg-[#111927] hover:bg-[#111927]/90 text-white cursor-pointer text-nowrap"
+          >
             <Plus className="h-5 w-5" />
             <span>Add Applicants</span>
           </button>
@@ -140,6 +144,8 @@ export default function ApplicantsFilter() {
           </div>
         </div>
       </div>
+
+      <AddApplicantModal open={open} setOpen={setOpen} />
     </div>
   );
 }
