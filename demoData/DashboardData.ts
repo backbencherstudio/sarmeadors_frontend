@@ -442,6 +442,108 @@ export const broadcastListData = [
   },
 ];
 
+export const applicantsListData = [
+  {
+    id: "1",
+    full_name: "Bessie Cooper",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "2",
+    full_name: "Marvin McKinney",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "3",
+    full_name: "Brooklyn Simmons",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "4",
+    full_name: "Courtney Henry",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "5",
+    full_name: "Arlene McCoy",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "6",
+    full_name: "Floyd Miles",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "7",
+    full_name: "Cody Fisher",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "8",
+    full_name: "Jerome Bell",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "9",
+    full_name: "Guy Hawkins",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "10",
+    full_name: "Kristin Watson",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "11",
+    full_name: "Esther Howard",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+];
+
 export const statuse = [
   {
     value: "Pre Application",
