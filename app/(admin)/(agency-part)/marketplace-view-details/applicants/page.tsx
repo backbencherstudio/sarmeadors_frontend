@@ -1,3 +1,4 @@
+import ApplicantsFilter from "@/components/clients/AgencyShortTermJob/ApplicantsFilter";
 import ApplicantTopBar from "@/components/clients/AgencyShortTermJob/ApplicantTopBar";
 import StatCards from "@/components/dashboard/StatCards";
 
@@ -51,6 +52,7 @@ export default function page() {
       <div className="pt-12">
         <StatCards statCards={statCards} />
       </div>
+      <ApplicantsFilter />
     </div>
   );
 }
