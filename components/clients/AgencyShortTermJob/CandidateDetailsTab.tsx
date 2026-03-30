@@ -22,7 +22,7 @@ export default function CandidateDetailsTab() {
     },
     {
       label: "Additional Information",
-      link: "/clients/admin/events",
+      link: "/marketplace-view-details/candidate-details/additional-information",
     },
   ];
 
