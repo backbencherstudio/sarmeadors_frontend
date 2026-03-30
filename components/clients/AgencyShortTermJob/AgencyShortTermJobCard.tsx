@@ -156,8 +156,9 @@ function ShortTermJobCard({ job }: { job: any }) {
                       href={viewDetailsHref}
                       className="bg-[#111927]! text-white! px-4 font-semibold rounded-md tex-sm py-[10.5px]! border border-borderColor"
                     />
-                    <ButtonReuseable
+                    <LinkReuseable
                       title="View Applicant"
+                      href={"/marketplace-view-details/applicants"}
                       className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
                     />
                     <ButtonReuseable
