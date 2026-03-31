@@ -70,6 +70,12 @@ const navItems: NavItem[] = [
     type: "admin",
   },
   {
+    icon: JobsIcon,
+    label: "Long-term Job",
+    href: "/agency-long-term-job",
+    type: "admin",
+  },
+  {
     icon: CalenderIcon,
     label: "Shift Job calendar",
     href: "/dashboard/shift-job-calendar",
@@ -240,7 +246,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     setIsLoggedIn(isLoggedIn || "admin");
   }, [pathname]);
 
-  console.log("login type", isLoggedIn);
+  // console.log("login type", isLoggedIn);
 
   const isActive = (href: string): boolean => {
     if (href === "/") {
