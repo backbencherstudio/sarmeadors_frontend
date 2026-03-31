@@ -786,7 +786,7 @@ export const PROFILES = [
     experience: "08 Years",
     description:
       "I have cared for children from infancy through early adolescence, with a strong passion and focus on early childhood development.",
-    status: "Interested",
+    status: "under-consideration",
     linked: "Mon Nov 18 2024 at 21 46 04",
     clientInterviewPrefeRence: "In person",
     clientInterviewAvailability: "Any time after 5pm on 11/18,11/19,11/20",
@@ -800,7 +800,7 @@ export const PROFILES = [
     experience: "04 Years",
     description:
       "I have experience providing structured childcare, supporting developmental milestones, and creating engaging, age-appropriate activities.",
-    status: "Interested",
+    status: "under-consideration",
     linked: "Mon Nov 18 2024 at 21 46 04",
   },
   {
@@ -812,8 +812,9 @@ export const PROFILES = [
     experience: "05 Years",
     description:
       "I have 8 years of experience as a nanny and house manager, working with children from infancy to school age.",
-    status: "Not Interested",
+    status: "not-interested",
     linked: "Mon Nov 18 2024 at 21 46 04",
+    notes: "I think Nakita could be a good personality fit and would create a really positive dynamic With the girls. She is open to travel, but would prefer not for 4 full consecutive weeks."
   },
   {
     id: 4,
@@ -824,7 +825,7 @@ export const PROFILES = [
     experience: "05 Years",
     description:
       "I have 8 years of experience as a nanny and house manager, working with children from infancy to school age.",
-    status: "Not Interested",
+    status: "not-interested",
     linked: "Mon Nov 18 2024 at 21 46 04",
   },
   {
@@ -836,8 +837,9 @@ export const PROFILES = [
     experience: "08 Years",
     description:
       "I have cared for children from infancy through early adolescence, with a strong passion and focus on early childhood development.",
-    status: "Interested",
+    status: "interested",
     linked: "Mon Nov 18 2024 at 21 46 04",
+    notes: "Kelsey is targeting an August start date."
   },
   {
     id: 6,
@@ -848,7 +850,7 @@ export const PROFILES = [
     experience: "04 Years",
     description:
       "I have experience providing structured childcare, supporting developmental milestones, and creating engaging, age-appropriate activities.",
-    status: "Under Consideration",
+    status: "under-consideration",
     linked: "Mon Nov 18 2024 at 21 46 04",
   },
 ];
