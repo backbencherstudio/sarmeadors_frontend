@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import {
   DropdownMenu,
@@ -36,14 +36,8 @@ const Header: React.FC<HeaderProps> = ({
   const router = useRouter();
   const { token } = useToken();
 
-  console.log(token, " token in header");
-
-  const [profile, setProfile] = useState<any>();
-
   const {
     data: userDetails,
-    isLoading,
-    isError,
     error,
   } = useQuery({
     queryKey: ["notifications"],

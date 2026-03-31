@@ -6,7 +6,7 @@ export function ShortTermJobTabs() {
   const tabs = [
     {
       label: "Running (1)",
-      link: "/client/client-my-jobs/short-term-job/running",
+      link: "/client/client-my-jobs/short-term-job",
     },
     {
       label: "Pending (0) ",
@@ -32,7 +32,7 @@ export function ShortTermJobTabs() {
 
   return (
     <div>
-      <ReusableTabs tabs={tabs} />
+      <ReusableTabs tabs={tabs} initialPath={"/client/client-my-jobs/short-term-job"} />
     </div>
   );
 }

@@ -7,11 +7,15 @@ type Tabs = { label: string; link: string; }[]
 
 function ReusableLineTabs({
     tabs,
-}: { tabs: Tabs }) {
+    currentPath
+}: { tabs: Tabs, currentPath?: string }) {
     const path = usePathname();
-    const isActive = (href: string) => {
-        if (!path) return false;
-        return path === href || path.startsWith(`${href}/`);
+    const isActive = (href: string): boolean => {
+        if (href === currentPath) {
+            return path === currentPath;
+        }
+
+        return path.startsWith(href);
     };
 
     return (
