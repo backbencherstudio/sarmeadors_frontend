@@ -340,6 +340,210 @@ export const candidateListData = [
   },
 ];
 
+export const broadcastListData = [
+  {
+    id: "1",
+    full_name: "Bessie Cooper",
+    email_address: "felicia.reid@example.com",
+    mobile_number: "+14842918883",
+    date: "2/11/12",
+    status: "Application Started",
+    action: "View",
+  },
+  {
+    id: "2",
+    full_name: "Marvin McKinney",
+    email_address: "bill.sanders@example.com",
+    mobile_number: "+16102458249",
+    date: "2/11/12",
+    status: "Applied",
+    action: "View",
+  },
+  {
+    id: "3",
+    full_name: "Brooklyn Simmons",
+    email_address: "georgia.young@example.com",
+    mobile_number: "+14842918653",
+    date: "2/11/12",
+    status: "Interview Complete",
+    action: "View",
+  },
+  {
+    id: "4",
+    full_name: "Courtney Henry",
+    email_address: "jessica.hanson@example.com",
+    mobile_number: "+14844080141",
+    date: "2/11/12",
+    status: "Application Started",
+    action: "View",
+  },
+  {
+    id: "5",
+    full_name: "Arlene McCoy",
+    email_address: "nathan.roberts@example.com",
+    mobile_number: "+14842634655",
+    date: "2/11/12",
+    status: "Profile Complete",
+    action: "View",
+  },
+  {
+    id: "6",
+    full_name: "Floyd Miles",
+    email_address: "tanya.hill@example.com",
+    mobile_number: "+14844145917",
+    date: "2/11/12",
+    status: "Applied",
+    action: "View",
+  },
+  {
+    id: "7",
+    full_name: "Cody Fisher",
+    email_address: "kenzi.lawson@example.com",
+    mobile_number: "+18143008346",
+    date: "2/11/12",
+    status: "Application Started",
+    action: "View",
+  },
+  {
+    id: "8",
+    full_name: "Jerome Bell",
+    email_address: "willie.jennings@example.com",
+    mobile_number: "+14842634689",
+    date: "2/11/12",
+    status: "Application Started",
+    action: "View",
+  },
+  {
+    id: "9",
+    full_name: "Guy Hawkins",
+    email_address: "dolores.chambers@example.com",
+    mobile_number: "+15552826353",
+    date: "2/11/12",
+    status: "Applied",
+    action: "View",
+  },
+  {
+    id: "10",
+    full_name: "Kristin Watson",
+    email_address: "nevaeh.simmons@example.com",
+    mobile_number: "+16102449865",
+    date: "2/11/12",
+    status: "Profile Complete",
+    action: "View",
+  },
+  {
+    id: "11",
+    full_name: "Esther Howard",
+    email_address: "tim.jennings@example.com",
+    mobile_number: "+18143008184",
+    date: "2/11/12",
+    status: "Application Started",
+    action: "View",
+  },
+];
+
+export const applicantsListData = [
+  {
+    id: "1",
+    full_name: "Bessie Cooper",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "2",
+    full_name: "Marvin McKinney",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "3",
+    full_name: "Brooklyn Simmons",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "4",
+    full_name: "Courtney Henry",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "5",
+    full_name: "Arlene McCoy",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "6",
+    full_name: "Floyd Miles",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "7",
+    full_name: "Cody Fisher",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "8",
+    full_name: "Jerome Bell",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "9",
+    full_name: "Guy Hawkins",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "10",
+    full_name: "Kristin Watson",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+  {
+    id: "11",
+    full_name: "Esther Howard",
+    application_date: "15 May 2020 9:00 am",
+    status: "Interested",
+    application_message:
+      "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
+    action: "Assign Candidate",
+  },
+];
+
 export const statuse = [
   {
     value: "Pre Application",
