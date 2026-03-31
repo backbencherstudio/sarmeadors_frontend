@@ -3,9 +3,8 @@
 import { RichTextEditor } from "@/components/reusable/Editor";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Plus, Info, Pin, PinOff } from "lucide-react";
+import { Plus, Pin, PinOff } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import InformationIcon from "@/public/icon/InformationIcon";
 
 interface Note {
     id: string;
@@ -65,7 +64,7 @@ export default function Notes() {
     });
 
     const onSubmit = async (data: TermsConditionFormData) => {
-        console.log("Form submitted:", data);
+        // console.log("Form submitted:", data);
         // Add your save logic here
     };
 

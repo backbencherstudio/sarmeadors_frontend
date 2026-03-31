@@ -21,19 +21,18 @@ function ClientjobsCard({ job }: { job: any }) {
         canceled: "/client/canceled-view-details",
         rejected: "/client/rejected-view-details",
     };
-    const viewDetailsHref = viewDetailsHrefByStatus[job.status];
+    const viewDetailsHref = viewDetailsHrefByStatus[job.status] ?? "/client/my-jobs";
 
     const isEqualDay = jobDate.isSame(today, "day");
-    const isScheduled = jobDate.isBefore(today, "day");
 
     return (
         <div>
             <div className="hover:bg-white bg-bgColor  border-l-4 border-bgColor hover:shadow-xl  hover:border-[#6BA6FF] transition-all duration-200 shadow rounded-lg p-4 md:p-5 space-y-4">
                 <div className="">
-                    <div className="flex justify-between items-start">
-                        <div className="flex flex-col items-start gap-2 mb-2">
-                            <div className="flex  md:items-center gap-2 ">
-                                <h3 className="md:text-lg text-base font-semibold text-blackColor">
+                    <div className="flex flex-col md:flex-row md:justify-between items-start gap-4">
+                        <div className="flex flex-col items-start gap-2 mb-2 w-full md:w-2/3">
+                            <div className="flex md:items-center gap-2 w-full min-w-0">
+                                <h3 className="md:text-lg text-base font-semibold text-blackColor truncate">
                                     {job.title}
                                 </h3>
                                 <p
@@ -59,7 +58,7 @@ function ClientjobsCard({ job }: { job: any }) {
                                     {job.status}
                                 </p>
                             </div>
-                            <div className="md:flex  flex-col md:flex-row md:justify-between items-center">
+                            <div className="md:flex  flex-col md:flex-row md:justify-between items-center w-full">
                                 <div>
                                     <div className="flex items-center gap-2 mb-3">
                                         <div className="w-8 h-8 rounded-full bg-[#96C0FF] flex items-center justify-center text-xs font-semibold text-headerColor">
@@ -68,11 +67,11 @@ function ClientjobsCard({ job }: { job: any }) {
                                                 .map((n) => n[0])
                                                 .join("")}
                                         </div>
-                                        <span className="text-sm text-lightblackColor">
+                                        <span className="text-sm text-lightblackColor truncate">
                                             {job.name}
                                         </span>
                                     </div>
-                                    <p className="text-sm text-secondaryColor mb-3">
+                                    <p className="text-sm text-secondaryColor mb-3 truncate">
                                         {job.description}
                                     </p>
                                     <div className="space-y-2 text-sm text-gray-500 mb-4">
@@ -122,9 +121,9 @@ function ClientjobsCard({ job }: { job: any }) {
                                 )}
                             </div>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-4 w-full md:w-1/3 mt-2 md:mt-0">
                             {job.status === "completed" || (
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 justify-start md:justify-end">
                                     {/* <ClockICon className="w-4 h-4 fill-secondaryColor" /> */}
                                     <span className="font-medium">
                                         {job.startTime} - {job.endTime}
@@ -155,7 +154,7 @@ function ClientjobsCard({ job }: { job: any }) {
                                 </div>
                             )}
                             {job.status === "running" && (
-                                <div className="bg-[#F3F4F6] rounded-lg px-4 py-3">
+                                <div className="w-fit md:ml-auto bg-[#F3F4F6] rounded-lg px-4 py-3 md:text-right">
                                     <p className="font-medium">
                                         <span className="text-[#778593] text-sm">Check In:</span>{" "}
                                         {job.checkIn}
@@ -177,15 +176,15 @@ function ClientjobsCard({ job }: { job: any }) {
                             </div>
                         )}
                     </div>
-                    <div className="pt-3 mt-3 border-t flex justify-between items-center border-borderColor">
-                        <div className="flex items-center h-full gap-2">
+                    <div className="pt-3 mt-3 border-t flex flex-col md:flex-row md:justify-between md:items-center gap-3 border-borderColor">
+                        <div className="flex items-center h-full gap-2 flex-wrap">
                             <ButtonReuseable
                                 rightIcon={<SmsIcon className="w-5 h-5" />}
-                                className="bg-grayColor1! h-full border border-borderColor text-blackColor!"
+                                className="bg-grayColor1! h-full border border-borderColor text-blackColor! w-fit md:w-auto"
                             />
                             {job.status === "completed" && (
-                                <div className="flex items-center justify-between w-full">
-                                    <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between w-full md:w-auto gap-2 flex-wrap">
+                                    <div className="flex items-center justify-between w-fit md:w-auto">
                                         {/* Buttons */}
                                         <CandidatesReviewModal />
                                     </div>
@@ -197,11 +196,13 @@ function ClientjobsCard({ job }: { job: any }) {
                                         title="View Details"
                                         href={viewDetailsHref}
                                         rightIcon={<ArrowTopBoxIcon />}
-                                        className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
+                                        className="w-fit bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!  md:w-auto"
                                     />
 
                                     {job.status === "canceled" || job.status === "rejected" || (
-                                        <CancelModal />
+                                        <div className="w-full md:w-auto">
+                                            <CancelModal />
+                                        </div>
                                     )}
                                 </>
                             )}
@@ -242,12 +243,12 @@ function ClientjobsCard({ job }: { job: any }) {
                                             key={index}
                                             src={img}
                                             alt="candidate"
-                                            className="w-8 h-8 rounded-full border-2 border-white -ml-2 first:ml-0 object-cover"
+                                            className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-white -ml-2 first:ml-0 object-cover"
                                         />
                                     ))}
 
                                     {/* Extra Count */}
-                                    <div className="w-8 h-8 rounded-full bg-gray-200 text-xs font-medium flex items-center justify-center border-2 border-white -ml-2">
+                                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-200 text-[10px] md:text-xs font-medium flex items-center justify-center border-2 border-white -ml-2">
                                         +5
                                     </div>
                                 </div>
@@ -258,12 +259,12 @@ function ClientjobsCard({ job }: { job: any }) {
                         {job.status === "completed" && <ViewInvoiceModal />}
 
                         {job.status === "canceled" && (
-                            <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer">
+                            <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer w-fit md:w-auto">
                                 Request for Refund
                             </button>
                         )}
                         {job.status === "rejected" && (
-                            <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer">
+                            <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer w-fit md:w-auto">
                                 Edit & Resubmit
                             </button>
                         )}

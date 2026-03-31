@@ -66,7 +66,7 @@ export default function PendingViewDetailsLayout({ children }) {
                 </div>
             </div>
             {/* Reusable Line Tabs */}
-            <ReusableLineTabs tabs={TabsData} />
+            <ReusableLineTabs tabs={TabsData} currentPath="" />
             {/* Children */}
             <div className='pt-5'>
                 {children}

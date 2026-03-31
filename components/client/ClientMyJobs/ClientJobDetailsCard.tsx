@@ -26,7 +26,8 @@ interface CurrentJob {
 
 function ClientJobDetailsCard() {
   const pathname = usePathname();
-  const lastPathText = pathname.split("/").filter(Boolean).pop() ?? "";
+  const lastPathText = pathname.split("/").filter(Boolean).pop() == "short-term-job" ? "running" : pathname.split("/").filter(Boolean).pop();
+
 
   return (
     <div className="space-y-4">
