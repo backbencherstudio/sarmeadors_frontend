@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import ViewInvoiceModal from "./LongTermJob/Completed/ViewInvoiceModal";
 import CancelModal from "./ShortTermJob/Common/CancelModal";
 import CandidatesReviewModal from "./ShortTermJob/Marketplace/Applicants/(view-details)/CandidatesReviewModal";
+import { Copy, Edit } from "lucide-react";
 
 function ClientjobsCard({ job }: { job: any }) {
     const today = dayjs();
@@ -178,10 +179,14 @@ function ClientjobsCard({ job }: { job: any }) {
                     </div>
                     <div className="pt-3 mt-3 border-t flex flex-col md:flex-row md:justify-between md:items-center gap-3 border-borderColor">
                         <div className="flex items-center h-full gap-2 flex-wrap">
-                            <ButtonReuseable
-                                rightIcon={<SmsIcon className="w-5 h-5" />}
-                                className="bg-grayColor1! h-full border border-borderColor text-blackColor! w-fit md:w-auto"
-                            />
+                            {
+                                job.status === "pending" || job.status === "marketplace" || job.status === "canceled" || job.status === "rejected" || (
+                                    <ButtonReuseable
+                                        rightIcon={<SmsIcon className="w-5 h-5" />}
+                                        className="bg-grayColor1! h-full border border-borderColor text-blackColor! w-fit md:w-auto"
+                                    />
+                                )
+                            }
                             {job.status === "completed" && (
                                 <div className="flex items-center justify-between w-full md:w-auto gap-2 flex-wrap">
                                     <div className="flex items-center justify-between w-fit md:w-auto">
@@ -190,6 +195,9 @@ function ClientjobsCard({ job }: { job: any }) {
                                     </div>
                                 </div>
                             )}
+
+
+
                             {job.status === "completed" || (
                                 <>
                                     <LinkReuseable
@@ -199,6 +207,15 @@ function ClientjobsCard({ job }: { job: any }) {
                                         className="w-fit bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!  md:w-auto"
                                     />
 
+                                    {
+                                        job.status === "running" || job.status === "canceled" || job.status === "rejected" || (
+                                            <ButtonReuseable
+                                                rightIcon={<Edit className="w-5 h-5" />}
+                                                className="bg-grayColor1! h-full border border-borderColor text-blackColor! w-fit md:w-auto"
+                                            />
+                                        )
+                                    }
+
                                     {job.status === "running" || job.status === "canceled" || job.status === "rejected" || (
                                         <div className="w-full md:w-auto">
                                             <CancelModal />
@@ -206,7 +223,17 @@ function ClientjobsCard({ job }: { job: any }) {
                                     )}
                                 </>
                             )}
+                            {
+                                (job.status === "canceled" || job.status === "rejected") && (
+                                    <ButtonReuseable
+                                        rightIcon={<Copy className="w-5 h-5" />}
+                                        className="bg-grayColor1! h-full border border-borderColor text-blackColor! w-fit md:w-auto"
+                                    />
+                                )
+                            }
                         </div>
+
+
 
                         {/* <div className="text-right ml-4">
                             {job.status === "cancel" || job.status === "completed" ? (
