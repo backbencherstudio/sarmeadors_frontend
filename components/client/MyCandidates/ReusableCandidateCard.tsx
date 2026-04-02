@@ -1,4 +1,5 @@
 "use client";
+
 import LinkReuseable from "@/components/reusable/CustomLink";
 import { EyeIcon } from "lucide-react";
 import Image from "next/image";
@@ -6,7 +7,9 @@ import { useState } from "react";
 import ClientNoteModal from "./ClientNoteModal";
 
 function ReusableCandidateCard({ profile }: any) {
+
     const [open, setOpen] = useState(false);
+
     return (
         <div>
             <div className="border flex flex-col justify-between h-full border-[#E5E7EB] rounded-2xl md:rounded-[24px]">
@@ -103,7 +106,7 @@ function ReusableCandidateCard({ profile }: any) {
                                     ) : (
                                         <>
                                             <button
-                                                onClick={() => setOpen(true)}
+                                                // onClick={() => setOpen(true)}
                                                 className="flex items-center justify-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto gap-2 h-full transition-all duration-200"
                                             >
                                                 <span>I'm interested</span>
