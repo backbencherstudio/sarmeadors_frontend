@@ -199,7 +199,7 @@ function ClientjobsCard({ job }: { job: any }) {
                                         className="w-fit bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!  md:w-auto"
                                     />
 
-                                    {job.status === "canceled" || job.status === "rejected" || (
+                                    {job.status === "running" || job.status === "canceled" || job.status === "rejected" || (
                                         <div className="w-full md:w-auto">
                                             <CancelModal />
                                         </div>
