@@ -30,7 +30,7 @@ function DocumentList() {
   ]);
 
   const handleAction = (id: string) => {
-    console.log("Document clicked:", id);
+    // console.log("Document clicked:", id);
   };
   return (
     <div>
