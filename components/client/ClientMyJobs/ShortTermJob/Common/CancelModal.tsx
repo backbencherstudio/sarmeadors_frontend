@@ -54,7 +54,7 @@ export default function CancelModal() {
           <Button
             type="button"
             variant="outline"
-            className="px-5 border-muted-foreground/30 cursor-pointer"
+            className="px-5 py-5 border-muted-foreground/30 cursor-pointer"
           >
             {cancelTime ? "No, Keep Job" : "Go Back"}
           </Button>
@@ -62,7 +62,7 @@ export default function CancelModal() {
             <Button
               type="button"
               variant="destructive"
-              className="px-5 bg-red-600 hover:bg-red-700 cursor-pointer"
+              className="px-5 py-5 bg-[#CB121D] hover:bg-red-700 cursor-pointer"
             >
               {cancelTime ? "Yes, Confirm Cancellation" : "Cancel"}
             </Button>

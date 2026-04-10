@@ -25,10 +25,11 @@ export default function SingleAplicantsLayout({ children }) {
             link: `/client/running-view-details/candidate-profile/additional-information`,
         },
     ]
+
     return (
         <div className='space-y-4'>
             <ProfileAndReview />
-            <ReusableTabs tabs={tabs} />
+            <ReusableTabs tabs={tabs} initialPath='' />
             {children}
         </div>
     )
