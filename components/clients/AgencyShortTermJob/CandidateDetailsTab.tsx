@@ -2,6 +2,7 @@
 import StarIcon from "@/components/icon/StarIcon";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -54,9 +55,12 @@ export default function CandidateDetailsTab() {
                 </h1>
                 <p className="flex items-center gap-1">
                   <StarIcon className="text-[#E5B400] h-4 w-4" />
-                  <span className="underline text-[#202735] text-lg">
+                  <Link
+                    href={"/marketplace-view-details/candidate-review"}
+                    className="underline text-[#202735] text-lg"
+                  >
                     4.5 Rating (8)
-                  </span>
+                  </Link>
                 </p>
               </div>
               <div className="mt-2">
@@ -74,7 +78,7 @@ export default function CandidateDetailsTab() {
         </div>
       </div>
       <div className="mb-6">
-        <ReusableTabs tabs={tabs} />
+        <ReusableTabs tabs={tabs} initialPath={""} />
       </div>
     </div>
   );
