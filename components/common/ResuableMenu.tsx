@@ -24,7 +24,7 @@ function ResuableMenu({
             key={menu.id}
             href={menu.href}
             title={menu.title}
-            className={`text-base font-medium hover:text-headerColor  pb-2 px-3 ${isActive(menu.href) ? "text-headerColor transition-all duration-200   border-b border-headerColor" : "text-lightblackColor"}`}
+            className={`text-base font-medium hover:text-headerColor  pb-2 px-3 ${isActive(menu.href) ? "text-headerColor transition-all duration-200  border-b border-headerColor" : "text-lightblackColor"}`}
           />
         ))}
       </div>
