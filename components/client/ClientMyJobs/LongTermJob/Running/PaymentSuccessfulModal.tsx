@@ -13,9 +13,7 @@ export default function PaymentSuccessfulModal() {
         <div>
             <Dialog>
                 <DialogTrigger className="w-full mt-6 bg-black text-white font-medium py-3 rounded-lg text-sm hover:bg-gray-800 cursor-pointer">
-
                     Confirm Payment
-
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
