@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function ProfileAndReview() {
     return (
-        <div className="w-full bg-white flex items-center justify-between">
+        <div className="w-full bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
 
             {/* Left Section */}
             <div className="flex items-center gap-4">
@@ -24,7 +24,7 @@ export default function ProfileAndReview() {
 
                 {/* Info */}
                 <div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                         <h3 className="font-semibold text-lg text-gray-900">
                             Kristin Ben
                         </h3>
@@ -46,7 +46,7 @@ export default function ProfileAndReview() {
             </div>
 
             {/* Right Section */}
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-2 md:gap-3 md:justify-end">
 
                 <ScheduleInterviewModal text={" Request for Interview"} />
 

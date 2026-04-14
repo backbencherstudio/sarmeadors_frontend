@@ -7,8 +7,8 @@ import ButtonReuseable from "../reusable/CustomButton";
 import Search from "./Search";
 
 interface FilterHeaderProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   handleOpenModal?: () => void;
   buttonTitle?: string;
   filter?: boolean;

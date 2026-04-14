@@ -39,7 +39,7 @@ export default function ProfileInfo() {
                             <SelectValue placeholder="Theme" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="light">Application Approved</SelectItem>
+                            <SelectItem value="light">Approved</SelectItem>
                             <SelectItem value="dark">Pending</SelectItem>
                             <SelectItem value="system">Rejected</SelectItem>
                         </SelectContent>

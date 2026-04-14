@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import ClientJobCard from "./ClientJobCard";
-import JobNotFound from "./JobNotFound";
-import JobsCardSkeleton from "./JobsCardSkeleton";
+import ClientJobNotFound from "./ClientJobNotFound";
+import ClientJobsCardSkeleton from "./ClientJobsCardSkeleton";
 
 function ClientJobList({
   jobs,
@@ -16,13 +16,13 @@ function ClientJobList({
     return (
       <div className="space-y-5">
         {[1, 2, 3].map((index) => (
-          <JobsCardSkeleton key={index} />
+          <ClientJobsCardSkeleton key={index} />
         ))}
       </div>
     );
   }
 
-  if (jobs.length === 0) return <JobNotFound />;
+  if (jobs.length === 0) return <ClientJobNotFound />;
 
   return (
     <div>
