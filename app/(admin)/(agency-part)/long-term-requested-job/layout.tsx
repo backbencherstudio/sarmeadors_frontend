@@ -1,5 +1,5 @@
-import AdminTopMenu from "@/components/clients/AdminMenu";
-import ProfileInfo from "@/components/clients/ProfileInfo/ProfileInfo";
+import LongTermJobProfileHeader from "@/components/clients/AgencyLongTermJob/LongTermJobProfileHeader";
+import LongTermJobProfileInfo from "@/components/clients/AgencyLongTermJob/LongTermJobProfileInfo";
 
 export default function LongTermRequestedJobLayout({
   children,
@@ -10,12 +10,10 @@ export default function LongTermRequestedJobLayout({
     <div>
       <div className="border grid grid-cols-1 lg:grid-cols-12">
         <div className="lg:col-span-3 2xl:col-span-2">
-          <ProfileInfo />
+          <LongTermJobProfileInfo />
         </div>
         <div className=" bg-white lg:col-span-9 2xl:col-span-10 p-4 lg:p-6">
-          <div>
-            <AdminTopMenu title="clients" />
-          </div>
+          <LongTermJobProfileHeader />
           {/* children */}
           <div className="py-4">{children}</div>
         </div>

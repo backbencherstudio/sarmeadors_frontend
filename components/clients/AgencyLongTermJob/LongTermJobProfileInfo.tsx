@@ -12,7 +12,7 @@ import avatar from "@/public/profile.png";
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
 
-export default function ProfileInfo() {
+export default function LongTermJobProfileInfo() {
   return (
     <div className="flex flex-col justify-between w-full mx-auto bg-white border-r border-gray-200 p-5 lg:h-full lg:min-h-screen">
       <div>
