@@ -72,7 +72,7 @@ const navItems: NavItem[] = [
   {
     icon: JobsIcon,
     label: "Long-term Job",
-    href: "/agency-long-term-job",
+    href: "/agency-long-term-job/agency-requested-job",
     type: "admin",
   },
   {
