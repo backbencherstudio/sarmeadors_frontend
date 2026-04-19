@@ -1,23 +1,6 @@
 "use client";
 
-const EyeIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
-    <path
-      d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      fill="none"
-    />
-    <circle
-      cx="8"
-      cy="8"
-      r="2"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      fill="none"
-    />
-  </svg>
-);
+import { EyeIcon } from "lucide-react";
 
 export interface AddressCardProps {
   title?: string;
@@ -51,7 +34,7 @@ export default function AddressCard({
             <div className="flex items-center gap-1 mb-0.5">
               <span className="text-sm text-gray-400">{label}</span>
               <span className="text-gray-900">
-                <EyeIcon />
+                <EyeIcon className="h-4 w-4"/>
               </span>
             </div>
             <p className="text-base text-gray-800">{address[key]}</p>

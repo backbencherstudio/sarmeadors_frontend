@@ -1,43 +1,7 @@
 "use client";
 
-const EyeIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
-    <path
-      d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      fill="none"
-    />
-    <circle
-      cx="8"
-      cy="8"
-      r="2"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      fill="none"
-    />
-  </svg>
-);
-
-const HiddenIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
-    <path
-      d="M3 13c0-2.5 1.5-4 5-4s5 1.5 5 4"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      fill="none"
-    />
-    <path
-      d="M4 5.5c0 1.5 1.5 3 4 3s4-1.5 4-3"
-      stroke="currentColor"
-      strokeWidth="1.1"
-      strokeLinecap="round"
-      fill="none"
-      strokeDasharray="2 1.5"
-    />
-  </svg>
-);
+import { HiddenIcon } from "@/public/icon/HiddenIcon";
+import { EyeIcon } from "lucide-react";
 
 export interface ContactPerson {
   name: string;
@@ -73,7 +37,7 @@ function ContactFields({
           <div className="flex items-center gap-1 mb-0.5">
             <span className="text-sm text-gray-400">{label}</span>
             <span className="text-gray-900">
-              <Icon />
+              <Icon className="h-4 w-4"/>
             </span>
           </div>
           <p className="text-base text-gray-800">{value}</p>

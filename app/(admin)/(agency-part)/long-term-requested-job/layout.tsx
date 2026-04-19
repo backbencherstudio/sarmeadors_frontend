@@ -1,4 +1,4 @@
-import LongTermJobProfileHeader from "@/components/clients/AgencyLongTermJob/LongTermJobProfileHeader";
+import LongTermJobProfileHeader from "@/components/clients/AgencyLongTermJob/RequestedJobDetails/LongTermJobProfileHeader";
 import LongTermJobProfileInfo from "@/components/clients/AgencyLongTermJob/LongTermJobProfileInfo";
 
 export default function LongTermRequestedJobLayout({

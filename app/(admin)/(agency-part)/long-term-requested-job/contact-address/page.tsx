@@ -1,21 +1,11 @@
-import AddressCard from "@/components/clients/AgencyLongTermJob/AddressCard";
-import ContactCard from "@/components/clients/AgencyLongTermJob/ContactCard";
-import ButtonReuseable from "@/components/reusable/CustomButton";
-import { Edit3Icon } from "lucide-react";
+import AddressCard from "@/components/clients/AgencyLongTermJob/RequestedJobDetails/AddressCard";
+import ContactCard from "@/components/clients/AgencyLongTermJob/RequestedJobDetails/ContactCard";
+import LongTermJobDetailsTopBar from "@/components/clients/AgencyLongTermJob/RequestedJobDetails/LongTermJobDetailsTopBar";
 
 export default function page() {
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-[#111927] text-2xl font-semibold">
-          Contact & Address
-        </h1>
-        <ButtonReuseable
-          title="Edit Information"
-          rightIcon={<Edit3Icon className="text-[#111927]" />}
-          className="bg-white !text-[#111927] border border-gray2Color font-semibold"
-        />
-      </div>
+      <LongTermJobDetailsTopBar title={"Contact & Address"} />
       <div className="mt-4">
         <ContactCard
           primaryContact={{

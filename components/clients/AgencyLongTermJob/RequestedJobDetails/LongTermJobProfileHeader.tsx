@@ -27,7 +27,7 @@ export default function LongTermJobProfileHeader() {
         <div className="mb-6 flex items-center justify-between">
           <button className="cursor-pointer text-[#111927] font-bold">
             <ArrowLeftIcon className="inline-block mr-2" />
-            <span>Job Details</span>
+            <span>Requested Job Details</span>
           </button>
           <ButtonReuseable title="Publish This job" />
         </div>
