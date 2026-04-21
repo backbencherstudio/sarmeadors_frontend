@@ -42,7 +42,7 @@ const LongTermJobCard = ({ job }) => {
           <ButtonReuseable title="Publish This job" />
 
           <LinkReuseable
-            href={"/long-term-requested-job/"}
+            href={"/long-term-requested-job/contact-address"}
             title="View Details"
             rightIcon={<ViewInvoiceIcon />}
             className="bg-white !text-blackColor border border-gray2Color font-semibold !p-3 rounded-[8px] hover:scale-105 transition-all  duration-200"

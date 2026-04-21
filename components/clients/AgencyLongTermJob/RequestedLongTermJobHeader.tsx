@@ -2,6 +2,7 @@ import Search from "@/components/common/Search";
 import DownloadIcon from "@/components/icon/DownloadIcon";
 import FilterIcon from "@/components/icon/FilterIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
+import LinkReuseable from "@/components/reusable/CustomLink";
 import { Plus, Share2 } from "lucide-react";
 
 export default function RequestedLongTermJobHeader({
@@ -13,7 +14,7 @@ export default function RequestedLongTermJobHeader({
     <div>
       <div className="mb-6">
         <div className="flex flex-col lg:flex-row lg:items-center md:justify-between gap-4 w-full mb-4">
-          <div className="max-w-xs w-full">
+          <div className="w-full">
             <h4 className="text-2xl font-bold text-gray-800 text-nowrap">
               {title}
             </h4>
@@ -44,7 +45,12 @@ export default function RequestedLongTermJobHeader({
                   />
                 </div>
                 <div>
-                  <ButtonReuseable title={buttonTitle} icon={<Plus />} />
+                  <LinkReuseable
+                    href="/long-term-job-post"
+                    title={buttonTitle}
+                    icon={<Plus />}
+                    className="bg-blackColor text-white h-full hover:scale-105 transition-all  duration-200 py-2.5 px-3 rounded-md"
+                  />
                 </div>
               </div>
             }

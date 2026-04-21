@@ -9,7 +9,7 @@ import CalandarIcon from "@/public/icon/CalandarIcon";
 import CallIcon from "@/public/icon/CallIcon";
 import EmailIcon from "@/public/icon/EmailIcon";
 import avatar from "@/public/profile.png";
-import { Trash2Icon } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import Image from "next/image";
 
 export default function LongTermJobProfileInfo() {
@@ -74,7 +74,7 @@ export default function LongTermJobProfileInfo() {
       {/* Delete Button */}
       <div className="mt-8">
         <button className="w-full flex items-center justify-center gap-2 rounded-xl border border-red-500 text-red-500 py-3 font-medium hover:bg-red-50 transition cursor-pointer">
-          <Trash2Icon className="w-5 h-5" /> Delete Client
+          <AlertTriangle className="w-5 h-5" /> Reject Job
         </button>
       </div>
     </div>
