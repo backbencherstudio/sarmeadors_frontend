@@ -1,11 +1,15 @@
+"use client";
 import LocationIcon from "@/components/icon/LocationIcon";
 import ViewInvoiceIcon from "@/components/icon/ViewInvoiceIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import LinkReuseable from "@/components/reusable/CustomLink";
 import { AlertTriangle } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import { RejectJobModal } from "./RejectJobModal";
 
 const LongTermJobCard = ({ job }) => {
+  const [open, setOpen] = useState(false);
   return (
     <div>
       <div className="p-6 bg-[#F9FAFB] rounded-[12px]">
@@ -49,12 +53,23 @@ const LongTermJobCard = ({ job }) => {
           />
 
           <ButtonReuseable
+            onClick={() => setOpen(true)}
             title="Reject Job"
             icon={<AlertTriangle className="text-[#CB121D]" />}
             className="bg-white !text-[#CB121D] border border-gray2Color font-semibold"
           />
         </div>
       </div>
+
+      <RejectJobModal
+        open={open}
+        onOpenChange={setOpen}
+        onConfirm={(reason) => {
+          console.log("Rejected with reason:", reason);
+          setOpen(false);
+        }}
+        onGoBack={() => setOpen(false)}
+      />
     </div>
   );
 };
