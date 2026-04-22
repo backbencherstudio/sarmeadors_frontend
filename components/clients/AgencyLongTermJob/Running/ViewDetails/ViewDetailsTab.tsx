@@ -17,7 +17,7 @@ export default function ViewDetailsTab() {
     },
     {
       label: "Candidate Profile",
-      link: "/view-job-details/candidate-profile",
+      link: "/view-job-details/candidate-profile/personal-information",
     },
     {
       label: "Message(13)",
