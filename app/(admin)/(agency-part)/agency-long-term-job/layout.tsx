@@ -57,15 +57,15 @@ const TabsData = [
   },
   {
     label: "Running Job (224)",
-    link: "/completed-view-details/invoice-active/applicants",
+    link: "/agency-long-term-job/agency-running-job",
   },
   {
     label: "Completed Job (1224)",
-    link: "/completed-view-details/invoice-active/applicants",
+    link: "/agency-long-term-job/agency-completed-job",
   },
   {
     label: "Canceled Job (223)",
-    link: "/completed-view-details/invoice-active/applicants",
+    link: "/agency-long-term-job/agency-canceled-job",
   },
 ];
 
