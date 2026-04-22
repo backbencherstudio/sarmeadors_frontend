@@ -1,6 +1,8 @@
+"use client";
 import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 import FilterHeader from "@/components/common/FilterHeader";
 import TableColAscDsc from "@/components/dashboard/TableColAscDsc";
+import DateIcon from "@/components/icon/DateIcon";
 import { broadcastListData, candidatesStatuse } from "@/demoData/DashboardData";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +19,7 @@ export default function BroadcastTable() {
     full_name: true,
     email_address: true,
     mobile_number: true,
-    date: true,
+    registration_date: true,
     status: true,
     action: true,
   });
@@ -98,10 +100,13 @@ export default function BroadcastTable() {
     },
     {
       label: "Registration Date",
-      accessor: "date",
+      accessor: "registration_date",
       width: "220px",
       formatter: (value: string) => (
-        <p className="text-sm text-blackColor">{value}</p>
+        <div className="flex items-center gap-2">
+          <DateIcon />
+          <span className="text-sm text-blackColor">{value}</span>
+        </div>
       ),
     },
     {
