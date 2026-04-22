@@ -29,7 +29,7 @@ export default function Records() {
     ]
     return (
         <div>
-            <ReusableTabs tabs={tabs} />
+            <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link}/>
         </div>
     )
 }

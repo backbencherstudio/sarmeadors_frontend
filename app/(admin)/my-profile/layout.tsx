@@ -36,7 +36,7 @@ function MyProfileLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="mt-4 space-y-4 p-4 md:p-6">
-      <ReusableTabs tabs={tabs} />
+      <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link}/>
       <div className="flex items-center justify-between">
         <UserInfo />
         <div className="flex items-center gap-2 ">
