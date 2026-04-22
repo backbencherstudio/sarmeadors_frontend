@@ -25,7 +25,7 @@ export default function ProfileTabs() {
     ]
     return (
         <div>
-            <ReusableTabs tabs={tabs} />
+            <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link}/>
         </div>
     )
 }
