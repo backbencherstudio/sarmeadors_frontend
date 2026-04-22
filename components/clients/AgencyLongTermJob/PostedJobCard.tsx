@@ -185,15 +185,16 @@ export default function PostedJobCard({
               <div className="flex items-center gap-4 mt-4 pt-3 border-t border-gray-100">
                 <div>
                   <LinkReuseable
-                    href="/posted-job-broadcast"
+                    href="/posted/posted-job-broadcast"
                     className="md:px-4 md:py-3 py-2.5 px-3 rounded-md md:rounded-lg cursor-pointer bg-blackColor text-white h-full hover:scale-105 transition-all duration-200"
                     title="Broadcast"
                   />
                 </div>
                 <div>
-                  <ButtonReuseable
+                  <LinkReuseable
+                    href="/posted/applicants"
                     title="View Applications"
-                    className="bg-white !text-blackColor border border-gray2Color"
+                    className="md:px-4 md:py-3 py-2.5 px-3 rounded-md md:rounded-lg cursor-pointer !bg-white !text-blackColor border border-gray2Color h-full hover:scale-105 transition-all duration-200"
                   />
                 </div>
                 <div>

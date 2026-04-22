@@ -1,11 +1,17 @@
+"use client";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
+import { useRouter } from "next/navigation";
 
 export default function PostedJobBroadcastHeader() {
+  const router = useRouter();
   return (
     <div className="mb-6 flex items-center justify-between">
       <div>
-        <button className="cursor-pointer text-[#111927] font-bold">
+        <button
+          onClick={() => router.back()}
+          className="cursor-pointer text-[#111927] font-bold"
+        >
           <ArrowLeftIcon className="inline-block mr-2" />
           <span>Nanny House Manager needed in McLean, VA</span>
         </button>
