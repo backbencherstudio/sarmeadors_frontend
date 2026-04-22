@@ -4,27 +4,26 @@ import ReusableTabs from "@/components/reusable/ReusableTabs";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 
-export default function LongTermJobProfileHeader() {
+export default function ViewDetailsTab() {
   const router = useRouter();
   const tabs = [
     {
-      label: "Contact & Address",
-      link: "/long-term-requested-job/contact-address",
+      label: "Attendance Calendar",
+      link: "/view-job-details/attendance-calendar",
     },
     {
-      label: "Children Information",
-      link: "/long-term-requested-job/children-information",
+      label: "Job Description",
+      link: "/view-job-details/job-description",
     },
     {
-      label: "Requirements",
-      link: "/long-term-requested-job/requirements",
+      label: "Candidate Profile",
+      link: "/view-job-details/candidate-profile",
     },
     {
-      label: "Additional Information",
-      link: "/long-term-requested-job/additional-information",
+      label: "Message(13)",
+      link: "/view-job-details/message",
     },
   ];
-
   return (
     <div>
       <div>
@@ -34,7 +33,7 @@ export default function LongTermJobProfileHeader() {
             className="cursor-pointer text-[#111927] font-bold"
           >
             <ArrowLeftIcon className="inline-block mr-2" />
-            <span>Requested Job Details</span>
+            <span>Job Details</span>
           </button>
           <ButtonReuseable title="Publish This job" />
         </div>

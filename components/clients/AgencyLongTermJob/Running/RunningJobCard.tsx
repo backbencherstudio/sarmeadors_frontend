@@ -106,9 +106,9 @@ export function RunningJobCard({
         />
         <LinkReuseable
           title="View Details"
-          href={"#"}
+          href={"/view-job-details/attendance-calendar"}
           rightIcon={<ArrowTopBoxIcon />}
-          className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
+          className="bg-grayColor1! px-4 rounded-md tex-sm py-[10.5px]! border border-borderColor text-blackColor! h-full hover:scale-105 transition-all  duration-200 font-bold"
         />
       </div>
     </div>
