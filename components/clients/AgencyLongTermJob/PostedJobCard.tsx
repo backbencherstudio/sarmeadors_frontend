@@ -2,6 +2,7 @@
 import LinkIcon from "@/components/icon/LinkIcon";
 import LocationIcon from "@/components/icon/LocationIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
+import LinkReuseable from "@/components/reusable/CustomLink";
 import {
   ChevronDown,
   ChevronUp,
@@ -183,7 +184,11 @@ export default function PostedJobCard({
               {/* Bottom action buttons */}
               <div className="flex items-center gap-4 mt-4 pt-3 border-t border-gray-100">
                 <div>
-                  <ButtonReuseable title="Broadcast" />
+                  <LinkReuseable
+                    href="/posted-job-broadcast"
+                    className="md:px-4 md:py-3 py-2.5 px-3 rounded-md md:rounded-lg cursor-pointer bg-blackColor text-white h-full hover:scale-105 transition-all duration-200"
+                    title="Broadcast"
+                  />
                 </div>
                 <div>
                   <ButtonReuseable
