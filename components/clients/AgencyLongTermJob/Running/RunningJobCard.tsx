@@ -139,8 +139,8 @@ export function RunningJobCard({
           <div>
             <LinkReuseable
               title="Invoice History"
-              href={"/view-job-details/attendance-calendar"}
-              rightIcon={<InvoiceIcon />}
+              href={"/view-invoice"}
+              icon={<InvoiceIcon />}
               className="px-4 rounded-md tex-sm py-[10.5px]! border bg-[#111927] text-white! h-full hover:scale-105 transition-all  duration-200 font-bold"
             />
           </div>
