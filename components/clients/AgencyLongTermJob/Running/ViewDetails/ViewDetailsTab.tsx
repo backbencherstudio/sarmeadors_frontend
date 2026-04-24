@@ -1,13 +1,15 @@
 "use client";
 import ButtonReuseable from "@/components/reusable/CustomButton";
+import ReusableLineTabs from "@/components/reusable/ReusableLineTabs";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 
 export default function ViewDetailsTab() {
   const router = useRouter();
-  const tabs = [
-    {
+
+  const TabsData = [
+   {
       label: "Attendance Calendar",
       link: "/view-job-details/attendance-calendar",
     },
@@ -39,7 +41,7 @@ export default function ViewDetailsTab() {
         </div>
       </div>
       <div>
-        <ReusableTabs tabs={tabs} initialPath={""} />
+        <ReusableLineTabs tabs={TabsData} />
       </div>
     </div>
   );
