@@ -340,6 +340,86 @@ export const candidateListData = [
   },
 ];
 
+export const invoicesData = [
+  {
+    id: "1",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cash",
+  },
+  {
+    id: "2",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "3",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+  {
+    id: "4",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+  {
+    id: "5",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "6",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cash",
+  },
+  {
+    id: "7",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "8",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+  {
+    id: "9",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cash",
+  },
+  {
+    id: "10",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "11",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+];
+
 export const broadcastListData = [
   {
     id: "1",
@@ -1754,8 +1834,8 @@ export const jobs = [
     candidateName: "Darlene Robertson",
     position: "Nanny",
     roles: ["House Manager", "Baby/Night Nurse"],
-    location: "Miami, New York, Other Locations",
     price: "$34/hr",
+    location: "Miami, New York, Other Locations",
     status: "Pending",
     start: "Mar 28, 2026",
     image: jobImage,
@@ -1765,8 +1845,8 @@ export const jobs = [
     candidateName: "Darlene Robertson",
     position: "Nanny",
     roles: ["House Manager", "Baby/Night Nurse"],
-    location: "Miami, New York, Other Locations",
     price: "$34/hr",
+    location: "Miami, New York, Other Locations",
     status: "Pending",
     start: "Mar 28, 2026",
     image: jobImage,

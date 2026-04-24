@@ -26,7 +26,7 @@ export default function CompletedLayout({
     <div className="p-6">
       {/* Job Details */}
       <div className="flex justify-between items-center">
-        <div className="">
+        <div>
           <button
             onClick={() => router.back()}
             className="font-semibold capitalize leading-[160%] flex items-center cursor-pointer"

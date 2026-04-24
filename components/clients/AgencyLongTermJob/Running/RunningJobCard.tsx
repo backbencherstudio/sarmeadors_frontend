@@ -10,7 +10,8 @@ import LinkReuseable from "@/components/reusable/CustomLink";
 
 interface RunningJobCardProps {
   title: string;
-  completed: boolean;
+  completed?: boolean;
+  canceled?: boolean;
   commitment: string;
   date: string;
   rate: string;
@@ -38,6 +39,7 @@ export function RunningJobCard({
   totalDuration,
   completed,
   workingHohur,
+  canceled,
 }: RunningJobCardProps) {
   return (
     <div
@@ -49,13 +51,19 @@ export function RunningJobCard({
         <div className="flex items-center gap-2">
           <h3 className="text-lg font-semibold text-[#111927]">{title}</h3>
           <div>
-            <span className="text-sm px-2 py-1 rounded-[4px] bg-[#E6F0FF] text-[#0065FF] font-bold">
-              {commitment}
-            </span>
+            {!canceled && (
+              <span className="text-sm px-2 py-1 rounded-[4px] bg-[#E6F0FF] text-[#0065FF] font-bold">
+                {commitment}
+              </span>
+            )}
           </div>
           {completed ? (
             <span className="text-sm text-white px-2 py-1 bg-[#111927] rounded-[4px] font-bold">
               completed
+            </span>
+          ) : canceled ? (
+            <span className="text-sm text-[#111927] px-2 py-1 bg-[#E5E7EB] rounded-[4px] font-bold">
+              canceled
             </span>
           ) : (
             <p className="flex items-center gap-1 text-sm text-[#2D3440] px-2 py-1 bg-[#F3F4F6] rounded-[4px] font-bold">
@@ -118,6 +126,20 @@ export function RunningJobCard({
         )}
       </div>
 
+      <div className="mt-5">
+        <div className="w-full">
+          <label className="block text-lg font-medium text-[#384250] mb-2">
+            Cancel Reason
+          </label>
+
+          <textarea
+            rows={4}
+            placeholder="Type your reason Type your reason Type your reason Type your reason Type your reason Type your reason Type your reason"
+            className="w-full rounded-[10px] border border-[#E4E7EC] bg-[#F9FAFB] px-4 py-3 text-sm text-[#101828] placeholder:text-[#98A2B3] focus:outline-none focus:ring-0 transition-all resize-none"
+          />
+        </div>
+      </div>
+
       {/* Divider */}
       <div className="border-t border-gray-200 mt-5 mb-3" />
 
@@ -139,8 +161,16 @@ export function RunningJobCard({
           <div>
             <LinkReuseable
               title="Invoice History"
-              href={"/view-job-details/attendance-calendar"}
-              rightIcon={<InvoiceIcon />}
+              href={"/view-invoice"}
+              icon={<InvoiceIcon />}
+              className="px-4 rounded-md tex-sm py-[10.5px]! border bg-[#111927] text-white! h-full hover:scale-105 transition-all  duration-200 font-bold"
+            />
+          </div>
+        )}
+        {canceled && (
+          <div>
+            <ButtonReuseable
+              title="Charge Free"
               className="px-4 rounded-md tex-sm py-[10.5px]! border bg-[#111927] text-white! h-full hover:scale-105 transition-all  duration-200 font-bold"
             />
           </div>
