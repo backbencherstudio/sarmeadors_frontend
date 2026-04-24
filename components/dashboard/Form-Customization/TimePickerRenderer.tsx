@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Clock } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Props = {
   field: any;
@@ -32,6 +32,21 @@ export default function TimePickerRenderer({ field }: Props) {
     const value = index * 5;
     return String(value).padStart(2, "0");
   });
+
+  useEffect(() => {
+    const initialTime = String(field?.value || field?.placeholder || "").trim();
+    const match = initialTime.match(/^(\d{1,2}):(\d{2})\s*([AaPp][Mm])$/);
+
+    if (!match) return;
+
+    const nextHour = String(Number(match[1]) % 12 || 12).padStart(2, "0");
+    const nextMinute = match[2];
+    const nextPeriod = match[3].toUpperCase();
+
+    setHour(nextHour);
+    setMinute(nextMinute);
+    setPeriod(nextPeriod);
+  }, [field?.placeholder, field?.value]);
 
   return (
     <div className="space-y-1 w-full">
@@ -72,7 +87,7 @@ export default function TimePickerRenderer({ field }: Props) {
                     key={value}
                     type="button"
                     onClick={() => setHour(value)}
-                    className={`block w-full px-3 py-2 text-sm text-center ${
+                    className={`block w-full px-2 py-1 text-sm text-center ${
                       hour === value
                         ? "bg-blackColor text-white"
                         : "text-headerColor hover:bg-gray-50"
@@ -106,7 +121,7 @@ export default function TimePickerRenderer({ field }: Props) {
                     key={value}
                     type="button"
                     onClick={() => setPeriod(value)}
-                    className={`block w-full px-3 py-2 text-sm text-center ${
+                    className={`block w-full px-2 py-1 text-sm text-center ${
                       period === value
                         ? "bg-blackColor text-white"
                         : "text-headerColor hover:bg-gray-50"
