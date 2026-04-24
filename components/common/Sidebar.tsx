@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/collapsible";
 import { clearBiodataData } from "@/helper/biodataStorage.helper";
 import { CookieHelper } from "@/helper/cookie.helper";
+import CopyIcon from "@/public/icon/CopyIcon";
 import JobsIcon from "@/public/icon/JobsIcon";
 import mainLogo from "@/public/icon/mainlogo.png";
 import MoreIcon from "@/public/icon/MoreIcon";
@@ -73,12 +74,12 @@ const navItems: NavItem[] = [
     href: "/agency-long-term-job/agency-requested-job",
     type: "admin",
   },
-  // {
-  //   icon: CalenderIcon,
-  //   label: "Shift Job calendar",
-  //   href: "/dashboard/shift-job-calendar",
-  //   type: "admin",
-  // },
+  {
+    icon: CopyIcon,
+    label: "Templates",
+    href: "/templates",
+    type: "admin",
+  },
   // {
   //   icon: JobsIcon,
   //   label: "Placement Jobs",

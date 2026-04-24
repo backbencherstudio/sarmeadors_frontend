@@ -227,6 +227,108 @@ export const demoData = [
   },
 ];
 
+export const mailTemplateData = [
+  {
+    id: "1",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "Chicago",
+    status: "Application Approved",
+  },
+  {
+    id: "2",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "3",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "4",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "Chicago",
+    status: "Application Approved",
+  },
+  {
+    id: "5",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "6",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "7",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "lowa",
+    status: "Application Approved",
+  },
+  {
+    id: "8",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Interview Complete",
+  },
+  {
+    id: "9",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "Chicago",
+    status: "Interview Complete",
+  },
+  {
+    id: "10",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "11",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Interview Complete",
+  },
+];
+
 export const candidateListData = [
   {
     id: "1",
