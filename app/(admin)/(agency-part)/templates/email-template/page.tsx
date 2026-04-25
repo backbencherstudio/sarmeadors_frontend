@@ -3,6 +3,8 @@ import SearchFilterBar from "@/components/clients/Templates/SearchFilterBar";
 import TemplatesTable from "@/components/clients/Templates/TemplatesTable";
 import LinkReuseable from "@/components/reusable/CustomLink";
 import { Plus } from "lucide-react";
+
+
 const userTypeOptions = [
   { label: "Admin", value: "admin" },
   { label: "Nanny", value: "nanny" },

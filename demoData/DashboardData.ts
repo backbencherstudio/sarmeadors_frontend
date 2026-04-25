@@ -296,6 +296,119 @@ export const noteData = [
   },
 ];
 
+export const documentsData = [
+  {
+    id: "1",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "2",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "3",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "4",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "5",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "6",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "7",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "8",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "9",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "10",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "11",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+];
+
 export const mailTemplateData = [
   {
     id: "1",
