@@ -1,16 +1,13 @@
 "use client";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { clearBiodataData } from "@/helper/biodataStorage.helper";
 import { CookieHelper } from "@/helper/cookie.helper";
 import CopyIcon from "@/public/icon/CopyIcon";
+import DocumentsIcon from "@/public/icon/DocumentsIcon";
+import EmailIcon from "@/public/icon/EmailIcon";
 import JobsIcon from "@/public/icon/JobsIcon";
 import mainLogo from "@/public/icon/mainlogo.png";
-import MoreIcon from "@/public/icon/MoreIcon";
-import { ChevronRight, X } from "lucide-react";
+import NoteIcon from "@/public/icon/NoteIcon";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -42,6 +39,13 @@ interface SidebarProps {
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }
+
+// Template sub-items
+const templateSubItems = [
+  { label: "Email Template", href: "/templates/email-template" },
+  { label: "Document Template", href: "/templates/document-template" },
+  { label: "Note Template", href: "/templates/note" },
+];
 
 const navItems: NavItem[] = [
   {
@@ -78,24 +82,6 @@ const navItems: NavItem[] = [
     icon: CopyIcon,
     label: "Templates",
     href: "/templates",
-    type: "admin",
-  },
-  // {
-  //   icon: JobsIcon,
-  //   label: "Placement Jobs",
-  //   href: "/dashboard/placement-jobs",
-  //   type: "admin",
-  // },
-  // {
-  //   icon: PlatFormIcon,
-  //   label: "Platform settings",
-  //   href: "/dashboard/platform-settings",
-  //   type: "admin",
-  // },
-  {
-    icon: MoreIcon,
-    label: "More",
-    href: "/dashboard/more",
     type: "admin",
   },
   {
@@ -146,14 +132,12 @@ const navItems: NavItem[] = [
     href: "/candidate/candidate-my-jobs",
     type: "candidate",
   },
-
   {
     label: "Interviews",
     icon: InterviewIcon,
     href: "/candidate/candidate-interviews",
     type: "candidate",
   },
-
   {
     label: "Applied Job",
     icon: AppliedJobIcon,
@@ -177,34 +161,6 @@ const navItems: NavItem[] = [
     icon: DocumentIcon,
     href: "/candidate/candidate-documents",
     type: "candidate",
-  },
-];
-
-const moreItems = [
-  {
-    // icon: PaymentIcon,
-    label: "Templates",
-    href: "/dashboard/billing",
-  },
-  {
-    // icon: SupportIcon,
-    label: "Settings",
-    href: "/dashboard/help-support",
-  },
-  {
-    // icon: SettingIcon,
-    label: "Application Builder",
-    href: "/dashboard/application-builder?step=configuration",
-  },
-  {
-    // icon: SettingIcon,
-    label: "Records",
-    href: "/dashboard/settings",
-  },
-  {
-    // icon: SettingIcon,
-    label: "Sub menu",
-    href: "/dashboard/settings",
   },
 ];
 
@@ -234,44 +190,49 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const [moreOpen, setMoreOpen] = useState<boolean>(() =>
-    moreItems.some((m) => pathname.startsWith(m.href)),
-  );
   const [isLoggedIn, setIsLoggedIn] = useState("admin");
+
+  const [templatesOpen, setTemplatesOpen] = useState<boolean>(() =>
+    pathname.startsWith("/templates"),
+  );
+
   const mainItems = navItems.filter((item) => item.type === isLoggedIn);
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(isLoggedIn || "admin");
+    const stored = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(stored || "admin");
   }, [pathname]);
 
-  // console.log("login type", isLoggedIn);
+  useEffect(() => {
+    if (pathname.startsWith("/templates")) {
+      setTemplatesOpen(true);
+    }
+  }, [pathname]);
 
   const isActive = (href: string): boolean => {
-    if (href === "/") {
-      return pathname === "/";
-    }
+    if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   };
+
   const handleLogout = () => {
     CookieHelper.destroy({ key: "jobtoken" });
     clearBiodataData();
     router.push("/login");
   };
+
   return (
-    <div className="h-screen  ">
+    <div className="h-screen">
       <div
         className={`
-          h-full
-          flex flex-col
-          min-h-[calc(100vh-100px)] 
-          bg-grayColor1 
+          h-full flex flex-col
+          min-h-[calc(100vh-100px)]
+          bg-grayColor1
           shadow-[0px_-0.3px_5.5px_0px_rgba(0,0,0,0.02)]
           p-5 overflow-y-auto transition-all duration-300
           ${isCollapsed ? "xl:w-20" : "w-full"}
         `}
       >
-        {/* Header with Logo and Toggle */}
+        {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Link
             href={"/"}
@@ -285,12 +246,11 @@ const Sidebar: React.FC<SidebarProps> = ({
               width={118}
               height={29}
               className={`transition-all duration-300 ${
-                isCollapsed ? "xl:w-8 xl:h-8 " : "w-20 md:w-[100px]"
+                isCollapsed ? "xl:w-8 xl:h-8" : "w-20 md:w-[100px]"
               }`}
             />
           </Link>
 
-          {/* Toggle button - visible on desktop, close button on mobile */}
           <button
             onClick={() => {
               if (window.innerWidth >= 1280) {
@@ -315,33 +275,36 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
         </div>
 
-        {/* Navigation Section */}
+        {/* Navigation */}
         <div className="flex-1">
           <div className="space-y-2">
             {mainItems.map((item, idx) => {
               const active = isActive(item.href);
-              const isMore = item.label === "More";
-              if (isMore) {
-                // Collapsed: simple link, no accordion
-                if (isCollapsed) {
-                  return (
-                    <Link
-                      key={idx}
-                      href={item.href}
-                      onClick={onClose}
+              const isTemplates = item.label === "Templates";
+              if (isTemplates) {
+                return (
+                  <div key={idx}>
+                    {/* Templates trigger */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!isCollapsed) {
+                          setTemplatesOpen((p) => !p);
+                        }
+                      }}
                       className={`
-                        w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
-                        hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
-                        ${active ? "bg-white opacity-100 text-blackColor" : ""}
-                        ${isCollapsed ? "xl:justify-center" : "justify-start"}
+                        w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg
+                        hover:bg-white text-blackColor transition-all duration-200
+                        ${active || templatesOpen ? "bg-white" : ""}
+                        ${isCollapsed ? "xl:justify-center" : "justify-between"}
                       `}
-                      title={item.label}
+                      title={isCollapsed ? item.label : ""}
                     >
                       <div className="flex gap-2 items-center">
-                        <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                        <div className="w-[30px] h-[30px] flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
                           <item.icon
                             className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
-                              active ? "opacity-100" : ""
+                              active || templatesOpen ? "opacity-100" : ""
                             }`}
                           />
                         </div>
@@ -353,119 +316,73 @@ const Sidebar: React.FC<SidebarProps> = ({
                           {item.label}
                         </span>
                       </div>
-                    </Link>
-                  );
-                }
-                // Expanded: accordion submenu
-                return (
-                  <Collapsible
-                    key={idx}
-                    open={moreOpen}
-                    onOpenChange={(o) => setMoreOpen(o)}
-                  >
-                    <CollapsibleTrigger asChild>
-                      <button
-                        type="button"
-                        className={`
-                          w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
-                          hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
-                          ${
-                            isCollapsed
-                              ? "xl:justify-center"
-                              : "justify-between"
-                          }
-                        `}
-                        title={item.label}
-                        aria-expanded={moreOpen}
-                      >
-                        <div className="flex gap-2 items-center">
-                          <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                            <item.icon
-                              className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
-                                active ? "opacity-100" : ""
-                              }`}
-                            />
-                          </div>
-                          <span
-                            className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
-                              isCollapsed ? "xl:hidden" : ""
-                            }`}
-                          >
-                            {item.label}
-                          </span>
-                        </div>
-                        <ChevronRight
-                          className={`transition-transform duration-200 ${
-                            moreOpen ? "rotate-90" : ""
-                          }`}
-                          size={18}
-                        />
-                      </button>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="CollapsibleContent pb-0">
-                      <div className="space-y-1 mt-1">
-                        {moreItems.map((sub, sidx) => {
-                          const subActive = isActive(sub.href);
+
+                      {/* Chevron — hidden when collapsed */}
+                      {!isCollapsed && (
+                        <span className="text-gray-400">
+                          {templatesOpen ? (
+                            <ChevronUp size={14} />
+                          ) : (
+                            <ChevronDown size={14} />
+                          )}
+                        </span>
+                      )}
+                    </button>
+
+                    {/* Sub-items */}
+                    {templatesOpen && !isCollapsed && (
+                      <div className="mt-1 space-y-0.5 bg-white p-3 rounded-[8px]">
+                        {templateSubItems.map((sub) => {
+                          const subActive = pathname === sub.href;
                           return (
                             <Link
-                              key={`${sub.label}-${sidx}`}
+                              key={sub.href}
                               href={sub.href}
                               onClick={onClose}
                               className={`
-                                ml-10 flex items-center group gap-3 px-3 py-1.5 lg:py-2 rounded-lg 
-                                hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
+                                flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm
+                                transition-all duration-200
                                 ${
                                   subActive
-                                    ? "bg-white opacity-100 text-blackColor"
-                                    : ""
-                                }
-                                ${
-                                  isCollapsed
-                                    ? "xl:justify-center"
-                                    : "justify-start"
+                                    ? "bg-blackColor text-white font-medium"
+                                    : "text-descriptionColor hover:bg-white hover:text-blackColor"
                                 }
                               `}
-                              title={isCollapsed ? sub.label : ""}
                             >
-                              <div className="flex gap-2 items-center">
-                                <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
-                                  {/* <sub.icon
-                                    className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
-                                      subActive ? "opacity-100" : ""
-                                    }`}
-                                  /> */}
-                                </div>
-                                <span
-                                  className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
-                                    isCollapsed ? "xl:hidden" : ""
-                                  }`}
-                                >
-                                  {sub.label}
-                                </span>
-                              </div>
+                              <span className="w-4 h-4 flex-shrink-0 opacity-70 text-xs">
+                                {sub.label === "Email Template" && (
+                                  <EmailIcon />
+                                )}
+                                {sub.label === "Document Template" && (
+                                  <DocumentsIcon />
+                                )}
+                                {sub.label === "Note Template" && <NoteIcon />}
+                              </span>
+                              {sub.label}
                             </Link>
                           );
                         })}
                       </div>
-                    </CollapsibleContent>
-                  </Collapsible>
+                    )}
+                  </div>
                 );
               }
+
               return (
                 <Link
                   key={idx}
                   href={item.href}
                   onClick={onClose}
                   className={`
-                    flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
-                    hover:text-whiteColor hover:bg-whiteColor text-blackColor transition-all duration-200
+                    flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg
+                    hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
                     ${active ? "bg-white opacity-100 text-blackColor" : ""}
                     ${isCollapsed ? "xl:justify-center" : "justify-start"}
                   `}
                   title={isCollapsed ? item.label : ""}
                 >
                   <div className="flex gap-2 items-center">
-                    <div className="w-[30px] h-[30px] group  flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
+                    <div className="w-[30px] h-[30px] group flex justify-center items-center flex-shrink-0 text-xl font-medium text-blackColor">
                       <item.icon
                         className={`opacity-70 group-hover:opacity-100 transition-opacity duration-200 ${
                           active ? "opacity-100" : ""
@@ -487,7 +404,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Other Section */}
-        {isLoggedIn == "admin" && (
+        {isLoggedIn === "admin" && (
           <div className="pt-4 border-t border-white/10">
             <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">
               Other
@@ -501,11 +418,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                     href={item.href}
                     onClick={onClose}
                     className={`
-                    flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg 
-                    hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
-                    ${active ? "bg-white opacity-100 text-blackColor" : ""}
-                    ${isCollapsed ? "xl:justify-center" : "justify-start"}
-                  `}
+                      flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg
+                      hover:text-whiteColor hover:bg-white text-blackColor transition-all duration-200
+                      ${active ? "bg-white opacity-100 text-blackColor" : ""}
+                      ${isCollapsed ? "xl:justify-center" : "justify-start"}
+                    `}
                     title={isCollapsed ? item.label : ""}
                   >
                     <div className="flex gap-2 items-center">
@@ -531,13 +448,13 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         )}
 
-        {/* Log out section */}
+        {/* Logout */}
         <div className="pt-4">
           <button
             onClick={handleLogout}
             className={`
-              flex items-center hover:bg-white text cursor-pointer gap-3 px-3 py-3 
-               w-full rounded-lg transition-all duration-200
+              flex items-center hover:bg-white cursor-pointer gap-3 px-3 py-3
+              w-full rounded-lg transition-all duration-200
               ${isCollapsed ? "xl:justify-center" : ""}
             `}
             title={isCollapsed ? "Log Out Account" : ""}
@@ -546,7 +463,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               <LogoutIcon />
             </div>
             <span
-              className={`text-base font-normal  whitespace-nowrap ${
+              className={`text-base font-normal whitespace-nowrap ${
                 isCollapsed ? "xl:hidden" : ""
               }`}
             >
