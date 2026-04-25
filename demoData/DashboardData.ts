@@ -227,6 +227,75 @@ export const demoData = [
   },
 ];
 
+export const noteData = [
+  {
+    id: "1",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "2",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Client",
+  },
+  {
+    id: "3",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "4",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "client",
+  },
+  {
+    id: "5",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "6",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "7",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "8",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "9",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "10",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "11",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+];
+
 export const mailTemplateData = [
   {
     id: "1",

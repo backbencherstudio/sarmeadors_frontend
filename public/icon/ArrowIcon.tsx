@@ -15,7 +15,7 @@ export default function ArrowIcon({ className }: { className?: string }) {
         />
       </defs>
       <use
-        fill-rule="evenodd"
+        fillRule="evenodd"
         href="#SVG1pzpbdYY"
         transform="rotate(-180 5.02 9.505)"
       />

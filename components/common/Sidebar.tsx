@@ -294,7 +294,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       }}
                       className={`
                         w-full flex items-center group gap-3 px-3 py-2.5 lg:py-3 rounded-lg
-                        hover:bg-white text-blackColor transition-all duration-200
+                        hover:bg-white text-blackColor cursor-pointer transition-all duration-200
                         ${active || templatesOpen ? "bg-white" : ""}
                         ${isCollapsed ? "xl:justify-center" : "justify-between"}
                       `}
@@ -309,7 +309,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                           />
                         </div>
                         <span
-                          className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap ${
+                          className={`text-base font-medium text-descriptionColor group-hover:text-blackColor transition-colors duration-200 whitespace-nowrap  ${
                             isCollapsed ? "xl:hidden" : ""
                           }`}
                         >
@@ -321,9 +321,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                       {!isCollapsed && (
                         <span className="text-gray-400">
                           {templatesOpen ? (
-                            <ChevronUp size={14} />
+                            <ChevronUp size={20} />
                           ) : (
-                            <ChevronDown size={14} />
+                            <ChevronDown size={20} />
                           )}
                         </span>
                       )}
