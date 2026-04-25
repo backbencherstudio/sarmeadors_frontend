@@ -1,8 +1,11 @@
 "use client";
+
+import DocumentTable from "@/components/clients/Templates/DocumentTable";
 import SearchFilterBar from "@/components/clients/Templates/SearchFilterBar";
 import TemplatesTable from "@/components/clients/Templates/TemplatesTable";
-import ButtonReuseable from "@/components/reusable/CustomButton";
+import LinkReuseable from "@/components/reusable/CustomLink";
 import { Plus } from "lucide-react";
+
 const userTypeOptions = [
   { label: "Admin", value: "admin" },
   { label: "Nanny", value: "nanny" },
@@ -29,13 +32,18 @@ export default function page() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-[#111927] text-2xl font-semibold">
-            All Email Template
+            All Document Template
           </h1>
           <p className="text-[#778593] text-base">
             List of all current clients and their details.
           </p>
         </div>
-        <ButtonReuseable title="Add Template" icon={<Plus />} />
+        <LinkReuseable
+          href="/templates/add-email-template"
+          title="Add Template"
+          icon={<Plus />}
+          className="py-2.5 px-3 rounded-md md:rounded-lg cursor-pointer bg-blackColor text-white h-full hover:scale-105 transition-all  duration-200"
+        />
       </div>
       <div>
         <SearchFilterBar
@@ -51,7 +59,7 @@ export default function page() {
         />
       </div>
       <div className="mt-4 p-3 border rounded-[8px]">
-        <TemplatesTable />
+        <DocumentTable />
       </div>
     </div>
   );
