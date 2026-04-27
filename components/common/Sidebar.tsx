@@ -223,7 +223,7 @@ const otherItems = [
   {
     icon: SettingIcon,
     label: "Settings",
-    href: "/dashboard/settings",
+    href: "/settings/agency-details",
   },
 ];
 
