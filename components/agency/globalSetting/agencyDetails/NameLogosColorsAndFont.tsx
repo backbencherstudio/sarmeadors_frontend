@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { Upload, ChevronDown } from "lucide-react";
-import CommonAccordion from "./CommonAccordion";
+import CommonAccordion from "../CommonAccordion";
 
 interface DropZoneProps {
     label: string;
