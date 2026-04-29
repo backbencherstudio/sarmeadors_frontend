@@ -30,7 +30,7 @@ interface NavItem {
   icon: any;
   label: string;
   href: string;
-  type?: "client" | "admin" | "candidate";
+  type?: "client" | "admin" | "candidate" | "super-admin";
 }
 
 interface SidebarProps {
@@ -48,6 +48,12 @@ const templateSubItems = [
 ];
 
 const navItems: NavItem[] = [
+  {
+    label: "Dashboard",
+    icon: DashboardIcon,
+    href: "/super-admin/dashboard",
+    type: "super-admin",
+  },
   {
     icon: ClientIcon,
     label: "Clients",
