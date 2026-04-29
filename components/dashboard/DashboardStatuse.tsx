@@ -51,12 +51,11 @@ function DashboardStatuse({
           value={value || "Pre Application"}
           open={selectOpen}
           onOpenChange={setSelectOpen}
-          // disabled={loadingStatusId === record?._id}
+        // disabled={loadingStatusId === record?._id}
         >
           <SelectTrigger className="flex items-center gap-1.5 p-1 !h-9 w-full justify-between">
             <div
-              className={`px-2 cursor-pointer flex items-center  py-2.5!  h-full w-full text-xs justify-center focus-visible:ring-0 font-medium rounded-md border-0 ${
-                value === "Applied"
+              className={`px-2 cursor-pointer flex items-center  py-2.5!  h-full w-full text-xs justify-center focus-visible:ring-0 font-medium rounded-md border-0 ${value === "Applied"
                   ? "bg-purple-500/15 text-purple-600"
                   : value === "Pre Application"
                     ? "bg-green-500/15 text-green-600"
@@ -65,7 +64,7 @@ function DashboardStatuse({
                       : value === "Pending"
                         ? "bg-orange-500/15 text-orange-600"
                         : "bg-gray-500/15 text-gray-600"
-              }`}
+                }`}
             >
               <SelectValue />
             </div>
