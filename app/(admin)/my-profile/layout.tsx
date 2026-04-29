@@ -1,6 +1,4 @@
 import UserInfo from "@/components/clients/UserInfo";
-import LinkIcon from "@/components/icon/LinkIcon";
-import ButtonReuseable from "@/components/reusable/CustomButton";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 import React from "react";
 
@@ -35,16 +33,16 @@ function MyProfileLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="mt-4 space-y-4 p-4 md:p-6">
-      <ReusableTabs tabs={tabs} />
+      <ReusableTabs tabs={tabs} initialPath="" />
       <div>
         <UserInfo />
-        <div>
+        {/* <div>
           <ButtonReuseable
             icon={<LinkIcon className=" stroke-whiteColor" />}
             className="bg-whiteColor! border border-borderColor"
           />
           <ButtonReuseable icon={<LinkIcon />} title="Share Profile" />
-        </div>
+        </div> */}
       </div>
       {children}
     </div>

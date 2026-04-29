@@ -1,20 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 import CommonAccordion from "../CommonAccordion";
 
 
-const FONTS = [
-    "Archivo", "Inter", "Roboto", "Open Sans", "Lato",
-    "Montserrat", "Poppins", "Raleway", "Nunito", "Source Sans Pro",
-];
+// const FONTS = [
+//     "Archivo", "Inter", "Roboto", "Open Sans", "Lato",
+//     "Montserrat", "Poppins", "Raleway", "Nunito", "Source Sans Pro",
+// ];
 
 export default function CommunicationSettings() {
     const [logoHeight, setLogoHeight] = useState("");
     const [websiteLink, setWebsiteLink] = useState("");
     const [taxId, setTaxId] = useState("");
-    const [font, setFont] = useState("Archivo");
 
     return (
         <CommonAccordion title="Communication Settings">

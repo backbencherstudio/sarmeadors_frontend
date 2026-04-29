@@ -1,7 +1,9 @@
-import React from 'react'
+import CandidateDashboardSettings from "@/components/agency/globalSetting/candidates/CandidateDashboardSettings";
 
 export default function CandidatesPage() {
     return (
-        <div>Candidates</div>
+        <div>
+            <CandidateDashboardSettings />
+        </div>
     )
 }
