@@ -7,13 +7,15 @@ import CopyIcon from "@/public/icon/CopyIcon";
 import DeleteIcon from "@/public/icon/DeleteIcon";
 import { DownloadIcon, PencilIcon } from "lucide-react";
 import { useState } from "react";
+import { DeleteTemplateDialog } from "./DeleteTemplateDialog";
 
 export default function DocumentTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(documentsData);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [visibleColumns, setVisibleColumns] = useState({
     full_name: true,
     user_type: true,
@@ -37,6 +39,14 @@ export default function DocumentTable() {
         ? prev.filter((id) => id !== rowId)
         : [...prev, rowId],
     );
+  };
+
+  const handleDelete = () => {
+    if (selectedTemplateId) {
+      setData((prev) => prev.filter((item) => item.id !== selectedTemplateId));
+      setSelectedTemplateId(null);
+      setDialogOpen(false);
+    }
   };
 
   const handleColShort = () => {
@@ -134,6 +144,10 @@ export default function DocumentTable() {
           <ButtonReuseable
             icon={<DeleteIcon className="h-4 w-4" />}
             className="bg-[#F3F4F6]! text-[#CB121D]! border!"
+            onClick={() => {
+              setSelectedTemplateId(record.id);
+              setDialogOpen(true);
+            }}
           />
         </div>
       ),
@@ -160,6 +174,13 @@ export default function DocumentTable() {
         loading={false}
         totalItems={data.length}
         totalpage={2}
+      />
+
+      <DeleteTemplateDialog
+        templateName={selectedTemplateId ? data.find(item => item.id === selectedTemplateId)?.full_name || '' : ''}
+        onDelete={handleDelete}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
       />
     </div>
   );
