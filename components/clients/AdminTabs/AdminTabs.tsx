@@ -52,7 +52,7 @@ export function AdminTabs() {
 
   return (
     <div>
-      <ReusableTabs tabs={tabs} />
+      <ReusableTabs tabs={tabs} initialPath={""} />
     </div>
   );
 }

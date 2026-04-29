@@ -38,8 +38,8 @@ function MyProfileLayout({ children }: { children: React.ReactNode }) {
         <UserInfo />
         {/* <div>
           <ButtonReuseable
-            icon={<LinkIcon className=" stroke-whiteColor" />}
-            className="bg-whiteColor! border border-borderColor"
+            icon={<EditeIcon className=" text-blackColor" />}
+            className="bg-whiteColor! border px-4! py-4! border-borderColor"
           />
           <ButtonReuseable icon={<LinkIcon />} title="Share Profile" />
         </div> */}

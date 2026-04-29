@@ -26,8 +26,8 @@ export default function StripeLogoIcon() {
         <g mask="url(#mask0_7795_17606)">
           <path d="M16 0H0V16H16V0Z" fill="#6BA6FF" />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M3.75 12.25L12.25 10.4474V3.75L3.75 5.57366V12.25Z"
             fill="white"
           />

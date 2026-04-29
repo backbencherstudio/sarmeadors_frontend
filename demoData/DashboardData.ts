@@ -227,6 +227,290 @@ export const demoData = [
   },
 ];
 
+export const noteData = [
+  {
+    id: "1",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "2",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Client",
+  },
+  {
+    id: "3",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "4",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "client",
+  },
+  {
+    id: "5",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "6",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "7",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "8",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "9",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "10",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+  {
+    id: "11",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    type: "Candidate",
+  },
+];
+
+export const documentsData = [
+  {
+    id: "1",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "2",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "3",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "4",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "5",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "6",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "7",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "8",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "9",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "10",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+  {
+    id: "11",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    trigger_status: "Application Approved",
+    created_at: "2025-11-12",
+    updated_at: "2025-11-12",
+  },
+];
+
+export const mailTemplateData = [
+  {
+    id: "1",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "Chicago",
+    status: "Application Approved",
+  },
+  {
+    id: "2",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "3",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "4",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "Chicago",
+    status: "Application Approved",
+  },
+  {
+    id: "5",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "6",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "7",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "clinet",
+    category: "Midwest Elite Nannies",
+    location: "lowa",
+    status: "Application Approved",
+  },
+  {
+    id: "8",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Interview Complete",
+  },
+  {
+    id: "9",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "Chicago",
+    status: "Interview Complete",
+  },
+  {
+    id: "10",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Application Approved",
+  },
+  {
+    id: "11",
+    full_name:
+      "Client Application Approved - Access Dashboard and Sign Agreement",
+    user_type: "Candidate",
+    category: "Midwest Elite Nannies",
+    location: "DC Metro Area",
+    status: "Interview Complete",
+  },
+];
+
 export const candidateListData = [
   {
     id: "1",
@@ -340,13 +624,93 @@ export const candidateListData = [
   },
 ];
 
+export const invoicesData = [
+  {
+    id: "1",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cash",
+  },
+  {
+    id: "2",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "3",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+  {
+    id: "4",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+  {
+    id: "5",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "6",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cash",
+  },
+  {
+    id: "7",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "8",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+  {
+    id: "9",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cash",
+  },
+  {
+    id: "10",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Bank Transfer",
+  },
+  {
+    id: "11",
+    invoices: "GSV567489243UI",
+    date_time: "08/01/21 9:02am",
+    price: "$15,000.00",
+    payment_method: "Cheque",
+  },
+];
+
 export const broadcastListData = [
   {
     id: "1",
     full_name: "Bessie Cooper",
     email_address: "felicia.reid@example.com",
     mobile_number: "+14842918883",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Application Started",
     action: "View",
   },
@@ -355,7 +719,7 @@ export const broadcastListData = [
     full_name: "Marvin McKinney",
     email_address: "bill.sanders@example.com",
     mobile_number: "+16102458249",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Applied",
     action: "View",
   },
@@ -364,7 +728,7 @@ export const broadcastListData = [
     full_name: "Brooklyn Simmons",
     email_address: "georgia.young@example.com",
     mobile_number: "+14842918653",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Interview Complete",
     action: "View",
   },
@@ -373,7 +737,7 @@ export const broadcastListData = [
     full_name: "Courtney Henry",
     email_address: "jessica.hanson@example.com",
     mobile_number: "+14844080141",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Application Started",
     action: "View",
   },
@@ -382,7 +746,7 @@ export const broadcastListData = [
     full_name: "Arlene McCoy",
     email_address: "nathan.roberts@example.com",
     mobile_number: "+14842634655",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Profile Complete",
     action: "View",
   },
@@ -391,7 +755,7 @@ export const broadcastListData = [
     full_name: "Floyd Miles",
     email_address: "tanya.hill@example.com",
     mobile_number: "+14844145917",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Applied",
     action: "View",
   },
@@ -400,7 +764,7 @@ export const broadcastListData = [
     full_name: "Cody Fisher",
     email_address: "kenzi.lawson@example.com",
     mobile_number: "+18143008346",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Application Started",
     action: "View",
   },
@@ -409,7 +773,7 @@ export const broadcastListData = [
     full_name: "Jerome Bell",
     email_address: "willie.jennings@example.com",
     mobile_number: "+14842634689",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Application Started",
     action: "View",
   },
@@ -418,7 +782,7 @@ export const broadcastListData = [
     full_name: "Guy Hawkins",
     email_address: "dolores.chambers@example.com",
     mobile_number: "+15552826353",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Applied",
     action: "View",
   },
@@ -427,7 +791,7 @@ export const broadcastListData = [
     full_name: "Kristin Watson",
     email_address: "nevaeh.simmons@example.com",
     mobile_number: "+16102449865",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Profile Complete",
     action: "View",
   },
@@ -436,7 +800,7 @@ export const broadcastListData = [
     full_name: "Esther Howard",
     email_address: "tim.jennings@example.com",
     mobile_number: "+18143008184",
-    date: "2/11/12",
+    registration_date: "2/11/12",
     status: "Application Started",
     action: "View",
   },
@@ -814,7 +1178,8 @@ export const PROFILES = [
       "I have 8 years of experience as a nanny and house manager, working with children from infancy to school age.",
     status: "not-interested",
     linked: "Mon Nov 18 2024 at 21 46 04",
-    notes: "I think Nakita could be a good personality fit and would create a really positive dynamic With the girls. She is open to travel, but would prefer not for 4 full consecutive weeks."
+    notes:
+      "I think Nakita could be a good personality fit and would create a really positive dynamic With the girls. She is open to travel, but would prefer not for 4 full consecutive weeks.",
   },
   {
     id: 4,
@@ -839,7 +1204,7 @@ export const PROFILES = [
       "I have cared for children from infancy through early adolescence, with a strong passion and focus on early childhood development.",
     status: "interested",
     linked: "Mon Nov 18 2024 at 21 46 04",
-    notes: "Kelsey is targeting an August start date."
+    notes: "Kelsey is targeting an August start date.",
   },
   {
     id: 6,
@@ -1753,8 +2118,8 @@ export const jobs = [
     candidateName: "Darlene Robertson",
     position: "Nanny",
     roles: ["House Manager", "Baby/Night Nurse"],
-    location: "Miami, New York, Other Locations",
     price: "$34/hr",
+    location: "Miami, New York, Other Locations",
     status: "Pending",
     start: "Mar 28, 2026",
     image: jobImage,
@@ -1764,8 +2129,8 @@ export const jobs = [
     candidateName: "Darlene Robertson",
     position: "Nanny",
     roles: ["House Manager", "Baby/Night Nurse"],
-    location: "Miami, New York, Other Locations",
     price: "$34/hr",
+    location: "Miami, New York, Other Locations",
     status: "Pending",
     start: "Mar 28, 2026",
     image: jobImage,

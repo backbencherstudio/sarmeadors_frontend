@@ -29,7 +29,7 @@ export default function SingleAplicantsLayout({ children }) {
     return (
         <div className='space-y-4'>
             <ProfileAndReview />
-            <ReusableTabs tabs={tabs} />
+            <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link} />
             {children}
         </div>
     )

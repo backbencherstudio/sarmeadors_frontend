@@ -1,5 +1,5 @@
 import InvoiceIcon from "@/components/icon/InvoiceIcon";
-import ButtonReuseable from "@/components/reusable/CustomButton";
+import LinkReuseable from "@/components/reusable/CustomLink";
 
 function CandidateJobDailyActivityHeader() {
   return (
@@ -36,7 +36,8 @@ function CandidateJobDailyActivityHeader() {
         </div>
       </div>
       <div className="mt-2 flex w-full lg:w-auto justify-end lg:mt-0">
-        <ButtonReuseable
+        <LinkReuseable
+          href="/view-invoice"
           icon={<InvoiceIcon className="h-4 w-4" />}
           title="View Invoice"
           className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-[#384250]/50! px-4 py-2 text-sm font-medium text-white"
