@@ -1,7 +1,9 @@
 import AccessControlAndVisibilitySettings from "@/components/agency/globalSetting/candidates/AccessControlAndVisibilitySettings";
 import CandidateDashboardSettings from "@/components/agency/globalSetting/candidates/CandidateDashboardSettings";
 import CandidateTypesTagsChecklistSettings from "@/components/agency/globalSetting/candidates/CandidateTypesTagsChecklistSettings";
+import Documents from "@/components/agency/globalSetting/candidates/Documents";
 import ProfileSettings from "@/components/agency/globalSetting/candidates/ProfileSettings";
+import ProfileSettings2 from "@/components/agency/globalSetting/candidates/ProfileSettings2";
 import RegistrationFeeSettings from "@/components/agency/globalSetting/candidates/RegistrationFeeSettings";
 
 export default function CandidatesPage() {
@@ -12,6 +14,8 @@ export default function CandidatesPage() {
       <ProfileSettings />
       <AccessControlAndVisibilitySettings />
       <RegistrationFeeSettings />
+      <Documents />
+      <ProfileSettings2 />
     </div>
   );
 }
