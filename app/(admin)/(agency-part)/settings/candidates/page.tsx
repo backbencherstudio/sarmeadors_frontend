@@ -5,6 +5,7 @@ import Documents from "@/components/agency/globalSetting/candidates/Documents";
 import ProfileSettings from "@/components/agency/globalSetting/candidates/ProfileSettings";
 import ProfileSettings2 from "@/components/agency/globalSetting/candidates/ProfileSettings2";
 import RegistrationFeeSettings from "@/components/agency/globalSetting/candidates/RegistrationFeeSettings";
+import ScheduleAvailabilitySettings from "@/components/agency/globalSetting/candidates/ScheduleAvailabilitySettings";
 
 export default function CandidatesPage() {
   return (
@@ -16,6 +17,7 @@ export default function CandidatesPage() {
       <RegistrationFeeSettings />
       <Documents />
       <ProfileSettings2 />
+      <ScheduleAvailabilitySettings />
     </div>
   );
 }
