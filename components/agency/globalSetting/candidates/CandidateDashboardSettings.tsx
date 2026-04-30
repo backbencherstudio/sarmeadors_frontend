@@ -113,15 +113,9 @@ export default function CandidateDashboardSettings() {
         },
     ]);
 
-    const [selectedStatusesForReason, setSelectedStatusesForReason] = useState<
-        string[]
-    >(["Inactive", "Rejected"]);
-    const [rejectedReasons, setRejectedReasons] = useState("");
-    const [inactiveReasons, setInactiveReasons] = useState("");
     const [draggedItem, setDraggedItem] = useState<string | null>(null);
     const [colorPickerOpen, setColorPickerOpen] = useState(false);
     const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
-    const [isAddingStatus, setIsAddingStatus] = useState(false);
     const [newStatusName, setNewStatusName] = useState("");
     const [newStatusColor, setNewStatusColor] = useState("#3B82F6");
 
@@ -192,36 +186,6 @@ export default function CandidateDashboardSettings() {
         setStatuses([...statuses, newStatus]);
         setNewStatusName("");
         setNewStatusColor("#3B82F6");
-    };
-
-    const toggleStatusForReason = (statusName: string) => {
-        if (selectedStatusesForReason.includes(statusName)) {
-            setSelectedStatusesForReason(
-                selectedStatusesForReason.filter((s) => s !== statusName),
-            );
-        } else {
-            setSelectedStatusesForReason([...selectedStatusesForReason, statusName]);
-        }
-    };
-
-    const removeStatusForReason = (statusName: string) => {
-        setSelectedStatusesForReason(
-            selectedStatusesForReason.filter((s) => s !== statusName),
-        );
-    };
-
-    const handleClear = () => {
-        setSelectedStatusesForReason([]);
-    };
-
-    const handleSubmit = () => {
-        // Handle submit logic here
-        console.log({
-            statuses,
-            selectedStatusesForReason,
-            rejectedReasons,
-            inactiveReasons,
-        });
     };
 
     const initialTextColor =
