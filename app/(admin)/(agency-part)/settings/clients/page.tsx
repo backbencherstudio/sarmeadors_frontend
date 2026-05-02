@@ -6,7 +6,6 @@ import ProfileSettings from "@/components/agency/globalSetting/candidates/Profil
 import ProfileSettings2 from "@/components/agency/globalSetting/candidates/ProfileSettings2";
 import RegistrationFeeSettings from "@/components/agency/globalSetting/candidates/RegistrationFeeSettings";
 import ScheduleAvailabilitySettings from "@/components/agency/globalSetting/candidates/ScheduleAvailabilitySettings";
-import React from "react";
 
 export default function ClientsPage() {
   return (
