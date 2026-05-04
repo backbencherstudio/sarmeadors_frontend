@@ -7,7 +7,7 @@ import EmailIcon from "@/public/icon/EmailIcon";
 import JobsIcon from "@/public/icon/JobsIcon";
 import mainLogo from "@/public/icon/mainlogo.png";
 import NoteIcon from "@/public/icon/NoteIcon";
-import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { BadgeIcon, BriefcaseIcon, ChevronDown, ChevronUp, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -52,6 +52,12 @@ const navItems: NavItem[] = [
     label: "Dashboard",
     icon: DashboardIcon,
     href: "/super-admin/dashboard",
+    type: "super-admin",
+  },
+  {
+    label: "Agencies",
+    icon: BriefcaseIcon,
+    href: "/super-admin/agencies",
     type: "super-admin",
   },
   {

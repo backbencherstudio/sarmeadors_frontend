@@ -7,15 +7,15 @@ import TableColAscDsc from "../dashboard/TableColAscDsc";
 const statusConfig: Record<string, { label: string; className: string }> = {
   Active: {
     label: "Active",
-    className: "text-green-600 bg-green-50 border border-green-200",
+    className: "text-[#217D43] bg-[#E8FAEF]",
   },
   Suspended: {
     label: "Suspended",
-    className: "text-red-600 bg-red-50 border border-red-200",
+    className: "text-[#CB121D] bg-[#FEF1F1]",
   },
   Inactive: {
     label: "Inactive",
-    className: "text-gray-500 bg-gray-100 border border-gray-200",
+    className: "text-[#4F5865] bg-[#F3F4F6]",
   },
 };
 
@@ -107,7 +107,7 @@ export default function DashboardTable() {
           <div className="relative inline-block group">
             {record.revenue && (
               <div
-                className="absolute -top-9 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-md whitespace-nowrap z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                className="absolute -top-9 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-sm font-medium px-3 py-1.5 whitespace-nowrap z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 style={{ pointerEvents: "none" }}
               >
                 {record.revenue}
@@ -116,7 +116,7 @@ export default function DashboardTable() {
             )}
 
             <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${config.className}`}
+              className={`inline-flex items-center px-3 py-1.5 text-sm rounded-md font-medium ${config.className}`}
             >
               {config.label}
             </span>
