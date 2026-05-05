@@ -1,16 +1,16 @@
 "use client";
-import { AgencyDashboardData, SuperAdminDashboardData } from "@/demoData/DashboardData";
-import { useState } from "react";
-import DynamicTableTwo from "../common/DynamicTableTwo";
-import TableColAscDsc from "../dashboard/TableColAscDsc";
-import { MoreVertical, Plus, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { AgencyDashboardData } from "@/demoData/DashboardData";
+import { MoreVertical, Plus, Search } from "lucide-react";
+import { useState } from "react";
+import DynamicTableTwo from "../common/DynamicTableTwo";
+import TableColAscDsc from "../dashboard/TableColAscDsc";
+import LinkReuseable from "../reusable/CustomLink";
 
 const statusConfig: Record<string, { label: string; className: string }> = {
   Active: {
@@ -28,10 +28,10 @@ const statusConfig: Record<string, { label: string; className: string }> = {
 };
 
 const tabs = [
-  { label: "All",       key: "All",       count: 3000 },
-  { label: "Active",    key: "Active",    count: 189  },
-  { label: "Suspended", key: "Suspended", count: 18   },
-  { label: "Inactive",  key: "Inactive",  count: 2900 },
+  { label: "All", key: "All", count: 3000 },
+  { label: "Active", key: "Active", count: 189 },
+  { label: "Suspended", key: "Suspended", count: 18 },
+  { label: "Inactive", key: "Inactive", count: 2900 },
 ];
 
 function AgencyAvatar({ name }: { name: string }) {
@@ -120,7 +120,9 @@ export default function AgencyTable() {
           />
           <AgencyAvatar name={value} />
           <div className="min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">{value}</p>
+            <p className="text-sm font-medium text-gray-900 truncate">
+              {value}
+            </p>
             <p className="text-xs text-gray-400 truncate">{record.domain}</p>
           </div>
         </div>
@@ -284,10 +286,12 @@ export default function AgencyTable() {
               className="pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg w-72 focus:outline-none focus:ring-2 focus:ring-gray-300"
             />
           </div>
-          <Button className="bg-gray-900 hover:bg-gray-800 text-white gap-1.5">
-            <Plus className="w-4 h-4" />
-            Add Agency
-          </Button>
+          <LinkReuseable
+            href="/super-admin/add-agency"
+            title="Add Agency"
+            icon={<Plus />}
+            className="text-white px-4 py-3 bg-[#111927] rounded-md"
+          />
         </div>
       </div>
 
