@@ -1,6 +1,6 @@
 "use client";
+import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -49,13 +49,13 @@ export default function AddNewAgency() {
       {/* Header */}
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+        className="flex items-center gap-1 text-xl text-[#111927] cursor-pointer mb-6 transition-colors"
       >
         <ChevronLeft className="w-4 h-4" />
         Add New Agency
       </button>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pl-10">
         {/* Agency Details */}
         <div>
           <h2 className="text-base font-semibold text-gray-900">
@@ -72,7 +72,7 @@ export default function AddNewAgency() {
                 <Label htmlFor="agency_name">
                   Agency Name <span className="text-red-500">*</span>
                 </Label>
-                <Input
+                <ReusableInput
                   id="agency_name"
                   placeholder="e.g. TalentBridge Solutions"
                   {...register("agency_name", {
@@ -91,8 +91,8 @@ export default function AddNewAgency() {
                 <Label htmlFor="subdomain">
                   Subdomain <span className="text-red-500">*</span>
                 </Label>
-                <div className="flex items-center gap-0">
-                  <Input
+                <div className="flex items-center">
+                  <ReusableInput
                     id="subdomain"
                     placeholder="talentbridge"
                     {...register("subdomain", {
@@ -118,7 +118,7 @@ export default function AddNewAgency() {
                 <Label htmlFor="email">
                   Email <span className="text-red-500">*</span>
                 </Label>
-                <Input
+                <ReusableInput
                   id="email"
                   type="email"
                   placeholder="admin@agency.io"
@@ -138,7 +138,7 @@ export default function AddNewAgency() {
 
               <div className="space-y-1.5">
                 <Label htmlFor="phone">Phone</Label>
-                <Input
+                <ReusableInput
                   id="phone"
                   placeholder="+1 (555) 000-0000"
                   {...register("phone")}
@@ -149,7 +149,7 @@ export default function AddNewAgency() {
             {/* Address */}
             <div className="space-y-1.5">
               <Label htmlFor="address">Address</Label>
-              <Input
+              <ReusableInput
                 id="address"
                 placeholder="123 Business Ave, City, State ZIP"
                 {...register("address")}
@@ -160,7 +160,7 @@ export default function AddNewAgency() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label htmlFor="logo_url">Logo URL</Label>
-                <Input
+                <ReusableInput
                   id="logo_url"
                   placeholder="https://cdn.agency.io/logo.png"
                   {...register("logo_url")}
@@ -168,7 +168,7 @@ export default function AddNewAgency() {
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="favicon_url">Favicon URL</Label>
-                <Input
+                <ReusableInput
                   id="favicon_url"
                   placeholder="https://cdn.agency.io/favicon.ico"
                   {...register("favicon_url")}
@@ -180,7 +180,7 @@ export default function AddNewAgency() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label htmlFor="stripe_account_id">Stripe Account ID</Label>
-                <Input
+                <ReusableInput
                   id="stripe_account_id"
                   placeholder="acct_1xxxxxxxxxx"
                   {...register("stripe_account_id")}
@@ -188,7 +188,7 @@ export default function AddNewAgency() {
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="entry_end_id">Entry End ID</Label>
-                <Input
+                <ReusableInput
                   id="entry_end_id"
                   placeholder="ent_xxxxxx"
                   {...register("entry_end_id")}
@@ -233,7 +233,7 @@ export default function AddNewAgency() {
                 <Label htmlFor="max_management_member">
                   Max Management Member <span className="text-red-500">*</span>
                 </Label>
-                <Input
+                <ReusableInput
                   id="max_management_member"
                   placeholder="e.g. 20 or Unlimited"
                   {...register("max_management_member", {
@@ -254,7 +254,7 @@ export default function AddNewAgency() {
                 <Label htmlFor="max_candidates">
                   Max Candidates <span className="text-red-500">*</span>
                 </Label>
-                <Input
+                <ReusableInput
                   id="max_candidates"
                   placeholder="e.g. 20 or Unlimited"
                   {...register("max_candidates", { required: "Required" })}
@@ -275,7 +275,7 @@ export default function AddNewAgency() {
                 <Label htmlFor="max_clients">
                   Max Clients <span className="text-red-500">*</span>
                 </Label>
-                <Input
+                <ReusableInput
                   id="max_clients"
                   placeholder="e.g. 20 or Unlimited"
                   {...register("max_clients", { required: "Required" })}
