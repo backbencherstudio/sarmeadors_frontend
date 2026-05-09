@@ -45,35 +45,37 @@ export default function AddNewAgency() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-white min-h-screen">
       {/* Header */}
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-1 text-xl text-[#111927] cursor-pointer mb-6 transition-colors"
+        className="flex items-center gap-1 text-sm font-medium text-[#111927] cursor-pointer mb-6 transition-colors hover:opacity-70"
       >
         <ChevronLeft className="w-4 h-4" />
         Add New Agency
       </button>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pl-10">
-        {/* Agency Details */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-8 pl-10 max-w-3xl"
+      >
+        {/* ── Agency Details ── */}
         <div>
-          <h2 className="text-base font-semibold text-gray-900">
+          <h2 className="text-sm font-semibold text-[#111927]">
             Agency details
           </h2>
-          <p className="text-sm text-gray-400 mt-0.5 mb-4">
+          <p className="text-xs text-gray-400 mt-0.5 mb-5">
             Fill in the details to create a new agency
           </p>
 
           <div className="space-y-4">
             {/* Agency Name + Subdomain */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="agency_name">
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
                   Agency Name <span className="text-red-500">*</span>
                 </Label>
                 <ReusableInput
-                  id="agency_name"
                   placeholder="e.g. TalentBridge Solutions"
                   {...register("agency_name", {
                     required: "Agency name is required",
@@ -87,20 +89,19 @@ export default function AddNewAgency() {
                 )}
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="subdomain">
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
                   Subdomain <span className="text-red-500">*</span>
                 </Label>
                 <div className="flex items-center">
                   <ReusableInput
-                    id="subdomain"
                     placeholder="talentbridge"
                     {...register("subdomain", {
                       required: "Subdomain is required",
                     })}
-                    className={`rounded-r-none ${errors.subdomain ? "border-red-400" : ""}`}
+                    className={`rounded-r-none border-r-0 ${errors.subdomain ? "border-red-400" : ""}`}
                   />
-                  <span className="px-3 h-9 flex items-center border border-l-0 border-gray-200 bg-gray-50 text-sm text-gray-500 rounded-r-md whitespace-nowrap">
+                  <span className="h-9 px-3 flex items-center border border-gray-200 bg-gray-50 text-xs text-gray-400 rounded-r-md whitespace-nowrap">
                     .platform.io
                   </span>
                 </div>
@@ -114,12 +115,11 @@ export default function AddNewAgency() {
 
             {/* Email + Phone */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="email">
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
                   Email <span className="text-red-500">*</span>
                 </Label>
                 <ReusableInput
-                  id="email"
                   type="email"
                   placeholder="admin@agency.io"
                   {...register("email", {
@@ -136,10 +136,11 @@ export default function AddNewAgency() {
                 )}
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="phone">Phone</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
+                  Phone
+                </Label>
                 <ReusableInput
-                  id="phone"
                   placeholder="+1 (555) 000-0000"
                   {...register("phone")}
                 />
@@ -147,10 +148,11 @@ export default function AddNewAgency() {
             </div>
 
             {/* Address */}
-            <div className="space-y-1.5">
-              <Label htmlFor="address">Address</Label>
+            <div className="space-y-1">
+              <Label className="text-xs font-medium text-[#111927]">
+                Address
+              </Label>
               <ReusableInput
-                id="address"
                 placeholder="123 Business Ave, City, State ZIP"
                 {...register("address")}
               />
@@ -158,18 +160,20 @@ export default function AddNewAgency() {
 
             {/* Logo URL + Favicon URL */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="logo_url">Logo URL</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
+                  Logo URL
+                </Label>
                 <ReusableInput
-                  id="logo_url"
                   placeholder="https://cdn.agency.io/logo.png"
                   {...register("logo_url")}
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="favicon_url">Favicon URL</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
+                  Favicon URL
+                </Label>
                 <ReusableInput
-                  id="favicon_url"
                   placeholder="https://cdn.agency.io/favicon.ico"
                   {...register("favicon_url")}
                 />
@@ -178,18 +182,20 @@ export default function AddNewAgency() {
 
             {/* Stripe Account ID + Entry End ID */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="stripe_account_id">Stripe Account ID</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
+                  Stripe Account ID
+                </Label>
                 <ReusableInput
-                  id="stripe_account_id"
                   placeholder="acct_1xxxxxxxxxx"
                   {...register("stripe_account_id")}
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="entry_end_id">Entry End ID</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
+                  Entry End ID
+                </Label>
                 <ReusableInput
-                  id="entry_end_id"
                   placeholder="ent_xxxxxx"
                   {...register("entry_end_id")}
                 />
@@ -197,13 +203,15 @@ export default function AddNewAgency() {
             </div>
 
             {/* Status */}
-            <div className="space-y-1.5">
-              <Label>Status</Label>
+            <div className="space-y-1">
+              <Label className="text-xs font-medium text-[#111927]">
+                Status
+              </Label>
               <Select
                 defaultValue="Active"
                 onValueChange={(val) => setValue("status", val)}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full text-sm">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -216,25 +224,22 @@ export default function AddNewAgency() {
           </div>
         </div>
 
-        {/* Usage Limits */}
+        {/* ── Usage Limits ── */}
         <div>
-          <h2 className="text-base font-semibold text-gray-900">
-            Usage Limits
-          </h2>
-          <p className="text-sm text-gray-400 mt-0.5 mb-4">
+          <h2 className="text-sm font-semibold text-[#111927]">Usage Limits</h2>
+          <p className="text-xs text-gray-400 mt-0.5 mb-5">
             Enter a number or type{" "}
-            <span className="font-medium text-gray-600">Unlimited</span> for no
-            cap.
+            <span className="font-semibold text-gray-600">Unlimited</span> for
+            no cap.
           </p>
 
-          <div className="border border-gray-200 rounded-lg p-4 bg-gray-50/50">
+          <div className="border border-[#E5E7EB] rounded-lg p-5 bg-[#F9FAFB]">
             <div className="grid grid-cols-3 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="max_management_member">
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
                   Max Management Member <span className="text-red-500">*</span>
                 </Label>
                 <ReusableInput
-                  id="max_management_member"
                   placeholder="e.g. 20 or Unlimited"
                   {...register("max_management_member", {
                     required: "Required",
@@ -250,12 +255,11 @@ export default function AddNewAgency() {
                 )}
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="max_candidates">
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
                   Max Candidates <span className="text-red-500">*</span>
                 </Label>
                 <ReusableInput
-                  id="max_candidates"
                   placeholder="e.g. 20 or Unlimited"
                   {...register("max_candidates", { required: "Required" })}
                   className={`bg-white ${errors.max_candidates ? "border-red-400" : ""}`}
@@ -271,12 +275,11 @@ export default function AddNewAgency() {
                 )}
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="max_clients">
+              <div className="space-y-1">
+                <Label className="text-xs font-medium text-[#111927]">
                   Max Clients <span className="text-red-500">*</span>
                 </Label>
                 <ReusableInput
-                  id="max_clients"
                   placeholder="e.g. 20 or Unlimited"
                   {...register("max_clients", { required: "Required" })}
                   className={`bg-white ${errors.max_clients ? "border-red-400" : ""}`}
@@ -295,14 +298,19 @@ export default function AddNewAgency() {
           </div>
         </div>
 
-        {/* Footer Actions */}
-        <div className="flex items-center justify-end gap-3 pt-2">
-          <Button type="button" variant="outline" onClick={() => router.back()}>
+        {/* ── Footer ── */}
+        <div className="flex items-center justify-end gap-3 pt-2 border-t border-gray-100">
+          <Button
+            type="button"
+            variant="outline"
+            className="text-sm"
+            onClick={() => router.back()}
+          >
             Cancel
           </Button>
           <Button
             type="submit"
-            className="bg-gray-900 hover:bg-gray-800 text-white"
+            className="bg-[#111927] hover:bg-[#1f2937] text-white text-sm"
           >
             Create Agency
           </Button>
