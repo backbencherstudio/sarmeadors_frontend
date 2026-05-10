@@ -377,7 +377,7 @@ function StatuseSetting({
                     <input
                       type="checkbox"
                       checked={selectedStatusesForReason.includes(status.name)}
-                      onChange={() => {}}
+                      onChange={() => { }}
                       className="mr-2"
                     />
                     {status.name}
