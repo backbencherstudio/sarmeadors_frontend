@@ -57,7 +57,7 @@ export default function DropdownRenderer({ field }: Props) {
           <ChevronDown size={14} className="text-gray-400 shrink-0" />
         </button>
         {open && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-borderColor rounded-lg shadow-md">
+          <div className="absolute z-50 w-full mt-1 bg-white border border-borderColor rounded-lg shadow-md">
             {items.map((item: string, i: number) => (
               <div
                 key={i}
