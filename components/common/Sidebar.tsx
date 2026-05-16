@@ -2,18 +2,18 @@
 import { clearBiodataData } from "@/helper/biodataStorage.helper";
 import { CookieHelper } from "@/helper/cookie.helper";
 import CopyIcon from "@/public/icon/CopyIcon";
-import DocumentsIcon from "@/public/icon/DocumentsIcon";
 import EmailIcon from "@/public/icon/EmailIcon";
 import JobsIcon from "@/public/icon/JobsIcon";
 import mainLogo from "@/public/icon/mainlogo.png";
 import NoteIcon from "@/public/icon/NoteIcon";
-import { BadgeIcon, BriefcaseIcon, ChevronDown, ChevronUp, X } from "lucide-react";
+import { BriefcaseIcon, ChevronDown, ChevronUp, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import AppliedJobIcon from "../icon/ApplideJobIcon";
+import BuilderIcon from "../icon/BuilderIcon";
 import CandidateIcon from "../icon/CandidateIcon";
 import ClientIcon from "../icon/ClientIcon";
 import DashboardIcon from "../icon/DashboardIcon";
@@ -42,9 +42,26 @@ interface SidebarProps {
 
 // Template sub-items
 const templateSubItems = [
-  { label: "Email Template", href: "/templates/email-template" },
-  { label: "Document Template", href: "/templates/document-template" },
-  { label: "Note Template", href: "/templates/note" },
+  {
+    label: "Email Template",
+    icons: <EmailIcon />,
+    href: "/templates/email-template",
+  },
+  {
+    label: "Document Template",
+    icons: <DocumentIcon />,
+    href: "/templates/document-template",
+  },
+  {
+    label: "Application  Builder",
+    icons: <BuilderIcon />,
+    href: "/templates/application-builder",
+  },
+  {
+    label: "Note Template",
+    icons: <NoteIcon />,
+    href: "/templates/note",
+  },
 ];
 
 const navItems: NavItem[] = [
@@ -362,13 +379,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                               `}
                             >
                               <span className="w-4 h-4 flex-shrink-0 opacity-70 text-xs">
-                                {sub.label === "Email Template" && (
-                                  <EmailIcon />
-                                )}
-                                {sub.label === "Document Template" && (
-                                  <DocumentsIcon />
-                                )}
-                                {sub.label === "Note Template" && <NoteIcon />}
+                                {sub.icons}
                               </span>
                               {sub.label}
                             </Link>
