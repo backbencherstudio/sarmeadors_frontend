@@ -13,9 +13,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useDraggableList } from "@/hooks/useDraggableList";
 import { ChevronDown, GripVertical, Trash2, X } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import RootDrawer from "../common/RootDrawer";
 import ButtonReuseable from "../reusable/CustomButton";
 import ColorPickerDialog from "./ColorPickerDialog";
@@ -117,36 +118,19 @@ function StatuseSetting({
   >(["Inactive", "Rejected"]);
   const [rejectedReasons, setRejectedReasons] = useState("");
   const [inactiveReasons, setInactiveReasons] = useState("");
-  const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
   const [isAddingStatus, setIsAddingStatus] = useState(false);
   const [newStatusName, setNewStatusName] = useState("");
   const [newStatusColor, setNewStatusColor] = useState("#3B82F6");
 
-  const handleDragStart = (e: React.DragEvent, id: string) => {
-    setDraggedItem(id);
-    e.dataTransfer.effectAllowed = "move";
-  };
-
-  const handleDragOver = (e: React.DragEvent, id: string) => {
-    e.preventDefault();
-    if (draggedItem === id) return;
-
-    const draggedIndex = statuses.findIndex((s) => s.id === draggedItem);
-    const targetIndex = statuses.findIndex((s) => s.id === id);
-
-    if (draggedIndex !== -1 && targetIndex !== -1) {
-      const newStatuses = [...statuses];
-      const [removed] = newStatuses.splice(draggedIndex, 1);
-      newStatuses.splice(targetIndex, 0, removed);
-      setStatuses(newStatuses);
-    }
-  };
-
-  const handleDragEnd = () => {
-    setDraggedItem(null);
-  };
+  const {
+    items,
+    setItems: setBlocks,
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+  } = useDraggableList(statuses);
 
   const handleColorChange = (id: string, color: string) => {
     setStatuses(
@@ -250,7 +234,7 @@ function StatuseSetting({
         <div className="md:px-4 px-2 pb-4">
           {/* Status List */}
           <div className="space-y-4 mb-4">
-            {statuses.map((status) => (
+            {items.map((status) => (
               <div
                 key={status.id}
                 draggable
@@ -377,7 +361,7 @@ function StatuseSetting({
                     <input
                       type="checkbox"
                       checked={selectedStatusesForReason.includes(status.name)}
-                      onChange={() => { }}
+                      onChange={() => {}}
                       className="mr-2"
                     />
                     {status.name}

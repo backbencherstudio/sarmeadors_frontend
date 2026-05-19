@@ -5,7 +5,7 @@ const intialState = {
   customElements: [],
   blocks: [
     {
-      id: 1,
+      id: Date.now().toString(),
       name: "Introduction",
       describe: "Set your logo & form title here",
     },

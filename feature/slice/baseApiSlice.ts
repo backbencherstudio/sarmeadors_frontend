@@ -1,6 +1,6 @@
 import { getToken } from "@/lib/token";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import exp from "constants";
+
 const baseApiSlice = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
