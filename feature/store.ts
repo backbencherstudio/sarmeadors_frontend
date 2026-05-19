@@ -1,4 +1,3 @@
-
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   FLUSH,
@@ -11,9 +10,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-
-import onboardingSlice from "./slice/onboarding/onboardingSlice";
-import postComposeSlice from "./slice/postCompose/postComposeSlice";
+import applicationFormSlice from "./slice/applicationBuilder/ApplicationFormSlice";
 import baseApiSlice from "./slice/baseApiSlice";
 
 const createNoopStorage = () => {
@@ -37,15 +34,14 @@ const storage =
 
 const rootReducer = combineReducers({
   [baseApiSlice.reducerPath]: baseApiSlice.reducer,
-  onboarding: onboardingSlice,
-  postCompose: postComposeSlice,
+  applicationForm: applicationFormSlice,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["onboarding", "postCompose"],
+  whitelist: ["applicationForm"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

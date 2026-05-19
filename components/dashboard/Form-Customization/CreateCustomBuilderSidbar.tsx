@@ -3,9 +3,11 @@ import ArrowDownIcon from "@/components/icon/ArrowDownIcon";
 import SectionIcon from "@/components/icon/SectionIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import CustomRadioButton from "@/components/reusable/CustomRadioButton";
+import { setApplicationAllType } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
 import { Link } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
 function CreateCustomBuilderSidbar({
   open,
   setOpen,
@@ -13,18 +15,20 @@ function CreateCustomBuilderSidbar({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const dispatch = useDispatch();
   const [isAdvanced, setIsAdvanced] = useState(false);
+  const router = useRouter();
+  const [isApplicationOpen, setIsApplicationOpen] = useState(false);
+  const [builderType, setBuilderType] = useState<
+    "Section" | "Application" | "Advanced"
+  >("Application");
   const [userType, setUserType] = useState<"candidate" | "client">("candidate");
   const [selectType, setSelectType] = useState<string>("Placement Job");
-  const [isApplicationOpen, setIsApplicationOpen] = useState(false);
-  // Application form states
   const [appStep, setAppStep] = useState<
     "application" | "userType" | "jobType"
   >("application");
-
   const [selectedApplicationType, setSelectedApplicationType] =
     useState<string>("");
-  const [selectedUserType, setSelectedUserType] = useState<string>("");
   const [selectedJobType, setSelectedJobType] = useState<string>("");
 
   const handleApplicationTypeSelect = (type: string) => {
@@ -37,7 +41,12 @@ function CreateCustomBuilderSidbar({
   };
 
   const handleUserTypeSelect = (type: string) => {
-    setSelectedUserType(type);
+    // Application flow gives "Client" / "Candidate" labels.
+    // Reuse `userType` state (which is "candidate" | "client").
+    const normalized = type.toLowerCase();
+    if (normalized === "client" || normalized === "candidate") {
+      setUserType(normalized as "candidate" | "client");
+    }
   };
 
   const handleJobTypeSelect = (type: string) => {
@@ -48,6 +57,7 @@ function CreateCustomBuilderSidbar({
     setUserType("candidate");
     setSelectType("Placement Job");
     setIsApplicationOpen(true);
+    setBuilderType("Application");
   };
 
   const handleClick = () => {
@@ -59,6 +69,28 @@ function CreateCustomBuilderSidbar({
   const handleAdvancedClick = () => {
     setIsApplicationOpen(false);
     setIsAdvanced((prev) => !prev);
+    setBuilderType("Advanced");
+  };
+  const handleCreateClick = () => {
+    const applicationTypeForStore = {
+      userType: userType,
+      applicationType: selectedApplicationType,
+      jobType: selectedJobType,
+      builderType: builderType,
+    };
+    const advancedTypeForStore = {
+      userType: userType,
+      selectType: selectType,
+      builderType: builderType,
+    };
+    const payload =
+      builderType === "Application"
+        ? applicationTypeForStore
+        : advancedTypeForStore;
+    dispatch(setApplicationAllType(payload));
+
+    setOpen(false);
+    router.push("/templates/application-builder/custom-form-builder");
   };
 
   return (
@@ -209,9 +241,9 @@ function CreateCustomBuilderSidbar({
                         label="Client"
                         name="userType"
                         value="Client"
-                        checked={selectedUserType === "Client"}
+                        checked={userType === "client"}
                         onChange={handleUserTypeSelect}
-                        isSelected={selectedUserType === "Client"}
+                        isSelected={userType === "client"}
                         variant="small"
                         colorScheme="secondary"
                       />
@@ -219,9 +251,9 @@ function CreateCustomBuilderSidbar({
                         label="Candidate"
                         name="userType"
                         value="Candidate"
-                        checked={selectedUserType === "Candidate"}
+                        checked={userType === "candidate"}
                         onChange={handleUserTypeSelect}
-                        isSelected={selectedUserType === "Candidate"}
+                        isSelected={userType === "candidate"}
                         variant="small"
                         colorScheme="secondary"
                       />
@@ -273,7 +305,7 @@ function CreateCustomBuilderSidbar({
           <ButtonReuseable
             title="Create"
             type="button"
-            onClick={handleClick}
+            onClick={handleCreateClick}
             className=" "
           />
         </div>
