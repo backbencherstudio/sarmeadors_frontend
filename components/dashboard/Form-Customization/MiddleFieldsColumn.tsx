@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import AddInputField from "./AddInputField";
 import CustomPassword from "./CustomPassword";
+import RatingFormSetting from "./RatingFormSetting";
 
 export default function MiddleFieldsColumn() {
   const [isBlockAdded, setIsBlockAdded] = useState(false);
@@ -136,7 +137,7 @@ export default function MiddleFieldsColumn() {
                     }
                     className="text-left"
                   >
-                    <h3 className="text-sm font-semibold text-headerColor">
+                    <h3 className="text-base lg:text-lg font-semibold text-headerColor">
                       {field.label}
                     </h3>
                   </button>
@@ -172,7 +173,7 @@ export default function MiddleFieldsColumn() {
                   errors={errors}
                   watch={watch}
                 />
-              ) : (
+              )  : field.type === "rating" ? <RatingFormSetting /> : (
                 <ReusableInput
                   label={field.label}
                   type={field.type}

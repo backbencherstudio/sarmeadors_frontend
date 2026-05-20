@@ -5,6 +5,7 @@ import SelecteInputField from "@/components/common/InputFiled/SelecteInputField"
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import {
   addInputToSection,
+  removeSectionInputs,
   setActiveField,
   updateFieldProperties,
 } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
@@ -120,7 +121,19 @@ export default function SectionSettingsColumn({
                   >
                     {input.label || input.type}
                   </button>
-                  <button className=" cursor-pointer">
+                  <button
+                    type="button"
+                    className="cursor-pointer"
+                    onClick={() =>
+                      dispatch(
+                        removeSectionInputs({
+                          blockId: activeBlockId,
+                          sectionId: activeSectionId,
+                          inputId: input.id,
+                        }),
+                      )
+                    }
+                  >
                     <DeleteIcon className="w-4 h-4 text-redColor" />
                   </button>
                 </div>

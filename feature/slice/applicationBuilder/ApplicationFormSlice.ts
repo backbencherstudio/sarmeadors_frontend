@@ -126,6 +126,28 @@ const applicationFormSlice = createSlice({
       }
     },
 
+    removeSectionInputs: (
+      state,
+      action: PayloadAction<{
+        blockId: string;
+        sectionId: string;
+        inputId: string;
+      }>,
+    ) => {
+      const { blockId, sectionId, inputId } = action.payload;
+      const block = state.blocks.find((b) => b.id === blockId);
+      if (block) {
+        const section = block.fields.find(
+          (f) => f.id === sectionId && f.type === "section",
+        ) as SectionField;
+        if (section) {
+          section.inputs = section.inputs.filter(
+            (input) => input.id !== inputId,
+          );
+        }
+      }
+    },
+
     setActiveField: (
       state,
       action: PayloadAction<{
@@ -216,6 +238,7 @@ export const {
   addInputToSection,
   setActiveField,
   updateFieldProperties,
+  removeSectionInputs,
   deleteField,
 } = applicationFormSlice.actions;
 
