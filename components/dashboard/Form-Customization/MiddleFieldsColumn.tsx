@@ -270,7 +270,7 @@ export default function MiddleFieldsColumn() {
         </div>
       </div>
 
-      <div className="p-6 w-full space-y-5">
+      <div className="p-6 w-full space-y-5 min-h-full">
         {blockFields.length > 0 ? (
           blockFields.map((field: any) => (
             <div
