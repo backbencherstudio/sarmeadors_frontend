@@ -120,7 +120,6 @@ function StatuseSetting({
   const [inactiveReasons, setInactiveReasons] = useState("");
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
-  const [isAddingStatus, setIsAddingStatus] = useState(false);
   const [newStatusName, setNewStatusName] = useState("");
   const [newStatusColor, setNewStatusColor] = useState("#3B82F6");
 
@@ -219,6 +218,7 @@ function StatuseSetting({
     }
     setColorPickerOpen(false);
   };
+  
   return (
     <RootDrawer open={open} setOpen={setOpen}>
       <div className="mx-auto w-full max-w-2xl overflow-y-auto">

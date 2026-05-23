@@ -1,34 +1,19 @@
 "use client";
-import ButtonReuseable from "@/components/reusable/CustomButton";
-import { useDraggableList } from "@/hooks/useDraggableList";
-import { PlusIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import BlocksCreateSetting from "./BlocksCreateSetting";
-import BlocksList from "./BlocksList";
+import LeftBlocksColumn from "./LeftBlocksColumn";
+import MiddleFieldsColumn from "./MiddleFieldsColumn";
+import RightSettingsColumn from "./RightSettingsColumn";
 
 function CustomFromTitleSetting() {
-  const data = useSelector((state: any) => state.applicationForm.blocks);
-  const [isBlockAdded, setIsBlockAdded] = useState(false);
-  const handleBlocks = (id: string) => {
-    // Handle block move logic here
-    console.log("Move block with id:", id);
-  };
-  const {
-    items: blocks,
-    setItems: setBlocks,
-    handleDragStart,
-    handleDragOver,
-    handleDragEnd,
-  } = useDraggableList(data);
 
-  useEffect(() => {
-    setBlocks(data);
-  }, [data]);
+  const [isBlockAdded, setIsBlockAdded] = useState(false);
+
   return (
-    <div className="flex  mt-4 h-full ">
+    <div className="flex  h-[calc(100vh-100px)] min-h-[500px] mt-4  ">
       <div className="max-w-75 w-full h-full border rounded-tl-lg border-borderColor  bg-grayColor1">
-        <div className="py-3.5 px-4  border-b border-borderColor flex items-center justify-between">
+        {/* <div className="py-3.5 px-4  border-b border-borderColor flex items-center justify-between">
           <h2 className="text-lg font-semibold text-headerColor md:text-xl">
             Blocks
           </h2>
@@ -37,8 +22,8 @@ function CustomFromTitleSetting() {
             onClick={() => setIsBlockAdded(true)}
             className="bg-blackColor px-2! py-2! rounded-sm! text-whiteColor "
           />
-        </div>
-        <div className="p-4 space-y-3">
+        </div> */}
+        {/* <div className="p-4 space-y-3">
           {blocks.map((block) => (
             <div
               draggable
@@ -54,10 +39,13 @@ function CustomFromTitleSetting() {
               />
             </div>
           ))}
+        </div> */}
+        <div>
+          <LeftBlocksColumn onAddBlockClick={() => setIsBlockAdded(true)} />
         </div>
       </div>
       <div className="w-full border-y border-borderColor  h-full">
-        <div className="py-2 px-4 flex items-center justify-between ">
+        {/* <div className="py-2 px-4 flex items-center border-b border-borderColor justify-between ">
           <h2 className="text-lg font-semibold text-headerColor ">
             Introduction
           </h2>
@@ -66,13 +54,19 @@ function CustomFromTitleSetting() {
             title="Reset"
             className="bg-grayColor1! border border-borderColor text-headerColor! py-2.75! font-semibold text-sm! "
           />
+        </div> */}
+        <div>
+          <MiddleFieldsColumn />
         </div>
       </div>
       <div className="max-w-75  border rounded-tr-lg border-borderColor w-full h-full bg-grayColor1">
-        <div className="py-4 px-4  border-borderColor ">
+        {/* <div className="py-4 px-4  border-b border-borderColor  ">
           <h2 className="text-lg font-semibold text-headerColor md:text-xl">
             Elements
           </h2>
+        </div> */}
+        <div>
+          <RightSettingsColumn />
         </div>
       </div>
       {isBlockAdded && (
