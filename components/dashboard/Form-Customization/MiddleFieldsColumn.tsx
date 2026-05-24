@@ -1,17 +1,30 @@
 "use client";
+import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import InputIcon from "@/components/icon/InputIcon";
 import SectionIcon from "@/components/icon/SectionIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
+import { setActiveField } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
 import { PlusIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import BlocksCreateSetting from "./BlocksCreateSetting";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import AddInputField from "./AddInputField";
+import CustomPassword from "./CustomPassword";
 
 export default function MiddleFieldsColumn() {
   const [isBlockAdded, setIsBlockAdded] = useState(false);
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useForm();
+  const dispatch = useDispatch();
   const activeBlockId = useSelector(
     (state: any) => state.applicationForm.activeBlockId,
+  );
+  const activeFieldId = useSelector(
+    (state: any) => state.applicationForm.activeFieldId,
   );
 
   const activeBlock = useSelector((state: any) =>
@@ -21,10 +34,15 @@ export default function MiddleFieldsColumn() {
     setIsBlockAdded(true);
   };
 
+  console.log(activeBlock);
+
   if (!activeBlock)
     return <div className="p-4 text-center text-gray-400">Select a block</div>;
 
-  if (activeBlock.name === "Introduction") {
+  if (
+    activeBlock.type === "introduction" ||
+    activeBlock.name === "Introduction"
+  ) {
     return (
       <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto border-borderColor">
         <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor">
@@ -80,28 +98,88 @@ export default function MiddleFieldsColumn() {
           </h2>
           <p className="text-xs text-gray-400">{activeBlock.describe}</p>
         </div>
-        <ButtonReuseable
-          icon={<PlusIcon size={16} />}
-          title="Reset"
-          className="bg-grayColor1! border border-borderColor text-headerColor! py-2.75! font-semibold text-sm!"
-        />
+        <div className="flex items-center gap-2">
+          <ButtonReuseable
+            icon={<SectionIcon className="" />}
+            title="Add Section"
+            onClick={onAddBlockClick}
+            className="bg-blackColor  py-2.75! text-sm! text-whiteColor"
+          />
+          <ButtonReuseable
+            icon={<InputIcon className="" />}
+            title="Add Input"
+            onClick={onAddBlockClick}
+            className="bg-white! border border-borderColor text-headerColor! py-2.75! font-semibold text-sm!"
+          />
+          <ButtonReuseable
+            icon={<PlusIcon size={16} />}
+            title="Reset"
+            className="bg-grayColor1! border border-borderColor text-headerColor! py-2.75! font-semibold text-sm!"
+          />
+        </div>
       </div>
       <div className="p-6  w-full space-y-4">
-        {activeBlock?.fields.length > 0 ? (
+        {activeBlock?.fields?.length > 0 ? (
           activeBlock.fields?.map((field: any) => (
             <div
               key={field.id}
-              className="p-4 border rounded-xl bg-white shadow-xs relative"
+              onClick={() =>
+                dispatch(
+                  setActiveField({
+                    sectionId: field.type === "section" ? null : null,
+                    fieldId: field.id,
+                  }),
+                )
+              }
             >
-              <label className="block text-xs font-bold text-gray-700 mb-1">
-                {field.label}
-              </label>
-              <input
-                type={field.type}
-                placeholder={field.placeholder}
-                disabled
-                className="w-full p-2.5 border rounded-lg bg-gray-50 text-sm"
-              />
+              {field.type === "section" ? (
+                <div className="space-y-3">
+                  <div>
+                    <h3 className="text-sm font-semibold text-headerColor">
+                      {field.label}
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2  gap-3">
+                    {field.inputs?.map((nestedInput: any) => (
+                      <div
+                        key={nestedInput.id}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(
+                            setActiveField({
+                              sectionId: field.id,
+                              fieldId: nestedInput.id,
+                            }),
+                          );
+                        }}
+                      >
+                        <ReusableInput
+                          label={nestedInput.label}
+                          type={nestedInput.type}
+                          required={nestedInput.required}
+                          placeholder={nestedInput.placeholder}
+                          className="w-full p-2.5 border rounded-lg bg-bgColor text-sm"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : field.type === "password" ? (
+                <CustomPassword
+                  field={field}
+                  register={register}
+                  errors={errors}
+                  watch={watch}
+                />
+              ) : (
+                <ReusableInput
+                  label={field.label}
+                  type={field.type}
+                  required={field.required}
+                  placeholder={field.placeholder}
+                  className="w-full p-2.5 border rounded-lg bg-gray-50 text-sm"
+                />
+              )}
             </div>
           ))
         ) : (
@@ -130,7 +208,7 @@ export default function MiddleFieldsColumn() {
         )}
       </div>
       {isBlockAdded && (
-        <BlocksCreateSetting open={isBlockAdded} setOpen={setIsBlockAdded} />
+        <AddInputField open={isBlockAdded} setOpen={setIsBlockAdded} />
       )}
     </div>
   );

@@ -1,6 +1,19 @@
 "use client";
+import ReusableInput from "@/components/common/InputFiled/ReusableInput";
+import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
 import { updateFieldProperties } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
+import { FORM_ELEMENT_CATEGORIES } from "@/public/custom/CustomFormElement";
 import { useDispatch, useSelector } from "react-redux";
+import IntroductionSettings from "./Introductionsettings";
+
+const fieldTypeOptions = FORM_ELEMENT_CATEGORIES.flatMap((category) =>
+  category.items
+    .filter((item) => item.type !== "section")
+    .map((item) => ({
+      label: item.label,
+      value: item.type,
+    })),
+);
 
 export default function RightSettingsColumn() {
   const dispatch = useDispatch();
@@ -16,7 +29,7 @@ export default function RightSettingsColumn() {
   const activeBlock = useSelector((state: any) =>
     state.applicationForm.blocks.find((b: any) => b.id === activeBlockId),
   );
-  // বর্তমানে একটিভ বা সিলেক্টেড ফিল্ড অবজেক্ট বের করা
+ 
   const activeField = useSelector((state: any) => {
     const block = state.applicationForm.blocks.find(
       (b: any) => b.id === activeBlockId,
@@ -40,142 +53,76 @@ export default function RightSettingsColumn() {
       }),
     );
   };
-  const handleLiveChange = (key: string, value: any) => {
-    dispatch(
-      updateFieldProperties({
-        blockId: activeBlockId,
-        fieldId: activeBlockId, 
-        key: key as any,
-        value,
-      }),
-    );
-  };
+
 
   return (
     <div className="max-w-75  w-full h-full bg-grayColor1 flex flex-col">
       <div className="py-4 px-4 border-b border-borderColor">
         <h2 className="text-lg font-semibold text-headerColor md:text-xl">
-          Settings
+          Elements
         </h2>
       </div>
 
       <div className="p-4 flex-1 overflow-y-auto">
-        {activeBlock.name === "Introduction" ? (
-          <div className="space-y-4 text-sm">
-            {/* Logo Section */}
-            <div className="p-3 border rounded-lg bg-white flex flex-col items-center gap-2">
-              <div className="w-full h-20 border border-dashed rounded flex items-center justify-center text-gray-400 bg-gray-50">
-                Logo Preview
-              </div>
-              <div className="flex justify-between w-full text-xs font-semibold text-gray-500">
-                <button className="text-red-500">Delete</button>
-                <button className="text-black">Change logo</button>
-              </div>
-            </div>
-
-            {/* Title Input */}
-            <div>
-              <label className="text-xs font-bold text-gray-700">
-                Title <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={activeBlock.title || ""}
-                onChange={(e) => handleLiveChange("title", e.target.value)}
-                className="w-full p-2 border rounded-md mt-1 bg-white text-sm"
-              />
-            </div>
-
-            {/* Description Input */}
-            <div>
-              <label className="text-xs font-bold text-gray-700">
-                Description
-              </label>
-              <textarea
-                value={activeBlock.description || ""}
-                onChange={(e) =>
-                  handleLiveChange("description", e.target.value)
-                }
-                rows={3}
-                className="w-full p-2 border rounded-md mt-1 bg-white text-sm resize-none"
-              />
-            </div>
-
-            {/* Add Button Config Toggle / Section */}
-            <div className="border-t pt-3 space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-xs font-bold text-gray-700">
-                  Add Button
-                </span>
-                <button className="text-gray-400">-</button>
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-gray-500">
-                  Label *
-                </label>
-                <input
-                  type="text"
-                  value={activeBlock.buttonLabel || ""}
-                  onChange={(e) =>
-                    handleLiveChange("buttonLabel", e.target.value)
-                  }
-                  className="w-full p-2 border rounded-md mt-1 bg-white text-xs"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-gray-500">
-                  Add Link *
-                </label>
-                <input
-                  type="text"
-                  value={activeBlock.buttonLink || ""}
-                  onChange={(e) =>
-                    handleLiveChange("buttonLink", e.target.value)
-                  }
-                  placeholder="Add a link"
-                  className="w-full p-2 border rounded-md mt-1 bg-white text-xs"
-                />
-              </div>
-            </div>
-          </div>
+        {activeBlock?.type === "introduction" ||
+        activeBlock?.name === "Introduction" ? (
+          <IntroductionSettings block={activeBlock} />
         ) : activeField ? (
-          <div className="space-y-4">
-            <div className="bg-white p-3 rounded-lg border text-xs text-gray-500 font-mono">
-              Type:{" "}
-              <span className="font-bold uppercase text-black">
-                {activeField.type}
-              </span>
-            </div>
-
-            {/* Field Label Input */}
+          <div className="space-y-3">
             <div>
-              <label className="text-xs font-semibold text-gray-700">
-                Field Label
-              </label>
-              <input
-                type="text"
-                value={activeField.label || ""}
-                onChange={(e) => handlePropertyChange("label", e.target.value)}
-                className="w-full p-2 border rounded-md mt-1 bg-white text-sm focus:outline-black"
-              />
+              <h2 className="text-lg font-bold text-gray-900">Fields</h2>
             </div>
-
-            {/* Placeholder Input (যদি সেকশন না হয়) */}
-            {activeField.type !== "section" && (
+            <div className="space-y-4 p-3 rounded-lg border bg-whiteColor">
               <div>
                 <label className="text-xs font-semibold text-gray-700">
-                  Placeholder
+                  Field Type
                 </label>
-                <input
-                  type="text"
-                  value={activeField.placeholder || ""}
-                  onChange={(e) =>
-                    handlePropertyChange("placeholder", e.target.value)
-                  }
-                  className="w-full p-2 border rounded-md mt-1 bg-white text-sm focus:outline-black"
+                <SelecteInputField
+                  value={activeField.type || "text"}
+                  onValueChange={(value) => handlePropertyChange("type", value)}
+                  options={fieldTypeOptions}
+                  className="mt-1 bg-bgColor text-sm focus:outline-black"
                 />
               </div>
-            )}
+
+              <div>
+                <ReusableInput
+                  label={"Field Label"}
+                  value={activeField.label || ""}
+                  onChange={(e) =>
+                    handlePropertyChange("label", e.target.value)
+                  }
+                  className="w-full bg-bgColor text-sm"
+                />
+              </div>
+              {activeField.type !== "section" &&
+                activeField.type !== "file" && (
+                  <div>
+                    <ReusableInput
+                      label={"Placeholder"}
+                      value={activeField.placeholder || ""}
+                      onChange={(e) =>
+                        handlePropertyChange("placeholder", e.target.value)
+                      }
+                      className="w-full bg-bgColor text-sm"
+                    />
+                  </div>
+                )}
+
+              {activeField.type !== "section" && (
+                <label className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(activeField.required)}
+                    onChange={(e) =>
+                      handlePropertyChange("required", e.target.checked)
+                    }
+                    className="h-4 w-4 rounded border-gray-300"
+                  />
+                  Keep Mandatory
+                </label>
+              )}
+            </div>
           </div>
         ) : (
           <div className="text-center py-12 text-gray-400 text-sm">
