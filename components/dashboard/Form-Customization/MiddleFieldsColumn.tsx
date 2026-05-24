@@ -121,24 +121,25 @@ export default function MiddleFieldsColumn() {
       <div className="p-6  w-full space-y-4">
         {activeBlock?.fields?.length > 0 ? (
           activeBlock.fields?.map((field: any) => (
-            <div
-              key={field.id}
-              onClick={() =>
-                dispatch(
-                  setActiveField({
-                    sectionId: field.type === "section" ? null : null,
-                    fieldId: field.id,
-                  }),
-                )
-              }
-            >
+            <div key={field.id}>
               {field.type === "section" ? (
                 <div className="space-y-3">
-                  <div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      dispatch(
+                        setActiveField({
+                          sectionId: field.id,
+                          fieldId: null,
+                        }),
+                      )
+                    }
+                    className="text-left"
+                  >
                     <h3 className="text-sm font-semibold text-headerColor">
                       {field.label}
                     </h3>
-                  </div>
+                  </button>
                   <div className="grid grid-cols-1 sm:grid-cols-2  gap-3">
                     {field.inputs?.map((nestedInput: any) => (
                       <div

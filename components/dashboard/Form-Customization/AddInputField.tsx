@@ -1,7 +1,10 @@
 "use client";
 
 import RootDialog from "@/components/common/RootDialog";
-import { addFieldToBlock } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
+import {
+  addFieldToBlock,
+  InputField,
+} from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
 import {
   ElementItem,
   FORM_ELEMENT_CATEGORIES,
@@ -24,7 +27,6 @@ export default function AddInputField({ open, setOpen }: AddInputFieldProps) {
   const [selectedElement, setSelectedElement] = useState<ElementItem>(
     FORM_ELEMENT_CATEGORIES[0].items[0],
   );
-
   const [fieldLabel, setFieldLabel] = useState("");
   const [fieldPlaceholder, setFieldPlaceholder] = useState("");
   const [isMandatory, setIsMandatory] = useState(false);
@@ -38,13 +40,13 @@ export default function AddInputField({ open, setOpen }: AddInputFieldProps) {
   const handleAddField = () => {
     if (!activeBlockId) return;
 
-    const defaultSectionInputs = [1, 2, 3, 4].map((index) => ({
+    const defaultSectionInputs: InputField[] = [1, 2, 3, 4].map((index) => ({
       id: `title_field_${index}_${Date.now()}`,
       type: "text",
       label: `Title Field ${index}`,
       placeholder: `Enter Title Field ${index}`,
       required: false,
-      width: "1/2" as const,
+      width: "1/2",
     }));
 
     if (selectedElement.type === "section") {
@@ -63,16 +65,19 @@ export default function AddInputField({ open, setOpen }: AddInputFieldProps) {
       return;
     }
 
-    const newFieldData = {
-      id: `${selectedElement.id}_${Date.now()}`,
-      type: selectedElement.type,
-      label: fieldLabel || selectedElement.label,
-      placeholder: fieldPlaceholder,
-      required: isMandatory,
-      width: "1",
-      ...(selectedElement.options ? { options: selectedElement.options } : {}),
-      ...(selectedElement.items ? { items: selectedElement.items } : {}),
-    };
+    const newFieldData: InputField & { options?: string[]; items?: string[] } =
+      {
+        id: `${selectedElement.id}_${Date.now()}`,
+        type: selectedElement.type,
+        label: fieldLabel || selectedElement.label,
+        placeholder: fieldPlaceholder,
+        required: isMandatory,
+        width: "1",
+        ...(selectedElement.options
+          ? { options: selectedElement.options }
+          : {}),
+        ...(selectedElement.items ? { items: selectedElement.items } : {}),
+      };
 
     dispatch(addFieldToBlock({ blockId: activeBlockId, field: newFieldData }));
     setOpen(false);
@@ -101,7 +106,7 @@ export default function AddInputField({ open, setOpen }: AddInputFieldProps) {
                       onClick={() => setSelectedElement(item)}
                       className={`w-full text-left px-3 py-2.5 text-xs font-medium rounded-lg transition-all flex items-center gap-2 ${
                         isSelected
-                          ? "bg-[#111827] text-white shadow-sm font-semibold"
+                          ? "bg-headerColor text-white shadow-sm font-semibold"
                           : "text-gray-600 hover:bg-gray-100"
                       }`}
                     >

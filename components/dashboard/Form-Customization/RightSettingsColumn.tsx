@@ -5,6 +5,7 @@ import { updateFieldProperties } from "@/feature/slice/applicationBuilder/Applic
 import { FORM_ELEMENT_CATEGORIES } from "@/public/custom/CustomFormElement";
 import { useDispatch, useSelector } from "react-redux";
 import IntroductionSettings from "./Introductionsettings";
+import SectionSettingsColumn from "./SectionSettingsColumn";
 
 const fieldTypeOptions = FORM_ELEMENT_CATEGORIES.flatMap((category) =>
   category.items
@@ -29,7 +30,10 @@ export default function RightSettingsColumn() {
   const activeBlock = useSelector((state: any) =>
     state.applicationForm.blocks.find((b: any) => b.id === activeBlockId),
   );
- 
+  const activeSection = activeBlock?.fields.find(
+    (f: any) => f.id === activeSectionId,
+  );
+
   const activeField = useSelector((state: any) => {
     const block = state.applicationForm.blocks.find(
       (b: any) => b.id === activeBlockId,
@@ -54,7 +58,6 @@ export default function RightSettingsColumn() {
     );
   };
 
-
   return (
     <div className="max-w-75  w-full h-full bg-grayColor1 flex flex-col">
       <div className="py-4 px-4 border-b border-borderColor">
@@ -67,23 +70,34 @@ export default function RightSettingsColumn() {
         {activeBlock?.type === "introduction" ||
         activeBlock?.name === "Introduction" ? (
           <IntroductionSettings block={activeBlock} />
+        ) : activeSection ? (
+          <SectionSettingsColumn
+            activeBlockId={activeBlockId}
+            activeSectionId={activeSectionId}
+            activeSection={activeSection}
+            activeFieldId={activeFieldId}
+          />
         ) : activeField ? (
           <div className="space-y-3">
             <div>
               <h2 className="text-lg font-bold text-gray-900">Fields</h2>
             </div>
             <div className="space-y-4 p-3 rounded-lg border bg-whiteColor">
-              <div>
-                <label className="text-xs font-semibold text-gray-700">
-                  Field Type
-                </label>
-                <SelecteInputField
-                  value={activeField.type || "text"}
-                  onValueChange={(value) => handlePropertyChange("type", value)}
-                  options={fieldTypeOptions}
-                  className="mt-1 bg-bgColor text-sm focus:outline-black"
-                />
-              </div>
+              {activeBlock?.type !== "section" && (
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">
+                    Field Type
+                  </label>
+                  <SelecteInputField
+                    value={activeField.type || "text"}
+                    onValueChange={(value) =>
+                      handlePropertyChange("type", value)
+                    }
+                    options={fieldTypeOptions}
+                    className="mt-1 bg-bgColor text-sm focus:outline-black"
+                  />
+                </div>
+              )}
 
               <div>
                 <ReusableInput

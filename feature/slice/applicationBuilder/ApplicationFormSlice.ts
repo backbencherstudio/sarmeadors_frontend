@@ -161,9 +161,15 @@ const applicationFormSlice = createSlice({
         const section = block.fields.find(
           (f) => f.id === sectionId && f.type === "section",
         ) as SectionField;
-        const nestedInput = section?.inputs.find((i) => i.id === fieldId);
-        if (nestedInput) {
-          (nestedInput as any)[key] = value;
+        // If fieldId is provided, update the nested input inside the section
+        if (fieldId) {
+          const nestedInput = section?.inputs.find((i) => i.id === fieldId);
+          if (nestedInput) {
+            (nestedInput as any)[key] = value;
+          }
+        } else if (section) {
+          // If no fieldId, update the section-level property (e.g., label)
+          (section as any)[key] = value;
         }
       } else {
         const mainField = block.fields.find((f) => f.id === fieldId);
