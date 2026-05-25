@@ -23,6 +23,12 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         description: "Allow users to enter a single line of text.",
       },
       {
+        id: "number",
+        label: "Number",
+        type: "number",
+        description: "Allow users to enter a numeric value.",
+      },
+      {
         id: "textarea",
         label: "Text Area",
         type: "textarea",
@@ -64,7 +70,7 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
     category: "Basic Choice Inputs",
     items: [
       {
-        id: "dropdown",
+        id: "selected_option",
         label: "Dropdown",
         type: "select",
         description: "Select an option from a dropdown list.",
@@ -81,24 +87,14 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "radio_table",
         description: "Matrix selection using radio buttons.",
       },
-      {
-        id: "checkbox_icon",
-        label: "Checkbox Icon",
-        type: "checkbox_icon",
-        description: "Icon-based checkbox selector.",
-      },
+      
       {
         id: "single_checkbox",
         label: "Single Checkbox",
         type: "checkbox",
         description: "A single toggle checkbox selection.",
       },
-      {
-        id: "group_checkbox",
-        label: "Group Checkbox",
-        type: "group_checkbox",
-        description: "Multiple standalone checkbox choices.",
-      },
+      
       {
         id: "multi_select_checkbox",
         label: "Multi Select Checkbox",
@@ -117,12 +113,7 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "multi_select",
         description: "Select multiple values from an input selector.",
       },
-      {
-        id: "checkbox_condition",
-        label: "Checkbox Condition",
-        type: "checkbox_condition",
-        description: "Conditional checkbox with rule validation.",
-      },
+      
     ],
   },
   {
@@ -141,29 +132,12 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         description: "Select a single standard calendar date.",
       },
       {
-        id: "month_picker",
-        label: "Month Picker",
-        type: "month",
-        description: "Filter or select a calendar month.",
-      },
-      {
-        id: "year_picker",
-        label: "Year Picker",
-        type: "year",
-        description: "Filter or select a calendar year.",
-      },
-      {
         id: "date_time_picker",
         label: "Date & Time Picker",
         type: "datetime",
         description: "Select both precise date and exact time.",
       },
-      {
-        id: "multi_date_picker",
-        label: "Multi Date Picker",
-        type: "multi_date",
-        description: "Choose multiple standalone dates.",
-      },
+      
       {
         id: "time_availability",
         label: "Time Availability",
@@ -217,31 +191,13 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         description: "Draw or input authentication signature.",
       },
       {
-        id: "signature_field",
-        label: "Signature Field",
-        type: "signature_field",
+        id: "signature_file",
+        label: "Signature File",
+        type: "signature_file",
         description:
           "Dedicated bounding box container for verification signatures.",
       },
-      {
-        id: "auto_log",
-        label: "Auto Log",
-        type: "auto_log",
-        description: "Automated systemic validation activity logging tracker.",
-      },
-      {
-        id: "sign_document",
-        label: "Sign Document",
-        type: "sign_document",
-        description:
-          "Digital signature interface over loaded document contracts.",
-      },
-      {
-        id: "drawing_signature",
-        label: "Drawing Signature",
-        type: "drawing_signature",
-        description: "Freehand vector canvas drawing sketch component.",
-      },
+      
     ],
   },
   {
@@ -265,58 +221,26 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "stripe_subscription",
         description: "Select continuous recurring Stripe payment structures.",
       },
+     
       {
-        id: "credit_package_condition",
-        label: "Credit Package Condition",
-        type: "credit_condition",
-        description: "Rule validation metrics dependent on bundle tokens.",
+        id: "subscription_plan",
+        label: "Subscription plan",
+        type: "subscription_plan",
+        description: "Choose standard automated monthly localized tokens.",
       },
       {
-        id: "monthly_credit_selection",
-        label: "Monthly Credit Package Selection",
-        type: "monthly_credit",
+        id: "phone_country_code",
+        label: "Phone Country Code",
+        type: "phone_country_code",
         description: "Choose standard automated monthly localized tokens.",
       },
     ],
   },
-  {
-    category: "List Inputs",
-    items: [
-      {
-        id: "list_items",
-        label: "List Items",
-        type: "list_items",
-        description: "Dynamically append simple structured row collections.",
-      },
-      {
-        id: "list_text_field",
-        label: "List Text Field",
-        type: "list_text",
-        description: "Add scalable standalone linear text input items.",
-      },
-      {
-        id: "list_textbox",
-        label: "List Textbox",
-        type: "list_textbox",
-        description: "Multi-column list dynamic inputs generator array.",
-      },
-    ],
-  },
+  
   {
     category: "Layout & Display",
     items: [
-      {
-        id: "label",
-        label: "Label",
-        type: "label",
-        description: "Static alphanumeric typography heading view item.",
-      },
-      {
-        id: "separator",
-        label: "Separator",
-        type: "separator",
-        description: "Visual horizontal line divider context spacing node.",
-      },
+      
       {
         id: "section",
         label: "Section",
@@ -324,39 +248,7 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         description:
           "Grouping structure container wrapping multiple dynamic fields.",
       },
-      {
-        id: "preset_section",
-        label: "Preset Section",
-        type: "preset_section",
-        description:
-          "Load global layout templates instantly into current form.",
-      },
-      {
-        id: "html",
-        label: "HTML",
-        type: "html",
-        description:
-          "Inject pure custom raw layout markup source scripts safely.",
-      },
-      {
-        id: "preset_fields",
-        label: "Preset Fields",
-        type: "preset_fields",
-        description: "Preconfigured standalone element assets arrays.",
-      },
-      {
-        id: "html_selection",
-        label: "HTML Selection",
-        type: "html_selection",
-        description:
-          "Dynamic components utilizing targeted custom syntax templates.",
-      },
-      {
-        id: "display_expression",
-        label: "Display Value by Expression",
-        type: "expression_view",
-        description: "Render programmatic runtime reactive output evaluations.",
-      },
+    
     ],
   },
   {
@@ -391,34 +283,5 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
       },
     ],
   },
-  {
-    category: "Predefined Section",
-    items: [
-      {
-        id: "predef_address",
-        label: "Address Autocomplete",
-        type: "predef_address",
-        description: "Predefined unified residential location container stack.",
-      },
-      {
-        id: "predef_phone",
-        label: "Phone Country Code",
-        type: "predef_phone",
-        description:
-          "Preconfigured localized communications network identity cluster.",
-      },
-      {
-        id: "predef_evaluation",
-        label: "Evaluation",
-        type: "predef_evaluation",
-        description: "Standardized system vetting structural criteria layout.",
-      },
-      {
-        id: "predef_placement",
-        label: "Placement Job Selection",
-        type: "predef_placement",
-        description: "Enterprise framework matching parameters structure node.",
-      },
-    ],
-  },
+ 
 ];

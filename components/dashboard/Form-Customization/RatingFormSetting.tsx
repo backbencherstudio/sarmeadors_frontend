@@ -9,8 +9,8 @@ export default function RatingFormSetting() {
   const stars = [1, 2, 3, 4, 5];
 
   return (
-    <div className="p-4">
-      <h3 className="text-xl font-semibold text-headerColor mb-3">
+    <div className="">
+      <h3 className="text-sm font-semibold text-headerColor mb-2">
         How would you rate your experience?
       </h3>
 
@@ -30,10 +30,10 @@ export default function RatingFormSetting() {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                width="28"
-                height="28"
+                width="20"
+                height="20"
                 className={`transition-colors ${
-                  filled ? "text-yellow-400" : "text-gray-300"
+                  filled ? "text-ratingColor" : "text-headerColor"
                 }`}
               >
                 <path

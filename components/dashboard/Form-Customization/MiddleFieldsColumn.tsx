@@ -24,13 +24,21 @@ export default function MiddleFieldsColumn() {
   const activeBlockId = useSelector(
     (state: any) => state.applicationForm.activeBlockId,
   );
-  const activeFieldId = useSelector(
-    (state: any) => state.applicationForm.activeFieldId,
-  );
 
   const activeBlock = useSelector((state: any) =>
     state.applicationForm.blocks.find((b: any) => b.id === activeBlockId),
   );
+
+  const selectField = (sectionId: string | null, fieldId: string | null) => {
+    dispatch(setActiveField({ sectionId, fieldId }));
+  };
+
+  const renderClickableField = (fieldId: string, node: React.ReactNode) => (
+    <div className="cursor-pointer" onClick={() => selectField(null, fieldId)}>
+      {node}
+    </div>
+  );
+
   const onAddBlockClick = () => {
     setIsBlockAdded(true);
   };
@@ -80,7 +88,7 @@ export default function MiddleFieldsColumn() {
 
           {activeBlock.buttonLabel && (
             <div className="pt-4">
-              <button className="px-6 py-3 bg-[#111827] text-white font-medium rounded-xl shadow-sm text-sm">
+              <button className="px-6 py-3 bg-blackColor text-white font-medium rounded-xl shadow-sm text-sm">
                 {activeBlock.buttonLabel}
               </button>
             </div>
@@ -127,14 +135,7 @@ export default function MiddleFieldsColumn() {
                 <div className="space-y-3">
                   <button
                     type="button"
-                    onClick={() =>
-                      dispatch(
-                        setActiveField({
-                          sectionId: field.id,
-                          fieldId: null,
-                        }),
-                      )
-                    }
+                    onClick={() => selectField(field.id, null)}
                     className="text-left"
                   >
                     <h3 className="text-base lg:text-lg font-semibold text-headerColor">
@@ -147,12 +148,7 @@ export default function MiddleFieldsColumn() {
                         key={nestedInput.id}
                         onClick={(e) => {
                           e.stopPropagation();
-                          dispatch(
-                            setActiveField({
-                              sectionId: field.id,
-                              fieldId: nestedInput.id,
-                            }),
-                          );
+                          selectField(field.id, nestedInput.id);
                         }}
                       >
                         <ReusableInput
@@ -167,20 +163,28 @@ export default function MiddleFieldsColumn() {
                   </div>
                 </div>
               ) : field.type === "password" ? (
-                <CustomPassword
-                  field={field}
-                  register={register}
-                  errors={errors}
-                  watch={watch}
-                />
-              )  : field.type === "rating" ? <RatingFormSetting /> : (
-                <ReusableInput
-                  label={field.label}
-                  type={field.type}
-                  required={field.required}
-                  placeholder={field.placeholder}
-                  className="w-full p-2.5 border rounded-lg bg-gray-50 text-sm"
-                />
+                renderClickableField(
+                  field.id,
+                  <CustomPassword
+                    field={field}
+                    register={register}
+                    errors={errors}
+                    watch={watch}
+                  />,
+                )
+              ) : field.type === "rating" ? (
+                renderClickableField(field.id, <RatingFormSetting />)
+              ) : (
+                renderClickableField(
+                  field.id,
+                  <ReusableInput
+                    label={field.label}
+                    type={field.type}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    className="w-full p-2.5 border rounded-lg bg-gray-50 text-sm"
+                  />,
+                )
               )}
             </div>
           ))
