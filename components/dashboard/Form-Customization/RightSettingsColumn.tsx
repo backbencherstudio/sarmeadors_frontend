@@ -5,6 +5,7 @@ import { updateFieldProperties } from "@/feature/slice/applicationBuilder/Applic
 import { FORM_ELEMENT_CATEGORIES } from "@/public/custom/CustomFormElement";
 import { useDispatch, useSelector } from "react-redux";
 import IntroductionSettings from "./Introductionsettings";
+import RatingGroupSettingsColumn from "./RatingGroupSettingsColumn";
 import SectionSettingsColumn from "./SectionSettingsColumn";
 
 const fieldTypeOptions = FORM_ELEMENT_CATEGORIES.flatMap((category) =>
@@ -70,12 +71,12 @@ export default function RightSettingsColumn() {
         {activeBlock?.type === "introduction" ||
         activeBlock?.name === "Introduction" ? (
           <IntroductionSettings block={activeBlock} />
-        ) : activeSection ? (
-          <SectionSettingsColumn
+        ) : activeField?.type === "rating_group" ? (
+          <RatingGroupSettingsColumn
             activeBlockId={activeBlockId}
-            activeSectionId={activeSectionId}
-            activeSection={activeSection}
             activeFieldId={activeFieldId}
+            activeField={activeField}
+            activeSectionId={activeSectionId}
           />
         ) : activeField ? (
           <div className="space-y-3">
@@ -138,6 +139,13 @@ export default function RightSettingsColumn() {
               )}
             </div>
           </div>
+        ) : activeSection ? (
+          <SectionSettingsColumn
+            activeBlockId={activeBlockId}
+            activeSectionId={activeSectionId}
+            activeSection={activeSection}
+            activeFieldId={activeFieldId}
+          />
         ) : (
           <div className="text-center py-12 text-gray-400 text-sm">
             Select any input field or section to configure its properties.

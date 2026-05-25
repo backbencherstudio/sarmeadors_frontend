@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddInputField from "./AddInputField";
 import CustomPassword from "./CustomPassword";
 import RatingFormSetting from "./RatingFormSetting";
+import RatingGroupSetting from "./RatingGroupSetting";
 
 export default function MiddleFieldsColumn() {
   const [isBlockAdded, setIsBlockAdded] = useState(false);
@@ -174,6 +175,11 @@ export default function MiddleFieldsColumn() {
                 )
               ) : field.type === "rating" ? (
                 renderClickableField(field.id, <RatingFormSetting />)
+              ) : field.type === "rating_group" ? (
+                renderClickableField(
+                  field.id,
+                  <RatingGroupSetting field={field} />,
+                )
               ) : (
                 renderClickableField(
                   field.id,
