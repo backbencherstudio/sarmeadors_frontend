@@ -20,7 +20,6 @@ function BlocksCreateSetting({
   const onSubmit = (data: any) => {
     dispatch(
       addBlock({
-        id: Date.now().toString(),
         name: data.block_name,
         describe: data.short_description,
       }),

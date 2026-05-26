@@ -3,6 +3,7 @@
 import RootDialog from "@/components/common/RootDialog";
 import {
   addFieldToBlock,
+  addInputToSection,
   InputField,
 } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
 import {
@@ -16,17 +17,30 @@ import AddInputFieldPreview from "./AddInputFieldPreview";
 interface AddInputFieldProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  initialType?: string;
 }
 
-export default function AddInputField({ open, setOpen }: AddInputFieldProps) {
+export default function AddInputField({
+  open,
+  setOpen,
+  initialType,
+}: AddInputFieldProps) {
   const dispatch = useDispatch();
   const activeBlockId = useSelector(
     (state: any) => state.applicationForm.activeBlockId,
   );
-
-  const [selectedElement, setSelectedElement] = useState<ElementItem>(
-    FORM_ELEMENT_CATEGORIES[0].items[0],
+  const activeSectionId = useSelector(
+    (state: any) => state.applicationForm.activeSectionId,
   );
+
+  const defaultElement = initialType
+    ? (FORM_ELEMENT_CATEGORIES.flatMap((c) => c.items).find(
+        (item) => item.type === initialType,
+      ) ?? FORM_ELEMENT_CATEGORIES[0].items[0])
+    : FORM_ELEMENT_CATEGORIES[0].items[0];
+
+  const [selectedElement, setSelectedElement] =
+    useState<ElementItem>(defaultElement);
   const [fieldLabel, setFieldLabel] = useState("");
   const [fieldPlaceholder, setFieldPlaceholder] = useState("");
   const [isMandatory, setIsMandatory] = useState(false);
@@ -57,29 +71,33 @@ export default function AddInputField({ open, setOpen }: AddInputFieldProps) {
         isSection: true,
         inputs: defaultSectionInputs,
       };
-
-      dispatch(
-        addFieldToBlock({ blockId: activeBlockId, field: sectionField }),
-      );
+      dispatch(addFieldToBlock({ blockId: activeBlockId, field: sectionField }));
       setOpen(false);
       return;
     }
 
-    const newFieldData: InputField & { options?: string[]; items?: string[] } =
-      {
-        id: `${selectedElement.id}_${Date.now()}`,
-        type: selectedElement.type,
-        label: fieldLabel || selectedElement.label,
-        placeholder: fieldPlaceholder,
-        required: isMandatory,
-        width: "1",
-        ...(selectedElement.options
-          ? { options: selectedElement.options }
-          : {}),
-        ...(selectedElement.items ? { items: selectedElement.items } : {}),
-      };
+    const newFieldData: InputField & { options?: string[]; items?: string[] } = {
+      id: `${selectedElement.id}_${Date.now()}`,
+      type: selectedElement.type,
+      label: fieldLabel || selectedElement.label,
+      placeholder: fieldPlaceholder,
+      required: isMandatory,
+      width: activeSectionId ? "1/2" : "1",
+      ...(selectedElement.options ? { options: selectedElement.options } : {}),
+      ...(selectedElement.items ? { items: selectedElement.items } : {}),
+    };
 
-    dispatch(addFieldToBlock({ blockId: activeBlockId, field: newFieldData }));
+    if (activeSectionId) {
+      dispatch(
+        addInputToSection({
+          blockId: activeBlockId,
+          sectionId: activeSectionId,
+          input: newFieldData,
+        }),
+      );
+    } else {
+      dispatch(addFieldToBlock({ blockId: activeBlockId, field: newFieldData }));
+    }
     setOpen(false);
   };
 
@@ -89,7 +107,7 @@ export default function AddInputField({ open, setOpen }: AddInputFieldProps) {
         {/* --- LEFT NAVIGATION PANEL --- */}
         <div className="w-64 border-r border-gray-100 bg-gray-50/60 flex flex-col h-full">
           <div className="p-4 border-b bg-white">
-            <h3 className="font-bold text-gray-900 text-sm">Notes</h3>
+            <h3 className="font-bold text-gray-900 text-sm">Element Types</h3>
           </div>
 
           <div className="flex-1 overflow-y-auto p-2 space-y-4 custom-scrollbar">

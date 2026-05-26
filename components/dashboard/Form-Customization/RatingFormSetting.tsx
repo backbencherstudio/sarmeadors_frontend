@@ -2,20 +2,26 @@
 
 import { useState } from "react";
 
-export default function RatingFormSetting() {
+type RatingFormSettingProps = {
+  field: {
+    label?: string;
+    maxRating?: number;
+  };
+};
+
+export default function RatingFormSetting({ field }: RatingFormSettingProps) {
   const [value, setValue] = useState<number>(0);
   const [hover, setHover] = useState<number>(0);
-
-  const stars = [1, 2, 3, 4, 5];
+  const maxRating = field.maxRating || 5;
 
   return (
-    <div className="">
+    <div>
       <h3 className="text-sm font-semibold text-headerColor mb-2">
-        How would you rate your experience?
+        {field.label || "Rating"}
       </h3>
 
       <div className="flex items-center gap-3">
-        {stars.map((s) => {
+        {Array.from({ length: maxRating }, (_, i) => i + 1).map((s) => {
           const filled = hover ? s <= hover : s <= value;
           return (
             <button

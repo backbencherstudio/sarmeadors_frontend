@@ -130,6 +130,7 @@ export default function RatingGroupSettingsColumn({
         <label className="flex items-center gap-2 text-xs font-semibold text-gray-700">
           <input
             type="checkbox"
+            checked={Boolean(activeField.required)}
             onChange={(e) => handlePropertyChange("required", e.target.checked)}
             className="h-4 w-4 rounded border-gray-300"
           />
