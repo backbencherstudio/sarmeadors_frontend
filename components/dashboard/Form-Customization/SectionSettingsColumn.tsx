@@ -163,20 +163,35 @@ export default function SectionSettingsColumn({
                       className="w-full bg-bgColor text-sm"
                     />
 
-                    {input.type !== "file" && (
-                      <ReusableInput
-                        label={"Placeholder"}
-                        value={input.placeholder || ""}
-                        onChange={(e) =>
-                          handleFieldUpdate(
-                            input.id,
-                            "placeholder",
-                            e.target.value,
-                          )
-                        }
-                        className="w-full bg-bgColor text-sm"
-                      />
-                    )}
+                    <ReusableInput
+                      label={"Profile Label"}
+                      value={input.profileLabel || ""}
+                      onChange={(e) =>
+                        handleFieldUpdate(
+                          input.id,
+                          "profileLabel",
+                          e.target.value,
+                        )
+                      }
+                      placeholder="Label shown on profile"
+                      className="w-full bg-bgColor text-sm"
+                    />
+
+                    {input.type !== "file" &&
+                      input.type !== "file_additional" && (
+                        <ReusableInput
+                          label={"Placeholder"}
+                          value={input.placeholder || ""}
+                          onChange={(e) =>
+                            handleFieldUpdate(
+                              input.id,
+                              "placeholder",
+                              e.target.value,
+                            )
+                          }
+                          className="w-full bg-bgColor text-sm"
+                        />
+                      )}
 
                     {input.type !== "section" && (
                       <label className="flex items-center gap-2 text-xs pt-1 font-semibold text-gray-700">

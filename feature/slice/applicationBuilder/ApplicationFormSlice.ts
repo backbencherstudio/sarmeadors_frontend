@@ -7,6 +7,20 @@ export interface InputField {
   placeholder?: string;
   required?: boolean;
   width?: "1/4" | "1/2" | "3/4" | "1";
+  isFixed?: boolean;
+  profileLabel?: string;
+  // Extended properties for specific field types
+  maxRating?: number;
+  items?: string[];
+  options?: string[];
+  layout?: "horizontal" | "vertical";
+  columns?: string[];
+  rows?: string[];
+  multiSelect?: boolean;
+  yesNo?: boolean;
+  listFile?: boolean;
+  additionalNote?: boolean;
+  content?: string;
 }
 
 export interface SectionField {
@@ -14,6 +28,7 @@ export interface SectionField {
   type: "section";
   label: string;
   isSection: boolean;
+  isFixed?: boolean;
   inputs: InputField[];
 }
 
@@ -39,23 +54,95 @@ interface ApplicationFormState {
   activeFieldId: string | null;
 }
 
+const INTRO_BLOCK: Block = {
+  id: "intro-block-1",
+  name: "Introduction",
+  type: "introduction",
+  describe: "Set your logo & form title here",
+  logoUrl: "",
+  title: "Family Form - Nanny",
+  description: "Not sure if you are ready to go ahead?",
+  buttonLabel: "Button Text",
+  buttonLink: "",
+  fields: [],
+};
+
+const FIXED_REGISTRATION_FIELDS: InputField[] = [
+  {
+    id: "fixed_first_name",
+    type: "text",
+    label: "First Name",
+    placeholder: "Enter first name",
+    required: true,
+    isFixed: true,
+    width: "1/2",
+  },
+  {
+    id: "fixed_last_name",
+    type: "text",
+    label: "Last Name",
+    placeholder: "Enter last name",
+    required: true,
+    isFixed: true,
+    width: "1/2",
+  },
+  {
+    id: "fixed_email",
+    type: "email",
+    label: "Email",
+    placeholder: "Enter email address",
+    required: true,
+    isFixed: true,
+    width: "1/2",
+  },
+  {
+    id: "fixed_mobile",
+    type: "tel",
+    label: "Mobile",
+    placeholder: "Enter mobile number",
+    required: true,
+    isFixed: true,
+    width: "1/2",
+  },
+  {
+    id: "fixed_hear_about_us",
+    type: "select",
+    label: "How did you hear about us?",
+    required: false,
+    isFixed: true,
+    width: "1/2",
+  },
+  {
+    id: "fixed_image",
+    type: "file",
+    label: "Profile Picture",
+    required: false,
+    isFixed: true,
+    width: "1/2",
+  },
+  {
+    id: "fixed_type",
+    type: "select",
+    label: "Type",
+    required: false,
+    isFixed: true,
+    width: "1/2",
+  },
+  {
+    id: "fixed_location",
+    type: "text",
+    label: "Location",
+    placeholder: "Enter location",
+    required: false,
+    isFixed: true,
+    width: "1/2",
+  },
+];
+
 const initialState: ApplicationFormState = {
   applicationType: {},
   customElements: [],
-  blocks: [
-    {
-      id: "intro-block-1",
-      name: "Introduction",
-      type: "introduction",
-      describe: "Set your logo & form title here",
-      logoUrl: "",
-      title: "Family Form - Nanny",
-      description: "Not sure if you are ready to go ahead?",
-      buttonLabel: "Button Text",
-      buttonLink: "",
-      fields: [],
-    },
-  ],
+  blocks: [{ ...INTRO_BLOCK, fields: [] }],
   activeBlockId: "intro-block-1",
   activeSectionId: null,
   activeFieldId: null,
@@ -67,6 +154,24 @@ const applicationFormSlice = createSlice({
   reducers: {
     setApplicationAllType: (state, action) => {
       state.applicationType = action.payload;
+      state.blocks = [{ ...INTRO_BLOCK, fields: [] }];
+      state.activeBlockId = "intro-block-1";
+      state.activeSectionId = null;
+      state.activeFieldId = null;
+
+      const { applicationType, userType } = action.payload;
+      if (
+        applicationType === "Registration" &&
+        (userType === "client" || userType === "candidate")
+      ) {
+        state.blocks.push({
+          id: "registration-block",
+          name: "Personal Details",
+          type: "dynamic",
+          describe: "Required registration information",
+          fields: FIXED_REGISTRATION_FIELDS.map((f) => ({ ...f })),
+        });
+      }
     },
 
     // --- BLOCK REDUCERS ---
@@ -141,6 +246,8 @@ const applicationFormSlice = createSlice({
           (f) => f.id === sectionId && f.type === "section",
         ) as SectionField;
         if (section) {
+          const input = section.inputs.find((i) => i.id === inputId);
+          if (input?.isFixed) return;
           section.inputs = section.inputs.filter(
             (input) => input.id !== inputId,
           );
@@ -166,7 +273,7 @@ const applicationFormSlice = createSlice({
         blockId: string;
         sectionId?: string | null;
         fieldId: string | null;
-        key: string;
+        key: keyof InputField | keyof Block | string;
         value: any;
       }>,
     ) => {
@@ -183,14 +290,12 @@ const applicationFormSlice = createSlice({
         const section = block.fields.find(
           (f) => f.id === sectionId && f.type === "section",
         ) as SectionField;
-        // If fieldId is provided, update the nested input inside the section
         if (fieldId) {
           const nestedInput = section?.inputs.find((i) => i.id === fieldId);
           if (nestedInput) {
             (nestedInput as any)[key] = value;
           }
         } else if (section) {
-          // If no fieldId, update the section-level property (e.g., label)
           (section as any)[key] = value;
         }
       } else {
@@ -219,12 +324,60 @@ const applicationFormSlice = createSlice({
           (f) => f.id === sectionId && f.type === "section",
         ) as SectionField;
         if (section) {
+          const input = section.inputs.find((i) => i.id === fieldId);
+          if (input?.isFixed) return;
           section.inputs = section.inputs.filter((i) => i.id !== fieldId);
         }
       } else {
+        const field = block.fields.find((f) => f.id === fieldId);
+        if ((field as InputField)?.isFixed) return;
         block.fields = block.fields.filter((f) => f.id !== fieldId);
       }
       state.activeFieldId = null;
+    },
+
+    deleteBlock: (state, action: PayloadAction<string>) => {
+      const blockId = action.payload;
+      const block = state.blocks.find((b) => b.id === blockId);
+      if (!block || block.type === "introduction") return;
+      state.blocks = state.blocks.filter((b) => b.id !== blockId);
+      if (state.activeBlockId === blockId) {
+        state.activeBlockId = state.blocks[0]?.id ?? null;
+      }
+      state.activeSectionId = null;
+      state.activeFieldId = null;
+    },
+
+    reorderBlockFields: (
+      state,
+      action: PayloadAction<{
+        blockId: string;
+        fields: (InputField | SectionField)[];
+      }>,
+    ) => {
+      const block = state.blocks.find((b) => b.id === action.payload.blockId);
+      if (block) {
+        block.fields = action.payload.fields;
+      }
+    },
+
+    reorderSectionInputs: (
+      state,
+      action: PayloadAction<{
+        blockId: string;
+        sectionId: string;
+        inputs: InputField[];
+      }>,
+    ) => {
+      const { blockId, sectionId, inputs } = action.payload;
+      const block = state.blocks.find((b) => b.id === blockId);
+      if (!block) return;
+      const section = block.fields.find(
+        (f) => f.id === sectionId && f.type === "section",
+      ) as SectionField;
+      if (section) {
+        section.inputs = inputs;
+      }
     },
   },
 });
@@ -240,6 +393,9 @@ export const {
   updateFieldProperties,
   removeSectionInputs,
   deleteField,
+  deleteBlock,
+  reorderBlockFields,
+  reorderSectionInputs,
 } = applicationFormSlice.actions;
 
 export default applicationFormSlice.reducer;

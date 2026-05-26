@@ -2,20 +2,26 @@
 
 import { useState } from "react";
 
-export default function RatingFormSetting() {
+type RatingFormSettingProps = {
+  field: {
+    label?: string;
+    maxRating?: number;
+  };
+};
+
+export default function RatingFormSetting({ field }: RatingFormSettingProps) {
   const [value, setValue] = useState<number>(0);
   const [hover, setHover] = useState<number>(0);
-
-  const stars = [1, 2, 3, 4, 5];
+  const maxRating = field.maxRating || 5;
 
   return (
-    <div className="p-4">
-      <h3 className="text-xl font-semibold text-headerColor mb-3">
-        How would you rate your experience?
+    <div>
+      <h3 className="text-sm font-semibold text-headerColor mb-2">
+        {field.label || "Rating"}
       </h3>
 
       <div className="flex items-center gap-3">
-        {stars.map((s) => {
+        {Array.from({ length: maxRating }, (_, i) => i + 1).map((s) => {
           const filled = hover ? s <= hover : s <= value;
           return (
             <button
@@ -30,10 +36,10 @@ export default function RatingFormSetting() {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                width="28"
-                height="28"
+                width="20"
+                height="20"
                 className={`transition-colors ${
-                  filled ? "text-yellow-400" : "text-gray-300"
+                  filled ? "text-ratingColor" : "text-headerColor"
                 }`}
               >
                 <path
