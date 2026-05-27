@@ -240,7 +240,6 @@ export default function MiddleFieldsColumn() {
       </div>
     );
   }
-
   // ── Dynamic block ──────────────────────────────────────────────────────────
   return (
     <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto">
