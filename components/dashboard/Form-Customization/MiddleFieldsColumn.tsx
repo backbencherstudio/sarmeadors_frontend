@@ -197,7 +197,7 @@ export default function MiddleFieldsColumn() {
     activeBlock.name === "Introduction"
   ) {
     return (
-      <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto border-borderColor">
+      <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto scrollbar-hide border-borderColor">
         <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor">
           <div>
             <h2 className="text-lg font-semibold text-headerColor">
@@ -242,7 +242,7 @@ export default function MiddleFieldsColumn() {
   }
   // ── Dynamic block ──────────────────────────────────────────────────────────
   return (
-    <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto">
+    <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto scrollbar-hide">
       <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor">
         <div>
           <h2 className="text-lg font-semibold text-headerColor">
@@ -339,7 +339,7 @@ export default function MiddleFieldsColumn() {
                       <GripVertical
                         size={15}
                         className="text-secondaryColor cursor-grab"
-                      /> 
+                      />
                     )}
                   </div>
                   <div
@@ -362,7 +362,6 @@ export default function MiddleFieldsColumn() {
           ))
         ) : (
           <div className="text-gray-400">
-            
             <div>
               <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-headerColor">
                 {activeBlock.name}

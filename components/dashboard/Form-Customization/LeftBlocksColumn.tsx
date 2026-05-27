@@ -1,15 +1,15 @@
 "use client";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { PlusIcon } from "lucide-react";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { useDraggableList } from "@/hooks/useDraggableList";
+import { PlusIcon } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import BlocksList from "./BlocksList";
 import {
   reorderBlocks,
   setActiveBlock,
 } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
+import BlocksList from "./BlocksList";
 
 export default function LeftBlocksColumn({
   onAddBlockClick,
@@ -24,13 +24,8 @@ export default function LeftBlocksColumn({
 
   const introBlock = data.find((b: any) => b.type === "introduction");
 
-  const {
-    items,
-    setItems,
-    handleDragStart,
-    handleDragOver,
-    handleDragEnd,
-  } = useDraggableList(data.filter((b: any) => b.type !== "introduction"));
+  const { items, setItems, handleDragStart, handleDragOver, handleDragEnd } =
+    useDraggableList(data.filter((b: any) => b.type !== "introduction"));
 
   useEffect(() => {
     setItems(data.filter((b: any) => b.type !== "introduction"));
@@ -55,7 +50,7 @@ export default function LeftBlocksColumn({
         />
       </div>
 
-      <div className="p-4 space-y-3 overflow-y-auto flex-1">
+      <div className="p-4 space-y-3 overflow-y-auto scrollbar-hide flex-1">
         {/* Introduction — always first, non-draggable */}
         {introBlock && (
           <div

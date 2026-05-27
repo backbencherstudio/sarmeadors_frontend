@@ -2,16 +2,16 @@
 import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
 import { updateFieldProperties } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
-import { Lock } from "lucide-react";
 import { FORM_ELEMENT_CATEGORIES } from "@/public/custom/CustomFormElement";
+import { Lock } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import IntroductionSettings from "./Introductionsettings";
-import RatingGroupSettingsColumn from "./RatingGroupSettingsColumn";
-import SectionSettingsColumn from "./SectionSettingsColumn";
 import ChoiceFieldSettings from "./ChoiceFieldSettings";
 import DropdownFieldSettings from "./DropdownFieldSettings";
 import FileFieldSettings from "./FileFieldSettings";
+import IntroductionSettings from "./Introductionsettings";
 import RatingFieldSettings from "./RatingFieldSettings";
+import RatingGroupSettingsColumn from "./RatingGroupSettingsColumn";
+import SectionSettingsColumn from "./SectionSettingsColumn";
 import TableFieldSettings from "./TableFieldSettings";
 
 const fieldTypeOptions = FORM_ELEMENT_CATEGORIES.flatMap((category) =>
@@ -131,7 +131,7 @@ export default function RightSettingsColumn() {
         </h2>
       </div>
 
-      <div className="p-4 flex-1 overflow-y-auto">
+      <div className="p-4 flex-1 overflow-y-auto scrollbar-hide">
         {activeBlock?.type === "introduction" ||
         activeBlock?.name === "Introduction" ? (
           <IntroductionSettings block={activeBlock} />
