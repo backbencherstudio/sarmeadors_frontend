@@ -340,7 +340,7 @@ export default function MiddleFieldsColumn() {
                       <GripVertical
                         size={15}
                         className="text-secondaryColor cursor-grab"
-                      />
+                      /> 
                     )}
                   </div>
                   <div
