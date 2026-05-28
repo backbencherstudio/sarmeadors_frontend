@@ -240,7 +240,6 @@ export default function MiddleFieldsColumn() {
       </div>
     );
   }
-
   // ── Dynamic block ──────────────────────────────────────────────────────────
   return (
     <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto">
@@ -363,6 +362,7 @@ export default function MiddleFieldsColumn() {
           ))
         ) : (
           <div className="text-gray-400">
+            
             <div>
               <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-headerColor">
                 {activeBlock.name}
