@@ -13,7 +13,6 @@ export default function MultiCheckboxRenderer({ field }: Props) {
     ? field.items
     : ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
   const isHorizontal = field.layout === "horizontal";
-
   const toggle = (item: string) =>
     setSelected((prev) =>
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item],
