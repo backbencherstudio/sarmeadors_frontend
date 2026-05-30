@@ -6,7 +6,7 @@ import ButtonReuseable from "@/components/reusable/CustomButton";
 import { updateFieldProperties } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
 import DeleteIcon from "@/public/icon/DeleteIcon";
 import { PlusIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 
 type SubscriptionPlan = {
@@ -69,8 +69,20 @@ export default function SubscriptionPlanFieldSettings({
   );
 
   const [expandedPlanId, setExpandedPlanId] = useState<string>(
-    plans[0]?.id || "",
+    activeField?.selectedPlanId || plans[0]?.id || "",
   );
+
+  useEffect(() => {
+    const selected = activeField?.selectedPlanId;
+    if (selected && plans.some((plan) => plan.id === selected)) {
+      setExpandedPlanId(selected);
+      return;
+    }
+
+    if (plans.length > 0 && !plans.some((plan) => plan.id === expandedPlanId)) {
+      setExpandedPlanId(plans[0].id);
+    }
+  }, [activeField?.selectedPlanId, plans, expandedPlanId]);
 
   const handlePropertyChange = (key: string, value: any) => {
     dispatch(
@@ -104,6 +116,7 @@ export default function SubscriptionPlanFieldSettings({
     updatePlans(next.length ? next : defaultPlans());
     if (expandedPlanId === planId) {
       setExpandedPlanId(next[0]?.id || "");
+      handlePropertyChange("selectedPlanId", next[0]?.id || "");
     }
   };
 
@@ -118,6 +131,7 @@ export default function SubscriptionPlanFieldSettings({
     const all = [...plans, next];
     updatePlans(all);
     setExpandedPlanId(next.id);
+    handlePropertyChange("selectedPlanId", next.id);
   };
 
   const addFeature = (planId: string) => {
@@ -162,6 +176,32 @@ export default function SubscriptionPlanFieldSettings({
         />
       </div>
 
+      <div className="space-y-2 rounded-lg border bg-white p-3">
+        <label className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+          <input
+            type="checkbox"
+            checked={Boolean(activeField?.billingAddress)}
+            onChange={(e) =>
+              handlePropertyChange("billingAddress", e.target.checked)
+            }
+            className="h-4 w-4 rounded accent-blackColor cursor-pointer border-gray-300"
+          />
+          Billing Address
+        </label>
+
+        <label className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+          <input
+            type="checkbox"
+            checked={Boolean(activeField?.additionalNote)}
+            onChange={(e) =>
+              handlePropertyChange("additionalNote", e.target.checked)
+            }
+            className="h-4 w-4 rounded accent-blackColor cursor-pointer border-gray-300"
+          />
+          Add additional note
+        </label>
+      </div>
+
       <div>
         <h3 className="text-lg font-bold text-gray-900">Plans</h3>
       </div>
@@ -178,7 +218,10 @@ export default function SubscriptionPlanFieldSettings({
                 <button
                   type="button"
                   className="text-left w-full text-sm font-semibold text-headerColor"
-                  onClick={() => setExpandedPlanId(plan.id)}
+                  onClick={() => {
+                    setExpandedPlanId(plan.id);
+                    handlePropertyChange("selectedPlanId", plan.id);
+                  }}
                 >
                   {plan.name || "Untitled Plan"}
                 </button>

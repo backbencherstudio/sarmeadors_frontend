@@ -21,6 +21,7 @@ import ListFilesRendererView from "./ListFilesRenderer";
 import MultiCheckboxRendererView from "./MultiCheckboxRenderer";
 import PaymentRendererView from "./PaymentRenderer";
 import PhoneCountryRendererView from "./PhoneCountryRenderer";
+import PlanRendererView from "./PlanRenderer";
 import RadioRendererView from "./RadioRenderer";
 import RadioTableRendererView from "./RadioTableRenderer";
 import RatingFormSetting from "./RatingFormSetting";
@@ -174,8 +175,16 @@ export default function FieldRenderer({
       return <ListFilesRendererView field={field} />;
 
     case "stripe_subscription":
-    case "subscription_plan":
       return <SubscriptionPlanRendererView field={field} />;
+
+    case "subscription_plan":
+      return (
+        <PlanRendererView
+          field={field}
+          activeBlockId={activeBlockId}
+          activeSectionId={activeSectionId}
+        />
+      );
 
     case "evaluation":
       return <EvaluationRendererView field={field} />;

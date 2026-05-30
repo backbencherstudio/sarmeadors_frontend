@@ -1,135 +1,72 @@
 "use client";
 
-import { Check } from "lucide-react";
-import { useMemo, useState } from "react";
+import SubscriptionAdditionalNoteSection from "./SubscriptionAdditionalNoteSection";
+import SubscriptionBillingAddressSection from "./SubscriptionBillingAddressSection";
 
 type Props = {
   field: any;
 };
 
-type SubscriptionPlan = {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  features: string[];
-};
-
-const defaultPlans = (): SubscriptionPlan[] => [
-  {
-    id: "plan_1",
-    name: "Plan 1",
-    description: "Description 1",
-    price: "0",
-    features: ["Feature 1", "Feature 2", "Feature 3"],
-  },
-  {
-    id: "plan_2",
-    name: "Plan 2",
-    description: "Description 2",
-    price: "0",
-    features: [],
-  },
-];
-
-const normalizePlans = (plans: any): SubscriptionPlan[] => {
-  if (!Array.isArray(plans) || plans.length === 0) return defaultPlans();
-
-  return plans.map((plan: any, index: number) => ({
-    id: String(plan?.id || `plan_${index + 1}`),
-    name: String(plan?.name || `Plan ${index + 1}`),
-    description: String(plan?.description || ""),
-    price: String(plan?.price ?? "0"),
-    features: Array.isArray(plan?.features)
-      ? plan.features.map((f: any) => String(f))
-      : [],
-  }));
-};
-
 export default function SubscriptionPlanRenderer({ field }: Props) {
-  const plans = useMemo(() => normalizePlans(field?.plans), [field?.plans]);
-  const [selectedPlanId, setSelectedPlanId] = useState(plans[0]?.id || "");
-
   return (
     <div className="space-y-3 w-full">
       <div>
         <h3 className="text-xl font-semibold text-headerColor">
-          Payment Information
+          {field.label || "Payment Information"}
         </h3>
         <p className="text-sm text-secondaryColor">
-          Your card will be charged for the booking fee only.
+          {field.shortDescription ||
+            "Your card will be charged for the booking fee only."}
         </p>
       </div>
 
-      <div>
-        <h4 className="text-base font-semibold text-headerColor">
-          {field.label || "Stripe Subscription Selection"}
-          {field.required && <span className="text-red-500 ml-0.5">*</span>}
-        </h4>
+      <div className="space-y-3 border border-borderColor rounded-lg p-4 bg-bgColor">
+        <div className="flex items-center border border-borderColor rounded-lg bg-white px-3 py-2.5 gap-2">
+          <span className="text-sm text-gray-400 flex-1">
+            Enter name as on card
+          </span>
+        </div>
+        <div className="flex items-center border border-borderColor rounded-lg bg-white px-3 py-2.5 gap-2">
+          <span className="text-sm text-gray-400 flex-1">
+            1234 2542 2541 5254
+          </span>
+          <div className="flex items-center gap-1">
+            <div className="w-6 h-4 bg-orange-500 rounded-sm" />
+            <div className="w-6 h-4 bg-red-500 rounded-sm opacity-80 -ml-2" />
+            <div className="w-5 h-5 rounded-full bg-blue-900 text-white text-[10px] flex items-center justify-center font-bold -ml-1">
+              V
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex items-center border border-borderColor rounded-lg bg-white px-3 py-2.5">
+            <span className="text-sm text-gray-400">MM / YY</span>
+          </div>
+          <div className="flex items-center border border-borderColor rounded-lg bg-white px-3 py-2.5">
+            <span className="text-sm text-gray-400">123</span>
+          </div>
+        </div>
+        <label className="flex items-center gap-2 text-xs text-gray-500">
+          <input type="checkbox" className="h-3 w-3" />
+          Your payment information is securely stored in our system to be used
+          for future bookings.
+        </label>
       </div>
 
-      <div className="space-y-2">
-        {plans.map((plan) => {
-          const selected = selectedPlanId === plan.id;
-
-          return (
-            <button
-              key={plan.id}
-              type="button"
-              onClick={() => setSelectedPlanId(plan.id)}
-              className={`w-full text-left rounded-lg border p-3 transition-colors ${
-                selected
-                  ? "border-headerColor bg-white"
-                  : "border-borderColor bg-bgColor"
-              }`}
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-start gap-2">
-                  <span
-                    className={`mt-1 h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-                      selected ? "border-headerColor" : "border-gray-300"
-                    }`}
-                  >
-                    {selected && (
-                      <span className="h-2 w-2 rounded-full bg-headerColor" />
-                    )}
-                  </span>
-
-                  <div>
-                    <p className="text-base font-medium text-headerColor">
-                      {plan.name}
-                    </p>
-                    <p className="text-xs text-secondaryColor">
-                      {plan.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <p className="text-xl leading-5 font-medium text-headerColor">
-                    ${plan.price}
-                  </p>
-                  <p className="text-xs text-secondaryColor">Per Month</p>
-                </div>
-              </div>
-
-              {selected && plan.features.length > 0 && (
-                <div className="mt-3 pl-7 space-y-1">
-                  {plan.features.map((feature, index) => (
-                    <p
-                      key={`${plan.id}-feature-${index}`}
-                      className="text-sm text-secondaryColor flex items-center gap-1"
-                    >
-                      <Check size={12} />
-                      {feature}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </button>
-          );
-        })}
+      <div className="flex items-center justify-between border border-borderColor rounded-lg p-3 bg-bgColor">
+        <span className="text-sm font-medium text-headerColor">Stripe</span>
+        <div className="relative w-8 h-4 rounded-full bg-indigo-600">
+          <div className="absolute right-0.5 top-0.5 w-3 h-3 rounded-full bg-white" />
+        </div>
       </div>
+
+      {field.billingAddress && (
+        <SubscriptionBillingAddressSection label="Billing Address" />
+      )}
+
+      {field.additionalNote && (
+        <SubscriptionAdditionalNoteSection label="Add additional note" />
+      )}
     </div>
   );
 }
