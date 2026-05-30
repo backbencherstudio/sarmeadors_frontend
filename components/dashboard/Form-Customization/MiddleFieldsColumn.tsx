@@ -121,12 +121,6 @@ export default function MiddleFieldsColumn() {
   const activeBlock = useSelector((state: any) =>
     state.applicationForm.blocks.find((b: any) => b.id === activeBlockId),
   );
-  const activeSectionId = useSelector(
-    (state: any) => state.applicationForm.activeSectionId,
-  );
-  const activeFieldId = useSelector(
-    (state: any) => state.applicationForm.activeFieldId,
-  );
 
   const isDraggingBlock = useRef(false);
   const {
@@ -174,15 +168,10 @@ export default function MiddleFieldsColumn() {
     setAddFieldOpen(true);
   };
 
-  const openAddInputToSection = (sectionId: string) => {
-    dispatch(setActiveField({ sectionId, fieldId: null }));
-    setAddFieldInitialType(undefined);
-    setAddFieldOpen(true);
-  };
-
   const handleDeleteBlock = () => {
     dispatch(deleteBlock(activeBlockId));
   };
+  console.log(activeBlock);
 
   if (!activeBlock)
     return <div className="p-4 text-center text-gray-400">Select a block</div>;
@@ -238,7 +227,7 @@ export default function MiddleFieldsColumn() {
   }
   // ── Dynamic block ──────────────────────────────────────────────────────────
   return (
-    <div className="w-full bg-white h-full flex flex-col flex-1 overflow-y-auto scrollbar-hide">
+    <div className="w-full bg-white h-full flex flex-col flex-1">
       <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor">
         <div>
           <h2 className="text-lg font-semibold text-headerColor">
@@ -270,7 +259,7 @@ export default function MiddleFieldsColumn() {
         </div>
       </div>
 
-      <div className="p-6 w-full space-y-5 min-h-full">
+      <div className="p-6 w-full space-y-5 flex-1 min-h-screen overflow-y-auto scrollbar-hide">
         {blockFields.length > 0 ? (
           blockFields.map((field: any) => (
             <div
