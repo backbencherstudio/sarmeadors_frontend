@@ -54,6 +54,7 @@ export default function DatePickerRenderer({ field }: Props) {
           <div className="rounded-xl border border-borderColor bg-white p-3 shadow-lg">
             <Calendar
               mode="single"
+              className="p-0!"
               selected={selectedDate}
               onSelect={(date) => {
                 setSelectedDate(date);
