@@ -12,6 +12,7 @@ import IntroductionSettings from "./Introductionsettings";
 import RatingFieldSettings from "./RatingFieldSettings";
 import RatingGroupSettingsColumn from "./RatingGroupSettingsColumn";
 import SectionSettingsColumn from "./SectionSettingsColumn";
+import SubscriptionPlanFieldSettings from "./SubscriptionPlanFieldSettings";
 import TableFieldSettings from "./TableFieldSettings";
 
 const fieldTypeOptions = FORM_ELEMENT_CATEGORIES.flatMap((category) =>
@@ -27,6 +28,7 @@ const CHOICE_TYPES = ["radio", "multi_select_checkbox"];
 const DROPDOWN_TYPES = ["select", "multi_select"];
 const TABLE_TYPES = ["radio_table", "checkbox_table"];
 const FILE_TYPES = ["file", "file_additional"];
+const SUBSCRIPTION_TYPES = ["stripe_subscription", "subscription_plan"];
 
 export default function RightSettingsColumn() {
   const dispatch = useDispatch();
@@ -148,6 +150,13 @@ export default function RightSettingsColumn() {
             activeSectionId={activeSectionId}
             activeSection={activeSection}
             activeFieldId={activeFieldId}
+          />
+        ) : activeField && SUBSCRIPTION_TYPES.includes(activeField.type) ? (
+          <SubscriptionPlanFieldSettings
+            activeBlockId={activeBlockId}
+            activeFieldId={activeFieldId}
+            activeSectionId={activeSectionId}
+            activeField={activeField}
           />
         ) : activeField ? (
           <div className="space-y-3">
