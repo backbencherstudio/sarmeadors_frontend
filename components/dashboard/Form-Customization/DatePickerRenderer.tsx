@@ -1,22 +1,86 @@
 "use client";
 
-import { Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 type Props = {
   field: any;
 };
 
 export default function DatePickerRenderer({ field }: Props) {
+  const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+
+  useEffect(() => {
+    if (!field?.value) return;
+    const parsed = new Date(field.value);
+    if (!Number.isNaN(parsed.getTime())) {
+      setSelectedDate(parsed);
+    }
+  }, [field?.value]);
+
   return (
     <div className="space-y-1 w-full">
       <label className="block text-xs font-semibold text-headerColor">
         {field.label || "Date Picker"}
         {field.required && " *"}
       </label>
-      <div className="flex items-center border border-borderColor rounded-lg bg-bgColor px-3 py-2.5 gap-2">
-        <span className="text-sm text-gray-400 flex-1">YYYY/MM/DD</span>
-        <Calendar size={14} className="text-gray-400" />
-      </div>
+
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className="flex w-full items-center justify-between rounded-lg border border-borderColor bg-bgColor px-3 py-2.5 text-left"
+          >
+            <span
+              className={`text-sm ${selectedDate ? "text-headerColor" : "text-gray-400"}`}
+            >
+              {selectedDate
+                ? selectedDate.toLocaleDateString("en-CA")
+                : field.placeholder || "YYYY/MM/DD"}
+            </span>
+            <CalendarIcon size={14} className="text-gray-400" />
+          </button>
+        </PopoverTrigger>
+
+        <PopoverContent className="w-auto p-0 border-0 shadow-xl" align="start">
+          <div className="rounded-xl border border-borderColor bg-white p-3 shadow-lg">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={(date) => {
+                setSelectedDate(date);
+                setOpen(false);
+              }}
+              initialFocus
+            />
+            <div className="mt-3 flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                className="flex-1 rounded-lg"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                className="flex-1 rounded-lg bg-blackColor text-white hover:bg-blackColor/90"
+                onClick={() => setOpen(false)}
+              >
+                Save
+              </Button>
+            </div>
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
