@@ -2,16 +2,18 @@
 import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
 import { updateFieldProperties } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
-import { Lock } from "lucide-react";
 import { FORM_ELEMENT_CATEGORIES } from "@/public/custom/CustomFormElement";
+import { Lock } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import IntroductionSettings from "./Introductionsettings";
-import RatingGroupSettingsColumn from "./RatingGroupSettingsColumn";
-import SectionSettingsColumn from "./SectionSettingsColumn";
 import ChoiceFieldSettings from "./ChoiceFieldSettings";
 import DropdownFieldSettings from "./DropdownFieldSettings";
 import FileFieldSettings from "./FileFieldSettings";
+import IntroductionSettings from "./Introductionsettings";
+import PaymentInformationFieldSettings from "./PaymentInformationFieldSettings";
 import RatingFieldSettings from "./RatingFieldSettings";
+import RatingGroupSettingsColumn from "./RatingGroupSettingsColumn";
+import SectionSettingsColumn from "./SectionSettingsColumn";
+import SubscriptionPlanFieldSettings from "./SubscriptionPlanFieldSettings";
 import TableFieldSettings from "./TableFieldSettings";
 
 const fieldTypeOptions = FORM_ELEMENT_CATEGORIES.flatMap((category) =>
@@ -27,6 +29,7 @@ const CHOICE_TYPES = ["radio", "multi_select_checkbox"];
 const DROPDOWN_TYPES = ["select", "multi_select"];
 const TABLE_TYPES = ["radio_table", "checkbox_table"];
 const FILE_TYPES = ["file", "file_additional"];
+// subscription types handled separately below
 
 export default function RightSettingsColumn() {
   const dispatch = useDispatch();
@@ -131,100 +134,117 @@ export default function RightSettingsColumn() {
         </h2>
       </div>
 
-      <div className="p-4 flex-1 overflow-y-auto">
+      <div className="p-4 flex-1 overflow-y-auto scrollbar-hide">
         {activeBlock?.type === "introduction" ||
         activeBlock?.name === "Introduction" ? (
           <IntroductionSettings block={activeBlock} />
-        ) : activeField?.type === "rating_group" ? (
-          <RatingGroupSettingsColumn
-            activeBlockId={activeBlockId}
-            activeFieldId={activeFieldId}
-            activeField={activeField}
-            activeSectionId={activeSectionId}
-          />
         ) : activeField ? (
-          <div className="space-y-3">
-            <div>
-              <h2 className="text-lg font-bold text-gray-900">Fields</h2>
-            </div>
-            {activeField.isFixed && (
-              <div className="flex items-center gap-1.5 text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-md px-2.5 py-1.5">
-                <Lock size={11} />
-                <span>Fixed field — cannot be removed</span>
+          // If a field is active (clicked), show its settings first — even if it's inside a section
+          activeField.type === "rating_group" ? (
+            <RatingGroupSettingsColumn
+              activeBlockId={activeBlockId}
+              activeFieldId={activeFieldId}
+              activeField={activeField}
+              activeSectionId={activeSectionId}
+            />
+          ) : activeField.type === "subscription_plan" ? (
+            <SubscriptionPlanFieldSettings
+              activeBlockId={activeBlockId}
+              activeFieldId={activeFieldId}
+              activeSectionId={activeSectionId}
+              activeField={activeField}
+            />
+          ) : activeField.type === "stripe_subscription" ? (
+            <PaymentInformationFieldSettings
+              activeBlockId={activeBlockId}
+              activeFieldId={activeFieldId}
+              activeSectionId={activeSectionId}
+              activeField={activeField}
+            />
+          ) : (
+            <div className="space-y-3">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">Fields</h2>
               </div>
-            )}
-            <div className="space-y-4 p-3 rounded-lg border bg-whiteColor">
-              {activeBlock?.type !== "section" && (
-                <div>
-                  <label className="text-xs font-semibold text-gray-700">
-                    Field Type
-                  </label>
-                  <SelecteInputField
-                    value={activeField.type || "text"}
-                    onValueChange={(value) =>
-                      handlePropertyChange("type", value)
-                    }
-                    options={fieldTypeOptions}
-                    className="mt-1 bg-bgColor text-sm focus:outline-black"
-                  />
+              {activeField.isFixed && (
+                <div className="flex items-center gap-1.5 text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-md px-2.5 py-1.5">
+                  <Lock size={11} />
+                  <span>Fixed field — cannot be removed</span>
                 </div>
               )}
-
-              <div>
-                <ReusableInput
-                  label={"Field Label"}
-                  value={activeField.label || ""}
-                  onChange={(e) =>
-                    handlePropertyChange("label", e.target.value)
-                  }
-                  className="w-full bg-bgColor text-sm"
-                />
-              </div>
-
-              <div>
-                <ReusableInput
-                  label={"Profile Label"}
-                  value={activeField.profileLabel || ""}
-                  onChange={(e) =>
-                    handlePropertyChange("profileLabel", e.target.value)
-                  }
-                  placeholder="Label shown on profile"
-                  className="w-full bg-bgColor text-sm"
-                />
-              </div>
-
-              {activeField.type !== "section" &&
-                activeField.type !== "file" &&
-                activeField.type !== "file_additional" && (
+              <div className="space-y-4 p-3 rounded-lg border bg-whiteColor">
+                {activeBlock?.type !== "section" && (
                   <div>
-                    <ReusableInput
-                      label={"Placeholder"}
-                      value={activeField.placeholder || ""}
-                      onChange={(e) =>
-                        handlePropertyChange("placeholder", e.target.value)
+                    <label className="text-xs font-semibold text-gray-700">
+                      Field Type
+                    </label>
+                    <SelecteInputField
+                      value={activeField.type || "text"}
+                      onValueChange={(value) =>
+                        handlePropertyChange("type", value)
                       }
-                      className="w-full bg-bgColor text-sm"
+                      options={fieldTypeOptions}
+                      className="mt-1 bg-bgColor text-sm focus:outline-black"
                     />
                   </div>
                 )}
 
-              {activeField.type !== "section" && (
-                <label className="flex items-center gap-2 text-xs font-semibold text-gray-700">
-                  <input
-                    type="checkbox"
-                    checked={Boolean(activeField.required)}
+                <div>
+                  <ReusableInput
+                    label={"Field Label"}
+                    value={activeField.label || ""}
                     onChange={(e) =>
-                      handlePropertyChange("required", e.target.checked)
+                      handlePropertyChange("label", e.target.value)
                     }
-                    className="h-4 w-4 rounded border-gray-300"
+                    className="w-full bg-bgColor text-sm"
                   />
-                  Keep Mandatory
-                </label>
-              )}
+                </div>
 
-              {typeSpecificSettings()}
+                <div>
+                  <ReusableInput
+                    label={"Profile Label"}
+                    value={activeField.profileLabel || ""}
+                    onChange={(e) =>
+                      handlePropertyChange("profileLabel", e.target.value)
+                    }
+                    placeholder="Label shown on profile"
+                    className="w-full bg-bgColor text-sm"
+                  />
+                </div>
+
+                {activeField.type !== "section" &&
+                  activeField.type !== "file" &&
+                  activeField.type !== "file_additional" && (
+                    <div>
+                      <ReusableInput
+                        label={"Placeholder"}
+                        value={activeField.placeholder || ""}
+                        onChange={(e) =>
+                          handlePropertyChange("placeholder", e.target.value)
+                        }
+                        className="w-full bg-bgColor text-sm"
+                      />
+                    </div>
+                  )}
+
+                {activeField.type !== "section" && (
+                  <label className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(activeField.required)}
+                      onChange={(e) =>
+                        handlePropertyChange("required", e.target.checked)
+                      }
+                      className="h-4 w-4 rounded border-gray-300"
+                    />
+                    Keep Mandatory
+                  </label>
+                )}
+
+                {typeSpecificSettings()}
+              </div>
             </div>
-          </div>
+          )
         ) : activeSection ? (
           <SectionSettingsColumn
             activeBlockId={activeBlockId}

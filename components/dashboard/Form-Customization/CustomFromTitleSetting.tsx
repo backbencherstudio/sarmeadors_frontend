@@ -1,18 +1,16 @@
 "use client";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import BlocksCreateSetting from "./BlocksCreateSetting";
 import LeftBlocksColumn from "./LeftBlocksColumn";
 import MiddleFieldsColumn from "./MiddleFieldsColumn";
 import RightSettingsColumn from "./RightSettingsColumn";
 
 function CustomFromTitleSetting() {
-
   const [isBlockAdded, setIsBlockAdded] = useState(false);
 
   return (
-    <div className="flex  h-[calc(100vh-100px)] min-h-[500px] mt-4  ">
-      <div className="max-w-75 w-full h-full border rounded-tl-lg border-borderColor  bg-grayColor1">
+    <div className="flex h-[calc(100vh-100px)] min-h-[500px] mt-4 items-start ">
+      <div className="sticky top-0 max-w-75 w-full h-full border rounded-tl-lg border-borderColor bg-grayColor1 self-start ">
         {/* <div className="py-3.5 px-4  border-b border-borderColor flex items-center justify-between">
           <h2 className="text-lg font-semibold text-headerColor md:text-xl">
             Blocks
@@ -44,7 +42,7 @@ function CustomFromTitleSetting() {
           <LeftBlocksColumn onAddBlockClick={() => setIsBlockAdded(true)} />
         </div>
       </div>
-      <div className="w-full border-y border-borderColor  h-full">
+      <div className="w-full border-y border-borderColor h-full min-h-0 overflow-y-auto scrollbar-hide flex-1">
         {/* <div className="py-2 px-4 flex items-center border-b border-borderColor justify-between ">
           <h2 className="text-lg font-semibold text-headerColor ">
             Introduction
@@ -59,7 +57,7 @@ function CustomFromTitleSetting() {
           <MiddleFieldsColumn />
         </div>
       </div>
-      <div className="max-w-75  border rounded-tr-lg border-borderColor w-full h-full bg-grayColor1">
+      <div className="sticky top-0 max-w-75 border rounded-tr-lg border-borderColor w-full h-full bg-grayColor1 ">
         {/* <div className="py-4 px-4  border-b border-borderColor  ">
           <h2 className="text-lg font-semibold text-headerColor md:text-xl">
             Elements

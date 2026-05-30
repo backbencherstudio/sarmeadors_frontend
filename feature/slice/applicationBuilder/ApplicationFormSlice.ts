@@ -4,6 +4,7 @@ export interface InputField {
   id: string;
   type: string;
   label: string;
+  shortDescription?: string;
   placeholder?: string;
   required?: boolean;
   width?: "1/4" | "1/2" | "3/4" | "1";
@@ -19,6 +20,7 @@ export interface InputField {
   multiSelect?: boolean;
   yesNo?: boolean;
   listFile?: boolean;
+  billingAddress?: boolean;
   additionalNote?: boolean;
   content?: string;
 }

@@ -20,12 +20,12 @@ export default function MultiCheckboxRenderer({ field }: Props) {
     );
 
   return (
-    <div className="space-y-2 w-full">
+    <div className="space-y-2 relative w-full">
       <label className="block text-xs font-semibold text-headerColor">
         {field.label || "Select options as you like"}
         {field.required && " *"}
       </label>
-      <div className={isHorizontal ? "flex flex-wrap gap-4" : "space-y-2"}>
+      <div className={isHorizontal ? "flex flex-wrap gap-4" : "space-y-2 absolute -bottom-3 left-0"}>
         {items.map((item: string, i: number) => (
           <div
             key={i}
