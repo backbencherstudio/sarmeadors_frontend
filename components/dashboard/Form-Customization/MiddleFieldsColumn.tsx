@@ -87,11 +87,7 @@ function SectionWithDrag({
             )}
           </div>
           <div
-            className={`flex-1 min-w-0 cursor-pointer rounded-md p-1 transition-all ${
-              activeSectionId === section.id && activeFieldId === input.id
-                ? "ring-2 ring-blackColor ring-offset-1"
-                : "hover:ring-1 hover:ring-borderColor hover:bg-bgColor"
-            }`}
+            className={`flex-1 min-w-0 cursor-pointer rounded-md p-1 transition-all `}
             onClick={(e) => {
               e.stopPropagation();
               dispatch(
@@ -299,11 +295,7 @@ export default function MiddleFieldsColumn() {
                   <button
                     type="button"
                     onClick={() => selectField(field.id, null)}
-                    className={`text-left w-full rounded-md px-1 py-0.5 transition-all ${
-                      activeSectionId === field.id && !activeFieldId
-                        ? "ring-2 ring-blackColor"
-                        : "hover:ring-1 hover:ring-borderColor"
-                    }`}
+                    className={`text-left w-full rounded-md px-1 py-0.5 transition-all`}
                   >
                     <h3 className="text-base lg:text-lg font-semibold text-headerColor">
                       {field.label}
@@ -311,23 +303,6 @@ export default function MiddleFieldsColumn() {
                   </button>
 
                   <SectionWithDrag section={field} blockId={activeBlockId} />
-
-                  <div className="pt-1">
-                    <ButtonReuseable
-                      icon={<PlusIcon size={13} />}
-                      title="Add Input"
-                      onClick={() => {
-                        dispatch(
-                          setActiveField({
-                            sectionId: field.id,
-                            fieldId: null,
-                          }),
-                        );
-                        openAddInput();
-                      }}
-                      className="bg-white! border border-borderColor text-headerColor! py-2! text-xs! font-medium"
-                    />
-                  </div>
                 </div>
               ) : (
                 // ── Regular field row ───────────────────────────────────────
@@ -343,11 +318,7 @@ export default function MiddleFieldsColumn() {
                     )}
                   </div>
                   <div
-                    className={`flex-1 min-w-0 cursor-pointer rounded-md p-1 transition-all ${
-                      !activeSectionId && activeFieldId === field.id
-                        ? "ring-2 ring-blackColor ring-offset-1"
-                        : "hover:ring-1 hover:ring-borderColor hover:bg-bgColor"
-                    }`}
+                    className={`flex-1 min-w-0 cursor-pointer rounded-md p-1 transition-all`}
                     onClick={() => selectField(null, field.id)}
                   >
                     <FieldRenderer

@@ -142,6 +142,13 @@ export default function RightSettingsColumn() {
             activeField={activeField}
             activeSectionId={activeSectionId}
           />
+        ) : activeSection ? (
+          <SectionSettingsColumn
+            activeBlockId={activeBlockId}
+            activeSectionId={activeSectionId}
+            activeSection={activeSection}
+            activeFieldId={activeFieldId}
+          />
         ) : activeField ? (
           <div className="space-y-3">
             <div>
@@ -225,13 +232,6 @@ export default function RightSettingsColumn() {
               {typeSpecificSettings()}
             </div>
           </div>
-        ) : activeSection ? (
-          <SectionSettingsColumn
-            activeBlockId={activeBlockId}
-            activeSectionId={activeSectionId}
-            activeSection={activeSection}
-            activeFieldId={activeFieldId}
-          />
         ) : (
           <div className="text-center py-12 text-gray-400 text-sm">
             Select any input field or section to configure its properties.
