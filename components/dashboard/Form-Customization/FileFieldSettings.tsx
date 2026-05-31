@@ -42,7 +42,8 @@ export default function FileFieldSettings({
         List File
       </label>
 
-      {activeField.type === "file_additional" && (
+      {(activeField.type === "file" ||
+        activeField.type === "file_additional") && (
         <label className="flex items-center gap-2 text-xs font-semibold text-gray-700">
           <input
             type="checkbox"
