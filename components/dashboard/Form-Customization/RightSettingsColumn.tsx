@@ -5,6 +5,7 @@ import { updateFieldProperties } from "@/feature/slice/applicationBuilder/Applic
 import { FORM_ELEMENT_CATEGORIES } from "@/public/custom/CustomFormElement";
 import { Lock } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import BookingFieldSettingsInline from "./BookingFieldSettingsInline";
 import ChoiceFieldSettings from "./ChoiceFieldSettings";
 import DropdownFieldSettings from "./DropdownFieldSettings";
 import FileFieldSettings from "./FileFieldSettings";
@@ -156,6 +157,13 @@ export default function RightSettingsColumn() {
             />
           ) : activeField.type === "stripe_subscription" ? (
             <PaymentInformationFieldSettings
+              activeBlockId={activeBlockId}
+              activeFieldId={activeFieldId}
+              activeSectionId={activeSectionId}
+              activeField={activeField}
+            />
+          ) : activeField.type === "booking" ? (
+            <BookingFieldSettingsInline
               activeBlockId={activeBlockId}
               activeFieldId={activeFieldId}
               activeSectionId={activeSectionId}

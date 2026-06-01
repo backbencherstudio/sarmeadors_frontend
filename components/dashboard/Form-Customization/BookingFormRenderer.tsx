@@ -23,11 +23,18 @@ type AdditionalDateRow = {
 
 type BookingData = {
   tab: "short" | "long";
+  tabVisibility: {
+    short: boolean;
+    long: boolean;
+  };
   shortTerm: {
     bookingDate: string;
     startTime: string;
     endTime: string;
+    agencyFee: string;
+    additionalDateEnabled: boolean;
     additionalDates: AdditionalDateRow[];
+    additionalDateLabel?: string;
   };
   longTerm: {
     children: string[];
@@ -35,7 +42,11 @@ type BookingData = {
     endDate: string;
     startTime: string;
     endTime: string;
+    agencyFee: string;
     days: string[];
+    additionalDateEnabled?: boolean;
+    additionalDates?: AdditionalDateRow[];
+    additionalDateLabel?: string;
   };
 };
 
@@ -59,10 +70,16 @@ const childOptions = [
 
 const createDefaultBookingData = (): BookingData => ({
   tab: "short",
+  tabVisibility: {
+    short: true,
+    long: true,
+  },
   shortTerm: {
     bookingDate: "",
     startTime: "",
     endTime: "",
+    agencyFee: "100",
+    additionalDateEnabled: true,
     additionalDates: [
       {
         id: `row-${Date.now()}`,
@@ -71,6 +88,7 @@ const createDefaultBookingData = (): BookingData => ({
         endTime: "",
       },
     ],
+    additionalDateLabel: "Add Additional Date",
   },
   longTerm: {
     children: ["Augustina Midgett", "Johnsie Jock"],
@@ -78,7 +96,11 @@ const createDefaultBookingData = (): BookingData => ({
     endDate: "",
     startTime: "",
     endTime: "",
+    agencyFee: "100",
     days: [],
+    additionalDateEnabled: false,
+    additionalDates: [],
+    additionalDateLabel: "Add Additional Date",
   },
 });
 
@@ -95,12 +117,32 @@ export default function BookingFormRenderer({
   const [tab, setTab] = useState<"short" | "long">(bookingData.tab);
   const [shortTerm, setShortTerm] = useState(bookingData.shortTerm);
   const [longTerm, setLongTerm] = useState(bookingData.longTerm);
+  const visibleTabs = bookingData.tabVisibility || { short: true, long: true };
+  const visibleTabList = [
+    visibleTabs.short ? "short" : null,
+    visibleTabs.long ? "long" : null,
+  ].filter(Boolean) as Array<"short" | "long">;
+  const activeTab = visibleTabList.includes(tab)
+    ? tab
+    : visibleTabList[0] || "short";
 
   useEffect(() => {
     setTab(bookingData.tab);
     setShortTerm(bookingData.shortTerm);
     setLongTerm(bookingData.longTerm);
   }, [bookingData]);
+
+  useEffect(() => {
+    if (!visibleTabList.includes(tab) && visibleTabList.length > 0) {
+      const nextTab = visibleTabList[0];
+      setTab(nextTab);
+      syncBookingData({
+        ...bookingData,
+        tab: nextTab,
+        tabVisibility: visibleTabs,
+      });
+    }
+  }, [bookingData, tab, visibleTabList, visibleTabs]);
 
   const syncBookingData = (nextData: BookingData) => {
     if (!activeBlockId || !field?.id) return;
@@ -117,6 +159,9 @@ export default function BookingFormRenderer({
   };
 
   const updateTab = (nextTab: "short" | "long") => {
+    if (!visibleTabs[nextTab]) {
+      return;
+    }
     setTab(nextTab);
     syncBookingData({
       ...bookingData,
@@ -132,6 +177,7 @@ export default function BookingFormRenderer({
       tab,
       shortTerm: nextShortTerm,
       longTerm,
+      tabVisibility: visibleTabs,
     });
   };
 
@@ -143,6 +189,7 @@ export default function BookingFormRenderer({
       tab,
       shortTerm,
       longTerm: nextLongTerm,
+      tabVisibility: visibleTabs,
     });
   };
 
@@ -154,6 +201,16 @@ export default function BookingFormRenderer({
       row.id === rowId ? { ...row, ...patch } : row,
     );
     updateShortTerm({ additionalDates: nextAdditionalDates });
+  };
+
+  const updateLongAdditionalDate = (
+    rowId: string,
+    patch: Partial<AdditionalDateRow>,
+  ) => {
+    const nextAdditionalDates = (longTerm.additionalDates || []).map((row) =>
+      row.id === rowId ? { ...row, ...patch } : row,
+    );
+    updateLongTerm({ additionalDates: nextAdditionalDates });
   };
 
   const addAdditionalDate = () => {
@@ -170,6 +227,19 @@ export default function BookingFormRenderer({
     });
   };
 
+  const addLongAdditionalDate = () => {
+    const next = [
+      ...(longTerm.additionalDates || []),
+      {
+        id: `row-${Date.now()}`,
+        date: "",
+        startTime: "",
+        endTime: "",
+      },
+    ];
+    updateLongTerm({ additionalDates: next });
+  };
+
   const addMultipleDates = () => {
     const nextRows = Array.from({ length: 3 }, () => ({
       id: `row-${Date.now()}-${Math.random().toString(16).slice(2)}`,
@@ -180,6 +250,19 @@ export default function BookingFormRenderer({
 
     updateShortTerm({
       additionalDates: [...shortTerm.additionalDates, ...nextRows],
+    });
+  };
+
+  const addLongMultipleDates = () => {
+    const nextRows = Array.from({ length: 3 }, () => ({
+      id: `row-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      date: "",
+      startTime: "",
+      endTime: "",
+    }));
+
+    updateLongTerm({
+      additionalDates: [...(longTerm.additionalDates || []), ...nextRows],
     });
   };
 
@@ -205,36 +288,42 @@ export default function BookingFormRenderer({
           Schedule when this job will take place
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-2 rounded-sm border p-0.5">
-        <button
-          type="button"
-          onClick={() => updateTab("short")}
-          className={`rounded-sm cursor-pointer px-4 py-2 text-sm font-semibold transition ${
-            tab === "short"
-              ? "border border-borderColor bg-bgColor text-headerColor "
-              : "text-gray-500"
-          }`}
-        >
-          Short-Term Booking
-        </button>
-        <button
-          type="button"
-          onClick={() => updateTab("long")}
-          className={`rounded-sm px-4 cursor-pointer py-2 text-sm font-semibold transition ${
-            tab === "long"
-              ? "border border-borderColor bg-bgColor text-headerColor "
-              : "text-gray-500"
-          }`}
-        >
-          Long-Term Booking
-        </button>
+      <div
+        className={`grid gap-2 rounded-sm border p-0.5 ${visibleTabList.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}
+      >
+        {visibleTabs.short && (
+          <button
+            type="button"
+            onClick={() => updateTab("short")}
+            className={`rounded-sm cursor-pointer px-4 py-2 text-sm font-semibold transition ${
+              activeTab === "short"
+                ? "border border-borderColor bg-bgColor text-headerColor "
+                : "text-gray-500"
+            }`}
+          >
+            Short-Term Booking
+          </button>
+        )}
+        {visibleTabs.long && (
+          <button
+            type="button"
+            onClick={() => updateTab("long")}
+            className={`rounded-sm px-4 cursor-pointer py-2 text-sm font-semibold transition ${
+              activeTab === "long"
+                ? "border border-borderColor bg-bgColor text-headerColor "
+                : "text-gray-500"
+            }`}
+          >
+            Long-Term Booking
+          </button>
+        )}
       </div>
 
-      {tab === "short" ? (
+      {activeTab === "short" ? (
         <div className="space-y-5">
           <DatePickerRenderer
             field={{
-              label: "Booking Date",
+              label: bookingData.shortTerm?.bookingDate || "Booking Date",
               placeholder: "MM/DD/YYYY",
               value: shortTerm.bookingDate,
             }}
@@ -244,73 +333,89 @@ export default function BookingFormRenderer({
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <TimePickerRenderer
-              field={{ label: "Start Time", value: shortTerm.startTime }}
+              field={{
+                label: bookingData.shortTerm?.startTime || "Start Time",
+                value: shortTerm.startTime,
+              }}
               value={shortTerm.startTime}
               onValueChange={(value) => updateShortTerm({ startTime: value })}
             />
             <TimePickerRenderer
-              field={{ label: "End Time", value: shortTerm.endTime }}
+              field={{
+                label: bookingData.shortTerm?.endTime || "End Time",
+                value: shortTerm.endTime,
+              }}
               value={shortTerm.endTime}
               onValueChange={(value) => updateShortTerm({ endTime: value })}
             />
           </div>
 
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-headerColor">
-              Add Additional Date
-            </label>
+          {shortTerm.additionalDateEnabled !== false && (
             <div className="space-y-3">
-              {shortTerm.additionalDates.map((row) => (
-                <div
-                  key={row.id}
-                  className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_0.8fr_0.8fr]"
-                >
-                  <DatePickerRenderer
-                    field={{
-                      label: "Additional Date",
-                      placeholder: "MM/DD/YYYY",
-                      value: row.date,
-                    }}
-                    value={row.date}
-                    onValueChange={(value) =>
-                      updateAdditionalDate(row.id, { date: value })
-                    }
-                  />
-                  <TimePickerRenderer
-                    field={{ label: "Start", value: row.startTime }}
-                    value={row.startTime}
-                    onValueChange={(value) =>
-                      updateAdditionalDate(row.id, { startTime: value })
-                    }
-                  />
-                  <TimePickerRenderer
-                    field={{ label: "End", value: row.endTime }}
-                    value={row.endTime}
-                    onValueChange={(value) =>
-                      updateAdditionalDate(row.id, { endTime: value })
-                    }
-                  />
-                </div>
-              ))}
-            </div>
+              <label className="text-sm font-semibold text-headerColor">
+                Add Additional Date
+              </label>
+              <div className="space-y-3">
+                {shortTerm.additionalDates.map((row) => (
+                  <div
+                    key={row.id}
+                    className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_0.8fr_0.8fr]"
+                  >
+                    <DatePickerRenderer
+                      field={{
+                        label:
+                          bookingData.shortTerm?.additionalDateLabel ||
+                          "Additional Date",
+                        placeholder: "MM/DD/YYYY",
+                        value: row.date,
+                      }}
+                      value={row.date}
+                      onValueChange={(value) =>
+                        updateAdditionalDate(row.id, { date: value })
+                      }
+                    />
+                    <TimePickerRenderer
+                      field={{
+                        label: bookingData.shortTerm?.startTime || "Start",
+                        value: row.startTime,
+                      }}
+                      value={row.startTime}
+                      onValueChange={(value) =>
+                        updateAdditionalDate(row.id, { startTime: value })
+                      }
+                    />
+                    <TimePickerRenderer
+                      field={{
+                        label: bookingData.shortTerm?.endTime || "End",
+                        value: row.endTime,
+                      }}
+                      value={row.endTime}
+                      onValueChange={(value) =>
+                        updateAdditionalDate(row.id, { endTime: value })
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
 
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={addAdditionalDate}
-                className="inline-flex items-center gap-2 rounded-md border border-borderColor bg-white px-3 py-2 text-xs font-semibold text-headerColor"
-              >
-                <Plus size={14} /> Add Another Date
-              </button>
-              <button
-                type="button"
-                onClick={addMultipleDates}
-                className="inline-flex items-center gap-2 rounded-md border border-borderColor bg-white px-3 py-2 text-xs font-semibold text-headerColor"
-              >
-                <Plus size={14} /> Add Multiple Dates
-              </button>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={addAdditionalDate}
+                  className="inline-flex items-center gap-2 rounded-md border border-borderColor bg-white px-3 py-2 text-xs font-semibold text-headerColor"
+                >
+                  <Plus size={14} /> Add Another Date
+                </button>
+                <button
+                  type="button"
+                  onClick={addMultipleDates}
+                  className="inline-flex items-center gap-2 rounded-md border border-borderColor bg-white px-3 py-2 text-xs font-semibold text-headerColor"
+                >
+                  <Plus size={14} /> Add Multiple Dates
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ) : (
         <div className="space-y-5">
@@ -348,12 +453,18 @@ export default function BookingFormRenderer({
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <DatePickerRenderer
-              field={{ label: "Start Date", value: longTerm.startDate }}
+              field={{
+                label: bookingData.longTerm?.startDate || "Start Date",
+                value: longTerm.startDate,
+              }}
               value={longTerm.startDate}
               onValueChange={(value) => updateLongTerm({ startDate: value })}
             />
             <DatePickerRenderer
-              field={{ label: "End Date", value: longTerm.endDate }}
+              field={{
+                label: bookingData.longTerm?.endDate || "End Date",
+                value: longTerm.endDate,
+              }}
               value={longTerm.endDate}
               onValueChange={(value) => updateLongTerm({ endDate: value })}
             />
@@ -361,12 +472,18 @@ export default function BookingFormRenderer({
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <TimePickerRenderer
-              field={{ label: "Start Time", value: longTerm.startTime }}
+              field={{
+                label: bookingData.longTerm?.startTime || "Start Time",
+                value: longTerm.startTime,
+              }}
               value={longTerm.startTime}
               onValueChange={(value) => updateLongTerm({ startTime: value })}
             />
             <TimePickerRenderer
-              field={{ label: "End Time", value: longTerm.endTime }}
+              field={{
+                label: bookingData.longTerm?.endTime || "End Time",
+                value: longTerm.endTime,
+              }}
               value={longTerm.endTime}
               onValueChange={(value) => updateLongTerm({ endTime: value })}
             />
@@ -398,6 +515,73 @@ export default function BookingFormRenderer({
               ))}
             </div>
           </div>
+          {longTerm.additionalDateEnabled && (
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-headerColor">
+                {bookingData.longTerm?.additionalDateLabel ||
+                  "Add Additional Date"}
+              </label>
+              <div className="space-y-3">
+                {(longTerm.additionalDates || []).map((row) => (
+                  <div
+                    key={row.id}
+                    className="grid grid-cols-1 gap-3 md:grid-cols-[1.2fr_0.8fr_0.8fr]"
+                  >
+                    <DatePickerRenderer
+                      field={{
+                        label:
+                          bookingData.longTerm?.additionalDateLabel ||
+                          "Additional Date",
+                        placeholder: "MM/DD/YYYY",
+                        value: row.date,
+                      }}
+                      value={row.date}
+                      onValueChange={(value) =>
+                        updateLongAdditionalDate(row.id, { date: value })
+                      }
+                    />
+                    <TimePickerRenderer
+                      field={{
+                        label: bookingData.longTerm?.startTime || "Start",
+                        value: row.startTime,
+                      }}
+                      value={row.startTime}
+                      onValueChange={(value) =>
+                        updateLongAdditionalDate(row.id, { startTime: value })
+                      }
+                    />
+                    <TimePickerRenderer
+                      field={{
+                        label: bookingData.longTerm?.endTime || "End",
+                        value: row.endTime,
+                      }}
+                      value={row.endTime}
+                      onValueChange={(value) =>
+                        updateLongAdditionalDate(row.id, { endTime: value })
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={addLongAdditionalDate}
+                  className="inline-flex items-center gap-2 rounded-md border border-borderColor bg-white px-3 py-2 text-xs font-semibold text-headerColor"
+                >
+                  <Plus size={14} /> Add Another Date
+                </button>
+                <button
+                  type="button"
+                  onClick={addLongMultipleDates}
+                  className="inline-flex items-center gap-2 rounded-md border border-borderColor bg-white px-3 py-2 text-xs font-semibold text-headerColor"
+                >
+                  <Plus size={14} /> Add Multiple Dates
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
