@@ -334,6 +334,9 @@ const applicationFormSlice = createSlice({
         const field = block.fields.find((f) => f.id === fieldId);
         if ((field as InputField)?.isFixed) return;
         block.fields = block.fields.filter((f) => f.id !== fieldId);
+        if (state.activeSectionId === fieldId) {
+          state.activeSectionId = null;
+        }
       }
       state.activeFieldId = null;
     },

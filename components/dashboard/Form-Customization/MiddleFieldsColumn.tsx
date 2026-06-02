@@ -1,10 +1,12 @@
 "use client";
 
 import InputIcon from "@/components/icon/InputIcon";
+import DeleteIcon from "@/components/icon/DeleteIcon";
 import SectionIcon from "@/components/icon/SectionIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import {
   deleteBlock,
+  deleteField,
   reorderBlockFields,
   reorderSectionInputs,
   setActiveField,
@@ -171,7 +173,14 @@ export default function MiddleFieldsColumn() {
   const handleDeleteBlock = () => {
     dispatch(deleteBlock(activeBlockId));
   };
-  console.log(activeBlock);
+
+  const handleDeleteBlockField = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    fieldId: string,
+  ) => {
+    e.stopPropagation();
+    dispatch(deleteField({ blockId: activeBlockId, sectionId: null, fieldId }));
+  };
 
   if (!activeBlock)
     return <div className="p-4 text-center text-gray-400">Select a block</div>;
@@ -281,15 +290,30 @@ export default function MiddleFieldsColumn() {
               {field.type === "section" ? (
                 // ── Section row ────────────────────────────────────────────
                 <div className="space-y-3">
-                  <button
-                    type="button"
-                    onClick={() => selectField(field.id, null)}
-                    className={`text-left w-full rounded-md px-1 py-0.5 transition-all`}
-                  >
-                    <h3 className="text-base lg:text-lg font-semibold text-headerColor">
-                      {field.label}
-                    </h3>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => selectField(field.id, null)}
+                      className={`text-left flex-1 min-w-0 rounded-md px-1 py-0.5 transition-all`}
+                    >
+                      <h3 className="text-base lg:text-lg font-semibold text-headerColor">
+                        {field.label}
+                      </h3>
+                    </button>
+                    {!field.isFixed && (
+                      <button
+                        type="button"
+                        title="Delete field"
+                        aria-label={`Delete ${field.label}`}
+                        draggable={false}
+                        onDragStart={(e) => e.stopPropagation()}
+                        onClick={(e) => handleDeleteBlockField(e, field.id)}
+                        className="shrink-0 p-2 rounded border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
+                      >
+                        <DeleteIcon />
+                      </button>
+                    )}
+                  </div>
 
                   <SectionWithDrag section={field} blockId={activeBlockId} />
                 </div>
@@ -316,6 +340,19 @@ export default function MiddleFieldsColumn() {
                       activeSectionId={null}
                     />
                   </div>
+                  {!field.isFixed && (
+                    <button
+                      type="button"
+                      title="Delete field"
+                      aria-label={`Delete ${field.label}`}
+                      draggable={false}
+                      onDragStart={(e) => e.stopPropagation()}
+                      onClick={(e) => handleDeleteBlockField(e, field.id)}
+                      className="mt-6 shrink-0 p-2 rounded border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
+                    >
+                      <DeleteIcon />
+                    </button>
+                  )}
                 </div>
               )}
             </div>
