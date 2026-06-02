@@ -1,7 +1,7 @@
 "use client";
 
 import { updateFieldProperties } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
-import { Calendar, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import DatePickerRenderer from "./DatePickerRenderer";
@@ -82,7 +82,7 @@ const createDefaultBookingData = (): BookingData => ({
   },
 });
 
-export default function BookingRenderer({
+export default function BookingFormRenderer({
   field,
   activeBlockId,
   activeSectionId,
@@ -195,14 +195,23 @@ export default function BookingRenderer({
   };
 
   return (
-    <div className="space-y-4 w-full rounded-2xl border border-borderColor bg-white p-5">
-      <div className="grid grid-cols-2 gap-2 rounded-full bg-bgColor p-1">
+    <div className="space-y-4 w-full rounded-2xl ">
+      <div className="space-y-1">
+        <h3 className="text-lg md:text-xl font-semibold text-headerColor flex items-center gap-2">
+          {field.label || "Set Booking Date & Time"}
+          {field.required && <span className="text-red-500">*</span>}
+        </h3>
+        <p className="text-sm md:text-base text-secondaryColor">
+          Schedule when this job will take place
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-2 rounded-sm border p-0.5">
         <button
           type="button"
           onClick={() => updateTab("short")}
-          className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+          className={`rounded-sm cursor-pointer px-4 py-2 text-sm font-semibold transition ${
             tab === "short"
-              ? "border border-borderColor bg-white text-headerColor shadow-sm"
+              ? "border border-borderColor bg-bgColor text-headerColor "
               : "text-gray-500"
           }`}
         >
@@ -211,9 +220,9 @@ export default function BookingRenderer({
         <button
           type="button"
           onClick={() => updateTab("long")}
-          className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+          className={`rounded-sm px-4 cursor-pointer py-2 text-sm font-semibold transition ${
             tab === "long"
-              ? "border border-borderColor bg-white text-headerColor shadow-sm"
+              ? "border border-borderColor bg-bgColor text-headerColor "
               : "text-gray-500"
           }`}
         >
@@ -221,33 +230,17 @@ export default function BookingRenderer({
         </button>
       </div>
 
-      <div className="space-y-1">
-        <h3 className="text-sm font-semibold text-headerColor flex items-center gap-2">
-          <Calendar size={16} className="text-gray-500" />
-          {field.label || "Set Booking Date & Time"}
-          {field.required && <span className="text-red-500">*</span>}
-        </h3>
-        <p className="text-xs text-gray-500">
-          Schedule when this job will take place
-        </p>
-      </div>
-
       {tab === "short" ? (
         <div className="space-y-5">
-          <div className="space-y-3">
-            <label className="text-xs font-semibold text-headerColor">
-              Booking Date *
-            </label>
-            <DatePickerRenderer
-              field={{
-                label: "Booking Date",
-                placeholder: "MM/DD/YYYY",
-                value: shortTerm.bookingDate,
-              }}
-              value={shortTerm.bookingDate}
-              onValueChange={(value) => updateShortTerm({ bookingDate: value })}
-            />
-          </div>
+          <DatePickerRenderer
+            field={{
+              label: "Booking Date",
+              placeholder: "MM/DD/YYYY",
+              value: shortTerm.bookingDate,
+            }}
+            value={shortTerm.bookingDate}
+            onValueChange={(value) => updateShortTerm({ bookingDate: value })}
+          />
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <TimePickerRenderer

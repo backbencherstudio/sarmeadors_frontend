@@ -5,9 +5,15 @@ import { useState } from "react";
 
 type Props = {
   field: any;
+  value?: string[];
+  onValueChange?: (value: string[]) => void;
 };
 
-export default function DropdownRenderer({ field }: Props) {
+export default function DropdownRenderer({
+  field,
+  value,
+  onValueChange,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const items = field.items?.length
@@ -17,14 +23,23 @@ export default function DropdownRenderer({ field }: Props) {
 
   const toggle = (item: string) => {
     if (!isMulti) {
-      setSelected([item]);
+      const nextValue = [item];
+      setSelected(nextValue);
+      onValueChange?.(nextValue);
       setOpen(false);
       return;
     }
-    setSelected((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item],
-    );
+    setSelected((prev) => {
+      const nextValue = prev.includes(item)
+        ? prev.filter((i) => i !== item)
+        : [...prev, item];
+      onValueChange?.(nextValue);
+      return nextValue;
+    });
   };
+
+  const displaySelected = value || selected;
+  const displaySingleValue = displaySelected[0] || "";
 
   return (
     <div className="space-y-1 w-full">
@@ -38,9 +53,9 @@ export default function DropdownRenderer({ field }: Props) {
           onClick={() => setOpen(!open)}
           className="w-full px-3 py-2.5 border border-borderColor rounded-lg bg-bgColor text-sm text-left flex justify-between items-center"
         >
-          {isMulti && selected.length > 0 ? (
+          {isMulti && displaySelected.length > 0 ? (
             <div className="flex flex-wrap gap-1">
-              {selected.map((s) => (
+              {displaySelected.map((s) => (
                 <span
                   key={s}
                   className="px-2 py-0.5 bg-blackColor text-white text-xs rounded"
@@ -49,6 +64,10 @@ export default function DropdownRenderer({ field }: Props) {
                 </span>
               ))}
             </div>
+          ) : displaySingleValue ? (
+            <span className="text-headerColor text-sm">
+              {displaySingleValue}
+            </span>
           ) : (
             <span className="text-gray-400 text-sm">
               {isMulti ? "Select Multiple Options" : "Select Option"}
@@ -74,10 +93,13 @@ export default function DropdownRenderer({ field }: Props) {
           </div>
         )}
       </div>
-      {isMulti && selected.length > 0 && (
+      {isMulti && displaySelected.length > 0 && (
         <button
           type="button"
-          onClick={() => setSelected([])}
+          onClick={() => {
+            setSelected([]);
+            onValueChange?.([]);
+          }}
           className="text-xs text-gray-400 hover:text-gray-600"
         >
           Clear

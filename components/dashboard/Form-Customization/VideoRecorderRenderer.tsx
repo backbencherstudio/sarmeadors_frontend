@@ -106,7 +106,7 @@ export default function VideoRecorderRenderer({ field }: Props) {
             event.stopPropagation();
             inputRef.current?.click();
           }}
-          className="text-xs text-headerColor flex items-center gap-2 font-semibold border border-borderColor rounded-sm px-3 py-1.5 bg-white"
+          className="text-xs text-headerColor flex items-center gap-2 font-semibold border  rounded-sm px-3 py-1.5"
         >
           <Upload size={14} className="text-headerColor" /> Select Video
         </button>

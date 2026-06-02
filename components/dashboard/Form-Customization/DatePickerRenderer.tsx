@@ -12,19 +12,33 @@ import { useEffect, useState } from "react";
 
 type Props = {
   field: any;
+  value?: string;
+  onValueChange?: (value: string) => void;
 };
 
-export default function DatePickerRenderer({ field }: Props) {
+export default function DatePickerRenderer({
+  field,
+  value,
+  onValueChange,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
+    if (value) {
+      const parsedValue = new Date(value);
+      if (!Number.isNaN(parsedValue.getTime())) {
+        setSelectedDate(parsedValue);
+      }
+      return;
+    }
+
     if (!field?.value) return;
     const parsed = new Date(field.value);
     if (!Number.isNaN(parsed.getTime())) {
       setSelectedDate(parsed);
     }
-  }, [field?.value]);
+  }, [field?.value, value]);
 
   return (
     <div className="space-y-1 w-full">
@@ -58,6 +72,9 @@ export default function DatePickerRenderer({ field }: Props) {
               selected={selectedDate}
               onSelect={(date) => {
                 setSelectedDate(date);
+                if (date && onValueChange) {
+                  onValueChange(date.toISOString());
+                }
                 setOpen(false);
               }}
               initialFocus
