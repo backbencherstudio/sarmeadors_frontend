@@ -55,10 +55,7 @@ export default function AddNewAgency() {
         Add New Agency
       </button>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-8 pl-10 max-w-3xl"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 pl-10">
         {/* ── Agency Details ── */}
         <div>
           <h2 className="text-sm font-semibold text-[#111927]">
