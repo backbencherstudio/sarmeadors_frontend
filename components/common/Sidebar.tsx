@@ -24,7 +24,6 @@ import MultiPleUserIcon from "../icon/MultiPleUserIcon";
 import MyAvailabilityIcon from "../icon/MyAvailabilityIcon";
 import PaymentIcon from "../icon/PaymentIcon";
 import SettingIcon from "../icon/SettingIcon";
-import SupportIcon from "../icon/SupportIcon";
 
 interface NavItem {
   icon: any;
@@ -194,16 +193,16 @@ const navItems: NavItem[] = [
 ];
 
 const otherItems = [
-  {
-    icon: PaymentIcon,
-    label: "Billing",
-    href: "/dashboard/billing",
-  },
-  {
-    icon: SupportIcon,
-    label: "Help & Support",
-    href: "/dashboard/help-support",
-  },
+  // {
+  //   icon: PaymentIcon,
+  //   label: "Billing",
+  //   href: "/dashboard/billing",
+  // },
+  // {
+  //   icon: SupportIcon,
+  //   label: "Help & Support",
+  //   href: "/dashboard/help-support",
+  // },
   {
     icon: SettingIcon,
     label: "Settings",
