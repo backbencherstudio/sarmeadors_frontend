@@ -54,7 +54,7 @@ export default function FileUploadRenderer({ field }: Props) {
 
   return (
     <div className="space-y-2 w-full">
-      <label className="block text-xs font-semibold text-headerColor">
+      <label className="block text-sm font-medium text-headerColor">
         {field.label || "Upload Cover Picture"}
         {field.required && " *"}
       </label>
@@ -86,7 +86,7 @@ export default function FileUploadRenderer({ field }: Props) {
           onChange={handleInputChange}
         />
 
-        <p className="text-sm font-medium text-headerColor">
+        <p className="text-base md:text-lg lg:text-xl font-medium text-headerColor">
           Drag and drop your file here
         </p>
         <p className="text-xs text-gray-400">Supported files: PDF, JPG, PNG</p>

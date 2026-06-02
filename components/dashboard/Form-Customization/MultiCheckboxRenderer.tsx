@@ -24,7 +24,7 @@ export default function MultiCheckboxRenderer({ field }: Props) {
         {field.label || "Select options as you like"}
         {field.required && " *"}
       </label>
-      <div className={isHorizontal ? "flex flex-wrap gap-4" : "space-y-2 absolute -bottom-3 left-0"}>
+      <div className={isHorizontal ? "flex flex-wrap gap-4" : "space-y-2 "}>
         {items.map((item: string, i: number) => (
           <div
             key={i}

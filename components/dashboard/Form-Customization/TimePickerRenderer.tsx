@@ -11,9 +11,15 @@ import { useEffect, useMemo, useState } from "react";
 
 type Props = {
   field: any;
+  value?: string;
+  onValueChange?: (value: string) => void;
 };
 
-export default function TimePickerRenderer({ field }: Props) {
+export default function TimePickerRenderer({
+  field,
+  value,
+  onValueChange,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [hour, setHour] = useState("12");
   const [minute, setMinute] = useState("00");
@@ -34,7 +40,9 @@ export default function TimePickerRenderer({ field }: Props) {
   });
 
   useEffect(() => {
-    const initialTime = String(field?.value || field?.placeholder || "").trim();
+    const initialTime = String(
+      value || field?.value || field?.placeholder || "",
+    ).trim();
     const match = initialTime.match(/^(\d{1,2}):(\d{2})\s*([AaPp][Mm])$/);
 
     if (!match) return;
@@ -46,7 +54,7 @@ export default function TimePickerRenderer({ field }: Props) {
     setHour(nextHour);
     setMinute(nextMinute);
     setPeriod(nextPeriod);
-  }, [field?.placeholder, field?.value]);
+  }, [field?.placeholder, field?.value, value]);
 
   return (
     <div className="space-y-1 w-full">
@@ -145,7 +153,10 @@ export default function TimePickerRenderer({ field }: Props) {
               <Button
                 type="button"
                 className="flex-1 rounded-lg bg-blackColor text-white hover:bg-blackColor/90"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  onValueChange?.(`${hour}:${minute} ${period}`);
+                  setOpen(false);
+                }}
               >
                 Save
               </Button>

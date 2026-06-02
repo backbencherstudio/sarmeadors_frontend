@@ -6,7 +6,7 @@ import { RichTextEditor } from "@/components/reusable/Editor";
 import { updateFieldProperties } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
 import { useDispatch } from "react-redux";
 import AddressRendererView from "./AddressRenderer";
-import BookingRendererView from "./BookingRenderer";
+import BookingRendererView from "./BookingFormRenderer";
 import CheckboxTableRendererView from "./CheckboxTableRenderer";
 import CustomPassword from "./CustomPassword";
 import DatePickerRendererView from "./DatePickerRenderer";
@@ -169,7 +169,13 @@ export default function FieldRenderer({
       return <LanguageRendererView field={field} />;
 
     case "booking":
-      return <BookingRendererView field={field} />;
+      return (
+        <BookingRendererView
+          field={field}
+          activeBlockId={activeBlockId}
+          activeSectionId={activeSectionId}
+        />
+      );
 
     case "list_files":
       return <ListFilesRendererView field={field} />;
