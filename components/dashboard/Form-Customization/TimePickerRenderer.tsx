@@ -21,6 +21,7 @@ function to24h(time12: string): string {
   return `${String(h).padStart(2, "0")}:${m}`;
 }
 
+
 function to12h(time24: string): string {
   const [hStr, m] = time24.split(":");
   if (!hStr || !m) return time24;
