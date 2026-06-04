@@ -1,9 +1,15 @@
 "use client";
 
+import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import { useState } from "react";
 
 type Props = {
   field: any;
+};
+
+const defaultTimes = {
+  start: "12:00",
+  end: "12:30",
 };
 
 export default function TimeAvailabilityRenderer({ field }: Props) {
@@ -25,6 +31,9 @@ export default function TimeAvailabilityRenderer({ field }: Props) {
     Friday: false,
     Saturday: false,
   });
+  const [times, setTimes] = useState<
+    Record<string, { start: string; end: string }>
+  >(Object.fromEntries(days.map((day) => [day, { ...defaultTimes }])));
 
   return (
     <div className="space-y-2 w-full">
@@ -35,6 +44,7 @@ export default function TimeAvailabilityRenderer({ field }: Props) {
       <div className="space-y-2.5">
         {days.map((day) => {
           const isOn = enabled[day];
+          const time = times[day];
           return (
             <div key={day} className="flex items-center gap-3">
               <button
@@ -59,9 +69,31 @@ export default function TimeAvailabilityRenderer({ field }: Props) {
               </span>
               {isOn ? (
                 <div className="flex items-center gap-1 text-xs text-gray-400">
-                  <span>12:00 PM</span>
+                  <ReusableInput
+                    type="time"
+                    value={time.start}
+                    onChange={(e) =>
+                      setTimes((prev) => ({
+                        ...prev,
+                        [day]: { ...prev[day], start: e.target.value },
+                      }))
+                    }
+                    className="w-24! h-10! md:h-10!  text-xs! px-1!"
+                    containerClassName="!m-0"
+                  />
                   <span>—</span>
-                  <span>12:30 PM</span>
+                  <ReusableInput
+                    type="time"
+                    value={time.end}
+                    onChange={(e) =>
+                      setTimes((prev) => ({
+                        ...prev,
+                        [day]: { ...prev[day], end: e.target.value },
+                      }))
+                    }
+                    className="w-24! h-10! md:h-10! text-xs! px-1!"
+                    containerClassName="!m-0"
+                  />
                 </div>
               ) : (
                 <span className="text-xs text-gray-300">Unavailable</span>
