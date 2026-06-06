@@ -84,10 +84,10 @@ export default function AddInputFieldPreview({
       return <CustomPassword field={element} />;
 
     case "rating":
-      return <RatingFormSetting field={{}} />;
+      return <RatingFormSetting field={element} />;
 
     case "rating_group":
-      return <RatingGroupSetting field={{}} />;
+      return <RatingGroupSetting field={element} />;
 
     case "rich_text":
       return (
@@ -97,94 +97,94 @@ export default function AddInputFieldPreview({
       );
 
     case "select":
-      return <SelectRenderer field={{}} />;
+      return <SelectRenderer field={element} />;
 
     case "multi_select":
-      return <DropdownRendererView field={{}} />;
+      return <DropdownRendererView field={element} />;
 
     case "radio":
-      return <RadioRendererView field={{}} />;
+      return <RadioRendererView field={element} />;
 
     case "radio_table":
-      return <RadioTableRendererView field={{}} />;
+      return <RadioTableRendererView field={element} />;
 
     case "checkbox":
-      return <SingleCheckboxRendererView field={{}} />;
+      return <SingleCheckboxRendererView field={element} />;
 
     case "multi_select_checkbox":
-      return <MultiCheckboxRendererView field={{}} />;
+      return <MultiCheckboxRendererView field={element} />;
 
     case "checkbox_table":
-      return <CheckboxTableRendererView field={{}} />;
+      return <CheckboxTableRendererView field={element} />;
 
     case "date":
-      return <DatePickerRendererView field={{}} />;
+      return <DatePickerRendererView field={element} />;
 
     case "time":
-      return <TimePickerRendererView field={{}} />;
+      return <TimePickerRendererView field={element} />;
 
     case "datetime":
-      return <DateTimePickerRendererView field={{}} />;
+      return <DateTimePickerRendererView field={element} />;
 
     case "file":
-      return <FileUploadRendererView field={{}} />;
+      return <FileUploadRendererView field={element} />;
 
     case "file_additional":
-      return <FileAdditionalRendererView field={{}} />;
+      return <FileAdditionalRendererView field={element} />;
 
     case "video_record":
-      return <VideoRecorderRendererView field={{}} />;
+      return <VideoRecorderRendererView field={element} />;
 
     case "signature":
-      return <SignatureRendererView field={{}} />;
+      return <SignatureRendererView field={element} />;
 
     case "signature_file":
-      return <SignatureFileRendererView field={{}} />;
+      return <SignatureFileRendererView field={element} />;
 
     case "salary_range":
-      return <SalaryRangeRendererView field={{}} />;
+      return <SalaryRangeRendererView field={element} />;
 
     case "payment":
-      return <PaymentRendererView field={{}} />;
+      return <PaymentRendererView field={element} />;
 
     case "address_auto":
-      return <AddressRendererView field={{}} />;
+      return <AddressRendererView field={element} />;
 
     case "phone_country":
     case "phone_country_code":
-      return <PhoneCountryRendererView field={{}} />;
+      return <PhoneCountryRendererView field={element} />;
 
     case "time_availability":
-      return <TimeAvailabilityRendererView field={{}} />;
+      return <TimeAvailabilityRendererView field={element} />;
 
     case "language":
-      return <LanguageRendererView field={{}} />;
+      return <LanguageRendererView field={element} />;
 
     case "booking":
       return (
         <BookingRendererView
-          field={{}}
+          field={element}
           activeBlockId={""}
           activeSectionId={""}
         />
       );
 
     case "list_files":
-      return <ListFilesRendererView field={{}} />;
+      return <ListFilesRendererView field={element} />;
 
     case "stripe_subscription":
-      return <SubscriptionPlanRendererView field={{}} />;
+      return <SubscriptionPlanRendererView field={element} />;
 
     case "subscription_plan":
       return (
-        <PlanRendererView field={{}} activeBlockId={""} activeSectionId={""} />
+        <PlanRendererView field={element} activeBlockId={""} activeSectionId={""} />
       );
 
     case "evaluation":
-      return <EvaluationRendererView field={{}} />;
+      return <EvaluationRendererView field={element} />;
 
     case "job_placement":
-      return <JobPlacementRendererView field={{}} />;
+      return <JobPlacementRendererView field={element} />;
     case "section":
       return (
         <div className="space-y-3 w-full">
