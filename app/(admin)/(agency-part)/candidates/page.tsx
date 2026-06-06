@@ -1,5 +1,4 @@
 import CandidatesDashboard from "@/components/candidates/CandidatesDashboard";
-import DashboardPage from "@/components/dashboard/DashboardPage";
 
 function page() {
   return (

@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ArrowIcon from "@/public/icon/ArrowIcon";
 import { Controller, useForm } from "react-hook-form";
 
 type FormValues = {
@@ -65,12 +66,14 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full py-5">
+                  <SelectTrigger className="w-full py-6 cursor-pointer bg-[#F9FAFB]">
                     <SelectValue placeholder="Select Type" />
                   </SelectTrigger>
 
                   <SelectContent>
+                    <SelectItem value="development">Development</SelectItem>
                     <SelectItem value="candidate">Candidate</SelectItem>
+                    <SelectItem value="client">Client</SelectItem>
                     <SelectItem value="job">Job</SelectItem>
                     <SelectItem value="admin">Admin</SelectItem>
                     <SelectItem value="reference">Reference</SelectItem>
@@ -90,11 +93,12 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full py-5">
+                  <SelectTrigger className="w-full py-6 cursor-pointer bg-[#F9FAFB]">
                     <SelectValue placeholder="Select Status" />
                   </SelectTrigger>
 
                   <SelectContent>
+                    <SelectItem value="development">Development</SelectItem>
                     <SelectItem value="pre-application">
                       Pre Application
                     </SelectItem>
@@ -121,7 +125,7 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-end gap-4 pt-6 border-t">
+        <div className="flex justify-end gap-4">
           <button
             type="button"
             className="px-6 py-2.5 rounded-md cursor-pointer border border-gray-200 text-sm font-medium hover:bg-gray-50"
@@ -131,9 +135,10 @@ export default function Configuration({ onNext }: { onNext?: () => void }) {
 
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-md cursor-pointer bg-[#111827] text-white text-sm font-medium hover:bg-black flex items-center gap-2"
+            className="px-6 py-2 rounded-md bg-gray-900 text-white text-sm hover:bg-black flex items-center gap-2 cursor-pointer"
           >
-            Next
+            <span>Next</span>
+            <ArrowIcon className="h-3 w-3 rotate-360" />
           </button>
         </div>
       </form>

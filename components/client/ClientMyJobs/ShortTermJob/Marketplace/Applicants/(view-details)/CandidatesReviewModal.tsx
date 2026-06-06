@@ -17,7 +17,7 @@ export default function CandidatesReviewModal() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <button className="px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 cursor-pointer">
+                <button className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor! cursor-pointer">
                     ⭐ Leave Review
                 </button>
             </DialogTrigger>

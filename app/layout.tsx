@@ -17,7 +17,7 @@ const change = Changa({
 });
 export const metadata: Metadata = {
   title: AppConfig().app.name,
-  description: AppConfig().app.slogan,
+  description: "Parvez Rahman",
   icons: {
     icon: "/icon/siteIcon.svg",
   },

@@ -1,4 +1,5 @@
 import PaymentHistoryTable from "@/components/client/ClientPayment/PaymentHistoryTable";
+import { Input } from "@/components/ui/input";
 
 export default function PaymentPage() {
   return (
@@ -13,14 +14,10 @@ export default function PaymentPage() {
             invoices can not be automatically collected
           </p>
         </div>
-        <div className="grid grid-cols-4 gap-x-1.5">
-          <div className="bg-[#FFFFFF] p-4 rounded-[8px] w-full col-span-3">
-            <h1 className="text-lg leading-[111.111%] text-[#111927] font-medium">
-              $100
-            </h1>
-          </div>
+        <div className="flex items-center gap-2.5">
+          <Input type="text" placeholder="Amount" className="bg-[#FFFFFF] text-lg rounded-[8px]! text-[#111927] font-medium  h-[52px]! w-full! border-0" />
           <div className="col-span-1">
-            <button className="px-4 py-[14px] bg-[#111927] border border-[#384250] rounded-[12px] text-[#FCFCFD] text-[16px] leading-[137.5%] font-semibold cursor-pointer">
+            <button className="px-4 py-[14px] bg-[#111927] border border-[#384250] rounded-[12px] text-[#FCFCFD] text-[16px] leading-[137.5%] font-semibold cursor-pointer h-[52px] text-nowrap">
               Pay Now
             </button>
           </div>

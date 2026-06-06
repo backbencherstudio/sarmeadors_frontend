@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 
 type Tabs = { label: string; link: string; icon?: React.ReactNode }[];
 
-export default function ReusableTabs({ tabs }: { tabs: Tabs }) {
+export default function ReusableTabs({ tabs, initialPath }: { tabs: Tabs, initialPath: string }) {
   const path = usePathname();
-  const isActive = (href: string) => {
-    if (!path) return false;
-    return path === href || path.startsWith(`${href}/`);
+  const isActive = (href: string): boolean => {
+    if (href === initialPath) {
+      return path === initialPath;
+    }
+    return path.startsWith(href);
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import ReusableInput from "@/components/common/InputFiled/ReusableInput";
+import ArrowIcon from "@/public/icon/ArrowIcon";
 import { Eye, Info, Trash2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 
@@ -125,9 +126,10 @@ The Coast to Coast Nannies Team`}
           <button
             type="button"
             onClick={onBack}
-            className="px-5 py-2 rounded-md border text-sm hover:bg-gray-50 cursor-pointer"
+            className="px-5 py-2 rounded-md border text-sm hover:bg-gray-50 cursor-pointer flex items-center gap-1"
           >
-            ← Back
+            <ArrowIcon className="h-3 w-3 rotate-180" />
+            <span>Back</span>
           </button>
 
           <div className="flex gap-4">
