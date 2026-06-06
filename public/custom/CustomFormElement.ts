@@ -221,12 +221,7 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "subscription_plan",
         description: "Choose standard automated monthly localized tokens.",
       },
-      {
-        id: "phone_country_code",
-        label: "Phone Country Code",
-        type: "phone_country_code",
-        description: "Choose standard automated monthly localized tokens.",
-      },
+      
     ],
   },
 

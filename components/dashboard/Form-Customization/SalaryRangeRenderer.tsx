@@ -44,7 +44,7 @@ export default function SalaryRangeRenderer({ field }: Props) {
         {field.label || "Select Salary Range"}
         {field.required && " *"}
       </label>
-      <div className="flex items-end gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 items-end gap-2">
         <div className="flex-1 space-y-1">
           <span className="text-sm text-headerColor">From</span>
           <div className="relative">
@@ -77,7 +77,7 @@ export default function SalaryRangeRenderer({ field }: Props) {
             />
           </div>
         </div>
-        <div className="flex-1 space-y-1">
+        <div className="flex-1 col-span-2 md:col-span-1 space-y-1">
           <span className="text-sm text-headerColor">Per</span>
           <div className="flex items-center justify-between border border-borderColor rounded-lg bg-bgColor px-2 py-1.5">
             {PERIODS.map((u) => (
