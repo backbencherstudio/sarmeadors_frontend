@@ -1,7 +1,7 @@
 "use client";
 
-import InputIcon from "@/components/icon/InputIcon";
 import DeleteIcon from "@/components/icon/DeleteIcon";
+import InputIcon from "@/components/icon/InputIcon";
 import SectionIcon from "@/components/icon/SectionIcon";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import {
@@ -319,19 +319,19 @@ export default function MiddleFieldsColumn() {
                 </div>
               ) : (
                 // ── Regular field row ───────────────────────────────────────
-                <div className="flex items-start gap-1">
-                  <div className="mt-6 shrink-0 w-5 flex items-center justify-center">
+                <div className="flex gap-1.5">
+                  <div className="w-5 flex  justify-center">
                     {field.isFixed ? (
-                      <Lock size={11} className="text-amber-500" />
+                      <Lock size={16} className="text-amber-500" />
                     ) : (
                       <GripVertical
-                        size={15}
+                        size={18}
                         className="text-secondaryColor cursor-grab"
                       />
                     )}
                   </div>
                   <div
-                    className={`flex-1 min-w-0 cursor-pointer rounded-md p-1 transition-all`}
+                    className={`flex-1 min-w-0 cursor-pointer rounded-md  transition-all`}
                     onClick={() => selectField(null, field.id)}
                   >
                     <FieldRenderer
@@ -341,17 +341,19 @@ export default function MiddleFieldsColumn() {
                     />
                   </div>
                   {!field.isFixed && (
-                    <button
-                      type="button"
-                      title="Delete field"
-                      aria-label={`Delete ${field.label}`}
-                      draggable={false}
-                      onDragStart={(e) => e.stopPropagation()}
-                      onClick={(e) => handleDeleteBlockField(e, field.id)}
-                      className="mt-6 shrink-0 p-2 rounded border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
-                    >
-                      <DeleteIcon />
-                    </button>
+                    <div className="flex items-end">
+                      <button
+                        type="button"
+                        title="Delete field"
+                        aria-label={`Delete ${field.label}`}
+                        draggable={false}
+                        onDragStart={(e) => e.stopPropagation()}
+                        onClick={(e) => handleDeleteBlockField(e, field.id)}
+                        className=" p-3.75 cursor-pointer rounded-md border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
+                      >
+                        <DeleteIcon />
+                      </button>
+                    </div>
                   )}
                 </div>
               )}
