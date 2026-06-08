@@ -172,12 +172,12 @@ function CreateCustomBuilderSidbar({
                     </h3>
                     <div className="flex flex-col gap-2">
                       {[
-                        "Placement Job",
                         "Add User",
+                        "Long-term Job", 
                         "Job Application Form",
                         "Schedule Interview Form",
                         "Review User",
-                        "Client Activity Log",
+
                       ].map((opt) => (
                         <CustomRadioButton
                           key={opt}
