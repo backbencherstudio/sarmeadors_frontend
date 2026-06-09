@@ -248,8 +248,8 @@ const FIXED_LONG_TERM_BLOCK: Block = {
       width: "1/2",
     },
     {
-      id: "long_term address",
-      type: "Address",
+      id: "long_term_address",
+      type: "address_auto",
       label: "Address",
       placeholder: "Address",
       required: true,
