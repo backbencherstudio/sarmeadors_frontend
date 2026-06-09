@@ -38,6 +38,7 @@ export interface Block {
   id: string;
   name: string;
   type: "introduction" | "dynamic";
+  isFixed?: boolean;
   describe?: string;
   logoUrl?: string;
   title?: string;
@@ -141,6 +142,87 @@ const FIXED_REGISTRATION_FIELDS: InputField[] = [
   },
 ];
 
+const FIXED_CLIENT_ADD_USER_BLOCK: Block = {
+  id: "client-add-user-block",
+  name: "Basic Information",
+  type: "dynamic",
+  isFixed: true,
+  describe: "Basic information about the user",
+  fields: [
+    {
+      id: "client_add_user_profile_picture",
+      type: "file",
+      label: "Profile Picture",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "client_add_user_first_name",
+      type: "text",
+      label: "First Name",
+      placeholder: "First Name",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "client_add_user_last_name",
+      type: "text",
+      label: "Last Name",
+      placeholder: "Last Name",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "client_add_user_email",
+      type: "email",
+      label: "Email",
+      placeholder: "Email",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "client_add_user_phone_number",
+      type: "tel",
+      label: "Phone Number",
+      placeholder: "Phone Number",
+      required: false,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "client_add_user_user_types",
+      type: "select",
+      label: "User Types",
+      placeholder: "Start typing to filter",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "client_add_user_locations",
+      type: "select",
+      label: "Locations",
+      placeholder: "Start typing to filter",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+  ],
+};
+
+const cloneBlock = (block: Block): Block => ({
+  ...block,
+  fields: block.fields.map((field) =>
+    "inputs" in field
+      ? { ...field, inputs: field.inputs.map((input) => ({ ...input })) }
+      : { ...field },
+  ),
+});
+
 const initialState: ApplicationFormState = {
   applicationType: {},
   customElements: [],
@@ -156,12 +238,25 @@ const applicationFormSlice = createSlice({
   reducers: {
     setApplicationAllType: (state, action) => {
       state.applicationType = action.payload;
-      state.blocks = [{ ...INTRO_BLOCK, fields: [] }];
-      state.activeBlockId = "intro-block-1";
       state.activeSectionId = null;
       state.activeFieldId = null;
 
-      const { applicationType, userType } = action.payload;
+      const { applicationType, builderType, selectType, userType } =
+        action.payload;
+
+      if (
+        userType === "client" &&
+        selectType === "Add User" &&
+        builderType === "Advanced"
+      ) {
+        state.blocks = [cloneBlock(FIXED_CLIENT_ADD_USER_BLOCK)];
+        state.activeBlockId = FIXED_CLIENT_ADD_USER_BLOCK.id;
+        return;
+      }
+
+      state.blocks = [{ ...INTRO_BLOCK, fields: [] }];
+      state.activeBlockId = "intro-block-1";
+
       if (
         applicationType === "Registration" &&
         (userType === "client" || userType === "candidate")
@@ -344,7 +439,7 @@ const applicationFormSlice = createSlice({
     deleteBlock: (state, action: PayloadAction<string>) => {
       const blockId = action.payload;
       const block = state.blocks.find((b) => b.id === blockId);
-      if (!block || block.type === "introduction") return;
+      if (!block || block.type === "introduction" || block.isFixed) return;
       state.blocks = state.blocks.filter((b) => b.id !== blockId);
       if (state.activeBlockId === blockId) {
         state.activeBlockId = state.blocks[0]?.id ?? null;

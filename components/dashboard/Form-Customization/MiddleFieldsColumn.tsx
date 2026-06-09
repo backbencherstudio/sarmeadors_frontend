@@ -186,6 +186,8 @@ export default function MiddleFieldsColumn() {
     return <div className="p-4 text-center text-gray-400">Select a block</div>;
 
   // ── Introduction block preview ─────────────────────────────────────────────
+
+
   if (
     activeBlock.type === "introduction" ||
     activeBlock.name === "Introduction"
