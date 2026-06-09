@@ -186,7 +186,7 @@ const FIXED_CLIENT_ADD_USER_BLOCK: Block = {
     },
     {
       id: "client_add_user_phone_number",
-      type: "tel",
+      type: "number",
       label: "Phone Number",
       placeholder: "Phone Number",
       required: false,
@@ -245,11 +245,13 @@ const applicationFormSlice = createSlice({
         action.payload;
 
       if (
-        userType === "client" &&
+        (userType === "client" || userType === "candidate") &&
         selectType === "Add User" &&
         builderType === "Advanced"
       ) {
-        state.blocks = [cloneBlock(FIXED_CLIENT_ADD_USER_BLOCK)];
+        const block = cloneBlock(FIXED_CLIENT_ADD_USER_BLOCK);
+        block.name = userType === "client" ? "Client Information" : "Candidate Information";
+        state.blocks = [block];
         state.activeBlockId = FIXED_CLIENT_ADD_USER_BLOCK.id;
         return;
       }
@@ -378,7 +380,7 @@ const applicationFormSlice = createSlice({
       const block = state.blocks.find((b) => b.id === blockId);
       if (!block) return;
 
-      if (block.type === "introduction" && !fieldId) {
+      if (!fieldId && !sectionId) {
         (block as any)[key] = value;
         return;
       }

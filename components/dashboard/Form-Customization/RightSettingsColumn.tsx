@@ -5,6 +5,7 @@ import { updateFieldProperties } from "@/feature/slice/applicationBuilder/Applic
 import { FORM_ELEMENT_CATEGORIES } from "@/public/custom/CustomFormElement";
 import { Lock } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import BlockSettings from "./BlockSettings";
 import BookingFieldSettingsInline from "./BookingFieldSettingsInline";
 import ChoiceFieldSettings from "./ChoiceFieldSettings";
 import DropdownFieldSettings from "./DropdownFieldSettings";
@@ -260,6 +261,8 @@ export default function RightSettingsColumn() {
             activeSection={activeSection}
             activeFieldId={activeFieldId}
           />
+        ) : activeBlock?.type === "dynamic" ? (
+          <BlockSettings block={activeBlock} />
         ) : (
           <div className="text-center py-12 text-gray-400 text-sm">
             Select any input field or section to configure its properties.
