@@ -83,6 +83,8 @@ function CreateCustomBuilderSidbar({
       selectType: selectType,
       builderType: builderType,
     };
+    console.log(advancedTypeForStore);
+
     const payload =
       builderType === "Application"
         ? applicationTypeForStore
@@ -138,33 +140,35 @@ function CreateCustomBuilderSidbar({
             <div>
               {isAdvanced && (
                 <div className="mt-2">
-                  <div>
-                    <h3 className="text-sm font-medium text-headerColor mb-2">
-                      User Type
-                    </h3>
-                    <div className="flex flex-col gap-2">
-                      <CustomRadioButton
-                        label="Candidate"
-                        name="userType"
-                        value="candidate"
-                        checked={userType === "candidate"}
-                        onChange={() => setUserType("candidate")}
-                        isSelected={userType === "candidate"}
-                        variant="small"
-                        colorScheme="secondary"
-                      />
-                      <CustomRadioButton
-                        label="Client"
-                        name="userType"
-                        value="client"
-                        checked={userType === "client"}
-                        onChange={() => setUserType("client")}
-                        isSelected={userType === "client"}
-                        variant="small"
-                        colorScheme="secondary"
-                      />
+                  {selectType !== "Long-term Job" && (
+                    <div>
+                      <h3 className="text-sm font-medium text-headerColor mb-2">
+                        User Type
+                      </h3>
+                      <div className="flex flex-col gap-2">
+                        <CustomRadioButton
+                          label="Candidate"
+                          name="userType"
+                          value="candidate"
+                          checked={userType === "candidate"}
+                          onChange={() => setUserType("candidate")}
+                          isSelected={userType === "candidate"}
+                          variant="small"
+                          colorScheme="secondary"
+                        />
+                        <CustomRadioButton
+                          label="Client"
+                          name="userType"
+                          value="client"
+                          checked={userType === "client"}
+                          onChange={() => setUserType("client")}
+                          isSelected={userType === "client"}
+                          variant="small"
+                          colorScheme="secondary"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <div className="mt-4">
                     <h3 className="text-sm font-medium text-headerColor mb-2">
@@ -173,11 +177,10 @@ function CreateCustomBuilderSidbar({
                     <div className="flex flex-col gap-2">
                       {[
                         "Add User",
-                        "Long-term Job", 
+                        "Long-term Job",
                         "Job Application Form",
                         "Schedule Interview Form",
                         "Review User",
-
                       ].map((opt) => (
                         <CustomRadioButton
                           key={opt}

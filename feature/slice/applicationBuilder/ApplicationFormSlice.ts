@@ -213,6 +213,104 @@ const FIXED_CLIENT_ADD_USER_BLOCK: Block = {
     },
   ],
 };
+const FIXED_LONG_TERM_BLOCK: Block = {
+  id: "long-term-block",
+  name: "Basic Information",
+  type: "dynamic",
+  isFixed: true,
+  describe: "Basic information about the user",
+  fields: [
+    {
+      id: "long_term_revenue_generated",
+      type: "number",
+      label: "How much revenue was generated from this jobl (Admin Only)",
+      required: false,
+      placeholder: "Enter revenue amount",
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "long_term_date_revenue_generated",
+      type: "text",
+      label: "Date Revenue Generated? (Admin Only)",
+      placeholder: "Date Revenue Generated",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "long_term_title",
+      type: "text",
+      label: "Title",
+      placeholder: "Title",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "long_term address",
+      type: "Address",
+      label: "Address",
+      placeholder: "Address",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "long_term_locations",
+      type: "select",
+      label: "Locations",
+      placeholder: "locations",
+      required: false,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "long_term_start_date",
+      type: "date",
+      label: "Start Date",
+      placeholder: "Start Date",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "long_term_schedule",
+      type: "text",
+      label: "Schedule",
+      placeholder: "type your schedule",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "long_term_children",
+      type: "text",
+      label: "Children",
+      placeholder: "Enter number of children",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "long_term_description",
+      type: "textarea",
+      label: "Description",
+      placeholder: "Enter description",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "long_term_upload_picture",
+      type: "file",
+      label: "Upload Picture",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+  ],
+};
 
 const cloneBlock = (block: Block): Block => ({
   ...block,
@@ -250,9 +348,19 @@ const applicationFormSlice = createSlice({
         builderType === "Advanced"
       ) {
         const block = cloneBlock(FIXED_CLIENT_ADD_USER_BLOCK);
-        block.name = userType === "client" ? "Client Information" : "Candidate Information";
+        block.name =
+          userType === "client"
+            ? "Client Add Information"
+            : "Candidate Add Information";
         state.blocks = [block];
         state.activeBlockId = FIXED_CLIENT_ADD_USER_BLOCK.id;
+        return;
+      }
+      if (selectType === "Long-term Job" && builderType === "Advanced") {
+        const block = cloneBlock(FIXED_LONG_TERM_BLOCK);
+        block.name = "Long-term Job Information";
+        state.blocks = [block];
+        state.activeBlockId = FIXED_LONG_TERM_BLOCK.id;
         return;
       }
 
