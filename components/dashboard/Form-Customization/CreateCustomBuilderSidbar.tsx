@@ -22,7 +22,7 @@ function CreateCustomBuilderSidbar({
   const [builderType, setBuilderType] = useState<
     "Section" | "Application" | "Advanced"
   >("Application");
-  const [userType, setUserType] = useState<"candidate" | "client">("candidate");
+  const [userType, setUserType] = useState<"candidate" | "client" | "admin">("candidate");
   const [selectType, setSelectType] = useState<string>("Placement Job");
   const [appStep, setAppStep] = useState<
     "application" | "userType" | "jobType"
@@ -42,10 +42,10 @@ function CreateCustomBuilderSidbar({
 
   const handleUserTypeSelect = (type: string) => {
     // Application flow gives "Client" / "Candidate" labels.
-    // Reuse `userType` state (which is "candidate" | "client").
+    // Reuse `userType` state (which is "candidate" | "client" | "admin").
     const normalized = type.toLowerCase();
-    if (normalized === "client" || normalized === "candidate") {
-      setUserType(normalized as "candidate" | "client");
+    if (normalized === "client" || normalized === "candidate" || normalized === "admin") {
+      setUserType(normalized as "candidate" | "client" | "admin");
     }
   };
 
@@ -146,26 +146,53 @@ function CreateCustomBuilderSidbar({
                         User Type
                       </h3>
                       <div className="flex flex-col gap-2">
-                        <CustomRadioButton
-                          label="Candidate"
-                          name="userType"
-                          value="candidate"
-                          checked={userType === "candidate"}
-                          onChange={() => setUserType("candidate")}
-                          isSelected={userType === "candidate"}
-                          variant="small"
-                          colorScheme="secondary"
-                        />
-                        <CustomRadioButton
-                          label="Client"
-                          name="userType"
-                          value="client"
-                          checked={userType === "client"}
-                          onChange={() => setUserType("client")}
-                          isSelected={userType === "client"}
-                          variant="small"
-                          colorScheme="secondary"
-                        />
+                        {selectType === "Schedule Interview Form" ? (
+                          <>
+                            <CustomRadioButton
+                              label="Admin"
+                              name="userType"
+                              value="admin"
+                              checked={userType === "admin"}
+                              onChange={() => setUserType("admin")}
+                              isSelected={userType === "admin"}
+                              variant="small"
+                              colorScheme="secondary"
+                            />
+                            <CustomRadioButton
+                              label="Client"
+                              name="userType"
+                              value="client"
+                              checked={userType === "client"}
+                              onChange={() => setUserType("client")}
+                              isSelected={userType === "client"}
+                              variant="small"
+                              colorScheme="secondary"
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <CustomRadioButton
+                              label="Candidate"
+                              name="userType"
+                              value="candidate"
+                              checked={userType === "candidate"}
+                              onChange={() => setUserType("candidate")}
+                              isSelected={userType === "candidate"}
+                              variant="small"
+                              colorScheme="secondary"
+                            />
+                            <CustomRadioButton
+                              label="Client"
+                              name="userType"
+                              value="client"
+                              checked={userType === "client"}
+                              onChange={() => setUserType("client")}
+                              isSelected={userType === "client"}
+                              variant="small"
+                              colorScheme="secondary"
+                            />
+                          </>
+                        )}
                       </div>
                     </div>
                   )}

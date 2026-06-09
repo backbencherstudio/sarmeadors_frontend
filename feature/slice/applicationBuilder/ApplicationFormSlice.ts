@@ -312,6 +312,106 @@ const FIXED_LONG_TERM_BLOCK: Block = {
   ],
 };
 
+const FIXED_SCHEDULE_INTERVIEW_BLOCK: Block = {
+  id: "schedule-interview-block",
+  name: "Schedule Interview",
+  type: "dynamic",
+  isFixed: true,
+  describe: "Schedule an interview",
+  fields: [
+    {
+      id: "si_event_date",
+      type: "date",
+      label: "Event Date",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "si_event_time",
+      type: "text",
+      label: "Event Time",
+      placeholder: "eg. interview",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "si_candidate_name",
+      type: "select",
+      label: "Time Zone",
+      placeholder: "Start typing to filter",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "si_select_candidate",
+      type: "select",
+      label: "Select Candidate",
+      placeholder: "Start typing to filter",
+      required: true,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "si_location",
+      type: "text",
+      label: "Location",
+      placeholder: "Location",
+      required: true,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "si_interview_link",
+      type: "text",
+      label: "Interview Link",
+      placeholder: "Zoom link or other call link",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+    
+    {
+      id: "si_interview_time",
+      type: "select",
+      label: "Status to Update Client to",
+      placeholder: "Start typing to filter",
+      required: true,
+      isFixed: true,
+      width: "1",
+    },
+    {
+      id: "si_event_title",
+      type: "text",
+      label: "Event Title",
+      placeholder: "Type Event",
+      required: true,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "si_event_type",
+      type: "select",
+      label: "Event Type",
+      placeholder: "Start typing to filter",
+      required: false,
+      isFixed: true,
+      width: "1/2",
+    },
+    {
+      id: "si_special_note",
+      type: "textarea",
+      label: "Special Note",
+      placeholder: "Write your note here...",
+      required: false,
+      isFixed: true,
+      width: "1",
+    },
+  ],
+};
+
 const cloneBlock = (block: Block): Block => ({
   ...block,
   fields: block.fields.map((field) =>
@@ -361,6 +461,16 @@ const applicationFormSlice = createSlice({
         block.name = "Long-term Job Information";
         state.blocks = [block];
         state.activeBlockId = FIXED_LONG_TERM_BLOCK.id;
+        return;
+      }
+      if (
+        selectType === "Schedule Interview Form" &&
+        builderType === "Advanced"
+      ) {
+        const block = cloneBlock(FIXED_SCHEDULE_INTERVIEW_BLOCK);
+        block.name = "Schedule Interview";
+        state.blocks = [block];
+        state.activeBlockId = FIXED_SCHEDULE_INTERVIEW_BLOCK.id;
         return;
       }
 

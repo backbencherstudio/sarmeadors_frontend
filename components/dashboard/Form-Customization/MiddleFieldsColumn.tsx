@@ -66,45 +66,55 @@ function SectionWithDrag({
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {items.map((input: any) => (
-        <div
-          key={input.id}
-          draggable={!input.isFixed}
-          onDragStart={(e) => !input.isFixed && onDragStart(e, input.id)}
-          onDragOver={(e) => handleDragOver(e, input.id)}
-          onDragEnd={onDragEnd}
-          className={`relative flex items-start gap-1 rounded-lg transition-opacity ${
-            draggedItemId === input.id ? "opacity-40" : ""
-          }`}
-        >
-          <div className="mt-6 shrink-0 w-5 flex items-center justify-center">
-            {input.isFixed ? (
-              <Lock size={10} className="text-amber-500" />
-            ) : (
-              <GripVertical
-                size={14}
-                className="text-secondaryColor cursor-grab"
-              />
-            )}
-          </div>
+    <div className="flex flex-wrap items-start gap-3">
+      {items.map((input: any) => {
+        const widthClass =
+          input.width === "1/2"
+            ? "w-[calc(50%-0.75rem)]"
+            : input.width === "3/4"
+              ? "w-[calc(75%-0.75rem)]"
+              : input.width === "1/4"
+                ? "w-[calc(25%-0.75rem)]"
+                : "w-full";
+        return (
           <div
-            className={`flex-1 min-w-0 cursor-pointer rounded-md p-1 transition-all `}
-            onClick={(e) => {
-              e.stopPropagation();
-              dispatch(
-                setActiveField({ sectionId: section.id, fieldId: input.id }),
-              );
-            }}
+            key={input.id}
+            draggable={!input.isFixed}
+            onDragStart={(e) => !input.isFixed && onDragStart(e, input.id)}
+            onDragOver={(e) => handleDragOver(e, input.id)}
+            onDragEnd={onDragEnd}
+            className={`${widthClass} relative flex items-start gap-1 rounded-lg transition-opacity ${
+              draggedItemId === input.id ? "opacity-40" : ""
+            }`}
           >
-            <FieldRenderer
-              field={input}
-              activeBlockId={blockId}
-              activeSectionId={section.id}
-            />
+            <div className="mt-6 shrink-0 w-5 flex items-center justify-center">
+              {input.isFixed ? (
+                <Lock size={10} className="text-amber-500" />
+              ) : (
+                <GripVertical
+                  size={14}
+                  className="text-secondaryColor cursor-grab"
+                />
+              )}
+            </div>
+            <div
+              className={`flex-1 min-w-0 cursor-pointer rounded-md p-1 transition-all `}
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(
+                  setActiveField({ sectionId: section.id, fieldId: input.id }),
+                );
+              }}
+            >
+              <FieldRenderer
+                field={input}
+                activeBlockId={blockId}
+                activeSectionId={section.id}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -186,7 +196,6 @@ export default function MiddleFieldsColumn() {
     return <div className="p-4 text-center text-gray-400">Select a block</div>;
 
   // ── Introduction block preview ─────────────────────────────────────────────
-
 
   if (
     activeBlock.type === "introduction" ||
@@ -270,97 +279,112 @@ export default function MiddleFieldsColumn() {
         </div>
       </div>
 
-      <div className="p-6 w-full space-y-5 flex-1 min-h-screen overflow-y-auto scrollbar-hide">
+      <div className="p-6 w-full flex-1 min-h-screen overflow-y-auto scrollbar-hide">
         {blockFields.length > 0 ? (
-          blockFields.map((field: any) => (
-            <div
-              key={field.id}
-              draggable={field.type !== "section" && !field.isFixed}
-              onDragStart={(e) =>
-                field.type !== "section" &&
-                !field.isFixed &&
-                onBlockDragStart(e, field.id)
-              }
-              onDragOver={(e) =>
-                field.type !== "section" && blockDragOver(e, field.id)
-              }
-              onDragEnd={field.type !== "section" ? onBlockDragEnd : undefined}
-              className={`transition-opacity ${
-                blockDraggedId === field.id ? "opacity-40" : ""
-              }`}
-            >
-              {field.type === "section" ? (
-                // ── Section row ────────────────────────────────────────────
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => selectField(field.id, null)}
-                      className={`text-left flex-1 min-w-0 rounded-md px-1 py-0.5 transition-all`}
-                    >
-                      <h3 className="text-base lg:text-lg font-semibold text-headerColor">
-                        {field.label}
-                      </h3>
-                    </button>
-                    {!field.isFixed && (
-                      <button
-                        type="button"
-                        title="Delete field"
-                        aria-label={`Delete ${field.label}`}
-                        draggable={false}
-                        onDragStart={(e) => e.stopPropagation()}
-                        onClick={(e) => handleDeleteBlockField(e, field.id)}
-                        className="shrink-0 p-2 rounded border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
-                      >
-                        <DeleteIcon />
-                      </button>
-                    )}
-                  </div>
+          <div className="flex flex-wrap items-start gap-4">
+            {blockFields.map((field: any) => {
+              const widthClass =
+                field.width === "1/2"
+                  ? "w-[calc(50%-0.5rem)]"
+                  : field.width === "3/4"
+                    ? "w-[calc(75%-0.5rem)]"
+                    : field.width === "1/4"
+                      ? "w-[calc(25%-0.5rem)]"
+                      : "w-full";
+              return (
+                <div
+                  key={field.id}
+                  draggable={field.type !== "section" && !field.isFixed}
+                  onDragStart={(e) =>
+                    field.type !== "section" &&
+                    !field.isFixed &&
+                    onBlockDragStart(e, field.id)
+                  }
+                  onDragOver={(e) =>
+                    field.type !== "section" && blockDragOver(e, field.id)
+                  }
+                  onDragEnd={
+                    field.type !== "section" ? onBlockDragEnd : undefined
+                  }
+                  className={`${widthClass} transition-opacity ${
+                    blockDraggedId === field.id ? "opacity-40" : ""
+                  }`}
+                >
+                  {field.type === "section" ? (
+                    // ── Section row ────────────────────────────────────────────
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => selectField(field.id, null)}
+                          className={`text-left flex-1 min-w-0 rounded-md px-1 py-0.5 transition-all`}
+                        >
+                          <h3 className="text-base lg:text-lg font-semibold text-headerColor">
+                            {field.label}
+                          </h3>
+                        </button>
+                        {!field.isFixed && (
+                          <button
+                            type="button"
+                            title="Delete field"
+                            aria-label={`Delete ${field.label}`}
+                            draggable={false}
+                            onDragStart={(e) => e.stopPropagation()}
+                            onClick={(e) => handleDeleteBlockField(e, field.id)}
+                            className="shrink-0 p-2 rounded border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
+                          >
+                            <DeleteIcon />
+                          </button>
+                        )}
+                      </div>
 
-                  <SectionWithDrag section={field} blockId={activeBlockId} />
-                </div>
-              ) : (
-                // ── Regular field row ───────────────────────────────────────
-                <div className="flex gap-1.5">
-                  <div className="w-5 flex  justify-center">
-                    {field.isFixed ? (
-                      <Lock size={16} className="text-amber-500" />
-                    ) : (
-                      <GripVertical
-                        size={18}
-                        className="text-secondaryColor cursor-grab"
+                      <SectionWithDrag
+                        section={field}
+                        blockId={activeBlockId}
                       />
-                    )}
-                  </div>
-                  <div
-                    className={`flex-1 min-w-0 cursor-pointer rounded-md  transition-all`}
-                    onClick={() => selectField(null, field.id)}
-                  >
-                    <FieldRenderer
-                      field={field}
-                      activeBlockId={activeBlockId}
-                      activeSectionId={null}
-                    />
-                  </div>
-                  {!field.isFixed && (
-                    <div className="flex items-end">
-                      <button
-                        type="button"
-                        title="Delete field"
-                        aria-label={`Delete ${field.label}`}
-                        draggable={false}
-                        onDragStart={(e) => e.stopPropagation()}
-                        onClick={(e) => handleDeleteBlockField(e, field.id)}
-                        className=" p-3.75 cursor-pointer rounded-md border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
+                    </div>
+                  ) : (
+                    // ── Regular field row ───────────────────────────────────────
+                    <div className="flex gap-1.5">
+                      {!field.isFixed && (
+                        <div className="w-5 flex  justify-center">
+                          <GripVertical
+                            size={18}
+                            className="text-secondaryColor cursor-grab"
+                          />
+                        </div>
+                      )}
+                      <div
+                        className={`flex-1 min-w-0 cursor-pointer rounded-md  transition-all`}
+                        onClick={() => selectField(null, field.id)}
                       >
-                        <DeleteIcon />
-                      </button>
+                        <FieldRenderer
+                          field={field}
+                          activeBlockId={activeBlockId}
+                          activeSectionId={null}
+                        />
+                      </div>
+                      {!field.isFixed && (
+                        <div className="flex items-end">
+                          <button
+                            type="button"
+                            title="Delete field"
+                            aria-label={`Delete ${field.label}`}
+                            draggable={false}
+                            onDragStart={(e) => e.stopPropagation()}
+                            onClick={(e) => handleDeleteBlockField(e, field.id)}
+                            className=" p-3.75 cursor-pointer rounded-md border border-borderColor bg-grayColor1 text-redColor hover:bg-red-50 transition-colors"
+                          >
+                            <DeleteIcon />
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              )}
-            </div>
-          ))
+              );
+            })}
+          </div>
         ) : (
           <div className="text-gray-400">
             <div>

@@ -7,8 +7,8 @@ export default function SelectRenderer({ field }: { field: any }) {
   const options = items.map((item: string) => ({ value: item, label: item }));
 
   return (
-    <div className="space-y-1 w-full">
-      <label className="block text-xs font-semibold text-headerColor">
+    <div className="space-y-1.5 w-full">
+      <label className="block text-sm font-semibold text-headerColor">
         {field.label || "Dropdown"}
         {field.required && " *"}
       </label>
