@@ -13,8 +13,8 @@ function RootDrawer({
   return (
     <div>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
-        <DrawerContent className="max-w-2xl! w-full">
-          <div className="relative ">
+        <DrawerContent className="max-w-2xl! w-full h-full">
+          <div className="relative h-full ">
             <button
               onClick={() => setOpen(false)}
               aria-label="Close drawer"
@@ -28,7 +28,7 @@ function RootDrawer({
                 className="w-6 h-6 group-hover:scale-110 transition-all duration-200"
               />
             </button>
-            <div className="max-h-[calc(100vh)] overflow-y-auto pb-4 ">
+            <div className="max-h-[calc(100vh)] overflow-y-auto pb-4 h-full">
               {children}
             </div>
           </div>

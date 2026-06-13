@@ -63,7 +63,7 @@ export default function LoginForm() {
           ? "client"
           : data.email === "candidate@gmail.com"
             ? "candidate"
-            : "admin",
+            : data.email === "superadmin@gmail.com"? "super-admin": "admin",
       );
     } catch (error) {
       toast.error("Wrong Email or Password");
