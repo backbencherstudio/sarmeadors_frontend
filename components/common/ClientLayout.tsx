@@ -1,4 +1,5 @@
 "use client";
+import { ReduxProvider } from "@/feature/provider";
 import { TokenProvider } from "@/hooks/useToken";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -14,14 +15,15 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   const closeSidebar = () => setSidebarOpen(false);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TokenProvider>
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-      </TokenProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <ReduxProvider>
+      <QueryClientProvider client={queryClient}>
+        <TokenProvider>
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        </TokenProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ReduxProvider>
   );
 };
 
 export default ClientLayout;
-

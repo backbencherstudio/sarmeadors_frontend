@@ -7,10 +7,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import ArrowRightIcon from "../icon/ArrowRightIcon";
 import ButtonReuseable from "../reusable/CustomButton";
 import { Checkbox } from "../ui/checkbox";
+import { useLoginMutation } from "@/feature/auth/auth";
+import { toast } from "react-toastify";
 
 type LoginFormInputs = {
   email: string;
@@ -35,43 +36,68 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
+  const [login] = useLoginMutation();
+
+  const getSubDomain = () => {
+    if (typeof window === "undefined") return "";
+
+    const host = window.location.hostname.toLowerCase();
+
+    if (host === "localhost" || host === "127.0.0.1") {
+      return "localhost";
+    }
+
+    if (host.endsWith(".localhost")) {
+      return host.replace(".localhost", "");
+    }
+
+    const parts = host.split(".");
+
+    return parts.length > 1 ? parts[0] : host;
+  };
 
   const onSubmit = async (data: LoginFormInputs) => {
     setIsDisable(true);
-    try {
-      // const response = await UserService.login(data);
 
-      // if (response?.data?.success === true) {
-      //   const tokenNumber = response?.data?.tokens?.accessToken;
-      //   const userType = response?.data?.data?.role;
-      //   CookieHelper.set({
-      //     key: "jobtoken",
-      //     value: tokenNumber,
-      //   });
-      //   toast.success("Successfully login!");
-      //   router.push(userType == "admin" ? "/dashboard" : "/");
-      //   reset();
-      //   setIsDisable(false);
-      // }
-      router.push(
-        data.email === "client@gmail.com"
-          ? "/client/dashboard"
-          : data.email === "candidate@gmail.com"
-            ? "/candidate/dashboard"
-            : "/",
-      );
-      localStorage.setItem(
-        "isLoggedIn",
-        data.email === "client@gmail.com"
-          ? "client"
-          : data.email === "candidate@gmail.com"
-            ? "candidate"
-            : data.email === "superadmin@gmail.com"
-              ? "super-admin"
-              : "admin",
-      );
-    } catch (error) {
-      toast.error("Wrong Email or Password");
+    try {
+      const subDomain = getSubDomain();
+      console.log("Subdomain:", subDomain);
+      const response = await login({
+        data,
+        subDomain,
+      }).unwrap();
+
+      const payload = response?.data ?? response;
+      const userType = payload?.user?.role ?? payload?.role ?? "admin";
+      const isSuccess = payload?.success === true || response?.success === true;
+      const message = payload?.message || response?.message;
+
+      if (!isSuccess) {
+        toast.error(message || "Login failed!");
+        return;
+      }
+
+      toast.success(message || "Successfully login!");
+
+      if (userType === "client") {
+        router.push("/client/dashboard");
+      } else if (userType === "candidate") {
+        router.push("/candidate/dashboard");
+      } else if (userType === "super-admin") {
+        router.push("/super-admin/dashboard");
+      } else {
+        router.push("/dashboard");
+      }
+
+      localStorage.setItem("isLoggedIn", userType);
+      reset();
+    } catch (error: any) {
+      console.log(error);
+      const message =
+        error?.data?.message || error?.message || "Wrong Email or Password";
+
+      toast.error(message);
+    } finally {
       setIsDisable(false);
     }
   };
