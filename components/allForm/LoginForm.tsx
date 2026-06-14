@@ -1,4 +1,5 @@
 "use client";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
@@ -10,10 +11,12 @@ import { toast } from "react-toastify";
 import ArrowRightIcon from "../icon/ArrowRightIcon";
 import ButtonReuseable from "../reusable/CustomButton";
 import { Checkbox } from "../ui/checkbox";
+
 type LoginFormInputs = {
   email: string;
   password: string;
 };
+
 export default function LoginForm() {
   const [isDisable, setIsDisable] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +66,9 @@ export default function LoginForm() {
           ? "client"
           : data.email === "candidate@gmail.com"
             ? "candidate"
-            : data.email === "superadmin@gmail.com"? "super-admin": "admin",
+            : data.email === "superadmin@gmail.com"
+              ? "super-admin"
+              : "admin",
       );
     } catch (error) {
       toast.error("Wrong Email or Password");
