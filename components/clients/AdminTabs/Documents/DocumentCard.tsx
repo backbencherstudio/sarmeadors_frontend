@@ -28,7 +28,7 @@ export default function DocumentCard({
     <Card className="relative p-6 gap-0 bg-white border border-gray-200 shadow-sm">
       {/* Icon */}
       <div className="flex justify-center mb-6 mt-2">
-        {isSigned ? <ListGreenIcon /> : <ListBlackIcon />}
+        {!isSigned ? <ListGreenIcon /> : <ListBlackIcon />}
       </div>
 
       {/* Title */}

@@ -22,16 +22,16 @@ function ClientJobList({
     );
   }
 
-  console.log(jobs);
+  // console.log("jobs", jobs);
 
   // if (jobs.length === 0) return <ClientJobNotFound />;
 
   return (
     <div>
       <div className="space-y-5">
-        {/* {jobs?.map((job) => (
+        {jobs?.map((job) => (
           <ClientJobCard key={job.id} job={job} userType={userType} />
-        ))} */}
+        ))}
       </div>
     </div>
   );
