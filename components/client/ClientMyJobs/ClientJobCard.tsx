@@ -11,6 +11,7 @@ interface ClientJobCardProps {
 
 function ClientJobCard({ job, userType }: ClientJobCardProps) {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(job);
   const handleInterview = () => {
     // Handle interview button click
     console.log("Interview button clicked for job:", job);
