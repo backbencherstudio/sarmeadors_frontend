@@ -289,6 +289,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             }}
             className="flex items-center cursor-pointer justify-center w-8 h-8 rounded-lg transition-all duration-200"
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+            
           >
             <span className="xl:hidden">
               <X className="text-blackColor" size={20} />
