@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import CommonAccordion from "../CommonAccordion";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
