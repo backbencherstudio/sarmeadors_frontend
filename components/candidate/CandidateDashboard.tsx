@@ -12,25 +12,8 @@ function CandidateDashboard() {
     "candidate-dashboard",
   );
 
-  const statCards = [
-    {
-      title: "Short-Term Job",
-      value: data?.data?.stats?.short_term_jobs,
-    },
-    {
-      title: "Long-Term Job",
-      value: data?.data?.stats?.long_term_jobs,
-    },
-    {
-      title: "My Jobs",
-      value: data?.data?.stats?.my_jobs,
-    },
-    {
-      title: "My Families",
-      value: data?.data?.stats?.my_families,
-    },
-  ];
-  console.log(data);
+  
+
 
   return (
     <div>
@@ -43,7 +26,7 @@ function CandidateDashboard() {
           <h3 className="text-lg font-semibold text-blackColor mb-4">
             Status Statistics
           </h3>
-          <StatCards statCards={statCards} />
+          <StatCards  />
         </div>
         <div>
           <CandidateCurrentJob />

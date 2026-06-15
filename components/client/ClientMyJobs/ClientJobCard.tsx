@@ -1,17 +1,15 @@
 import LocationIcon from "@/components/icon/LocationIcon";
+import candidateImage from "@/public/candidates/candidates-2.png";
+import { Job } from "@/types";
 import Image from "next/image";
-import { useState } from "react";
 import ClientJobcardAction from "./ClientJobcardAction";
-
 interface ClientJobCardProps {
-  job?: any;
+  job?: Job;
   loading?: boolean;
   userType?: string;
 }
 
 function ClientJobCard({ job, userType }: ClientJobCardProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  console.log(job);
   const handleInterview = () => {
     // Handle interview button click
     console.log("Interview button clicked for job:", job);
@@ -21,8 +19,8 @@ function ClientJobCard({ job, userType }: ClientJobCardProps) {
       <div className="flex gap-4 flex-col md:flex-row items-center">
         <div className="w-full md:w-[220px] md:h-[160px] lg:w-[280px] lg:h-[204px] h-[204px] rounded-lg overflow-hidden ">
           <Image
-            src={job.image}
-            alt={job.candidateName}
+            src={job.cover_image_url || candidateImage}
+            alt={job.title}
             width={280}
             height={204}
             className="w-full h-full object-cover"
@@ -30,19 +28,19 @@ function ClientJobCard({ job, userType }: ClientJobCardProps) {
         </div>
         <div>
           <h4 className="text-lg font-semibold text-blackColor leading-6">
-            {job.candidateName}{" "}
+            {job.client_name}{" "}
             <span
-              className={` px-2 py-1 text-sm rounded-sm ${job?.jobType === "long-term" ? "bg-blueColor/20 text-blueColor" : "bg-greenColor/20 text-greenColor"}`}
+              className={` px-2 py-1 text-sm rounded-sm ${job?.job_type === "long_term" ? "bg-blueColor/20 text-blueColor" : "bg-greenColor/20 text-greenColor"}`}
             >
-              {(job?.jobType && job?.jobType) || "Long-Term"}
+              {(job?.job_type == "long_term" ? "Long-Term" : "Short-Term")}
             </span>
           </h4>
-          <p className="text-base text-descriptionColor mt-1">
+          {/* <p className="text-base text-descriptionColor mt-1">
             {job.position} | {job.roles.join(" | ")}
-          </p>
+          </p> */}
           <p className="text-base text-descriptionColor mt-1 flex items-center gap-1.5">
             <LocationIcon className="w-4 h-4" />
-            {job.location}
+            {job.address?.city}, {job.address?.province}, {job.address?.country}
           </p>
           <div>
             <ClientJobcardAction job={job} userType={userType} />
@@ -51,7 +49,8 @@ function ClientJobCard({ job, userType }: ClientJobCardProps) {
       </div>
       <div className="flex flex-col items-end ">
         <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-blackColor leading-6 ">
-          {job.price}
+          {job.compensation?.amount}{" "}
+          {job.compensation?.type === "per_hour" ? "/hr" : ""}
         </h4>
         <p className="text-xs px-2 py-1.5 font-semibold text-whiteColor rounded-sm bg-yellowColor  mt-1">
           {job.status}

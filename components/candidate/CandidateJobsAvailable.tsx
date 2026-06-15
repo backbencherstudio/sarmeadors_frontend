@@ -2,31 +2,11 @@ import jobImage from "@/public/jobs/Rectangle 856.png";
 import ClientJobList from "../client/ClientMyJobs/ClientJobList";
 import SearchIcon from "../icon/SearchIcon";
 import ButtonReuseable from "../reusable/CustomButton";
+import { useGetCandidateDashboardQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
 function CandidateJobsAvailable() {
-  const jobs = [
-    {
-      id: 1,
-      candidateName: "Darlene Robertson",
-      position: "Nanny",
-      roles: ["House Manager", "Baby/Night Nurse"],
-      location: "Miami, New York, Other Locations",
-      price: "$34/hr",
-      status: "Pending",
-      jobType: "Short-term",
-      image: jobImage,
-    },
-    {
-      id: 2,
-      candidateName: "Darlene Robertson",
-      position: "Nanny",
-      roles: ["House Manager", "Baby/Night Nurse"],
-      location: "Miami, New York, Other Locations",
-      price: "$34/hr",
-      status: "Pending",
-      jobType: "Long-term",
-      image: jobImage,
-    },
-  ];
+const { data, isLoading, isError } = useGetCandidateDashboardQuery(
+    "candidate-dashboard",
+  );
   return (
     <div>
       <div className="flex h-full justify-between items-center mb-4">
@@ -40,7 +20,7 @@ function CandidateJobsAvailable() {
         />
       </div>
       <div className="space-y-4">
-        <ClientJobList jobs={jobs} />
+        <ClientJobList jobs={data?.data?.running_jobs} isLoading={isLoading} />
       </div>
     </div>
   );

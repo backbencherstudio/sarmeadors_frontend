@@ -1,18 +1,17 @@
 "use client";
-import { useState } from "react";
 import ClientJobCard from "./ClientJobCard";
-import ClientJobNotFound from "./ClientJobNotFound";
 import ClientJobsCardSkeleton from "./ClientJobsCardSkeleton";
 
 function ClientJobList({
   jobs,
   userType,
+  isLoading,
 }: {
   jobs?: any[];
   userType?: string;
+  isLoading?: boolean;
 }) {
-  const [loading, setLoading] = useState(false);
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="space-y-5">
         {[1, 2, 3].map((index) => (
@@ -29,9 +28,9 @@ function ClientJobList({
   return (
     <div>
       <div className="space-y-5">
-        {/* {jobs?.map((job) => (
+        {jobs?.map((job) => (
           <ClientJobCard key={job.id} job={job} userType={userType} />
-        ))} */}
+        ))}
       </div>
     </div>
   );
