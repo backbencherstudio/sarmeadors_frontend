@@ -1,3 +1,6 @@
+"use client";
+
+import { useGetCandidateDashboardQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
 import UserInfo from "../clients/UserInfo";
 import StatCards from "../dashboard/StatCards";
 import CandidateCurrentJob from "./CandidateCurrentJob";
@@ -5,28 +8,34 @@ import CandidateHeroSection from "./CandidateHeroSection";
 import CandidateJobsAvailable from "./CandidateJobsAvailable";
 
 function CandidateDashboard() {
+  const { data, isLoading, isError } = useGetCandidateDashboardQuery(
+    "candidate-dashboard",
+  );
+
   const statCards = [
     {
       title: "Short-Term Job",
-      value: 0,
+      value: data?.data?.stats?.short_term_jobs,
     },
     {
       title: "Long-Term Job",
-      value: 0,
+      value: data?.data?.stats?.long_term_jobs,
     },
     {
       title: "My Jobs",
-      value: 0,
+      value: data?.data?.stats?.my_jobs,
     },
     {
       title: "My Families",
-      value: 0,
+      value: data?.data?.stats?.my_families,
     },
   ];
+  console.log(data);
+
   return (
     <div>
       <div className="md:p-6 p-3">
-        <UserInfo />
+        <UserInfo clientInfo={data?.data?.candidate} />
         <div>
           <CandidateHeroSection />
         </div>

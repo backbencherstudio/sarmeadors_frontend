@@ -1,3 +1,4 @@
+import { getSubDomain } from "@/helper/getDomain.helper";
 import { getToken } from "@/lib/token";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -13,6 +14,7 @@ const baseApiSlice = createApi({
         headers.set("Authorization", `Bearer ${token}`);
       }
       headers.set("accept", "application/json");
+      headers.set("X-Subdomain", getSubDomain());
       return headers;
     },
   }),
