@@ -1,4 +1,5 @@
 "use client";
+
 import { clearBiodataData } from "@/helper/biodataStorage.helper";
 import { CookieHelper } from "@/helper/cookie.helper";
 import CopyIcon from "@/public/icon/CopyIcon";
@@ -252,7 +253,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     <div className="h-screen">
       <div
         className={`
-          h-full flex flex-col
+          h-full flex flex-col 
           min-h-[calc(100vh-100px)]
           bg-grayColor1
           shadow-[0px_-0.3px_5.5px_0px_rgba(0,0,0,0.02)]

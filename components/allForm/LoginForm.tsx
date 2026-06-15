@@ -12,6 +12,7 @@ import ButtonReuseable from "../reusable/CustomButton";
 import { Checkbox } from "../ui/checkbox";
 import { useLoginMutation } from "@/feature/auth/auth";
 import { toast } from "react-toastify";
+import setToken from "@/feature/token/token";
 
 type LoginFormInputs = {
   email: string;
@@ -77,6 +78,10 @@ export default function LoginForm() {
         return;
       }
 
+      if (isSuccess) {
+        await setToken(response?.token, userType);
+      }
+
       toast.success(message || "Successfully login!");
 
       if (userType === "client") {
@@ -90,6 +95,7 @@ export default function LoginForm() {
       }
 
       localStorage.setItem("isLoggedIn", userType);
+      // localStorage.setItem("accessToken", response?.token);
       reset();
     } catch (error: any) {
       console.log(error);
@@ -156,7 +162,7 @@ export default function LoginForm() {
             type="button"
             aria-label="toggle-password-visibility"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-100  hover:text-gray-300  focus:outline-none transition-colors duration-200"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none transition-colors duration-200 cursor-pointer"
           >
             {showPassword ? (
               <EyeOff className="h-4 w-4" />
