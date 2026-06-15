@@ -1,4 +1,5 @@
 "use client";
+
 import { Skeleton } from "../ui/skeleton";
 interface StatCard {
   title: string;
