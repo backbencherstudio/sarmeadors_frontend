@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import applicationFormSlice from "./slice/applicationBuilder/ApplicationFormSlice";
-import baseApiSlice from "./slice/baseApiSlice";
+import { baseApi } from "./api/baseApi";
 
 const createNoopStorage = () => {
   return {
@@ -33,7 +33,7 @@ const storage =
     : createNoopStorage();
 
 const rootReducer = combineReducers({
-  [baseApiSlice.reducerPath]: baseApiSlice.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
   applicationForm: applicationFormSlice,
 });
 
@@ -53,7 +53,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(baseApiSlice.middleware as any),
+    }).concat(baseApi.middleware as any),
 });
 
 export const persistor =

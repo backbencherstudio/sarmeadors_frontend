@@ -87,14 +87,14 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "radio_table",
         description: "Matrix selection using radio buttons.",
       },
-      
+
       {
         id: "single_checkbox",
         label: "Single Checkbox",
         type: "checkbox",
         description: "A single toggle checkbox selection.",
       },
-      
+
       {
         id: "multi_select_checkbox",
         label: "Multi Select Checkbox",
@@ -113,7 +113,6 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "multi_select",
         description: "Select multiple values from an input selector.",
       },
-      
     ],
   },
   {
@@ -137,7 +136,7 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "datetime",
         description: "Select both precise date and exact time.",
       },
-      
+
       {
         id: "time_availability",
         label: "Time Availability",
@@ -161,12 +160,7 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "file",
         description: "Upload a generic document or media file.",
       },
-      {
-        id: "list_files",
-        label: "List Files",
-        type: "list_files",
-        description: "Display and manage multiple file list assets.",
-      },
+
       {
         id: "video_recorder",
         label: "Video Recorder",
@@ -197,7 +191,6 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         description:
           "Dedicated bounding box container for verification signatures.",
       },
-      
     ],
   },
   {
@@ -221,26 +214,20 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         type: "stripe_subscription",
         description: "Select continuous recurring Stripe payment structures.",
       },
-     
+
       {
         id: "subscription_plan",
         label: "Subscription plan",
         type: "subscription_plan",
         description: "Choose standard automated monthly localized tokens.",
       },
-      {
-        id: "phone_country_code",
-        label: "Phone Country Code",
-        type: "phone_country_code",
-        description: "Choose standard automated monthly localized tokens.",
-      },
+      
     ],
   },
-  
+
   {
     category: "Layout & Display",
     items: [
-      
       {
         id: "section",
         label: "Section",
@@ -248,7 +235,6 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
         description:
           "Grouping structure container wrapping multiple dynamic fields.",
       },
-    
     ],
   },
   {
@@ -283,5 +269,4 @@ export const FORM_ELEMENT_CATEGORIES: ElementCategory[] = [
       },
     ],
   },
- 
 ];

@@ -15,11 +15,7 @@ export default function FileUploadRenderer({ field }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   const isAllowedFile = (file: File) => {
-    return (
-      file.type.startsWith("image/") ||
-      file.type === "application/pdf" ||
-      /\.(png|jpe?g|gif|webp|pdf)$/i.test(file.name)
-    );
+    return !file.type.startsWith("video/");
   };
 
   const handleFile = (file?: File | null) => {
@@ -28,7 +24,7 @@ export default function FileUploadRenderer({ field }: Props) {
     }
 
     if (!isAllowedFile(file)) {
-      setError("Only image files and PDF are allowed.");
+      setError("Video files are not allowed.");
       setSelectedFile(null);
       return;
     }
@@ -81,7 +77,7 @@ export default function FileUploadRenderer({ field }: Props) {
         <input
           ref={inputRef}
           type="file"
-          accept="image/*,application/pdf"
+          accept="*"
           className="hidden"
           onChange={handleInputChange}
         />
@@ -89,7 +85,7 @@ export default function FileUploadRenderer({ field }: Props) {
         <p className="text-base md:text-lg lg:text-xl font-medium text-headerColor">
           Drag and drop your file here
         </p>
-        <p className="text-xs text-gray-400">Supported files: PDF, JPG, PNG</p>
+        <p className="text-xs text-gray-400">All file types accepted (video not supported)</p>
         <p className="text-xs font-medium text-headerColor">
           {selectedFile ? selectedFile.name : "No file selected yet"}
         </p>

@@ -1,4 +1,6 @@
 "use client";
+import { useRef } from "react";
+import Image from "next/image";
 import ReusableInput from "@/components/common/InputFiled/ReusableInput";
 import { updateFieldProperties } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
 import { useDispatch } from "react-redux";
@@ -18,6 +20,7 @@ interface Props {
 
 export default function IntroductionSettings({ block }: Props) {
   const dispatch = useDispatch();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (key: string, value: any) => {
     dispatch(
@@ -30,17 +33,51 @@ export default function IntroductionSettings({ block }: Props) {
     );
   };
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      handleChange("logoUrl", event.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDeleteLogo = () => {
+    handleChange("logoUrl", "");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
   return (
     <div className="space-y-4 text-sm">
       {/* Logo Section */}
       <div className="p-3 border rounded-lg bg-white flex flex-col items-center gap-2">
-        <div className="w-full h-20 border border-dashed rounded flex items-center justify-center text-gray-400 bg-gray-50">
-          Logo Preview
+        <div className="w-full h-20 border border-dashed rounded flex items-center justify-center text-gray-400 bg-gray-50 overflow-hidden">
+          {block.logoUrl ? (
+            <Image
+              src={block.logoUrl}
+              alt="Form Logo"
+              width={240}
+              height={60}
+              className="object-contain w-full h-full"
+              unoptimized
+            />
+          ) : (
+            <span>Logo Preview</span>
+          )}
         </div>
         <div className="flex justify-between w-full text-xs font-semibold text-gray-500">
-          <button className="text-redColor">Delete</button>
-          <button className="text-black">Change logo</button>
+          <button type="button" className="text-redColor cursor-pointer" onClick={handleDeleteLogo}>Delete</button>
+          <button type="button" className="text-black cursor-pointer" onClick={() => fileInputRef.current?.click()}>Change logo</button>
         </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleLogoUpload}
+        />
       </div>
 
       {/* Title */}

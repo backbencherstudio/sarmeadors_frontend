@@ -100,7 +100,7 @@ export default function AddInputField({
     }
     setOpen(false);
   };
-
+  console.log(selectedElement,"aksdfajsdfkaskdjf");
   return (
     <RootDialog open={open} setOpen={setOpen}>
       <div className="flex h-[80vh] max-h-[650px] w-full max-w-5xl overflow-hidden rounded-xl bg-white shadow-2xl">
@@ -118,6 +118,8 @@ export default function AddInputField({
                 </span>
                 {category.items.map((item) => {
                   const isSelected = selectedElement.id === item.id;
+                
+                  
                   return (
                     <button
                       key={item.id}

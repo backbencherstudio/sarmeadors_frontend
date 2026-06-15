@@ -10,10 +10,8 @@ export default function RadioTableRenderer({ field }: Props) {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const columns = field.columns?.length
     ? field.columns
-    : ["Column 1", "Column 2", "Column 3", "Column 4"];
-  const rows = field.rows?.length
-    ? field.rows
-    : ["Row 1", "Row 2", "Row 3", "Row 4"];
+    : ["Column 1", "Column 2", "Column 3"];
+  const rows = field.rows?.length ? field.rows : ["Row 1", "Row 2"];
 
   return (
     <div className="space-y-2 w-full overflow-x-auto">

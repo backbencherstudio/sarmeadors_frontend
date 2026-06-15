@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: AppConfig().app.name,
   description: "Parvez Rahman",
   icons: {
-    icon: "/icon/siteIcon.svg",
+    icon: "/icon/mainlogo.png",
   },
 };
 
