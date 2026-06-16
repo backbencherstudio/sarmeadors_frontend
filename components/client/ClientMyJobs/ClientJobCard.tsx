@@ -10,10 +10,6 @@ interface ClientJobCardProps {
 }
 
 function ClientJobCard({ job, userType }: ClientJobCardProps) {
-  const handleInterview = () => {
-    // Handle interview button click
-    console.log("Interview button clicked for job:", job);
-  };
   return (
     <div className="border flex flex-col md:flex-row justify-between border-borderColor hover:shadow-xl transition-all duration-200 p-5 rounded-lg">
       <div className="flex gap-4 flex-col md:flex-row items-center">
@@ -32,7 +28,7 @@ function ClientJobCard({ job, userType }: ClientJobCardProps) {
             <span
               className={` px-2 py-1 text-sm rounded-sm ${job?.job_type === "long_term" ? "bg-blueColor/20 text-blueColor" : "bg-greenColor/20 text-greenColor"}`}
             >
-              {(job?.job_type == "long_term" ? "Long-Term" : "Short-Term")}
+              {job?.job_type == "long_term" ? "Long-Term" : "Short-Term"}
             </span>
           </h4>
           {/* <p className="text-base text-descriptionColor mt-1">
