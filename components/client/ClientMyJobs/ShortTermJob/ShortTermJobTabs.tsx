@@ -32,7 +32,10 @@ export function ShortTermJobTabs() {
 
   return (
     <div>
-      <ReusableTabs tabs={tabs} initialPath={"/client/client-my-jobs/short-term-job"} />
+      <ReusableTabs
+        tabs={tabs}
+        initialPath={"/client/client-my-jobs/short-term-job"}
+      />
     </div>
   );
 }

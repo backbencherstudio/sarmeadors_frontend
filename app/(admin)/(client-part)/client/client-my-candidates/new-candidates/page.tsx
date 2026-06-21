@@ -5,7 +5,7 @@ import { PROFILES } from "@/demoData/DashboardData";
 import { useGetClientMyCandidateQuery } from "@/feature/dashboard/client/myCandidate";
 
 export default function page() {
-  const { data } = useGetClientMyCandidateQuery("previous");
+  const { data } = useGetClientMyCandidateQuery("new");
   return (
     <div>
       {/* <div className="flex justify-between items-center mt-4">
