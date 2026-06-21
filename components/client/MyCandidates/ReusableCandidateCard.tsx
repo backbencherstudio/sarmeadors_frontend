@@ -1,11 +1,10 @@
 "use client";
 
 import LinkReuseable from "@/components/reusable/CustomLink";
-import { EyeIcon, User } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import ClientNoteModal from "./ClientNoteModal";
-import UserIcon from "@/public/icon/UserIcon";
 
 function ReusableCandidateCard({ profile }: any) {
   const [open, setOpen] = useState(false);
@@ -49,8 +48,8 @@ function ReusableCandidateCard({ profile }: any) {
             </div>
           </div>
           {/* <div>
-                        <Toggle />
-                    </div> */}
+              <Toggle />
+           </div> */}
         </div>
         <div className="md:p-6 p-4">
           {/* <div className="mt-10">
@@ -76,12 +75,12 @@ function ReusableCandidateCard({ profile }: any) {
                                 {profile?.clientInterviewAvailability}
                             </p>
                         </div>
-                    )} */}
+          )} */}
           <div className="mt-10 w-full">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               {profile?.status === "not-interested" ? (
                 <LinkReuseable
-                  href={`/client/client-my-candidates/new-candidates/1/personal-information`}
+                  href={`/client/client-my-candidates/new-candidates/${profile.id}/personal-information`}
                   title="View Details"
                   icon={<EyeIcon size={15} />}
                   className="flex items-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto"
@@ -89,7 +88,7 @@ function ReusableCandidateCard({ profile }: any) {
               ) : (
                 <>
                   <LinkReuseable
-                    href={`/client/client-my-candidates/new-candidates/1/personal-information`}
+                    href={`/client/client-my-candidates/new-candidates/${profile.id}/personal-information`}
                     title="View Details"
                     icon={<EyeIcon size={15} />}
                     className="flex items-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto"

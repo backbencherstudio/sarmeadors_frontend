@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { X } from "lucide-react";
 import { useState } from "react";
+import { useShortTermHireRequestMutation } from "@/feature/dashboard/client/myCandidate";
 
 interface HireRequestModalProps {
   isHireModalOpen: boolean;
@@ -13,14 +15,23 @@ export default function HireRequestModal({
   isHireModalOpen,
   onClose,
 }: HireRequestModalProps) {
-  const [jobType, setJobType] = useState("long-term");
+  const [jobType, setJobType] = useState("short-term");
   const [step, setStep] = useState(1);
+  const [shortTermHireRequest] = useShortTermHireRequestMutation();
 
   if (!isHireModalOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
       <div className="bg-white w-full max-w-4xl rounded-2xl shadow-xl p-6 md:p-8 relative">
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-gray-500 hover:text-black cursor-pointer"
+          aria-label="Close modal"
+        >
+          <X size={20} />
+        </button>
+
         {/* ===== STEP 1 ===== */}
         {step === 1 && (
           <div className="grid md:grid-cols-3 gap-8">

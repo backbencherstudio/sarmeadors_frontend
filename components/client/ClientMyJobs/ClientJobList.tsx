@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import ClientJobCard from "./ClientJobCard";
-import ClientJobNotFound from "./ClientJobNotFound";
 import ClientJobsCardSkeleton from "./ClientJobsCardSkeleton";
 
 function ClientJobList({

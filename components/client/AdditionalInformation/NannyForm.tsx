@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useGetSingleClientMyCandidateQuery } from "@/feature/dashboard/client/myCandidate";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface FormData {
   interestedMidwest: string;
@@ -40,6 +42,56 @@ export function NannyForm() {
     ssn: "yes",
     hearAboutUs: "google",
   });
+
+  const { id } = useParams();
+  const { data } = useGetSingleClientMyCandidateQuery(id);
+
+  const additionalInformation = data?.data?.candidate?.additional_information;
+
+  useEffect(() => {
+    if (!additionalInformation) return;
+
+    const availableFor = Array.isArray(additionalInformation.available_for)
+      ? additionalInformation.available_for
+      : [];
+
+    setFormData({
+      interestedMidwest:
+        additionalInformation.interested_in_iowa === true ? "yes" : "no",
+      yearsExperience: additionalInformation.years_of_experience || "5-10",
+      commitment:
+        additionalInformation.commitment === "long_term"
+          ? "long-term"
+          : additionalInformation.commitment === "short_term"
+            ? "short-term"
+            : "long-term",
+      availableFor: {
+        partTime:
+          availableFor.includes("full_time") ||
+          availableFor.includes("part_time"),
+        liveIn:
+          availableFor.includes("live_in") || availableFor.includes("live_out"),
+      },
+      driverLicense:
+        additionalInformation.drivers_license === "dl_and_car"
+          ? "drivers-license"
+          : additionalInformation.drivers_license || "drivers-license",
+      cprCertified:
+        additionalInformation.cpr_first_aid === "yes" ||
+        additionalInformation.cpr_first_aid === "willing"
+          ? "willing"
+          : "willing",
+      vaccinations:
+        additionalInformation.vaccinations === "yes" ? "yes" : "yes",
+      petsHome: additionalInformation.ok_with_pets || "cat",
+      travel: additionalInformation.ok_with_travel || "international",
+      usWork: additionalInformation.work_legally_in_us === true ? "yes" : "no",
+      paidLegally:
+        additionalInformation.comfortable_paid_legally === true ? "yes" : "no",
+      ssn: additionalInformation.has_ssn === true ? "yes" : "no",
+      hearAboutUs: additionalInformation.hear_about_us || "google",
+    });
+  }, [additionalInformation]);
 
   const handleRadioChange = (field: string, value: string) => {
     setFormData((prev) => ({
