@@ -19,29 +19,29 @@ const textareaClass =
   "min-h-[92px] rounded-md border-[#DDE3EA] bg-white px-3 py-3 text-sm text-[#111827] shadow-none placeholder:text-[#8A94A6] focus-visible:ring-1 focus-visible:ring-[#111827]";
 
 type ChildInfo = {
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
+  first_name: string;
+  last_name: string;
+  date_of_birth: string;
   gender: string;
-  habits: string;
+  interests: string;
   allergies: string;
 };
 
 type JobDetailsDraft = {
-  jobTitle: string;
+  title: string;
   description: string;
-  coverPicture: string;
+  cover_image: string;
   children: ChildInfo[];
 };
 
 const STORAGE_KEY = "short-term-job-details";
 
 const createEmptyChild = (): ChildInfo => ({
-  firstName: "",
-  lastName: "",
-  dateOfBirth: "",
+  first_name: "",
+  last_name: "",
+  date_of_birth: "",
   gender: "",
-  habits: "",
+  interests: "",
   allergies: "",
 });
 
@@ -61,9 +61,9 @@ export default function Page() {
 
   const saveDraft = () => {
     const draft: JobDetailsDraft = {
-      jobTitle,
-      description,
-      coverPicture: selectedFileName,
+      title: jobTitle,
+      description: description,
+      cover_image: selectedFileName,
       children: childrenInfo,
     };
 
@@ -124,7 +124,7 @@ export default function Page() {
             Job Title <RequiredMark />
           </label>
           <Input
-            id="job-title"
+            id="title"
             value={jobTitle}
             onChange={(event) => setJobTitle(event.target.value)}
             className={inputClass}
@@ -153,11 +153,10 @@ export default function Page() {
             }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            className={`flex min-h-[164px] flex-col items-center justify-center rounded-lg border border-dashed px-4 py-7 text-center transition-colors ${
-              isDragging
-                ? "border-[#111827] bg-[#F3F6FA]"
-                : "border-[#DDE3EA] bg-[#F8FAFC]"
-            }`}
+            className={`flex min-h-[164px] flex-col items-center justify-center rounded-lg border border-dashed px-4 py-7 text-center transition-colors ${isDragging
+              ? "border-[#111827] bg-[#F3F6FA]"
+              : "border-[#DDE3EA] bg-[#F8FAFC]"
+              }`}
           >
             <p className="text-base font-medium text-[#111827]">
               {selectedFileName || "Drag and drop Here"}
@@ -218,11 +217,11 @@ export default function Page() {
                       </label>
                       <Input
                         id={firstNameId}
-                        value={child.firstName}
+                        value={child.first_name}
                         onChange={(event) =>
                           handleChildChange(
                             index,
-                            "firstName",
+                            "first_name",
                             event.target.value,
                           )
                         }
@@ -235,11 +234,11 @@ export default function Page() {
                       </label>
                       <Input
                         id={lastNameId}
-                        value={child.lastName}
+                        value={child.last_name}
                         onChange={(event) =>
                           handleChildChange(
                             index,
-                            "lastName",
+                            "last_name",
                             event.target.value,
                           )
                         }
@@ -255,11 +254,12 @@ export default function Page() {
                     <div className="relative">
                       <Input
                         id={dateOfBirthId}
-                        value={child.dateOfBirth}
+                        type="date"
+                        value={child.date_of_birth}
                         onChange={(event) =>
                           handleChildChange(
                             index,
-                            "dateOfBirth",
+                            "date_of_birth",
                             event.target.value,
                           )
                         }
@@ -311,9 +311,9 @@ export default function Page() {
                     </label>
                     <Textarea
                       id={habitsId}
-                      value={child.habits}
+                      value={child.interests}
                       onChange={(event) =>
-                        handleChildChange(index, "habits", event.target.value)
+                        handleChildChange(index, "interests", event.target.value)
                       }
                       placeholder="Enter a description..."
                       className={`${textareaClass} min-h-[132px]`}

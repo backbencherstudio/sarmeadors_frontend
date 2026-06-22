@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { useLocationsQuery } from "@/feature/dashboard/client/myCandidate";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -25,18 +26,22 @@ export default function Page() {
   const [country, setCountry] = useState("");
   const [location, setLocation] = useState("");
 
+  const { data } = useLocationsQuery({})
+
+  console.log(data?.data)
+
   const saveDraft = () => {
     const stored = localStorage.getItem(STORAGE_KEY);
     const currentDraft = stored ? JSON.parse(stored) : {};
 
     const draft = {
       ...currentDraft,
-      jobAddress,
-      homeCity,
-      homeProvince,
-      homePostalCode,
+      job_address: jobAddress,
+      home_city: homeCity,
+      home_province: homeProvince,
+      home_postal_code: homePostalCode,
       country,
-      location,
+      location_id: location,
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
@@ -49,12 +54,12 @@ export default function Page() {
 
     try {
       const parsed = JSON.parse(stored);
-      setJobAddress(parsed.jobAddress || "");
-      setHomeCity(parsed.homeCity || "");
-      setHomeProvince(parsed.homeProvince || "");
-      setHomePostalCode(parsed.homePostalCode || "");
+      setJobAddress(parsed.job_address || "");
+      setHomeCity(parsed.home_city || "");
+      setHomeProvince(parsed.home_province || "");
+      setHomePostalCode(parsed.home_postal_code || "");
       setCountry(parsed.country || "");
-      setLocation(parsed.location || "");
+      setLocation(parsed.location_id || "");
     } catch {
       localStorage.removeItem(STORAGE_KEY);
     }
@@ -157,9 +162,11 @@ export default function Page() {
               <option value="" disabled>
                 Start typing to filter
               </option>
-              <option value="home">Home</option>
-              <option value="office">Office</option>
-              <option value="other">Other</option>
+              {data?.data?.map((loc) => (
+                <option key={loc.id} value={loc.id}>
+                  {loc.location}
+                </option>
+              ))}
             </select>
             <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#475569]" />
           </div>

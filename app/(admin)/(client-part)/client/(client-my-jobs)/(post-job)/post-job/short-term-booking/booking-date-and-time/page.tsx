@@ -17,25 +17,18 @@ const requiredClass = "text-[#EF4444]";
 const selectClass =
   "h-11 w-full appearance-none rounded-md border border-[#DDE3EA] bg-[#F8FAFC] px-3 pr-10 text-sm text-[#111827] outline-none transition-[color,box-shadow] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]";
 
-type AdditionalDate = {
-  date: string;
-  startTime: string;
-  endTime: string;
-};
-
-type BookingDraft = {
-  bookingDate: string;
-  startTime: string;
-  endTime: string;
-  additionalDates: AdditionalDate[];
+type BookingDate = {
+  booking_date: string; // "YYYY-MM-DD"
+  start_time: string; // "HH:mm"
+  end_time: string; // "HH:mm"
 };
 
 const STORAGE_KEY = "short-term-job-details";
 
-const createEmptyAdditionalDate = (): AdditionalDate => ({
-  date: "",
-  startTime: "",
-  endTime: "",
+const createEmptyBookingDate = (): BookingDate => ({
+  booking_date: "",
+  start_time: "",
+  end_time: "",
 });
 
 function RequiredMark() {
@@ -75,11 +68,14 @@ function TimeSelect({
           <option value="" disabled>
             hh:mm:A
           </option>
-          <option value="5:45 AM">5:45 AM</option>
-          <option value="8:00 AM">8:00 AM</option>
-          <option value="12:00 PM">12:00 PM</option>
-          <option value="5:40 PM">5:40 PM</option>
-          <option value="6:00 PM">6:00 PM</option>
+          {/* values are 24-hour "HH:mm" to match the stored data format */}
+          <option value="05:45">5:45 AM</option>
+          <option value="08:00">8:00 AM</option>
+          <option value="09:00">9:00 AM</option>
+          <option value="12:00">12:00 PM</option>
+          <option value="17:00">5:00 PM</option>
+          <option value="17:40">5:40 PM</option>
+          <option value="18:00">6:00 PM</option>
         </select>
         <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#475569]" />
       </div>
@@ -88,23 +84,19 @@ function TimeSelect({
 }
 
 export default function Page() {
-  const [bookingDate, setBookingDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [additionalDates, setAdditionalDates] = useState<AdditionalDate[]>([
-    createEmptyAdditionalDate(),
+  // Single source of truth: index 0 is the primary booking date,
+  // every subsequent item is an "additional date".
+  const [bookingDates, setBookingDates] = useState<BookingDate[]>([
+    createEmptyBookingDate(),
   ]);
 
-  const saveDraft = () => {
+  const saveDraft = (dates: BookingDate[]) => {
     const stored = localStorage.getItem(STORAGE_KEY);
     const currentDraft = stored ? JSON.parse(stored) : {};
 
     const draft = {
       ...currentDraft,
-      bookingDate,
-      startTime,
-      endTime,
-      additionalDates,
+      dates,
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
@@ -116,17 +108,14 @@ export default function Page() {
     if (!stored) return;
 
     try {
-      const parsed = JSON.parse(stored) as Partial<BookingDraft> & {
-        children?: unknown;
+      const parsed = JSON.parse(stored) as {
+        dates?: BookingDate[];
       };
 
-      setBookingDate(parsed.bookingDate || "");
-      setStartTime(parsed.startTime || "");
-      setEndTime(parsed.endTime || "");
-      setAdditionalDates(
-        Array.isArray(parsed.additionalDates) && parsed.additionalDates.length
-          ? parsed.additionalDates
-          : [createEmptyAdditionalDate()],
+      setBookingDates(
+        Array.isArray(parsed.dates) && parsed.dates.length
+          ? parsed.dates
+          : [createEmptyBookingDate()],
       );
     } catch {
       localStorage.removeItem(STORAGE_KEY);
@@ -134,15 +123,15 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    saveDraft();
-  }, [bookingDate, startTime, endTime, additionalDates]);
+    saveDraft(bookingDates);
+  }, [bookingDates]);
 
-  const handleAdditionalDateChange = (
+  const handleDateChange = (
     dateIndex: number,
-    field: keyof AdditionalDate,
+    field: keyof BookingDate,
     value: string,
   ) => {
-    setAdditionalDates((currentDates) =>
+    setBookingDates((currentDates) =>
       currentDates.map((dateItem, index) =>
         index === dateIndex ? { ...dateItem, [field]: value } : dateItem,
       ),
@@ -150,16 +139,18 @@ export default function Page() {
   };
 
   const handleAddAdditionalDate = () => {
-    setAdditionalDates((currentDates) => [
+    setBookingDates((currentDates) => [
       ...currentDates,
-      createEmptyAdditionalDate(),
+      createEmptyBookingDate(),
     ]);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    saveDraft();
+    saveDraft(bookingDates);
   };
+
+  const [primaryDate, ...additionalDates] = bookingDates;
 
   return (
     <form className="pb-8 pt-5" onSubmit={handleSubmit}>
@@ -180,9 +171,11 @@ export default function Page() {
           <div className="relative">
             <Input
               id="booking-date"
-              value={bookingDate}
-              onChange={(event) => setBookingDate(event.target.value)}
-              placeholder="MM/DD/YYYY"
+              type="date"
+              value={primaryDate.booking_date}
+              onChange={(event) =>
+                handleDateChange(0, "booking_date", event.target.value)
+              }
               className={`${inputClass} pr-10`}
             />
             <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#475569]" />
@@ -193,15 +186,15 @@ export default function Page() {
           <TimeSelect
             id="start-time"
             label="Start Time"
-            value={startTime}
-            onChange={setStartTime}
+            value={primaryDate.start_time}
+            onChange={(value) => handleDateChange(0, "start_time", value)}
             required
           />
           <TimeSelect
             id="end-time"
             label="End Time"
-            value={endTime}
-            onChange={setEndTime}
+            value={primaryDate.end_time}
+            onChange={(value) => handleDateChange(0, "end_time", value)}
             required
           />
         </div>
@@ -212,8 +205,9 @@ export default function Page() {
           </h2>
 
           <div className="space-y-4">
-            {additionalDates.map((dateItem, index) => {
-              const dateNumber = index + 1;
+            {additionalDates.map((dateItem, additionalIndex) => {
+              const dateNumber = additionalIndex + 1;
+              const actualIndex = additionalIndex + 1; // offset by primary date
 
               return (
                 <div
@@ -223,31 +217,31 @@ export default function Page() {
                   <div className="relative">
                     <Input
                       id={`additional-date-${dateNumber}`}
-                      value={dateItem.date}
+                      value={dateItem.booking_date}
                       onChange={(event) =>
-                        handleAdditionalDateChange(
-                          index,
-                          "date",
+                        handleDateChange(
+                          actualIndex,
+                          "booking_date",
                           event.target.value,
                         )
                       }
-                      placeholder="MM/DD/YYYY"
+                      type="date"
                       className={`${inputClass} pr-10`}
                     />
                     <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#111827]" />
                   </div>
                   <TimeSelect
                     id={`additional-start-time-${dateNumber}`}
-                    value={dateItem.startTime}
+                    value={dateItem.start_time}
                     onChange={(value) =>
-                      handleAdditionalDateChange(index, "startTime", value)
+                      handleDateChange(actualIndex, "start_time", value)
                     }
                   />
                   <TimeSelect
                     id={`additional-end-time-${dateNumber}`}
-                    value={dateItem.endTime}
+                    value={dateItem.end_time}
                     onChange={(value) =>
-                      handleAdditionalDateChange(index, "endTime", value)
+                      handleDateChange(actualIndex, "end_time", value)
                     }
                   />
                 </div>

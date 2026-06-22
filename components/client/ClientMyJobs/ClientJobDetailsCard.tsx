@@ -4,6 +4,7 @@ import { clientCurrentJobs } from "@/demoData/DashboardData";
 import { AlertCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import ClientjobsCard from "./ClientjobsCard";
+import { useGetShortTermJobQuery } from "@/feature/dashboard/client/myCandidate";
 
 interface CurrentJob {
   id: number;
@@ -24,9 +25,13 @@ interface CurrentJob {
   total?: string;
 }
 
-function ClientJobDetailsCard() {
+function ClientJobDetailsCard({ status }: { status?: string }) {
   const pathname = usePathname();
   const lastPathText = pathname.split("/").filter(Boolean).pop() == "short-term-job" ? "running" : pathname.split("/").filter(Boolean).pop();
+
+  const { data } = useGetShortTermJobQuery(status)
+
+  console.log(data?.data?.jobs)
 
 
   return (
@@ -38,7 +43,7 @@ function ClientJobDetailsCard() {
         </h2>
       </div>
       <div className="space-y-5">
-        {clientCurrentJobs.map((job) => (
+        {data?.data?.jobs?.map((job) => (
           <>
             {job.status === lastPathText && (
               <ClientjobsCard key={job.id} job={job} />

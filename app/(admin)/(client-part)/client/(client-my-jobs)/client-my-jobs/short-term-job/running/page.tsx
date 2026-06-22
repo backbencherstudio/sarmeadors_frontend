@@ -3,7 +3,7 @@ import ClientJobDetailsCard from '@/components/client/ClientMyJobs/ClientJobDeta
 export default function page() {
     return (
         <div>
-            <ClientJobDetailsCard />
+            <ClientJobDetailsCard status='running' />
         </div>
     )
 }
