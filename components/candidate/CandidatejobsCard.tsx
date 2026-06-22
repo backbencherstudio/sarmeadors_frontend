@@ -9,7 +9,7 @@ import ButtonReuseable from "../reusable/CustomButton";
 import LinkReuseable from "../reusable/CustomLink";
 import CandidateJobsReviewAction from "./CandidateJobsReviewAction";
 
-function CandidatejobsCard({ job }: { job: Job }) {
+function CandidatejobsCard({ job }: { job?: Job }) {
   const today = dayjs();
   const jobDate = dayjs(job.latest_attendance?.booking_date);
 
@@ -45,7 +45,7 @@ function CandidatejobsCard({ job }: { job: Job }) {
                   <div
                     className={`${isEqualDay ? "bg-greenColor text-blackColor!" : "bg-secondaryColor"} w-3 h-3  rounded-full`}
                   ></div>{" "}
-                  <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${ dayjs(job.latest_attendance?.date).format("MMM DD, YYYY")  }`}</p>
+                  <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${dayjs(job.latest_attendance?.date).format("MMM DD, YYYY")}`}</p>
                 </div>
               )}
             </div>

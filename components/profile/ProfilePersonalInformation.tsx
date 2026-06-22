@@ -1,11 +1,20 @@
 "use client";
+
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import ButtonReuseable from "../reusable/CustomButton";
+import { useGetSingleClientMyCandidateQuery } from "@/feature/dashboard/client/myCandidate";
+import { useParams } from "next/navigation";
 
 function ProfilePersonalInformation() {
   const [isHidden, setIsHidden] = useState(false);
   const [hiddenField, setHiddenField] = useState("");
+  const { id } = useParams();
+  const { data } = useGetSingleClientMyCandidateQuery(id);
+
+  const personalInfo = data?.data?.candidate?.personal_information;
+
+  const address = personalInfo?.address || {};
 
   const handleHidden = (field: string) => {
     setHiddenField(field);
@@ -25,7 +34,7 @@ function ProfilePersonalInformation() {
                 First Name
               </p>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                Kristin
+                {personalInfo?.first_name || "-"}
               </p>
             </div>
             <div>
@@ -33,7 +42,7 @@ function ProfilePersonalInformation() {
                 Email Address
               </p>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                binhan628@gmail.com
+                {personalInfo?.email || "-"}
               </p>
             </div>
             <div>
@@ -41,7 +50,7 @@ function ProfilePersonalInformation() {
                 Nationality
               </p>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                Americans
+                {personalInfo?.nationality || "-"}
               </p>
             </div>
           </div>
@@ -51,7 +60,7 @@ function ProfilePersonalInformation() {
                 Last Name
               </p>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                Ben
+                {personalInfo?.last_name || "-"}
               </p>
             </div>
             <div>
@@ -59,7 +68,7 @@ function ProfilePersonalInformation() {
                 Date of Birth
               </p>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                12/12/2025
+                {personalInfo?.date_of_birth || "-"}
               </p>
             </div>
             <div>
@@ -67,7 +76,7 @@ function ProfilePersonalInformation() {
                 Phone Number
               </p>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                +14842918883
+                {personalInfo?.mobile || "-"}
               </p>
             </div>
           </div>
@@ -93,7 +102,7 @@ function ProfilePersonalInformation() {
                 />
               </div>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                26 Berkshire Ave.
+                {address?.street || "-"}
               </p>
             </div>
             <div>
@@ -112,7 +121,7 @@ function ProfilePersonalInformation() {
                 />
               </div>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                Atlantic City
+                {address?.city || "-"}
               </p>
             </div>
             <div>
@@ -131,7 +140,7 @@ function ProfilePersonalInformation() {
                 />
               </div>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                NJ
+                {address?.province || "-"}
               </p>
             </div>
             <div>
@@ -150,7 +159,7 @@ function ProfilePersonalInformation() {
                 />
               </div>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                08401
+                {address?.postalCode || "-"}
               </p>
             </div>
             <div>
@@ -169,7 +178,7 @@ function ProfilePersonalInformation() {
                 />
               </div>
               <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium">
-                USA
+                {address?.country || "-"}
               </p>
             </div>
           </div>

@@ -36,6 +36,7 @@ function MyProfileLayout({ children }: { children: React.ReactNode }) {
       <ReusableTabs tabs={tabs} initialPath="" />
       <div>
         <UserInfo />
+
         {/* <div>
           <ButtonReuseable
             icon={<EditeIcon className=" text-blackColor" />}

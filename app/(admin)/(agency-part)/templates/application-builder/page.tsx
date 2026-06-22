@@ -1,4 +1,3 @@
-import { statCards } from "@/components/dashboard/DashboardPage";
 import InitialFormCreate from "@/components/dashboard/Form-Customization/InitialFormCreate";
 import StatCards from "@/components/dashboard/StatCards";
 import { TbNotes } from "react-icons/tb";
@@ -21,7 +20,7 @@ function page() {
             </button>
           </div>
         </div>
-        <StatCards statCards={statCards} />
+        <StatCards />
       </div>
       <div className="mt-10">
         <InitialFormCreate />

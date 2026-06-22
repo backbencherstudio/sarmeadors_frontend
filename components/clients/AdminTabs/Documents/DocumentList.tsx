@@ -1,13 +1,8 @@
 "use client";
 
 import DocumentCard from "./DocumentCard";
-import { useGetClientDocumentsQuery } from "@/feature/dashboard/client/documents";
 
-function DocumentList() {
-  const { data } = useGetClientDocumentsQuery({});
-
-  const agreements = data?.data?.agreements ?? [];
-
+function DocumentList({ data }) {
   const handleAction = (id: string) => {
     // console.log("Document clicked:", id);
   };
@@ -15,7 +10,7 @@ function DocumentList() {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {agreements.map((agreement: any) => (
+        {data?.map((agreement: any) => (
           <DocumentCard
             key={agreement.id}
             id={String(agreement.id)}
@@ -23,6 +18,7 @@ function DocumentList() {
             addedDate={agreement.description}
             isSigned={agreement?.can_sign}
             link={`/client/client-documents/document-details?id=${agreement.id}`}
+            fileUrl={agreement.file_url}
             onAction={handleAction}
             linkText={agreement.can_sign ? "Sign Agreement" : "View Agreement"}
           />

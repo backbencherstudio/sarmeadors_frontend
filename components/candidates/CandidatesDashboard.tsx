@@ -80,7 +80,7 @@ async function CandidatesDashboard() {
               </button>
             </div>
           </div>
-          <StatCards statCards={statCards} />
+          <StatCards  />
         </div>
 
         <div className="mt-10">

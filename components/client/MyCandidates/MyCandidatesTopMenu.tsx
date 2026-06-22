@@ -5,7 +5,7 @@ function MyCandidatesTopMenu() {
     {
       id: 1,
       title: "New Candidates",
-      href: "/client/client-my-candidates",
+      href: "/client/client-my-candidates/new-candidates",
     },
     {
       id: 2,

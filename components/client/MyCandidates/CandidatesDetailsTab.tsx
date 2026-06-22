@@ -72,7 +72,7 @@ export function CandidatesDetailsTab() {
           </button>
         </div>
       </div>
-      <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link}/>
+      <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link} />
 
       <ReviewModal isOpen={open} onClose={() => setOpen(false)} />
       <HireRequestModal

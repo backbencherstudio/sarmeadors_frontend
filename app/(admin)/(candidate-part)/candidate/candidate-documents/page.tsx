@@ -3,7 +3,7 @@ import DocumentList from "@/components/clients/AdminTabs/Documents/DocumentList"
 function page() {
   return (
     <div>
-      <DocumentList />
+      <DocumentList data={[]} />
     </div>
   );
 }

@@ -126,9 +126,7 @@ function CandidateListJobs() {
 
       <div className="space-y-6">
         {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, index) => (
-            <CandidatejobsCard key={index} job={job} />
-          ))
+          filteredJobs.map((job, index) => <CandidatejobsCard key={index} />)
         ) : (
           <div className="text-center py-8 text-secondaryColor">
             No jobs found for selected filters.

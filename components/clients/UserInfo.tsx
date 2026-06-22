@@ -1,6 +1,6 @@
 import ProgressAvatar from "../ProgressAvatar";
 
-function UserInfo({ clientInfo }) {
+function UserInfo({ clientInfo }: { clientInfo?: any }) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">

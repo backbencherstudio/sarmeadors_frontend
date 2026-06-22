@@ -8,10 +8,11 @@ import Link from "next/link";
 interface DocumentCardProps {
   id: string;
   title: string;
-  addedDate: string;
+  addedDate?: string;
   isSigned: boolean;
   linkText: string;
   link: string;
+  fileUrl?: string;
   onAction?: (id: string) => void;
 }
 
@@ -21,6 +22,7 @@ export default function DocumentCard({
   addedDate,
   isSigned,
   link,
+  fileUrl,
   onAction,
   linkText,
 }: DocumentCardProps) {
@@ -37,19 +39,31 @@ export default function DocumentCard({
       </h3>
 
       {/* Date */}
-      <div className="space-y-1 mb-4 text-center">
-        <p className="text-sm text-gray-600">Added: {addedDate}</p>
-      </div>
+      {addedDate && (
+        <div className="space-y-1 text-center">
+          <p className="text-sm text-gray-600">Added: {addedDate}</p>
+        </div>
+      )}
 
       {/* Button */}
-      <div className="flex justify-center gap-2">
-        <Link
-          href={link}
-          onClick={() => onAction?.(id)}
-          className="inline-flex items-center justify-center rounded-[12px] bg-black text-white px-4 py-3.5 border-0 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
-        >
-          {linkText}
-        </Link>
+      <div className="flex justify-center gap-2 mt-4">
+        {fileUrl ? (
+          <Link
+            href={fileUrl}
+            onClick={() => onAction?.(id)}
+            className="inline-flex items-center justify-center rounded-[12px] bg-black text-white px-4 py-3.5 border-0 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+          >
+            View
+          </Link>
+        ) : (
+          <Link
+            href={link}
+            onClick={() => onAction?.(id)}
+            className="inline-flex items-center justify-center rounded-[12px] bg-black text-white px-4 py-3.5 border-0 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+          >
+            {linkText}
+          </Link>
+        )}
       </div>
     </Card>
   );
