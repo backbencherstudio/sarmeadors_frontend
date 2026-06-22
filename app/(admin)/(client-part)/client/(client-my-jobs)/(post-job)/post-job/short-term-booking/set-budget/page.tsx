@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
@@ -47,6 +48,7 @@ export default function Page() {
   const [currency, setCurrency] = useState("usd");
   const [compensationAmount, setCompensationAmount] = useState("");
   const [rateType, setRateType] = useState("hour");
+  const router = useRouter()
 
   const saveDraft = () => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -54,13 +56,15 @@ export default function Page() {
 
     const draft = {
       ...currentDraft,
-      currency,
-      compensationAmount,
-      rateType,
+      compensation_currency: currency,
+      compensation_amount: Number(compensationAmount),
+      compensation_type: rateType,
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
   };
+
+  const sendToPaymentPage = () => router.push("/client/payment");
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -118,9 +122,9 @@ export default function Page() {
           />
 
           <SelectField id="rate-type" value={rateType} onChange={setRateType}>
-            <option value="hour">Per Hour</option>
-            <option value="day">Per Day</option>
-            <option value="job">Per Job</option>
+            <option value="per_hour">Per Hour</option>
+            <option value="per_day">Per Day</option>
+            <option value="per_week">Per Week</option>
           </SelectField>
         </div>
       </div>
@@ -145,6 +149,7 @@ export default function Page() {
 
         <button
           type="submit"
+          onClick={sendToPaymentPage}
           className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#111827] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#1F2937]"
         >
           Submit Short-term Job Post
