@@ -1,13 +1,18 @@
 "use client";
 
 import ButtonReuseable from "@/components/reusable/CustomButton";
+import { useGetDocumentDetailsQuery } from "@/feature/dashboard/client/documents";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
 import { Download } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 export default function DocumentDetailsPage() {
   const router = useRouter();
+  const result = useSearchParams();
+  const id = result.get("id");
+  const { data } = useGetDocumentDetailsQuery(id);
+  console.log("data--------->", data?.data);
 
   const handleDownloadPDF = () => {
     // Implement PDF download logic here

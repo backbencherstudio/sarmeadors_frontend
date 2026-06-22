@@ -16,7 +16,6 @@ function ClientJobcardAction({
   const handleInterview = () => {
     // Handle interview button click
     setIsOpen(true);
-    console.log("Interview button clicked for job:", job);
   };
   return (
     <div>
