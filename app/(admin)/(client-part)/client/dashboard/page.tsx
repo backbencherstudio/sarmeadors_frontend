@@ -1,9 +1,9 @@
 "use client";
 
-import StatCards from "@/components/dashboard/StatCards";
 import ClientCandiateInfo from "@/components/client/ClientMyJobs/ClientCandiateInfo";
 import ClientHeroSection from "@/components/client/ClientMyJobs/ClientHeroSection";
 import UserInfo from "@/components/clients/UserInfo";
+import StatCards from "@/components/dashboard/StatCards";
 import { useGetClientDashboardQuery } from "@/feature/dashboard/client/dashboard";
 
 function CandidatesDashboard() {
@@ -58,7 +58,7 @@ function CandidatesDashboard() {
         <h3 className="text-lg font-semibold text-blackColor mb-4">
           Status Statistics
         </h3>
-        <StatCards statCards={statCards} />
+        <StatCards />
       </div>
       <div className="mb-8">
         <ClientCandiateInfo data={data?.data} />

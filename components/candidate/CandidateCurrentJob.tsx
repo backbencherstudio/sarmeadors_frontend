@@ -1,29 +1,16 @@
 "use client";
 
-import { currentJobs } from "@/demoData/DashboardData";
+import { useGetCandidateDashboardQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
+import { Job } from "@/types";
 import { AlertCircle } from "lucide-react";
 import CandidatejobsCard from "./CandidatejobsCard";
-
-interface CurrentJob {
-  id: number;
-  title: string;
-  jobType: "Short-term" | "Long-term";
-  name: string;
-  avatar: string;
-  description: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  startTime: string;
-  endTime: string;
-  hourlyRate: string;
-  status: "running" | "scheduled" | "completed";
-  checkIn?: string;
-  checkOut?: string;
-  total?: string;
-}
+import CandidateJobsCardSkeleton from "./candidate-skleton/CandidateJobsCardSkeleton";
 
 function CandidateCurrentJob() {
+  const { data, isLoading, isError } = useGetCandidateDashboardQuery(
+    "candidate-dashboard",
+  );
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-6">
@@ -31,9 +18,17 @@ function CandidateCurrentJob() {
         <h2 className="text-lg font-semibold text-blackColor">Running Job</h2>
       </div>
       <div className="space-y-5">
-        {currentJobs.map((job) => (
-          <CandidatejobsCard key={job.id} job={job} />
-        ))}
+        {isLoading ? (
+          <div className="space-y-4">
+            {[1, 2, 3].map((index) => (
+              <CandidateJobsCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : (
+          data?.data?.running_jobs?.map((job: Job) => (
+            <CandidatejobsCard key={job.id} job={job} />
+          ))
+        )}
       </div>
     </div>
   );

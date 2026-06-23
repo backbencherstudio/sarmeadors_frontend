@@ -2,17 +2,17 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLoginMutation } from "@/feature/auth/auth";
+import setToken from "@/feature/token/token";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import ArrowRightIcon from "../icon/ArrowRightIcon";
 import ButtonReuseable from "../reusable/CustomButton";
 import { Checkbox } from "../ui/checkbox";
-import { useLoginMutation } from "@/feature/auth/auth";
-import { toast } from "react-toastify";
-import setToken from "@/feature/token/token";
 
 type LoginFormInputs = {
   email: string;
@@ -67,6 +67,7 @@ export default function LoginForm() {
         data,
         subDomain,
       }).unwrap();
+      console.log(response, "check");
 
       const payload = response?.data ?? response;
       const userType = payload?.user?.role ?? payload?.role ?? "admin";

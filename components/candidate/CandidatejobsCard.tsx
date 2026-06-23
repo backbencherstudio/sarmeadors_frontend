@@ -1,3 +1,4 @@
+import { Job } from "@/types";
 import dayjs from "dayjs";
 import ArrowTopBoxIcon from "../icon/ArrowTopBoxIcon";
 import CalenderIcon from "../icon/CalenderIcon";
@@ -8,12 +9,14 @@ import ButtonReuseable from "../reusable/CustomButton";
 import LinkReuseable from "../reusable/CustomLink";
 import CandidateJobsReviewAction from "./CandidateJobsReviewAction";
 
-function CandidatejobsCard({ job }: { job: any }) {
+function CandidatejobsCard({ job }: { job?: Job }) {
   const today = dayjs();
-  const jobDate = dayjs(job.startDate);
+  const jobDate = dayjs(job.latest_attendance?.booking_date);
 
   const isEqualDay = jobDate.isSame(today, "day");
   const isScheduled = jobDate.isBefore(today, "day");
+  console.log(isScheduled, "isScheduled");
+  console.log(job.latest_attendance?.booking_date, "isEqualDay");
 
   return (
     <div>
@@ -27,12 +30,12 @@ function CandidatejobsCard({ job }: { job: any }) {
                 </h3>
                 <p
                   className={`text-xs md:text-sm px-2 py-1 rounded-sm font-semibold ${
-                    job.jobType === "Short-term"
+                    job.job_type === "short_term"
                       ? "bg-greenColor/20 text-greenColor"
                       : "bg-blueColor/20 text-blueColor"
                   }`}
                 >
-                  {job.jobType}
+                  {job.job_type}
                 </p>
               </div>
               {!isScheduled && (
@@ -42,24 +45,27 @@ function CandidatejobsCard({ job }: { job: any }) {
                   <div
                     className={`${isEqualDay ? "bg-greenColor text-blackColor!" : "bg-secondaryColor"} w-3 h-3  rounded-full`}
                   ></div>{" "}
-                  <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${job.startDate}`}</p>
+                  <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${dayjs(job.latest_attendance?.date).format("MMM DD, YYYY")}`}</p>
                 </div>
               )}
             </div>
             <p className="text-lg font-semibold text-blackColor mb-3">
-              {job.hourlyRate}
+              ${job?.compensation?.amount}{" "}
+              {job?.compensation?.type === "per_hour" ? "/hr" : ""}
             </p>
           </div>
           <div className="md:flex  flex-col md:flex-row md:justify-between  items-center">
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-8 h-8 rounded-full bg-[#96C0FF] flex items-center justify-center text-xs font-semibold text-headerColor">
-                  {job.name
+                  {job.title
                     .split(" ")
                     .map((n) => n[0])
                     .join("")}
                 </div>
-                <span className="text-sm text-lightblackColor">{job.name}</span>
+                <span className="text-sm text-lightblackColor">
+                  {job.title}
+                </span>
               </div>
               <p className="text-sm text-secondaryColor mb-3">
                 {job.description}
@@ -67,17 +73,25 @@ function CandidatejobsCard({ job }: { job: any }) {
               <div className="space-y-2 text-sm text-gray-500 mb-4">
                 <div className="flex items-center gap-2">
                   <LocationIcon className="w-4 h-4" />
-                  <span>{job.location}</span>
+                  <span>
+                    {job.address.city}, {job.address.province},{" "}
+                    {job.address.line}, {job.address.postal_code}
+                  </span>
                 </div>
                 <div className="flex gap-3 items-center">
                   <div className="flex items-center gap-2">
                     <CalenderIcon className="w-4 h-4" />
-                    <span>{job.startDate}</span>
+                    <span>
+                      {dayjs(job.latest_attendance?.booking_date).format(
+                        "MMM DD, YYYY",
+                      )}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <ClockICon className="w-4 h-4 fill-secondaryColor" />
                     <span>
-                      {job.startTime} - {job.endTime}
+                      {job.latest_attendance?.check_in} -{" "}
+                      {job.latest_attendance?.check_out}
                     </span>
                   </div>
                 </div>
@@ -88,22 +102,24 @@ function CandidatejobsCard({ job }: { job: any }) {
                 <div>
                   <p className="text-blackColor w-full py-1.5 px-2 bg-bgColor rounded-sm font-medium">
                     <span className="text-greenColor">Check In</span>{" "}
-                    {job.checkIn}
+                    {job.latest_attendance?.check_in || "Not checked in yet"}
                   </p>
                 </div>
                 <div>
                   <p className="text-blackColor py-1.5 w-full px-2 bg-bgColor rounded-sm font-medium">
                     <span className="text-redColor">Check Out</span>{" "}
-                    {job.checkOut}
+                    {job.latest_attendance?.check_out || "Not checked out yet"}
                   </p>
                 </div>
-                <div className="  mt-1">
-                  <p className="text-gray-900 font-medium">
-                    {" "}
-                    <span className="text-secondaryColor">Total</span>{" "}
-                    {job.total}
-                  </p>
-                </div>
+                {/* {job?.total && (
+                  <div className="  mt-1">
+                    <p className="text-gray-900 font-medium">
+                      {" "}
+                      <span className="text-secondaryColor">Total</span>{" "}
+                      {job.total}
+                    </p>
+                  </div>
+                )} */}
               </div>
             )}
           </div>
@@ -114,7 +130,7 @@ function CandidatejobsCard({ job }: { job: any }) {
                   Cancel Reason
                 </h4>
                 <p className="px-3 py-4 mt-2 text-secondaryColor border border-borderColor  bg-grayColor1 rounded-sm ">
-                  {job.cancelReason || "No reason provided"}
+                  {job.latest_attendance?.notes || "No reason provided"}
                 </p>
               </div>
             )}

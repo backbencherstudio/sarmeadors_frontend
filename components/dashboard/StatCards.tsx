@@ -1,19 +1,34 @@
 "use client";
 
+import { useGetCandidateDashboardQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
 import { Skeleton } from "../ui/skeleton";
-interface StatCard {
-  title: string;
-  value: number;
-  percentage?: string;
-}
 
-export default function StatCards({ statCards }: { statCards: StatCard[] }) {
-  const isLoading = false;
-
+export default function StatCards() {
+  const { data, isLoading, isError } = useGetCandidateDashboardQuery(
+    "candidate-dashboard",
+  );
+  const statCards = [
+    {
+      title: "Short-Term Job",
+      value: data?.data?.stats?.short_term_jobs,
+    },
+    {
+      title: "Long-Term Job",
+      value: data?.data?.stats?.long_term_jobs,
+    },
+    {
+      title: "My Jobs",
+      value: data?.data?.stats?.my_jobs,
+    },
+    {
+      title: "My Families",
+      value: data?.data?.stats?.my_families,
+    },
+  ];
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
       {isLoading
-        ? Array.from({ length: 8 }).map((_, idx) => (
+        ? Array.from({ length: 4 }).map((_, idx) => (
             <div
               key={idx}
               className="p-4 rounded-lg bg-white border border-gray-100 flex flex-col gap-4"
@@ -38,9 +53,9 @@ export default function StatCards({ statCards }: { statCards: StatCard[] }) {
                 <div className="text-[20px] font-semibold group-hover:text-whiteColor transition-all duration-200 text-blackColor">
                   {card.value}
                 </div>
-                <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
+                {/* <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
                   {card.percentage ? <span>{card.percentage}</span> : null}
-                </span>
+                </span> */}
               </div>
 
               {/* Hover Effect - Show Arrow */}

@@ -1,17 +1,17 @@
 "use client";
-import { useState } from "react";
 import ClientJobCard from "./ClientJobCard";
 import ClientJobsCardSkeleton from "./ClientJobsCardSkeleton";
 
 function ClientJobList({
   jobs,
   userType,
+  isLoading,
 }: {
   jobs?: any[];
   userType?: string;
+  isLoading?: boolean;
 }) {
-  const [loading, setLoading] = useState(false);
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="space-y-5">
         {[1, 2, 3].map((index) => (
