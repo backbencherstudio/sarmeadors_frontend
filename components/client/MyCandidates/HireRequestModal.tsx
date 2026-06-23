@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { useShortTermHireRequestMutation } from "@/feature/dashboard/client/myCandidate";
+import { useShortTermHireRequestMutation } from "@/feature/dashboard/client/myJob";
+
 
 interface HireRequestModalProps {
   isHireModalOpen: boolean;

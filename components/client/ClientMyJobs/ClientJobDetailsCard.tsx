@@ -3,7 +3,8 @@
 import { AlertCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import ClientjobsCard from "./ClientjobsCard";
-import { useGetShortTermJobQuery } from "@/feature/dashboard/client/myCandidate";
+import { useGetShortTermJobQuery } from "@/feature/dashboard/client/myJob";
+
 
 // interface CurrentJob {
 //   id: number;

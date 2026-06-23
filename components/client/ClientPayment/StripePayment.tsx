@@ -3,10 +3,7 @@
 import DateIcon from "@/components/icon/DateIcon";
 import LocationIcon from "@/components/icon/LocationIcon";
 import StripeIcon from "@/components/icon/StripeIcon";
-import {
-  usePaymentCheckQuery,
-  usePaymentServiceMutation,
-} from "@/feature/dashboard/client/myCandidate";
+import { usePaymentCheckQuery, usePaymentServiceMutation } from "@/feature/dashboard/client/myJob";
 import {
   CardCvcElement,
   CardExpiryElement,
