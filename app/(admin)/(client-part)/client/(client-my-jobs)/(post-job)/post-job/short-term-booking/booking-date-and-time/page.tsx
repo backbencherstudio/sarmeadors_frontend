@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Plus,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
@@ -44,12 +45,19 @@ const labelClass = "mb-2 block text-sm font-medium text-[#111827]";
 const requiredClass = "text-[#EF4444]";
 const selectClass =
   "h-11 w-full appearance-none rounded-md border border-[#DDE3EA] bg-[#F8FAFC] px-3 pr-10 text-sm text-[#111827] outline-none transition-[color,box-shadow] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]";
+const errorInputClass = "border-[#EF4444] focus-visible:ring-[#EF4444]";
+const errorSelectClass = "border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]";
+const errorTextClass = "mt-1 text-xs text-[#EF4444]";
 
 type BookingDate = {
   booking_date: string; // "YYYY-MM-DD"
   start_time: string; // "HH:mm"
   end_time: string; // "HH:mm"
 };
+
+type DateErrors = Partial<
+  Record<"booking_date" | "start_time" | "end_time", string>
+>;
 
 const STORAGE_KEY = "short-term-job-details";
 
@@ -70,6 +78,7 @@ function TimeSelect({
   value,
   onChange,
   required,
+  hasError,
 }: {
   id: string;
   label?: string;
@@ -77,6 +86,7 @@ function TimeSelect({
   value?: string;
   onChange?: (value: string) => void;
   required?: boolean;
+  hasError?: boolean;
 }) {
   return (
     <div>
@@ -91,7 +101,9 @@ function TimeSelect({
           defaultValue={value === undefined ? defaultValue || "" : undefined}
           value={value}
           onChange={(event) => onChange?.(event.target.value)}
-          className={selectClass}
+          className={`${selectClass} ${hasError ? errorSelectClass : ""}`}
+          data-error={Boolean(hasError)}
+          aria-invalid={Boolean(hasError)}
         >
           <option value="" disabled>
             hh:mm
@@ -114,6 +126,8 @@ export default function Page() {
   const [bookingDates, setBookingDates] = useState<BookingDate[]>([
     createEmptyBookingDate(),
   ]);
+  const [errors, setErrors] = useState<DateErrors[]>([{}]);
+  const router = useRouter()
 
   const saveDraft = (dates: BookingDate[]) => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -137,11 +151,13 @@ export default function Page() {
         dates?: BookingDate[];
       };
 
-      setBookingDates(
+      const restoredDates =
         Array.isArray(parsed.dates) && parsed.dates.length
           ? parsed.dates
-          : [createEmptyBookingDate()],
-      );
+          : [createEmptyBookingDate()];
+
+      setBookingDates(restoredDates);
+      setErrors(restoredDates.map(() => ({})));
     } catch {
       localStorage.removeItem(STORAGE_KEY);
     }
@@ -168,17 +184,63 @@ export default function Page() {
       ...currentDates,
       createEmptyBookingDate(),
     ]);
+    setErrors((currentErrors) => [...currentErrors, {}]);
   };
+
+  const validate = (): DateErrors[] => {
+    return bookingDates.map((dateItem, index) => {
+      // Only the primary date (index 0) is required.
+      // Additional dates are optional, but if a user starts filling
+      // one in, we still check start/end time ordering for sanity.
+      const isPrimary = index === 0;
+      const dateErrors: DateErrors = {};
+
+      if (isPrimary && !dateItem.booking_date.trim()) {
+        dateErrors.booking_date = "Booking date is required.";
+      }
+      if (isPrimary && !dateItem.start_time.trim()) {
+        dateErrors.start_time = "Start time is required.";
+      }
+      if (isPrimary && !dateItem.end_time.trim()) {
+        dateErrors.end_time = "End time is required.";
+      }
+
+      if (
+        dateItem.start_time &&
+        dateItem.end_time &&
+        dateItem.end_time <= dateItem.start_time
+      ) {
+        dateErrors.end_time = "End time must be after start time.";
+      }
+
+      return dateErrors;
+    });
+  };
+
+  const hasErrors = (allErrors: DateErrors[]) =>
+    allErrors.some((dateErrors) => Object.keys(dateErrors).length > 0);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const nextErrors = validate();
+    setErrors(nextErrors);
+
+    if (hasErrors(nextErrors)) {
+      const firstErrorEl = document.querySelector("[data-error='true']");
+      firstErrorEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
     saveDraft(bookingDates);
+    router.push('/client/post-job/short-term-booking/job-address');
   };
 
   const [primaryDate, ...additionalDates] = bookingDates;
+  const [primaryErrors, ...additionalErrors] = errors;
 
   return (
-    <form className="pb-8 pt-5" onSubmit={handleSubmit}>
+    <form className="pb-8 pt-5" onSubmit={handleSubmit} noValidate>
       <div className="mb-8">
         <h1 className="text-xl font-semibold text-[#111827]">
           Booking Date & Time
@@ -201,27 +263,44 @@ export default function Page() {
               onChange={(event) =>
                 handleDateChange(0, "booking_date", event.target.value)
               }
-              className={`${inputClass} pr-10`}
+              className={`${inputClass} pr-10 ${primaryErrors?.booking_date ? errorInputClass : ""}`}
+              data-error={Boolean(primaryErrors?.booking_date)}
+              aria-invalid={Boolean(primaryErrors?.booking_date)}
             />
             <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#475569]" />
           </div>
+          {primaryErrors?.booking_date && (
+            <p className={errorTextClass}>{primaryErrors.booking_date}</p>
+          )}
         </div>
 
         <div className="grid gap-5 md:grid-cols-2">
-          <TimeSelect
-            id="start-time"
-            label="Start Time"
-            value={primaryDate.start_time}
-            onChange={(value) => handleDateChange(0, "start_time", value)}
-            required
-          />
-          <TimeSelect
-            id="end-time"
-            label="End Time"
-            value={primaryDate.end_time}
-            onChange={(value) => handleDateChange(0, "end_time", value)}
-            required
-          />
+          <div>
+            <TimeSelect
+              id="start-time"
+              label="Start Time"
+              value={primaryDate.start_time}
+              onChange={(value) => handleDateChange(0, "start_time", value)}
+              required
+              hasError={Boolean(primaryErrors?.start_time)}
+            />
+            {primaryErrors?.start_time && (
+              <p className={errorTextClass}>{primaryErrors.start_time}</p>
+            )}
+          </div>
+          <div>
+            <TimeSelect
+              id="end-time"
+              label="End Time"
+              value={primaryDate.end_time}
+              onChange={(value) => handleDateChange(0, "end_time", value)}
+              required
+              hasError={Boolean(primaryErrors?.end_time)}
+            />
+            {primaryErrors?.end_time && (
+              <p className={errorTextClass}>{primaryErrors.end_time}</p>
+            )}
+          </div>
         </div>
 
         <section className="pt-1">
@@ -233,42 +312,59 @@ export default function Page() {
             {additionalDates.map((dateItem, additionalIndex) => {
               const dateNumber = additionalIndex + 1;
               const actualIndex = additionalIndex + 1; // offset by primary date
+              const itemErrors = additionalErrors[additionalIndex] ?? {};
 
               return (
-                <div
-                  key={dateNumber}
-                  className="grid gap-4 md:grid-cols-[1fr_152px_152px]"
-                >
-                  <div className="relative">
-                    <Input
-                      id={`additional-date-${dateNumber}`}
-                      value={dateItem.booking_date}
-                      onChange={(event) =>
-                        handleDateChange(
-                          actualIndex,
-                          "booking_date",
-                          event.target.value,
-                        )
-                      }
-                      type="date"
-                      className={`${inputClass} pr-10`}
-                    />
-                    <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#111827]" />
+                <div key={dateNumber} className="grid gap-1 md:grid-cols-[1fr_152px_152px] md:gap-4">
+                  <div>
+                    <div className="relative">
+                      <Input
+                        id={`additional-date-${dateNumber}`}
+                        value={dateItem.booking_date}
+                        onChange={(event) =>
+                          handleDateChange(
+                            actualIndex,
+                            "booking_date",
+                            event.target.value,
+                          )
+                        }
+                        type="date"
+                        className={`${inputClass} pr-10 ${itemErrors.booking_date ? errorInputClass : ""}`}
+                        data-error={Boolean(itemErrors.booking_date)}
+                        aria-invalid={Boolean(itemErrors.booking_date)}
+                      />
+                      <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#111827]" />
+                    </div>
+                    {itemErrors.booking_date && (
+                      <p className={errorTextClass}>{itemErrors.booking_date}</p>
+                    )}
                   </div>
-                  <TimeSelect
-                    id={`additional-start-time-${dateNumber}`}
-                    value={dateItem.start_time}
-                    onChange={(value) =>
-                      handleDateChange(actualIndex, "start_time", value)
-                    }
-                  />
-                  <TimeSelect
-                    id={`additional-end-time-${dateNumber}`}
-                    value={dateItem.end_time}
-                    onChange={(value) =>
-                      handleDateChange(actualIndex, "end_time", value)
-                    }
-                  />
+                  <div>
+                    <TimeSelect
+                      id={`additional-start-time-${dateNumber}`}
+                      value={dateItem.start_time}
+                      onChange={(value) =>
+                        handleDateChange(actualIndex, "start_time", value)
+                      }
+                      hasError={Boolean(itemErrors.start_time)}
+                    />
+                    {itemErrors.start_time && (
+                      <p className={errorTextClass}>{itemErrors.start_time}</p>
+                    )}
+                  </div>
+                  <div>
+                    <TimeSelect
+                      id={`additional-end-time-${dateNumber}`}
+                      value={dateItem.end_time}
+                      onChange={(value) =>
+                        handleDateChange(actualIndex, "end_time", value)
+                      }
+                      hasError={Boolean(itemErrors.end_time)}
+                    />
+                    {itemErrors.end_time && (
+                      <p className={errorTextClass}>{itemErrors.end_time}</p>
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -297,7 +393,7 @@ export default function Page() {
       <div className="mt-10 flex items-center justify-between">
         <button
           type="button"
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[#E5E7EB] bg-white px-5 text-sm font-medium text-[#111827] transition-colors hover:bg-[#F8FAFC]"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[#E5E7EB] bg-white px-5 text-sm font-medium text-[#111827] transition-colors hover:bg-[#F8FAFC] cursor-pointer"
         >
           <ChevronLeft className="h-4 w-4" />
           Back
@@ -305,7 +401,7 @@ export default function Page() {
 
         <button
           type="submit"
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#111827] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#1F2937]"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#111827] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#1F2937] cursor-pointer"
         >
           Next
           <ChevronRight className="h-4 w-4" />

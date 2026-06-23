@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Archivo, Changa } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 // If loading a variable font, you don't need to specify the font weight
 const archivo = Archivo({
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${archivo.className} ${change.variable} top-0!`}>
         <ToastContainer />
+        <Toaster position="top-center" richColors />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

@@ -9,6 +9,7 @@ import {
   Plus,
   Upload,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const inputClass =
@@ -17,6 +18,8 @@ const labelClass = "mb-2 block text-sm font-medium text-[#111827]";
 const requiredClass = "text-[#EF4444]";
 const textareaClass =
   "min-h-[92px] rounded-md border-[#DDE3EA] bg-white px-3 py-3 text-sm text-[#111827] shadow-none placeholder:text-[#8A94A6] focus-visible:ring-1 focus-visible:ring-[#111827]";
+const errorInputClass = "border-[#EF4444] focus-visible:ring-[#EF4444]";
+const errorTextClass = "mt-1 text-xs text-[#EF4444]";
 
 type ChildInfo = {
   first_name: string;
@@ -25,6 +28,16 @@ type ChildInfo = {
   gender: string;
   interests: string;
   allergies: string;
+};
+
+type ChildErrors = Partial<
+  Record<"first_name" | "last_name" | "date_of_birth" | "gender", string>
+>;
+
+type FormErrors = {
+  title?: string;
+  description?: string;
+  children: ChildErrors[];
 };
 
 type JobDetailsDraft = {
@@ -58,6 +71,9 @@ export default function Page() {
   const [childrenInfo, setChildrenInfo] = useState<ChildInfo[]>([
     createEmptyChild(),
   ]);
+  const [errors, setErrors] = useState<FormErrors>({ children: [{}] });
+
+  const router = useRouter();
 
   const saveDraft = () => {
     const draft: JobDetailsDraft = {
@@ -102,15 +118,68 @@ export default function Page() {
       ...currentChildren,
       createEmptyChild(),
     ]);
+    setErrors((current) => ({
+      ...current,
+      children: [...current.children, {}],
+    }));
   };
+
+  const validate = (): FormErrors => {
+    const nextErrors: FormErrors = { children: [] };
+
+    if (!jobTitle.trim()) {
+      nextErrors.title = "Job title is required.";
+    }
+
+    if (!description.trim()) {
+      nextErrors.description = "Description is required.";
+    }
+
+    nextErrors.children = childrenInfo.map((child) => {
+      const childErrors: ChildErrors = {};
+
+      if (!child.first_name.trim()) {
+        childErrors.first_name = "First name is required.";
+      }
+      if (!child.last_name.trim()) {
+        childErrors.last_name = "Last name is required.";
+      }
+      if (!child.date_of_birth.trim()) {
+        childErrors.date_of_birth = "Date of birth is required.";
+      }
+      if (!child.gender.trim()) {
+        childErrors.gender = "Please select a gender.";
+      }
+
+      return childErrors;
+    });
+
+    return nextErrors;
+  };
+
+  const hasErrors = (formErrors: FormErrors) =>
+    Boolean(formErrors.title) ||
+    Boolean(formErrors.description) ||
+    formErrors.children.some((childErrors) => Object.keys(childErrors).length > 0);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const nextErrors = validate();
+    setErrors(nextErrors);
+
+    if (hasErrors(nextErrors)) {
+      const firstErrorEl = document.querySelector("[data-error='true']");
+      firstErrorEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
     saveDraft();
+    router.push("/client/post-job/short-term-booking/booking-date-and-time");
   };
 
   return (
-    <form className="pb-8 pt-5" onSubmit={handleSubmit}>
+    <form className="pb-8 pt-5" onSubmit={handleSubmit} noValidate>
       <div className="mb-6">
         <h1 className="text-base font-semibold text-[#111827]">Job Details</h1>
         <p className="mt-1 text-sm text-[#64748B]">
@@ -120,15 +189,18 @@ export default function Page() {
 
       <div className="space-y-5">
         <div>
-          <label htmlFor="job-title" className={labelClass}>
+          <label htmlFor="title" className={labelClass}>
             Job Title <RequiredMark />
           </label>
           <Input
             id="title"
             value={jobTitle}
             onChange={(event) => setJobTitle(event.target.value)}
-            className={inputClass}
+            className={`${inputClass} ${errors.title ? errorInputClass : ""}`}
+            data-error={Boolean(errors.title)}
+            aria-invalid={Boolean(errors.title)}
           />
+          {errors.title && <p className={errorTextClass}>{errors.title}</p>}
         </div>
 
         <div>
@@ -140,8 +212,13 @@ export default function Page() {
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             placeholder="Enter a description..."
-            className={textareaClass}
+            className={`${textareaClass} ${errors.description ? errorInputClass : ""}`}
+            data-error={Boolean(errors.description)}
+            aria-invalid={Boolean(errors.description)}
           />
+          {errors.description && (
+            <p className={errorTextClass}>{errors.description}</p>
+          )}
         </div>
 
         <div>
@@ -198,6 +275,7 @@ export default function Page() {
               const dateOfBirthId = `date-of-birth-${childNumber}`;
               const habitsId = `habits-${childNumber}`;
               const allergiesId = `allergies-${childNumber}`;
+              const childErrors = errors.children[index] ?? {};
 
               return (
                 <div
@@ -225,8 +303,13 @@ export default function Page() {
                             event.target.value,
                           )
                         }
-                        className={inputClass}
+                        className={`${inputClass} ${childErrors.first_name ? errorInputClass : ""}`}
+                        data-error={Boolean(childErrors.first_name)}
+                        aria-invalid={Boolean(childErrors.first_name)}
                       />
+                      {childErrors.first_name && (
+                        <p className={errorTextClass}>{childErrors.first_name}</p>
+                      )}
                     </div>
                     <div>
                       <label htmlFor={lastNameId} className={labelClass}>
@@ -242,8 +325,13 @@ export default function Page() {
                             event.target.value,
                           )
                         }
-                        className={inputClass}
+                        className={`${inputClass} ${childErrors.last_name ? errorInputClass : ""}`}
+                        data-error={Boolean(childErrors.last_name)}
+                        aria-invalid={Boolean(childErrors.last_name)}
                       />
+                      {childErrors.last_name && (
+                        <p className={errorTextClass}>{childErrors.last_name}</p>
+                      )}
                     </div>
                   </div>
 
@@ -264,17 +352,25 @@ export default function Page() {
                           )
                         }
                         placeholder="MM/DD/YYYY"
-                        className={`${inputClass} pr-10`}
+                        className={`${inputClass} pr-10 ${childErrors.date_of_birth ? errorInputClass : ""}`}
+                        data-error={Boolean(childErrors.date_of_birth)}
+                        aria-invalid={Boolean(childErrors.date_of_birth)}
                       />
                       <CalendarDays className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#475569]" />
                     </div>
+                    {childErrors.date_of_birth && (
+                      <p className={errorTextClass}>{childErrors.date_of_birth}</p>
+                    )}
                   </div>
 
                   <fieldset className="mt-4">
                     <legend className={labelClass}>
                       Gender <RequiredMark />
                     </legend>
-                    <div className="flex flex-wrap items-center gap-5">
+                    <div
+                      className="flex flex-wrap items-center gap-5"
+                      data-error={Boolean(childErrors.gender)}
+                    >
                       {["Male", "Female"].map((gender) => {
                         const genderValue = gender.toLowerCase();
 
@@ -302,6 +398,9 @@ export default function Page() {
                         );
                       })}
                     </div>
+                    {childErrors.gender && (
+                      <p className={errorTextClass}>{childErrors.gender}</p>
+                    )}
                   </fieldset>
 
                   <div className="mt-4">
@@ -358,7 +457,7 @@ export default function Page() {
       <div className="mt-8 flex items-center justify-between">
         <button
           type="button"
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-[#E5E7EB] bg-white px-4 text-sm font-medium text-[#111827] transition-colors hover:bg-[#F8FAFC]"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-[#E5E7EB] bg-white px-4 text-sm font-medium text-[#111827] transition-colors hover:bg-[#F8FAFC] cursor-pointer"
         >
           <ChevronLeft className="h-4 w-4" />
           Back
@@ -366,7 +465,7 @@ export default function Page() {
 
         <button
           type="submit"
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#111827] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#1F2937]"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#111827] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#1F2937] cursor-pointer"
         >
           Next
           <ChevronRight className="h-4 w-4" />

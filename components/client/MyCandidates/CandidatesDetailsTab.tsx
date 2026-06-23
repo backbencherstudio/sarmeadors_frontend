@@ -7,27 +7,31 @@ import Image from "next/image";
 import { useState } from "react";
 import HireRequestModal from "./HireRequestModal";
 import ReviewModal from "./ReviewModal";
+import { useParams } from "next/navigation";
 
 export function CandidatesDetailsTab() {
+
+  const { id } = useParams()
+
   const tabs = [
     {
       label: "Personal Information",
-      link: "/client/client-my-candidates/new-candidates/1/personal-information",
+      link: `/client/client-my-candidates/new-candidates/${id}/personal-information`,
       // icon: <HiOutlineMenu className="w-5 h-5" />,
     },
     {
       label: "Professional Information",
-      link: "/client/client-my-candidates/new-candidates/1/professional-information",
+      link: `/client/client-my-candidates/new-candidates/${id}/professional-information`,
       // icon: <HiOutlineDocumentText className="w-5 h-5" />,
     },
     {
       label: "Documents",
-      link: "/client/client-my-candidates/new-candidates/1/documents",
+      link: `/client/client-my-candidates/new-candidates/${id}/documents`,
       // icon: <MdSms className="w-5 h-5" />,
     },
     {
       label: "Additional Information",
-      link: "/client/client-my-candidates/new-candidates/1/additional-information",
+      link: `/client/client-my-candidates/new-candidates/${id}/additional-information`,
       // icon: <FaTrophy className="w-5 h-5" />,
     },
   ];
