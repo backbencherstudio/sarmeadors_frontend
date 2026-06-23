@@ -9,9 +9,10 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
             }),
         }),
         shortTermHireRequest: builder.mutation({
-            query: (id) => ({
+            query: ({ data, id }) => ({
                 url: `/client/candidates/${id}/hire-request`,
                 method: "POST",
+                body: data
             }),
         }),
         PaymentService: builder.mutation({
