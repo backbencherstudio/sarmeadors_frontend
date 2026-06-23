@@ -2,14 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { useState } from "react";
-import { useShortTermHireRequestMutation } from "@/feature/dashboard/client/myJob";
-
+import {
+  useLocationsQuery,
+  useShortTermHireRequestMutation,
+} from "@/feature/dashboard/client/myJob";
+import { useParams } from "next/navigation";
 
 interface HireRequestModalProps {
   isHireModalOpen: boolean;
   onClose: () => void;
+}
+
+interface DateEntry {
+  booking_date: string;
+  start_time: string;
+  end_time: string;
 }
 
 export default function HireRequestModal({
@@ -18,9 +27,85 @@ export default function HireRequestModal({
 }: HireRequestModalProps) {
   const [jobType, setJobType] = useState("short-term");
   const [step, setStep] = useState(1);
-  const [shortTermHireRequest] = useShortTermHireRequestMutation();
+  const { id } = useParams()
+  const [shortTermHireRequest, { isLoading: isSubmitting }] =
+    useShortTermHireRequestMutation();
+  const { data: locationsData } = useLocationsQuery({});
+
+  // ===== Step 1: Booking dates =====
+  const [dates, setDates] = useState<DateEntry[]>([
+    { booking_date: "", start_time: "", end_time: "" },
+  ]);
+
+  const updateDate = (
+    index: number,
+    field: keyof DateEntry,
+    value: string
+  ) => {
+    setDates((prev) =>
+      prev.map((d, i) => (i === index ? { ...d, [field]: value } : d))
+    );
+  };
+
+  const addDate = () => {
+    setDates((prev) => [
+      ...prev,
+      { booking_date: "", start_time: "", end_time: "" },
+    ]);
+  };
+
+  // ===== Step 2: Job details =====
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [compensationCurrency, setCompensationCurrency] = useState("USD");
+  const [compensationAmount, setCompensationAmount] = useState("");
+
+  // ===== Step 3: Address =====
+  const [jobAddress, setJobAddress] = useState("");
+  const [homeCity, setHomeCity] = useState("");
+  const [homeProvince, setHomeProvince] = useState("");
+  const [homePostalCode, setHomePostalCode] = useState("");
+  const [country, setCountry] = useState("");
+  const [location, setLocation] = useState("");
+
+
+  const [error, setError] = useState<string | null>(null);
 
   if (!isHireModalOpen) return null;
+
+  const handleSubmit = async () => {
+    setError(null);
+
+    const payload = {
+      job_type: "short-term",
+      note: null,
+      title,
+      description: description || null,
+      compensation_amount: Number(compensationAmount) || 0,
+      compensation_currency: compensationCurrency || null,
+      compensation_type: "per_hour",
+      job_address: jobAddress,
+      home_city: homeCity,
+      home_province: homeProvince,
+      home_postal_code: homePostalCode,
+      country,
+      location_id: location || null,
+      payment_method_id: null,
+      cardholder_name: null,
+      billing_country: null,
+      billing_postal_code: null,
+      save_payment_method: null,
+      dates,
+    };
+
+    try {
+      await shortTermHireRequest({ data: payload, id }).unwrap();
+      onClose();
+    } catch (err) {
+      console.error("Failed to submit hire request:", err);
+      setError("Something went wrong while submitting. Please try again.");
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
@@ -119,40 +204,44 @@ export default function HireRequestModal({
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <input
-                        type="date"
-                        className="border rounded-lg px-4 py-3 w-full"
-                      />
-                      <input
-                        type="time"
-                        className="border rounded-lg px-4 py-3 w-full"
-                      />
-                      <input
-                        type="time"
-                        className="border rounded-lg px-4 py-3 w-full"
-                      />
-                    </div>
-
-                    <div>
-                      <h4 className="font-medium text-[#111927]">
-                        Add Additional Date
-                      </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+                    {dates.map((date, index) => (
+                      <div
+                        key={index}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                      >
                         <input
                           type="date"
+                          value={date.booking_date}
+                          onChange={(e) =>
+                            updateDate(index, "booking_date", e.target.value)
+                          }
                           className="border rounded-lg px-4 py-3 w-full"
                         />
                         <input
                           type="time"
+                          value={date.start_time}
+                          onChange={(e) =>
+                            updateDate(index, "start_time", e.target.value)
+                          }
                           className="border rounded-lg px-4 py-3 w-full"
                         />
                         <input
                           type="time"
+                          value={date.end_time}
+                          onChange={(e) =>
+                            updateDate(index, "end_time", e.target.value)
+                          }
                           className="border rounded-lg px-4 py-3 w-full"
                         />
                       </div>
-                      <button className="mt-3 text-sm underline text-gray-700">
+                    ))}
+
+                    <div>
+                      <button
+                        type="button"
+                        onClick={addDate}
+                        className="mt-3 text-sm underline text-gray-700 cursor-pointer"
+                      >
                         Add Another Date
                       </button>
                     </div>
@@ -196,6 +285,8 @@ export default function HireRequestModal({
                 </label>
                 <input
                   type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
                 />
               </div>
@@ -206,6 +297,8 @@ export default function HireRequestModal({
                 <textarea
                   placeholder="Enter a description..."
                   rows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 resize-none focus:outline-none focus:ring-2 focus:ring-[#111927]"
                 />
               </div>
@@ -214,14 +307,21 @@ export default function HireRequestModal({
                   Compensation <span className="text-red-500">*</span>
                 </label>
                 <div className="flex gap-2 mt-1">
-                  <select className="border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none">
-                    <option>$</option>
-                    <option>€</option>
-                    <option>£</option>
+                  <select
+                    value={compensationCurrency}
+                    onChange={(e) => setCompensationCurrency(e.target.value)}
+                    className="border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none"
+                  >
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="BDT">BDT</option>
                   </select>
                   <input
                     type="number"
                     placeholder="0.00"
+                    value={compensationAmount}
+                    onChange={(e) => setCompensationAmount(e.target.value)}
                     className="flex-1 border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
                   />
                 </div>
@@ -269,6 +369,8 @@ export default function HireRequestModal({
                 </label>
                 <input
                   type="text"
+                  value={jobAddress}
+                  onChange={(e) => setJobAddress(e.target.value)}
                   className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
                 />
               </div>
@@ -279,6 +381,8 @@ export default function HireRequestModal({
                   </label>
                   <input
                     type="text"
+                    value={homeCity}
+                    onChange={(e) => setHomeCity(e.target.value)}
                     className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
                   />
                 </div>
@@ -288,6 +392,8 @@ export default function HireRequestModal({
                   </label>
                   <input
                     type="text"
+                    value={homeProvince}
+                    onChange={(e) => setHomeProvince(e.target.value)}
                     className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
                   />
                 </div>
@@ -299,6 +405,8 @@ export default function HireRequestModal({
                   </label>
                   <input
                     type="text"
+                    value={homePostalCode}
+                    onChange={(e) => setHomePostalCode(e.target.value)}
                     className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
                   />
                 </div>
@@ -308,6 +416,8 @@ export default function HireRequestModal({
                   </label>
                   <input
                     type="text"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
                     className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
                   />
                 </div>
@@ -316,12 +426,29 @@ export default function HireRequestModal({
                 <label className="text-sm font-medium text-[#111927] leading-[142.857%]">
                   Location <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
-                  className="mt-1 w-full border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927]"
-                />
+                <div className="relative mt-1">
+                  <select
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="w-full appearance-none border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#111927] text-[#111927]"
+                  >
+                    <option value="" disabled>
+                      Select a location
+                    </option>
+                    {locationsData?.data?.map((loc) => (
+                      <option key={loc.id} value={loc.id}>
+                        {loc.location}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#778593]" />
+                </div>
               </div>
             </div>
+
+            {error && (
+              <p className="text-sm text-red-500 mt-4">{error}</p>
+            )}
 
             <div className="flex justify-between mt-8">
               <button
@@ -330,15 +457,13 @@ export default function HireRequestModal({
               >
                 Back
               </button>
-              <Link
-                href={
-                  "/client/client-my-candidates/new-candidates/1/personal-information/payment-information"
-                }
-                onClick={onClose}
-                className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer"
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Submit
-              </Link>
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </button>
             </div>
           </div>
         )}
