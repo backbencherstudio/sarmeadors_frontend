@@ -1,38 +1,39 @@
 "use client";
 
-import { clientCurrentJobs } from "@/demoData/DashboardData";
 import { AlertCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import ClientjobsCard from "./ClientjobsCard";
 import { useGetShortTermJobQuery } from "@/feature/dashboard/client/myCandidate";
 
-interface CurrentJob {
-  id: number;
-  title: string;
-  jobType: "Short-term" | "Long-term";
-  name: string;
-  avatar: string;
-  description: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  startTime: string;
-  endTime: string;
-  hourlyRate: string;
-  status: "running" | "scheduled" | "completed";
-  checkIn?: string;
-  checkOut?: string;
-  total?: string;
-}
+// interface CurrentJob {
+//   id: number;
+//   title: string;
+//   jobType: "Short-term" | "Long-term";
+//   name: string;
+//   avatar: string;
+//   description: string;
+//   location: string;
+//   startDate: string;
+//   endDate: string;
+//   startTime: string;
+//   endTime: string;
+//   hourlyRate: string;
+//   status: "running" | "scheduled" | "completed";
+//   checkIn?: string;
+//   checkOut?: string;
+//   total?: string;
+// }
 
 function ClientJobDetailsCard({ status }: { status?: string }) {
   const pathname = usePathname();
-  const lastPathText = pathname.split("/").filter(Boolean).pop() == "short-term-job" ? "running" : pathname.split("/").filter(Boolean).pop();
+  const lastPathText =
+    pathname.split("/").filter(Boolean).pop() == "short-term-job"
+      ? "running"
+      : pathname.split("/").filter(Boolean).pop();
 
-  const { data } = useGetShortTermJobQuery(status)
+  const { data } = useGetShortTermJobQuery(status);
 
-  console.log(data?.data?.jobs)
-
+  console.log(data?.data?.jobs);
 
   return (
     <div className="space-y-4">
@@ -45,9 +46,9 @@ function ClientJobDetailsCard({ status }: { status?: string }) {
       <div className="space-y-5">
         {data?.data?.jobs?.map((job) => (
           <>
-            {job.status === lastPathText && (
-              <ClientjobsCard key={job.id} job={job} />
-            )}
+            {/* {job.status === lastPathText && ( */}
+            <ClientjobsCard key={job.id} job={job} />
+            {/* )} */}
           </>
         ))}
       </div>
