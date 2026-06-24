@@ -1,19 +1,52 @@
 "use client";
 
+import { useShortTermHireReviewMutation } from "@/feature/dashboard/client/myCandidate";
 import { X } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
+  hireId: any;
 }
 
-export default function ReviewModal({ isOpen, onClose }: ReviewModalProps) {
+export default function ReviewModal({ isOpen, onClose, hireId }: ReviewModalProps) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [review, setReview] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [hireReview, { isLoading: isSubmitting }] = useShortTermHireReviewMutation();
 
   if (!isOpen) return null;
+
+  const handleSubmit = async () => {
+    setError(null);
+
+    if (rating === 0) {
+      setError("Please select a rating before submitting.");
+      return;
+    }
+
+    const payload = {
+      rating,
+      review: review || null,
+    };
+
+    try {
+      const result = await hireReview({ data: payload, id: hireId }).unwrap();
+      if (result?.success) {
+        toast.success(result?.message)
+        setRating(0);
+        setReview("");
+        onClose();
+      }
+    } catch (err) {
+      toast.error("Failed to submit review:", err)
+      // console.error("Failed to submit review:", err);
+      setError("Something went wrong while submitting your review. Please try again.");
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
@@ -68,16 +101,16 @@ export default function ReviewModal({ isOpen, onClose }: ReviewModalProps) {
           rows={4}
         />
 
+        {error && <p className="text-sm text-red-500 mt-4">{error}</p>}
+
         {/* Submit */}
         <div className="flex justify-end mt-6">
           <button
-            className="bg-[#111927] border border-[#384250] text-white px-6 py-2 rounded-lg hover:bg-black cursor-pointer"
-            onClick={() => {
-              console.log({ rating, review });
-              onClose();
-            }}
+            disabled={isSubmitting}
+            className="bg-[#111927] border border-[#384250] text-white px-6 py-2 rounded-lg hover:bg-black cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+            onClick={handleSubmit}
           >
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
       </div>

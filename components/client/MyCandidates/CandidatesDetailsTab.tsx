@@ -78,10 +78,11 @@ export function CandidatesDetailsTab() {
       </div>
       <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link} />
 
-      <ReviewModal isOpen={open} onClose={() => setOpen(false)} />
+      <ReviewModal isOpen={open} onClose={() => setOpen(false)} hireId={id} />
       <HireRequestModal
         isHireModalOpen={hireModalOpen}
         onClose={() => setHireModalOpen(false)}
+
       />
     </div>
   );

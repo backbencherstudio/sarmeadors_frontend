@@ -151,7 +151,7 @@ export default function Page() {
 
   const sendToPaymentPage = () => {
     if (paymentCheck?.data?.payment_required) {
-      router.push("/client/payment");
+      router.push("/client/payment?payment-page=post-job");
     }
   };
 
