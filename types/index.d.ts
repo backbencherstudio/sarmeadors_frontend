@@ -78,3 +78,98 @@ export interface DashboardAPIResponse {
   message: string;
   data: DashboardData;
 }
+
+// Sub-Interfaces for Nested Objects
+export interface JobClient {
+  id: number;
+  name: string;
+  image_url: string | null;
+}
+
+export interface JobLocation {
+  label: string;
+  street_address: string;
+  city: string;
+  province: string;
+  postal_code: string;
+  country: string;
+}
+
+export interface JobTime {
+  from: string;
+  to: string;
+  range: string;
+}
+
+export interface JobCompensation {
+  amount: string; // Dynamic values input formatted text
+  currency: string;
+  type: string;
+  label: string;
+}
+
+export interface JobAttendance {
+  checked_in_at: string | null;
+  checked_out_at: string | null;
+  total_minutes: number;
+  total_label: string | null;
+}
+
+export interface JobWorkingTime {
+  total_minutes: number;
+  total_label: string;
+}
+
+export interface JobReview {
+  id: number;
+  rating: number;
+  review: string;
+}
+
+export interface JobActions {
+  can_view_details: boolean;
+  can_check_in: boolean;
+  can_check_out: boolean;
+  can_report_client: boolean;
+  can_leave_review: boolean;
+  can_view_review: boolean;
+  view_details_url: string;
+  check_in_url: string;
+  check_out_url: string;
+  reviews_url: string;
+  report_client_url: string;
+}
+
+export interface JobModal {
+  title: string;
+  subtitle: string;
+  date: string;
+  time_range: string;
+  can_check_in: boolean;
+}
+
+// Main Job Interface
+export interface JobDetails {
+  id: string; // Notice object output as alphanumeric dynamic id "long_term_1_2026-06-01"
+  job_id: number;
+  job_type: 'long_term' | 'short_term' | string; // Type restrict korar jonne generic string literal or standalone string
+  job_type_label: string;
+  title: string;
+  client: JobClient;
+  cover_image_url: string | null;
+  description: string;
+  description_preview: string;
+  location: JobLocation;
+  date: string;
+  date_label: string;
+  time: JobTime;
+  compensation: JobCompensation;
+  status: string;
+  status_label: string;
+  attendance: JobAttendance;
+  working_time: JobWorkingTime;
+  cancellation: string | null; // Null types dynamically set
+  review: JobReview | null;
+  actions: JobActions;
+  modal: JobModal;
+}
