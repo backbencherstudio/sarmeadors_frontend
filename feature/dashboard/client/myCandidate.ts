@@ -14,11 +14,26 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-
+    shortTermHireRequest: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/client/candidates/${id}/hire-request`,
+        method: "POST",
+        body: data
+      }),
+    }),
+    shortTermHireReview: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/client/candidates/${id}/reviews`,
+        method: "POST",
+        body: data
+      }),
+    }),
   }),
 });
 
 export const {
   useGetClientMyCandidateQuery,
   useGetSingleClientMyCandidateQuery,
+  useShortTermHireRequestMutation,
+  useShortTermHireReviewMutation,
 } = ClientMyCandidatedApi;

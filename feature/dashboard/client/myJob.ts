@@ -8,13 +8,6 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
                 method: "GET",
             }),
         }),
-        shortTermHireRequest: builder.mutation({
-            query: ({ data, id }) => ({
-                url: `/client/candidates/${id}/hire-request`,
-                method: "POST",
-                body: data
-            }),
-        }),
         PaymentService: builder.mutation({
             query: (body) => ({
                 url: `/client/jobs/short-term`,
@@ -39,7 +32,6 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
 
 export const {
     useGetShortTermJobQuery,
-    useShortTermHireRequestMutation,
     usePaymentServiceMutation,
     usePaymentCheckQuery,
     useLocationsQuery
