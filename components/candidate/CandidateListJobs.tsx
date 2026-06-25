@@ -6,21 +6,54 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { currentJobs } from "@/demoData/DashboardData";
+import { useGetCandidateMyJobsListQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
+import { useUpdateQueryParams } from "@/hooks/useUpdateQueryParams";
 import dayjs, { Dayjs } from "dayjs";
-import { useMemo, useState } from "react";
+import { X } from "lucide-react";
+import { useState } from "react";
 import SelecteInputField from "../common/InputFiled/SelecteInputField";
 import DateIcon from "../icon/DateIcon";
 import CandidatejobsCard from "./CandidatejobsCard";
 
-type JobFilter = "all" | "short" | "long";
+type JobFilter = "all" | "short_term" | "long_term";
 type JobStatusFilter = "all" | "running" | "cancel" | "complete";
 
 function CandidateListJobs() {
-  const [filter, setFilter] = useState<JobFilter>("all");
-  const [statusFilter, setStatusFilter] = useState<JobStatusFilter>("all");
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const { updateParams, searchParams } = useUpdateQueryParams();
+
+  const [filter, setFilter] = useState<JobFilter>(
+    (searchParams.get("filter") as JobFilter) || "all",
+  );
+  const [statusFilter, setStatusFilter] = useState<JobStatusFilter>(
+    (searchParams.get("status") as JobStatusFilter) || "all",
+  );
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(
+    searchParams.get("date") ? dayjs(searchParams.get("date")) : null,
+  );
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const buildQueryParams = () => {
+    const params = new URLSearchParams();
+    params.append("view", "list");
+    if (selectedDate) params.append("year", selectedDate.format("YYYY"));
+    if (selectedDate) params.append("month", selectedDate.format("MM"));
+    if (statusFilter && statusFilter !== "all")
+      params.append("status", statusFilter);
+    if (filter && filter !== "all") params.append("job_type", filter);
+    return params.toString();
+  };
+  const { data } = useGetCandidateMyJobsListQuery({
+    params: buildQueryParams().toString(),
+  });
+
+  const handleFilterChange = (value: JobFilter) => {
+    setFilter(value);
+    updateParams("job_type", value);
+  };
+
+  const handleStatusFilterChange = (value: JobStatusFilter) => {
+    setStatusFilter(value);
+    updateParams("status", value);
+  };
 
   const filterOptions: {
     key: JobFilter;
@@ -28,8 +61,8 @@ function CandidateListJobs() {
     dotClass: string;
   }[] = [
     { key: "all", label: "All Jobs", dotClass: "bg-blackColor" },
-    { key: "short", label: "Short-Term Jobs", dotClass: "bg-greenColor" },
-    { key: "long", label: "Long-Term Jobs", dotClass: "bg-blueColor" },
+    { key: "short_term", label: "Short-Term Jobs", dotClass: "bg-greenColor" },
+    { key: "long_term", label: "Long-Term Jobs", dotClass: "bg-blueColor" },
   ];
 
   const statusOptions = [
@@ -39,39 +72,6 @@ function CandidateListJobs() {
     { value: "complete", label: "Complete Job" },
   ];
 
-  const filteredJobs = useMemo(() => {
-    let filtered = currentJobs;
-
-    if (selectedDate) {
-      filtered = filtered.filter((job) => {
-        const jobDay = dayjs(job.startDate);
-        return jobDay.isValid() && jobDay.isSame(selectedDate, "day");
-      });
-    }
-
-    if (filter !== "all") {
-      filtered = filtered.filter(
-        (job) =>
-          (filter === "short" && job.jobType === "Short-term") ||
-          (filter === "long" && job.jobType === "Long-term"),
-      );
-    }
-
-    if (statusFilter !== "all") {
-      if (statusFilter === "complete") {
-        filtered = filtered.filter((job) => job.status === "completed");
-      } else if (statusFilter === "cancel") {
-        filtered = filtered.filter(
-          (job) => job.status === "cancel" || job.status === "cancelled",
-        );
-      } else {
-        filtered = filtered.filter((job) => job.status === statusFilter);
-      }
-    }
-
-    return filtered;
-  }, [filter, selectedDate, statusFilter]);
-
   return (
     <div className="w-full rounded-xl border border-borderColor bg-white p-3 sm:p-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -79,9 +79,21 @@ function CandidateListJobs() {
         <div className="flex flex-col md:flex-row md:items-center gap-3">
           <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
             <PopoverTrigger asChild>
-              <button className="rounded-md cursor-pointer border border-borderColor px-4 py-3.5">
-                <DateIcon className="h-5 w-5 text-blackColor" />
-              </button>
+              <div className="relative">
+                <button className="rounded-md cursor-pointer border border-borderColor px-4 py-3.5">
+                  <DateIcon className="h-5 w-5 text-blackColor" />
+                </button>
+                <button
+                  title="Reset filter"
+                  onClick={() => {
+                    setSelectedDate(null);
+                    updateParams("date", "");
+                  }}
+                  className="rounded-md absolute bg-red-100 -top-1.5 -right-1.5 text-redColor  cursor-pointer border border-redColor "
+                >
+                  <X size={14} />
+                </button>
+              </div>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
@@ -89,6 +101,10 @@ function CandidateListJobs() {
                 selected={selectedDate ? selectedDate.toDate() : undefined}
                 onSelect={(date) => {
                   setSelectedDate(date ? dayjs(date) : null);
+                  updateParams(
+                    "date",
+                    date ? dayjs(date).format("YYYY-MM-DD") : "",
+                  );
                   setCalendarOpen(false);
                 }}
                 initialFocus
@@ -102,7 +118,7 @@ function CandidateListJobs() {
                 <button
                   key={item.key}
                   type="button"
-                  onClick={() => setFilter(item.key)}
+                  onClick={() => handleFilterChange(item.key)}
                   className={`flex shrink-0 items-center gap-1 cursor-pointer rounded-sm py-2 px-3 text-sm font-medium ${
                     filter === item.key
                       ? "bg-bgColor border border-borderColor"
@@ -117,7 +133,9 @@ function CandidateListJobs() {
           </div>
           <SelecteInputField
             value={statusFilter}
-            onValueChange={(value) => setStatusFilter(value as JobStatusFilter)}
+            onValueChange={(value) =>
+              handleStatusFilterChange(value as JobStatusFilter)
+            }
             options={statusOptions}
             className="h-10! bg-white! w-[150px]! shadow-none! px-3 py-2 text-sm text-blackColor"
           />
@@ -125,8 +143,10 @@ function CandidateListJobs() {
       </div>
 
       <div className="space-y-6">
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, index) => <CandidatejobsCard key={index} />)
+        {data?.data?.jobs?.length > 0 ? (
+          data?.data?.jobs?.map((job, index) => (
+            <CandidatejobsCard key={index} job={job} />
+          ))
         ) : (
           <div className="text-center py-8 text-secondaryColor">
             No jobs found for selected filters.

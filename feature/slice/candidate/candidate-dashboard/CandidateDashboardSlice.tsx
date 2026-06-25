@@ -15,8 +15,8 @@ const candidateDashboardSlice = baseApi.injectEndpoints({
       }),
     }),
     getCandidateMyJobsList: builder.query({
-      query: () => ({
-        url: `/candidate/jobs?view=list`,
+      query: ({ params }) => ({
+        url: `/candidate/jobs?${params}`,
         method: "GET",
       }),
     }),
