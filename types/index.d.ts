@@ -173,3 +173,32 @@ export interface JobDetails {
   actions: JobActions;
   modal: JobModal;
 }
+
+
+// Pratham structure (e.g., Existing or Signed Document)
+export interface UserDocument {
+  id: number;
+  document_record_id: number;
+  title: string;
+  description: string;
+  status: 'signed' | 'missing' | 'pending' | string; 
+  signed_at: string | null; 
+  content_type: string;
+  file_url: string | null;
+  can_sign: boolean;
+  can_view: boolean;
+}
+
+export interface RequiredDocument {
+  key: string; 
+  document_record_id: number | null;
+  title: string;
+  description: string;
+  status: 'missing' | 'uploaded' | 'pending' | string;
+  file_name: string | null;
+  file_url: string | null;
+  can_upload: boolean;
+  can_view: boolean;
+  can_replace: boolean;
+  can_delete: boolean;
+}
