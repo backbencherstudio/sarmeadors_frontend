@@ -3,10 +3,8 @@
 import DateIcon from "@/components/icon/DateIcon";
 import LocationIcon from "@/components/icon/LocationIcon";
 import StripeIcon from "@/components/icon/StripeIcon";
-import {
-  usePaymentCheckQuery,
-  usePaymentServiceMutation,
-} from "@/feature/dashboard/client/myCandidate";
+import { useShortTermHireRequestMutation } from "@/feature/dashboard/client/myCandidate";
+import { usePaymentCheckQuery, usePaymentServiceMutation } from "@/feature/dashboard/client/myJob";
 import {
   CardCvcElement,
   CardExpiryElement,
@@ -16,7 +14,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -165,6 +163,8 @@ function PaymentPageContent({
   const stripe = useStripe();
   const elements = useElements();
   const [createPayment] = usePaymentServiceMutation();
+  const [shortTermHireRequest, { isLoading: isSubmitting }] =
+    useShortTermHireRequestMutation();
 
   const [saveCard, setSaveCard] = useState(false);
   const [cardholderName, setCardholderName] = useState("");
@@ -172,6 +172,14 @@ function PaymentPageContent({
   const [billingZip, setBillingZip] = useState("");
   const [additionalNote, setAdditionalNote] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const name = useSearchParams()
+  const params = name.get("payment-page")
+  const id = name.get("id")
+
+  const stored = localStorage.getItem("hire-request");
+  const hireRequestData = JSON.parse(stored)
+
 
   const jobTitle =
     paymentData?.job?.title ??
@@ -237,7 +245,22 @@ function PaymentPageContent({
         save_card: saveCard,
       });
 
-      await createPayment(formData).unwrap();
+      const hireData = {
+        ...hireRequestData,
+        payment_method_id: paymentMethod.id,
+        cardholder_name: cardholderName,
+        billing_country: billingCountry,
+        billing_zip: billingZip,
+        additional_note: additionalNote,
+        save_card: saveCard,
+      }
+
+      if (params === "post-job") {
+        await createPayment(formData).unwrap();
+      } else if (params === "hire-requrest") {
+        await shortTermHireRequest({ data: hireData, id }).unwrap();
+      }
+
 
       toast.success("Payment successful!");
       // router.push(PENDING_JOBS_ROUTE);

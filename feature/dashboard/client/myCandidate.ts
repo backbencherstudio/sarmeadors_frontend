@@ -8,12 +8,6 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getShortTermJob: builder.query({
-      query: (q) => ({
-        url: `/client/jobs/short-term?filter[status]=${q}`,
-        method: "GET",
-      }),
-    }),
     getSingleClientMyCandidate: builder.query({
       query: (id) => ({
         url: `/client/candidates/${id}`,
@@ -21,28 +15,17 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
       }),
     }),
     shortTermHireRequest: builder.mutation({
-      query: (id) => ({
+      query: ({ data, id }) => ({
         url: `/client/candidates/${id}/hire-request`,
         method: "POST",
+        body: data
       }),
     }),
-    PaymentService: builder.mutation({
-      query: (body) => ({
-        url: `/client/jobs/short-term`,
+    shortTermHireReview: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/client/candidates/${id}/reviews`,
         method: "POST",
-        body,
-      }),
-    }),
-    PaymentCheck: builder.query({
-      query: () => ({
-        url: `/client/jobs/short-term/payment-check`,
-        method: "GET",
-      }),
-    }),
-    locations: builder.query({
-      query: () => ({
-        url: `/client/locations`,
-        method: "GET",
+        body: data
       }),
     }),
   }),
@@ -50,10 +33,7 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
 
 export const {
   useGetClientMyCandidateQuery,
-  useGetShortTermJobQuery,
   useGetSingleClientMyCandidateQuery,
   useShortTermHireRequestMutation,
-  usePaymentServiceMutation,
-  usePaymentCheckQuery,
-  useLocationsQuery
+  useShortTermHireReviewMutation,
 } = ClientMyCandidatedApi;
