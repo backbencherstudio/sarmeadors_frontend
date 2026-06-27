@@ -16,15 +16,13 @@ function CandidatejobsCard({ job }: { job?: Job }) {
   const isEqualDay = jobDate.isSame(today, "day");
   const isScheduled = jobDate.isBefore(today, "day");
 
-
-
   return (
     <div>
       <div className="hover:bg-white bg-bgColor  border-l-4 border-bgColor hover:shadow-xl  hover:border-[#6BA6FF] transition-all duration-200 shadow rounded-lg p-4 md:p-5 space-y-4">
         <div className="">
           <div className="flex justify-between items-center">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-2 mb-2">
-              <div className="flex  md:items-center gap-2 ">
+              <div className="flex flex-wrap  md:items-center gap-2 ">
                 <h3 className="md:text-lg text-base font-semibold text-blackColor">
                   {job?.title}
                 </h3>
@@ -37,19 +35,29 @@ function CandidatejobsCard({ job }: { job?: Job }) {
                 >
                   {job?.job_type}
                 </p>
+                {job?.status == "cancelled" && (
+                  <p className="text-xs md:text-sm px-2 py-1 bg-borderColor rounded-sm font-semibold">
+                    {job?.status}
+                  </p>
+                )}
+                {job?.status == "completed" && (
+                  <p className="text-xs md:text-sm px-2 py-1 bg-blackColor text-whiteColor rounded-sm font-semibold">
+                    {job?.status}
+                  </p>
+                )}
               </div>
-              {!isScheduled && (
-                <div
-                  className={`${isEqualDay ? "text-blackColor" : "text-secondaryColor"} text-sm flex items-center gap-1.5 bg-bgColor px-2 py-1 font-medium rounded-sm `}
-                >
+              {!isScheduled &&
+                job?.status !== "cancelled" &&
+                job?.status !== "completed" && (
                   <div
-                    className={`${isEqualDay ? "bg-greenColor text-blackColor!" : "bg-secondaryColor"} w-3 h-3  rounded-full`}
-                  ></div>{" "}
-                  {job?.latest_attendance && (
+                    className={`${isEqualDay ? "text-blackColor" : "text-secondaryColor"} text-sm flex items-center gap-1.5 bg-bgColor px-2 py-1 font-medium rounded-sm `}
+                  >
+                    <div
+                      className={`${isEqualDay ? "bg-greenColor text-blackColor!" : "bg-secondaryColor"} w-3 h-3  rounded-full`}
+                    ></div>{" "}
                     <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${dayjs(job?.latest_attendance?.date).format("MMM DD, YYYY")}`}</p>
-                  )}
-                </div>
-              )}
+                  </div>
+                )}
             </div>
             <p className="text-lg font-semibold text-blackColor mb-3">
               ${job?.compensation?.amount}{" "}
@@ -131,16 +139,15 @@ function CandidatejobsCard({ job }: { job?: Job }) {
             )}
           </div>
           <div>
-            {job?.status === "cancel" && (
+            {job?.status === "cancelled" && (
               <div className="">
                 <h4 className="text-lightblackColor text-sm font-semibold">
                   Cancel Reason
                 </h4>
-                {job?.latest_attendance && (
-                  <p className="px-3 py-4 mt-2 text-secondaryColor border border-borderColor  bg-grayColor1 rounded-sm ">
-                    {job?.latest_attendance?.notes || "No reason provided"}
-                  </p>
-                )}
+
+                <p className="px-3 py-4 mt-2 text-secondaryColor border border-borderColor  bg-grayColor1 rounded-sm ">
+                  {job?.latest_attendance?.notes || "No reason provided"}
+                </p>
               </div>
             )}
           </div>
@@ -158,7 +165,7 @@ function CandidatejobsCard({ job }: { job?: Job }) {
               />
             </div>
             <div className="text-right ml-4">
-              {job?.status === "cancel" || job?.status === "completed" ? (
+              {job?.status === "cancelled" || job?.status === "completed" ? (
                 <CandidateJobsReviewAction />
               ) : (
                 <div className="flex flex-col items-end gap-1">

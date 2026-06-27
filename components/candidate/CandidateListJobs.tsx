@@ -16,7 +16,7 @@ import DateIcon from "../icon/DateIcon";
 import CandidatejobsCard from "./CandidatejobsCard";
 
 type JobFilter = "all" | "short_term" | "long_term";
-type JobStatusFilter = "all" | "running" | "cancel" | "complete";
+type JobStatusFilter = "all" | "running" | "cancelled" | "completed";
 
 function CandidateListJobs() {
   const { updateParams, searchParams } = useUpdateQueryParams();
@@ -68,8 +68,8 @@ function CandidateListJobs() {
   const statusOptions = [
     { value: "all", label: "All Status" },
     { value: "running", label: "Running Job" },
-    { value: "cancel", label: "Cancel Job" },
-    { value: "complete", label: "Complete Job" },
+    { value: "cancelled", label: "Cancel Job" },
+    { value: "completed", label: "Completed Job" },
   ];
 
   return (
@@ -83,16 +83,18 @@ function CandidateListJobs() {
                 <button className="rounded-md cursor-pointer border border-borderColor px-4 py-3.5">
                   <DateIcon className="h-5 w-5 text-blackColor" />
                 </button>
-                <button
-                  title="Reset filter"
-                  onClick={() => {
-                    setSelectedDate(null);
-                    updateParams("date", "");
-                  }}
-                  className="rounded-md absolute bg-red-100 -top-1.5 -right-1.5 text-redColor  cursor-pointer border border-redColor "
-                >
-                  <X size={14} />
-                </button>
+                {selectedDate && (
+                  <button
+                    title="Reset filter"
+                    onClick={() => {
+                      setSelectedDate(null);
+                      updateParams("date", "");
+                    }}
+                    className="rounded-md absolute bg-red-100 -top-1.5 -right-1.5 text-redColor  cursor-pointer border border-redColor "
+                  >
+                    <X size={14} />
+                  </button>
+                )}
               </div>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
