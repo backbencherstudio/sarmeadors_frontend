@@ -201,3 +201,19 @@ export interface RequiredDocument {
   can_replace: boolean;
   can_delete: boolean;
 }
+
+export interface AvailabilityDayType {
+  id: number;
+  day_of_week: number; 
+  day_name: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday' | string;
+  is_available: boolean;
+  start_time: string; 
+  end_time: string;   
+}
+
+// Main Availability Sub-Object
+export interface AvailabilityDataType {
+  id: number;
+  timezone: string; 
+  days: AvailabilityDayType[];
+}

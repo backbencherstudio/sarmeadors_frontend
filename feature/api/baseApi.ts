@@ -41,6 +41,12 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["subsciprions", "profile", "submissions", "candidateDocuments"],
+  tagTypes: [
+    "subsciprions",
+    "profile",
+    "submissions",
+    "candidateDocuments",
+    "candidateAvailability",
+  ],
   endpoints: (builder) => ({}),
 });
