@@ -41,9 +41,10 @@ const candidateDocumentSlice = baseApi.injectEndpoints({
       invalidatesTags: ["candidateDocuments"],
     }),
     uploadCandidateAdditionalDocument: builder.mutation({
-      query: () => ({
+      query: ({ data }: { data: FormData }) => ({
         url: `/candidate/documents/additional`,
         method: "POST",
+        body: data,
       }),
       invalidatesTags: ["candidateDocuments"],
     }),
