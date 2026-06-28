@@ -12,17 +12,20 @@ import { format } from "date-fns";
 import { CalendarIcon, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import ButtonReuseable from "../reusable/CustomButton";
+import RootDialog from "../common/RootDialog";
 
 interface CandidateAvailabilityCreateFromProps {
   onClose?: () => void;
   createDateData?: any;
   setCreateDateData?: any;
+  open?: boolean;
 }
 
 function CandidateAvailabilityCreateFrom({
   onClose,
   createDateData,
   setCreateDateData,
+  open
 }: CandidateAvailabilityCreateFromProps) {
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
@@ -50,6 +53,7 @@ function CandidateAvailabilityCreateFrom({
   };
 
   return (
+    <RootDialog open={open} setOpen={onClose}>
     <div className="p-5 space-y-5">
       {/* Header */}
       <div className="flex items-center gap-2">
@@ -152,6 +156,7 @@ function CandidateAvailabilityCreateFrom({
         />
       </div>
     </div>
+    </RootDialog>
   );
 }
 

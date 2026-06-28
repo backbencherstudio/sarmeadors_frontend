@@ -211,6 +211,12 @@ export interface AvailabilityDayType {
   end_time: string;   
 }
 
+export interface UnavailabilityType {
+  id: number;
+  title: string;
+  start_date: string; 
+  end_date: string;   
+}
 // Main Availability Sub-Object
 export interface AvailabilityDataType {
   id: number;
