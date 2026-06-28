@@ -19,7 +19,7 @@ function CandidateDocumentCard({
   onView?: (item: RequiredDocument) => void;
   onEdit?: (item: RequiredDocument) => void;
   onDelete?: (item: RequiredDocument) => void;
-  onUpload?: (item: RequiredDocument) => void;
+  onUpload?: (id) => void;
 }) {
   return (
     <div className="rounded-xl border border-borderColor hover:shadow-lg transition-shadow duration-200 bg-bgColor px-6 py-10">
@@ -73,7 +73,7 @@ function CandidateDocumentCard({
             <ButtonReuseable
               type="button"
               title="Upload"
-              onClick={() => onUpload?.(item)}
+              onClick={() => onUpload?.(item.key)}
               className="px-6! py-2.5! "
             />
           )}
