@@ -224,7 +224,7 @@ function CandidateAdditonalDocumentUploadFrom({
           />
         </div>
 
-        <div className="flex items-center gap-4 border-t pt-5">
+        <div className="flex items-center justify-end gap-4 border-t pt-5">
           <ButtonReuseable
             type="submit"
             title="Upload"

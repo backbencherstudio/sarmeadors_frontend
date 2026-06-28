@@ -7,15 +7,25 @@ import documentBlackIcon from "@/public/icon/RequiredBalackIcon.png";
 import { RequiredDocument } from "@/types";
 import Image from "next/image";
 import { useState } from "react";
+import CandidateAdditionalDocDelete from "./CandidateAdditionalDocDelete";
 import CandidateAdditonalDocumentUploadFrom from "./CandidateAdditonalDocumentUploadFrom";
 import CandidateDocumentCard from "./CandidateDocumentCard";
 import CandidateDocumentCardSkeleton from "./CandidateDocumentCardSkeleton";
 
 function CandidateAdditionalPage() {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedDocumentKey, setSelectedDocumentKey] = useState<number | null>(
+    null,
+  );
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const { data: documents, isLoading } =
     useGetCandidateDocumentQuery("Documents");
+  const handleDelete = (id: number) => {
+    console.log(id, "cdsasfd");
 
+    setSelectedDocumentKey(id);
+    setIsDeleteOpen(true);
+  };
   const handleView = (item: RequiredDocument) => {
     console.log("view open ");
   };
@@ -71,6 +81,7 @@ function CandidateAdditionalPage() {
                 key={item.key}
                 item={item}
                 onView={handleView}
+                onDelete={handleDelete}
               />
             ),
           )
@@ -85,6 +96,13 @@ function CandidateAdditionalPage() {
         <CandidateAdditonalDocumentUploadFrom
           open={isOpen}
           setOpen={setIsOpen}
+        />
+      )}
+      {isDeleteOpen && selectedDocumentKey && (
+        <CandidateAdditionalDocDelete
+          open={isDeleteOpen}
+          setOpen={setIsDeleteOpen}
+          documentKey={selectedDocumentKey}
         />
       )}
     </div>

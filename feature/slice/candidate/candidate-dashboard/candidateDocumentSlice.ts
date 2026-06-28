@@ -17,7 +17,7 @@ const candidateDocumentSlice = baseApi.injectEndpoints({
       invalidatesTags: ["candidateDocuments"],
     }),
     deleteCandidateAdditionalDocument: builder.mutation({
-      query: (id: string) => ({
+      query: (id: number) => ({
         url: `/candidate/documents/additional/${id}`,
         method: "DELETE",
       }),

@@ -18,9 +18,11 @@ function CandidateDocumentCard({
   isLoading?: boolean;
   onView?: (item: RequiredDocument) => void;
   onEdit?: (item: RequiredDocument) => void;
-  onDelete?: (item: RequiredDocument) => void;
-  onUpload?: (id) => void;
+  onDelete?: (id: number | string) => void;
+  onUpload?: (id: string) => void;
 }) {
+  console.log(item, "tiem");
+
   return (
     <div className="rounded-xl border border-borderColor hover:shadow-lg transition-shadow duration-200 bg-bgColor px-6 py-10">
       <div className="mx-auto flex w-full  flex-col items-center text-center">
@@ -65,7 +67,7 @@ function CandidateDocumentCard({
                 icon={
                   <DeleteIcon className="w-4 h-4 text-redColor fill-headerColor " />
                 }
-                onClick={() => onDelete?.(item)}
+                onClick={() => onDelete?.(item.id)}
                 className="px-6! py-3! rounded-lg border border-borderColor bg-whiteColor "
               />
             </>

@@ -1,11 +1,10 @@
 declare global {
-    interface Window {
-      katex: typeof import("katex");
-    }
+  interface Window {
+    katex: typeof import("katex");
   }
+}
 
-
-  export interface Address {
+export interface Address {
   line: string;
   city: string;
   province: string;
@@ -15,8 +14,8 @@ declare global {
 
 export interface Compensation {
   amount: string;
-  currency: 'usd' | string;
-  type: 'per_hour' | string;
+  currency: "usd" | string;
+  type: "per_hour" | string;
 }
 
 export interface Attendance {
@@ -36,14 +35,14 @@ export interface Attendance {
 
 export interface Job {
   id: number;
-  job_type: 'short_term' | 'long_term';
+  job_type: "short_term" | "long_term";
   title: string;
   client_name: string;
   description: string;
   cover_image_url: string | null;
   address: Address;
   compensation: Compensation;
-  status: 'running' | 'marketplace' | string;
+  status: "running" | "marketplace" | string;
   latest_attendance: Attendance | null;
   can_check_in: boolean;
   can_check_out: boolean;
@@ -152,7 +151,7 @@ export interface JobModal {
 export interface JobDetails {
   id: string; // Notice object output as alphanumeric dynamic id "long_term_1_2026-06-01"
   job_id: number;
-  job_type: 'long_term' | 'short_term' | string; // Type restrict korar jonne generic string literal or standalone string
+  job_type: "long_term" | "short_term" | string; // Type restrict korar jonne generic string literal or standalone string
   job_type_label: string;
   title: string;
   client: JobClient;
@@ -174,15 +173,14 @@ export interface JobDetails {
   modal: JobModal;
 }
 
-
 // Pratham structure (e.g., Existing or Signed Document)
 export interface UserDocument {
   id: number;
   document_record_id: number;
   title: string;
   description: string;
-  status: 'signed' | 'missing' | 'pending' | string; 
-  signed_at: string | null; 
+  status: "signed" | "missing" | "pending" | string;
+  signed_at: string | null;
   content_type: string;
   file_url: string | null;
   can_sign: boolean;
@@ -190,11 +188,12 @@ export interface UserDocument {
 }
 
 export interface RequiredDocument {
-  key: string; 
+  id: number;
+  key: string;
   document_record_id: number | null;
   title: string;
   description: string;
-  status: 'missing' | 'uploaded' | 'pending' | string;
+  status: "missing" | "uploaded" | "pending" | string;
   file_name: string | null;
   file_url: string | null;
   can_upload: boolean;
