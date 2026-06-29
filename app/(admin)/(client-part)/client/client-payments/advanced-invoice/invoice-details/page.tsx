@@ -1,10 +1,19 @@
+"use client";
+
 import InvoiceTable from "@/components/client/ClientPayment/InvoiceTable";
 import PaymentForm from "@/components/client/ClientPayment/PaymentForm";
+import { useGetPaymentInvoiceDetailsQuery } from "@/feature/dashboard/client/payment";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function InvoiceDetails() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  const { data } = useGetPaymentInvoiceDetailsQuery(id);
+
   return (
     <div className="p-6">
       <div className="mb-6">
@@ -36,7 +45,7 @@ export default function InvoiceDetails() {
                 Status:
               </p>
               <p className="text-[#111927] text-[16px] font-medium leading-[137.5%]">
-                Not Sent
+                {data?.data?.status}
               </p>
             </div>
             <div className="flex items-center gap-x-2 mt-1">
@@ -44,7 +53,7 @@ export default function InvoiceDetails() {
                 Invoice No:
               </p>
               <p className="text-[#111927] text-[16px] font-medium leading-[137.5%]">
-                5837
+                {data?.data?.invoice_no}
               </p>
             </div>
             <div className="flex items-center gap-x-2 mt-1">
@@ -52,7 +61,7 @@ export default function InvoiceDetails() {
                 Invoice Name:
               </p>
               <p className="text-[#111927] text-[16px] font-medium leading-[137.5%]">
-                Invoice #1
+                {data?.data?.invoice_name}
               </p>
             </div>
             <div className="flex items-center gap-x-2 mt-1">
@@ -60,7 +69,7 @@ export default function InvoiceDetails() {
                 Date:
               </p>
               <p className="text-[#111927] text-[16px] font-medium leading-[137.5%]">
-                Sun Nov 30 2025
+                {data?.data?.date}
               </p>
             </div>
           </div>
@@ -72,20 +81,20 @@ export default function InvoiceDetails() {
           </h1>
           <div className="mt-4">
             <p className="text-[#778593] text-[16px] font-medium leading-[137.5%]">
-              Parvez Rahman
+              {data?.data?.bill_to?.name}
             </p>
             <p className="text-[#778593] text-[16px] font-medium leading-[137.5%]">
-              Parvezz13913@gmail.com
+              {data?.data?.bill_to?.email}
             </p>
           </div>
         </div>
         <div>
-          <InvoiceTable />
+          <InvoiceTable data={data?.data} />
         </div>
-        <div className="border-b border-[#E5E7EB] pb-8" />
-        <div>
+        {/* <div className="border-b border-[#E5E7EB] pb-8" /> */}
+        {/* <div>
           <PaymentForm />
-        </div>
+        </div> */}
       </div>
     </div>
   );

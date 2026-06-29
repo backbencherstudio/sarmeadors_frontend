@@ -27,14 +27,14 @@ function ClientPaymentTopMenu({ title, id }: { title?: string; id?: string }) {
             <span className="text-[#0065FF]">Stripe</span>
           </p>
         </div>
-        <div>
+        {/* <div>
           <button className="px-6 py-4 bg-[#111927] border border-[#384250] rounded-[12px] flex items-center gap-x-1.5 cursor-pointer">
             <StripeLogoIcon />
             <span className="text-[#FCFCFD] font-semibold text-[16px] leading-[137.5%]">
               Connect Stripe
             </span>
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="w-full">
         <div className="w-full border-b border-gray-200">
