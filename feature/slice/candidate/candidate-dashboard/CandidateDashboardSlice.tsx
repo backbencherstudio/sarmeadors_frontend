@@ -8,7 +8,20 @@ const candidateDashboardSlice = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getCandidateMyJobs: builder.query({
+      query: () => ({
+        url: `/candidate/jobs`,
+        method: "GET",
+      }),
+    }),
+    getCandidateMyJobsList: builder.query({
+      query: ({ params }) => ({
+        url: `/candidate/jobs?${params}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetCandidateDashboardQuery } = candidateDashboardSlice;
+export const { useGetCandidateDashboardQuery, useGetCandidateMyJobsQuery, useGetCandidateMyJobsListQuery } =
+  candidateDashboardSlice;

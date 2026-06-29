@@ -1,6 +1,7 @@
 "use client";
 
 import { jobEvents } from "@/demoData/DashboardData";
+import { useGetCandidateMyJobsQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
 import { EventContentArg } from "@fullcalendar/core";
 import { useState } from "react";
 import FullCalenderCustomize from "../common/FullCalenderCustomize";
@@ -11,12 +12,12 @@ import CandidateJobRenderSection from "./myJobs/CandidateJobsRenderSection";
 function CandidateJobCalender() {
   const [scheduledData, setScheduledData] = useState<any>(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  const { data, isLoading } = useGetCandidateMyJobsQuery("candidate-my-jobs");
   const handleOpen = (event: any) => {
-    console.log(event, "CHECK");
     setScheduledData(event);
     setIsOpen(true);
   };
+
 
   const renderJobEvent = (eventInfo: EventContentArg) => (
     <CandidateJobRenderSection eventInfo={eventInfo} onOpen={handleOpen} />
@@ -28,7 +29,7 @@ function CandidateJobCalender() {
         <FullCalenderCustomize
           filterSection={<CandidateJobTypeFilter />}
           renderEvent={renderJobEvent}
-          data={jobEvents}
+          data={data?.data?.events}
         />
       </div>
 

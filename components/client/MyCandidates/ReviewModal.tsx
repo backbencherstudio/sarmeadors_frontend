@@ -8,15 +8,20 @@ import { toast } from "sonner";
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  hireId: any;
+  hireId?: any;
 }
 
-export default function ReviewModal({ isOpen, onClose, hireId }: ReviewModalProps) {
+export default function ReviewModal({
+  isOpen,
+  onClose,
+  hireId,
+}: ReviewModalProps) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [review, setReview] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [hireReview, { isLoading: isSubmitting }] = useShortTermHireReviewMutation();
+  const [hireReview, { isLoading: isSubmitting }] =
+    useShortTermHireReviewMutation();
 
   if (!isOpen) return null;
 
@@ -36,15 +41,17 @@ export default function ReviewModal({ isOpen, onClose, hireId }: ReviewModalProp
     try {
       const result = await hireReview({ data: payload, id: hireId }).unwrap();
       if (result?.success) {
-        toast.success(result?.message)
+        toast.success(result?.message);
         setRating(0);
         setReview("");
         onClose();
       }
     } catch (err) {
-      toast.error("Failed to submit review:", err)
+      toast.error("Failed to submit review:", err);
       // console.error("Failed to submit review:", err);
-      setError("Something went wrong while submitting your review. Please try again.");
+      setError(
+        "Something went wrong while submitting your review. Please try again.",
+      );
     }
   };
 

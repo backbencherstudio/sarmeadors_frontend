@@ -35,13 +35,18 @@ export const baseApi = createApi({
           headers.set("Authorization", `Bearer ${token}`);
         }
       }
-      headers.set("Content-Type", "application/json");
       headers.set("Accept", "application/json");
       headers.set("X-Subdomain", subDomain);
 
       return headers;
     },
   }),
-  tagTypes: ["subsciprions", "profile", "submissions"],
+  tagTypes: [
+    "subsciprions",
+    "profile",
+    "submissions",
+    "candidateDocuments",
+    "candidateAvailability",
+  ],
   endpoints: (builder) => ({}),
 });

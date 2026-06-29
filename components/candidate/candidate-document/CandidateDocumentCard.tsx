@@ -3,18 +3,8 @@ import ButtonReuseable from "@/components/reusable/CustomButton";
 import DeleteIcon from "@/public/icon/DeleteIcon";
 import documentBlackIcon from "@/public/icon/RequiredBalackIcon.png";
 import documentGreenIcon from "@/public/icon/requiredGreenIcon.png";
+import { RequiredDocument } from "@/types";
 import Image from "next/image";
-import CandidateDocumentCardSkeleton from "./CandidateDocumentCardSkeleton";
-
-export type CandidateDocumentItem = {
-  id: number;
-  title: string;
-  subtitle: string;
-  isUploaded: boolean;
-  previewUrl?: string;
-  previewName?: string;
-  previewType?: string;
-};
 
 function CandidateDocumentCard({
   item,
@@ -24,20 +14,20 @@ function CandidateDocumentCard({
   onDelete,
   onUpload,
 }: {
-  item: CandidateDocumentItem;
+  item: RequiredDocument;
   isLoading?: boolean;
-  onView?: (item: CandidateDocumentItem) => void;
-  onEdit?: (item: CandidateDocumentItem) => void;
-  onDelete?: (item: CandidateDocumentItem) => void;
-  onUpload?: (item: CandidateDocumentItem) => void;
+  onView?: (item: RequiredDocument) => void;
+  onEdit?: (item: RequiredDocument) => void;
+  onDelete?: (id: number | string) => void;
+  onUpload?: (id: string) => void;
 }) {
-  if (isLoading) return <CandidateDocumentCardSkeleton />;
+  console.log(item, "tiem");
 
   return (
     <div className="rounded-xl border border-borderColor hover:shadow-lg transition-shadow duration-200 bg-bgColor px-6 py-10">
       <div className="mx-auto flex w-full  flex-col items-center text-center">
         <Image
-          src={item.isUploaded ? documentGreenIcon : documentBlackIcon}
+          src={!item.can_upload ? documentGreenIcon : documentBlackIcon}
           alt="Document status"
           width={82}
           height={82}
@@ -47,16 +37,16 @@ function CandidateDocumentCard({
         <h3 className="mt-4 text-xl font-semibold text-headerColor">
           {item.title}
         </h3>
-        <p className="mt-1 text-base text-secondaryColor">{item.subtitle}</p>
+        <p className="mt-1 text-base text-secondaryColor">{item.description}</p>
 
-        {item.previewUrl && !item.previewType?.startsWith("image/") && (
+        {/* {item.previewUrl && !item.previewType?.startsWith("image/") && (
           <p className="mt-2 max-w-[240px] truncate text-sm text-secondaryColor">
             {item.previewName}
           </p>
-        )}
+        )} */}
 
         <div className="mt-5 flex items-center gap-2">
-          {item.isUploaded ? (
+          {!item.can_upload ? (
             <>
               <ButtonReuseable
                 type="button"
@@ -77,7 +67,7 @@ function CandidateDocumentCard({
                 icon={
                   <DeleteIcon className="w-4 h-4 text-redColor fill-headerColor " />
                 }
-                onClick={() => onDelete?.(item)}
+                onClick={() => onDelete?.(item.id)}
                 className="px-6! py-3! rounded-lg border border-borderColor bg-whiteColor "
               />
             </>
@@ -85,7 +75,7 @@ function CandidateDocumentCard({
             <ButtonReuseable
               type="button"
               title="Upload"
-              onClick={() => onUpload?.(item)}
+              onClick={() => onUpload?.(item.key)}
               className="px-6! py-2.5! "
             />
           )}

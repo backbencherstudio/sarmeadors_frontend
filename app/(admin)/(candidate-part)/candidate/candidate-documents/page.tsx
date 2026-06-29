@@ -1,9 +1,9 @@
-import DocumentList from "@/components/clients/AdminTabs/Documents/DocumentList";
+import CandidateDocumentList from "@/components/candidate/candidate-document/CandidateDocumentList";
 
 function page() {
   return (
     <div>
-      <DocumentList data={[]} />
+      <CandidateDocumentList />
     </div>
   );
 }
