@@ -7,9 +7,12 @@ import DateIcon from "../icon/DateIcon";
 import ButtonReuseable from "../reusable/CustomButton";
 import { Skeleton } from "../ui/skeleton";
 import CandidateAvailabilityCreateFrom from "./CandidateAvailabilityCreateFrom";
+import AvailabilityAdditionalDateDelete from "./AvailabilityAdditionalDateDelete";
 
 function CandidateTemporaryUnavailable() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [selectedDocumentKey, setSelectedDocumentKey] = useState<number | null>(null);
   const [createDateData, setCreateDateData] = useState([
     {
       title: "Checkup at hospital",
@@ -54,6 +57,10 @@ function CandidateTemporaryUnavailable() {
                 <div>
                   <ButtonReuseable
                     icon={<DeleteIcon className="w-4 h-4 text-redColor" />}
+                    onClick={() => {
+                      setSelectedDocumentKey(item.id);
+                      setIsDeleteOpen(true);
+                    }}
                     className="border-redColor bg-whiteColor! border  px-2! py-2! h-auto! rounded-sm!"
                   />
                 </div>
@@ -71,13 +78,21 @@ function CandidateTemporaryUnavailable() {
       </div>
 
       {/* Modal */}
-
       <CandidateAvailabilityCreateFrom
         createDateData={createDateData}
         setCreateDateData={setCreateDateData}
         onClose={() => setModalOpen(false)}
         open={modalOpen}
       />
+      {
+        isDeleteOpen && (
+          <AvailabilityAdditionalDateDelete
+            open={isDeleteOpen}
+            setOpen={setIsDeleteOpen}
+            documentKey={selectedDocumentKey}
+          />
+        )
+      }
     </div>
   );
 }

@@ -41,25 +41,25 @@ function AvailabilityPage() {
   const { data, isLoading } =
     useGetCandidateAvailabilabilityQuery("availability");
   const [updateAvailability] = useUpdateCandidateAvailabilityMutation();
-
   const [days, setDays] = useState<DayState[]>([]);
 
   // Sync server data into local state initially
   useEffect(() => {
     if (data?.data?.availability?.days) {
-      const formattedDays = data.data.availability.days.map((day: any) => ({
-        id: day.id,
-        day_name: day.day_name,
-        is_available: !!day.is_available,
-        start_time: formatTimeForSelect(day.start_time) || defaultTime,
-        end_time: formatTimeForSelect(day.end_time) || defaultTime,
+      const formattedDays = data?.data?.availability?.days?.map((day: any) => ({
+        id: day?.id,
+        day_name: day?.day_name,
+        is_available: !!day?.is_available,
+        start_time: formatTimeForSelect(day?.start_time) || defaultTime,
+        end_time: formatTimeForSelect(day?.end_time) || defaultTime,
       }));
       setDays(formattedDays);
     }
     if (data?.data?.availability?.timezone) {
-      setTimezone(data.data.availability.timezone);
+      setTimezone(data?.data?.availability?.timezone);
     }
   }, [data]);
+
 
   useEffect(() => {
     if (days.length === 0) return;
@@ -68,7 +68,6 @@ function AvailabilityPage() {
       const payload = {
         days: days.map((d) => {
           const dayName = d?.day_name ? d.day_name.toLowerCase() : "";
-
           const baseData: any = {
             day: dayName,
             is_available: !!d?.is_available,
