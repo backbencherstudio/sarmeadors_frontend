@@ -36,10 +36,7 @@ const Header: React.FC<HeaderProps> = ({
   const router = useRouter();
   const { token } = useToken();
 
-  const {
-    data: userDetails,
-    error,
-  } = useQuery({
+  const { data: userDetails, error } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => UserService.getUserDetails(token),
     enabled: !!token, // Only run the query when token exists
@@ -145,7 +142,7 @@ const Header: React.FC<HeaderProps> = ({
 
                   <DropdownMenuItem asChild>
                     <Link
-                      href="/my-profile/personal-information"
+                      href="/client/client-profile"
                       className="cursor-pointer"
                     >
                       Profile Settings
