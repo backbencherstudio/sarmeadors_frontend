@@ -4,6 +4,7 @@ import TableColAscDsc from "@/components/dashboard/TableColAscDsc";
 import DateIcon from "@/components/icon/DateIcon";
 import LinkSquareIcon from "@/components/icon/LinkSquareIcon";
 import { advancedInvoiceTableData } from "@/demoData/DashboardData";
+import { useGetPaymentInvoiceQuery } from "@/feature/dashboard/client/payment";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -22,11 +23,24 @@ export default function AdvancedInvoiceTable() {
     dueDate: true,
     action: true,
   });
+  const { data: paymentInvoices, isLoading } = useGetPaymentInvoiceQuery({});
+
+  const invoices =
+    paymentInvoices?.data?.invoices?.map((item: any) => ({
+      ...item,
+      id: item.id,
+      invoiceId: item.invoice_id,
+      invoiceTotal: item.total,
+      status: item.status,
+      createdAt: item.created_at.split(" ")[0],
+      dueDate: item.due_date,
+    })) || [];
+
   const toggleSelectAll = () => {
-    if (selectedRows.length === data.length) {
+    if (selectedRows.length === invoices?.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(data.map((row) => row.invoiceId));
+      setSelectedRows(paymentInvoices?.data?.map((row) => row.invoiceId));
     }
   };
 
@@ -48,7 +62,9 @@ export default function AdvancedInvoiceTable() {
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
-            checked={selectedRows.length === data.length && data.length > 0}
+            checked={
+              selectedRows.length === invoices?.length && invoices?.length > 0
+            }
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300 accent-gray-9000"
           />
@@ -122,7 +138,7 @@ export default function AdvancedInvoiceTable() {
       width: "50px",
       formatter: (value: string, record: any) => (
         <Link
-          href={`/client/client-payments/advanced-invoice/invoice-details?id=${record?.id}`}
+          href={`/client/client-payments/advanced-invoice/invoice-details?id=${1}`}
           className="p-3 bg-[#F3F4F6] hover:bg-[#111927] hover:border hover:border-[#384250] hover:text-white border border-[#E5E7EB] rounded-[8px] flex items-center justify-center cursor-pointer"
         >
           <LinkSquareIcon />
@@ -150,7 +166,7 @@ export default function AdvancedInvoiceTable() {
         </div>
         <DynamicTableTwo
           columns={visibleColumnsArray}
-          data={data || []}
+          data={invoices || []}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={(page) => setCurrentPage(page)}
@@ -158,8 +174,8 @@ export default function AdvancedInvoiceTable() {
             setItemsPerPage(newItemsPerPage);
             setCurrentPage(1);
           }}
-          loading={false}
-          totalItems={data.length}
+          loading={isLoading}
+          totalItems={invoices?.length}
           totalpage={2}
         />
       </div>

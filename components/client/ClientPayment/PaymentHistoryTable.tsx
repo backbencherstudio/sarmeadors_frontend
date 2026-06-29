@@ -4,11 +4,11 @@ import Search from "@/components/common/Search";
 import TableColAscDsc from "@/components/dashboard/TableColAscDsc";
 import DownloadIcon from "@/components/icon/DownloadIcon";
 import { paymentHistoryTableData } from "@/demoData/DashboardData";
+import { useGetClientPaymentQuery } from "@/feature/dashboard/client/payment";
 import { useState } from "react";
 
 export default function PaymentHistoryTable() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState(paymentHistoryTableData);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,11 +19,20 @@ export default function PaymentHistoryTable() {
     paymentMethod: true,
     action: true,
   });
+  const { data: clientPayment, isLoading } = useGetClientPaymentQuery({});
+
+  const payments = clientPayment?.data?.payments?.map((item: any) => ({
+    ...item,
+    id: item.invoice,
+    invoices: item.invoice,
+    paymentMethod: item.method,
+  })) || [];
+
   const toggleSelectAll = () => {
-    if (selectedRows.length === data.length) {
+    if (selectedRows.length === payments.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(data.map((row) => row.id));
+      setSelectedRows(payments.map((row: any) => row.id));
     }
   };
 
@@ -45,7 +54,10 @@ export default function PaymentHistoryTable() {
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
-            checked={selectedRows.length === data.length && data.length > 0}
+            checked={
+              selectedRows.length === payments.length &&
+              payments.length > 0
+            }
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300 accent-gray-900"
           />
@@ -81,7 +93,16 @@ export default function PaymentHistoryTable() {
       label: "Amount",
       accessor: "amount",
       width: "250px",
-      formatter: (value: string, record: any) => <div>{value}</div>,
+      formatter: (value: any, record: any) => (
+        <div>
+          {typeof value === "number"
+            ? new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(value)
+            : value}
+        </div>
+      ),
     },
     {
       label: "Payment Method",
@@ -128,7 +149,7 @@ export default function PaymentHistoryTable() {
         </div>
         <DynamicTableTwo
           columns={visibleColumnsArray}
-          data={data || []}
+          data={payments}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={(page) => setCurrentPage(page)}
@@ -136,9 +157,9 @@ export default function PaymentHistoryTable() {
             setItemsPerPage(newItemsPerPage);
             setCurrentPage(1);
           }}
-          loading={false}
-          totalItems={data.length}
-          totalpage={2}
+          loading={isLoading}
+          totalItems={clientPayment?.data?.pagination?.total ?? 0}
+          totalpage={clientPayment?.data?.pagination?.last_page ?? 0}
         />
       </div>
     </section>
