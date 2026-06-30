@@ -1,9 +1,9 @@
 "use client";
 
-import { demoData } from "@/demoData/DashboardData";
+import { useGetCandidateMyClientsQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateMyClientsSlice";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import FilterHeader from "../common/FilterHeader";
@@ -21,104 +21,65 @@ type ClientRow = {
   status: ClientStatus;
 };
 
-const clientListData: ClientRow[] = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    email: "felicia.reid@example.com",
-    phone: "+1 484 291 8883",
-    jobType: "Short-term Jobs",
-    status: "running",
-  },
-  {
-    id: 2,
-    name: "Devon Lane",
-    email: "bill.sanders@example.com",
-    phone: "+1 610 295 2240",
-    jobType: "Long-term Jobs",
-    status: "completed",
-  },
-  {
-    id: 3,
-    name: "Eleanor Pena",
-    email: "georgia.young@example.com",
-    phone: "+1 484 291 8653",
-    jobType: "Long-term Jobs",
-    status: "canceled",
-  },
-  {
-    id: 4,
-    name: "Kathryn Murphy",
-    email: "jessica.hanson@example.com",
-    phone: "+1 484 460 8341",
-    jobType: "Short-term Jobs",
-    status: "running",
-  },
-  {
-    id: 5,
-    name: "Robert Fox",
-    email: "nathan.roberts@example.com",
-    phone: "+1 484 263 4465",
-    jobType: "Short-term Jobs",
-    status: "completed",
-  },
-  {
-    id: 6,
-    name: "Ronald Richards",
-    email: "tanya.hill@example.com",
-    phone: "+1 484 413 5671",
-    jobType: "Short-term Jobs",
-    status: "completed",
-  },
-  {
-    id: 7,
-    name: "Bessie Cooper",
-    email: "henry.lawson@example.com",
-    phone: "+1 834 303 8346",
-    jobType: "Short-term Jobs",
-    status: "completed",
-  },
-  {
-    id: 8,
-    name: "Cameron Williamson",
-    email: "willie.jennings@example.com",
-    phone: "+1 484 263 4669",
-    jobType: "Short-term Jobs",
-    status: "completed",
-  },
-  {
-    id: 9,
-    name: "Wade Warren",
-    email: "dolores.chambers@example.com",
-    phone: "+1 555 282 8653",
-    jobType: "Long-term Jobs",
-    status: "canceled",
-  },
-  {
-    id: 10,
-    name: "Ralph Edwards",
-    email: "nevaeh.simmons@example.com",
-    phone: "+1 610 244 8965",
-    jobType: "Short-term Jobs",
-    status: "completed",
-  },
-  {
-    id: 11,
-    name: "Marvin McKinney",
-    email: "tim.jennings@example.com",
-    phone: "+1 813 403 8154",
-    jobType: "Short-term Jobs",
-    status: "completed",
-  },
-];
-
-
-
 function CandidateAllClientTable() {
-  
   const [selectedRows, setSelectedRows] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [perPage, setPerPage] = useState(10);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchTerm(inputValue);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [inputValue]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [perPage]);
+
+  const {
+    data: clientsResponse,
+    isLoading,
+    isError,
+  } = useGetCandidateMyClientsQuery(
+    {
+      search: searchTerm,
+      filter_search: searchTerm,
+      per_page: perPage,
+      page: currentPage,
+    },
+    {
+      skip: false,
+    },
+  );
+
+  const clientListData =
+    clientsResponse?.data?.data?.map((client: any) => ({
+      id: client.id,
+      name: client.name,
+      email: client.email,
+      phone: client.mobile,
+      jobType: client.job_type,
+      status: client.job_status,
+      image_url: client.image_url,
+    })) || [];
+
+  const pagination = clientsResponse?.data || {
+    current_page: 1,
+    per_page: 10,
+    total: 0,
+    last_page: 1,
+  };
+
+  const totalItems = pagination.total || 0;
+  const totalPages = pagination.last_page || 1;
+
   const toggleSelectAll = () => {
     if (selectedRows.length === clientListData.length) {
       setSelectedRows([]);
@@ -157,7 +118,8 @@ function CandidateAllClientTable() {
           <input
             type="checkbox"
             checked={
-              selectedRows.length === demoData.length && demoData.length > 0
+              selectedRows.length === clientListData.length &&
+              clientListData.length > 0
             }
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
@@ -179,12 +141,15 @@ function CandidateAllClientTable() {
             onChange={() => toggleRowSelection(record.id)}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
           />
-          <Link href={`/candidate/my-clients/${record.id}`} className=" flex items-center justify-center gap-2">
+          <Link
+            href={`/candidate/my-clients/${record.id}`}
+            className=" flex items-center justify-center gap-2"
+          >
             <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
               <span className="text-xs font-medium text-gray-600">
-                {record?.image_name ? (
+                {record?.image_url ? (
                   <Image
-                    src={record?.image_name || `/empty-user.png`}
+                    src={record?.image_url || `/empty-user.png`}
                     alt="Uploaded Preview"
                     width={40}
                     height={40}
@@ -246,19 +211,19 @@ function CandidateAllClientTable() {
       label: "Actions",
       accessor: "action",
       width: "150px",
-      formatter: (value: ClientStatus) => (
-        <ButtonReuseable
-          title="View"
-          className="bg-bgColor! text-blackColor! font-semibold border border-borderColor"
-        />
+      formatter: (_value: any, record: any) => (
+        <Link
+          href={`/candidate/my-clients/${record.id}`}
+          className="inline-block"
+        >
+          <ButtonReuseable
+            title="View"
+            className="bg-bgColor! text-blackColor! font-semibold border border-borderColor"
+          />
+        </Link>
       ),
     },
   ];
-
-  const handleView = (row: ClientRow) => {
-    console.log("View client:", row);
-    // TODO: Navigate to client detail page
-  };
 
   return (
     <section className="p-3 sm:p-4 lg:p-6 h-full">
@@ -268,20 +233,41 @@ function CandidateAllClientTable() {
             title="Client List"
             filter={false}
             description="List of all current clients and their details."
+            searchValue={inputValue}
+            onSearchChange={setInputValue}
+            onSearchSubmit={(val) => {
+              setInputValue(val);
+              setSearchTerm(val);
+            }}
           />
         </div>
 
-        <DynamicTableTwo
-          columns={columns}
-          data={clientListData}
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          onPageChange={(page) => setCurrentPage(page)}
-          totalpage={5}
-          totalItems={5}
-          border={true}
-          noDataMessage="No clients found."
-        />
+        {isLoading && (
+          <div className="flex items-center justify-center py-10">
+            <p className="text-gray-500">Loading clients...</p>
+          </div>
+        )}
+
+        {isError && (
+          <div className="flex items-center justify-center py-10">
+            <p className="text-red-500">Failed to load clients.</p>
+          </div>
+        )}
+
+        {!isLoading && !isError && (
+          <DynamicTableTwo
+            columns={columns}
+            data={clientListData}
+            currentPage={currentPage}
+            itemsPerPage={perPage}
+            onPageChange={(page) => setCurrentPage(page)}
+            totalpage={totalPages}
+            totalItems={totalItems}
+            border={true}
+            noDataMessage="No clients found."
+            onItemsPerPageChange={setPerPage}
+          />
+        )}
       </div>
     </section>
   );
