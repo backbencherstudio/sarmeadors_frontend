@@ -1,30 +1,14 @@
 "use client";
 
-import { useGetCandidateDashboardQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
 import { Skeleton } from "../ui/skeleton";
 
-export default function StatCards() {
-  const { data, isLoading, isError } = useGetCandidateDashboardQuery(
-    "candidate-dashboard",
-  );
-  const statCards = [
-    {
-      title: "Short-Term Job",
-      value: data?.data?.stats?.short_term_jobs,
-    },
-    {
-      title: "Long-Term Job",
-      value: data?.data?.stats?.long_term_jobs,
-    },
-    {
-      title: "My Jobs",
-      value: data?.data?.stats?.my_jobs,
-    },
-    {
-      title: "My Families",
-      value: data?.data?.stats?.my_families,
-    },
-  ];
+export default function StatCards({
+  statCards,
+  isLoading,
+}: {
+  statCards: any;
+  isLoading: boolean;
+}) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
       {isLoading
@@ -45,17 +29,19 @@ export default function StatCards() {
             >
               {/* Title */}
               <p className="text-sm text-secondaryColor group-hover:text-whiteColor transition-all duration-200 font-medium mb-5">
-                {card.title}
+                {card.name}
               </p>
 
               {/* Large Number with Percentage */}
               <div className="flex items-end justify-between">
                 <div className="text-[20px] font-semibold group-hover:text-whiteColor transition-all duration-200 text-blackColor">
-                  {card.value}
+                  {card.count}
                 </div>
-                {/* <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
-                  {card.percentage ? <span>{card.percentage}</span> : null}
-                </span> */}
+                {card.percentage && (
+                  <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
+                    <span>{card.percentage}%</span>
+                  </span>
+                )}
               </div>
 
               {/* Hover Effect - Show Arrow */}

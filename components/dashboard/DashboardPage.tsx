@@ -4,49 +4,9 @@ import { TbNotes } from "react-icons/tb";
 import { TiFlowMerge } from "react-icons/ti";
 import DashboardUserTable from "./DashboardUserTable";
 import StatCards from "./StatCards";
+import AgencyStateInfo from "./AgencyStateInfo";
 
-export const statCards = [
-  {
-    title: "Pre Application",
-    value: 195,
-    percentage: "0.1%",
-  },
-  {
-    title: "Application Started",
-    value: 7,
-    percentage: "0.8%",
-  },
-  {
-    title: "Applied",
-    value: 18,
-    percentage: "1.5%",
-  },
-  {
-    title: "Inactive",
-    value: 635,
-    percentage: "72.6%",
-  },
-  {
-    title: "Initial Payment Made",
-    value: 0,
-    percentage: "3.2%",
-  },
-  {
-    title: "Consultation Booked",
-    value: 0,
-    percentage: "3.2%",
-  },
-  {
-    title: "Consultation Complete",
-    value: 0,
-    percentage: "3.2%",
-  },
-  {
-    title: "Job Posted",
-    value: 97,
-    percentage: "3.2%",
-  },
-];
+
 async function DashboardPage() {
   const cookieStore = await cookies();
   const token = cookieStore?.get("jobtoken")?.value;
@@ -80,7 +40,7 @@ async function DashboardPage() {
               </button>
             </div>
           </div>
-          <StatCards  />
+         <AgencyStateInfo/>
         </div>
 
         <div className="mt-10">

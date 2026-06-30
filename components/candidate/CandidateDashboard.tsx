@@ -12,8 +12,27 @@ function CandidateDashboard() {
     "candidate-dashboard",
   );
 
-  
-
+  const { data:statData, isLoading: statLoading } = useGetCandidateDashboardQuery(
+    "candidate-dashboard",
+  );
+  const statCards = [
+    {
+      name: "Short-Term Job",
+      count: statData?.data?.stats?.short_term_jobs,
+    },
+    {
+      name: "Long-Term Job",
+      count: statData?.data?.stats?.long_term_jobs,
+    },
+    {
+      name: "My Jobs",
+      count: statData?.data?.stats?.my_jobs,
+    },
+    {
+      name: "My Families",
+      count: statData?.data?.stats?.my_families,
+    },
+  ];
 
   return (
     <div>
@@ -26,7 +45,7 @@ function CandidateDashboard() {
           <h3 className="text-lg font-semibold text-blackColor mb-4">
             Status Statistics
           </h3>
-          <StatCards  />
+          <StatCards statCards={statCards} isLoading={statLoading} />
         </div>
         <div>
           <CandidateCurrentJob />
