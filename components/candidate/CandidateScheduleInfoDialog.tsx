@@ -1,4 +1,6 @@
+import { JobClient, JobLocation, JobModal } from "@/types";
 import dayjs from "dayjs";
+import Image from "next/image";
 import RootDialog from "../common/RootDialog";
 import ClockICon from "../icon/ClockICon";
 import LocationIcon from "../icon/LocationIcon";
@@ -12,11 +14,12 @@ interface ScheduleData {
   start: string;
   jobTime?: string;
   allDay?: boolean;
-  candidateName?: string;
+  client?: JobClient;
   avatar?: string;
   description?: string;
-  location?: string;
   date?: string;
+  location: JobLocation;
+  modal?: JobModal;
   time?: string;
 }
 
@@ -54,6 +57,7 @@ function CandidateScheduleInfoDialog({
   const isEqualDay = jobDate.isSame(today, "day");
   const isScheduled = jobDate.isBefore(today, "day");
 
+
   return (
     <RootDialog open={isOpen} setOpen={setOpen}>
       <div className="w-full  rounded-2xl  p-6">
@@ -89,26 +93,37 @@ function CandidateScheduleInfoDialog({
         {/* Candidate Info */}
         <div className="flex items-center gap-3  pb-2 ">
           <div className="w-8 h-8 rounded-full bg-[#96C0FF] flex items-center justify-center text-blackColor font-bold text-sm">
-            OP
+            {data.client?.image_url ? (
+              <Image
+                src={data.client.image_url}
+                alt={data.client.name}
+                width={60}
+                height={60}
+                className="w-full h-full object-cover rounded-full"
+              />
+            ) : (
+              data.client.name.slice(0, 2).toUpperCase()
+            )}{" "}
           </div>
           <div>
             <h3 className="text-base font-semibold text-blackColor">
-              Arlene McCoy
+              {data?.client?.name || "Olivia Parker"}
             </h3>
           </div>
         </div>
 
         {/* Description */}
         <p className="text-sm text-secondaryColor mb-1 leading-relaxed">
-          Full responsibility for three energetic children, ages 2, 5, and 7,
-          including crafting delicious and...
+          {data?.description ||
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies lacinia, nunc nisl aliquam nisl, eget aliquam nunc nisl eget nunc."}
         </p>
 
         {/* Location */}
         <div className="flex items-start gap-3 mb-8">
           <LocationIcon className="w-5 h-5 text-secondaryColor " />
           <p className="text-sm text-secondaryColor">
-            71 Raglan Street, CROWNTHORPE, Queensland(QLD), 4605
+            {data?.location?.label || "Address not available"},{" "}
+            {data?.location?.postal_code || "4605"}
           </p>
         </div>
 
@@ -116,15 +131,17 @@ function CandidateScheduleInfoDialog({
         <div className="flex items-center justify-between  border-borderColor">
           <div>
             <p className="text-base font-semibold text-blackColor">
-              {formatDate(data.start)}
+              {data?.modal?.date}
             </p>
-            <p className="text-xs text-secondaryColor">10:00AM - 11:00AM</p>
+            <p className="text-xs text-secondaryColor">
+              {data?.modal?.time_range}
+            </p>
           </div>
           <div>
             <ButtonReuseable
               title="Check In"
               icon={<ClockICon />}
-              loading={isEqualDay ? false : true}
+              loading={!data?.modal?.can_check_in}
               sendingMsg="Check In"
               className={`bg-blackColor text-white`}
             />

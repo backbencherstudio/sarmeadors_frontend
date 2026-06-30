@@ -1,70 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import CandidateDocumentCard, {
-  type CandidateDocumentItem,
-} from "./CandidateDocumentCard";
-
-const candidateDocuments: CandidateDocumentItem[] = [
-  {
-    id: 1,
-    title: "Please upload a headshot of yourself",
-    subtitle: "You’ve already signed this agreement.",
-    isUploaded: false,
-  },
-  {
-    id: 2,
-    title: "Driver's license or government issued card",
-    subtitle: "You’ve already signed this agreement.",
-    isUploaded: true,
-  },
-  {
-    id: 3,
-    title: "Letter(s) of recommendation",
-    subtitle: "You’ve already signed this agreement.",
-    isUploaded: true,
-  },
-  {
-    id: 4,
-    title: "Additional Letter(s) of recommendation",
-    subtitle: "You’ve already signed this agreement.",
-    isUploaded: true,
-  },
-  {
-    id: 5,
-    title: "Additional Letter(s) of recommendation",
-    subtitle: "You’ve already signed this agreement.",
-    isUploaded: false,
-  },
-  {
-    id: 6,
-    title: "Nanny Resume",
-    subtitle:
-      "Make sure your resume highlights your nanny and other childcare experience",
-    isUploaded: true,
-  },
-];
+import { useGetCandidateDocumentQuery } from "@/feature/slice/candidate/candidate-dashboard/candidateDocumentSlice";
+import { RequiredDocument } from "@/types";
+import { useState } from "react";
+import CandidateDocumentCard from "./CandidateDocumentCard";
+import CandidateDocumentCardSkeleton from "./CandidateDocumentCardSkeleton";
+import CandidateUploadFrom from "./CandidateUploadFrom";
 
 function CandidateDocumentPage() {
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: documents, isLoading } =
+    useGetCandidateDocumentQuery("Documents");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedDocumentKey, setSelectedDocumentKey] = useState<string | null>(
+    null,
+  );
+  const handleUpload = (key: string) => {
+    console.log(key);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 700);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+    setSelectedDocumentKey(key);
+    setIsOpen(true);
+  };
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {candidateDocuments.map((item) => (
-        <CandidateDocumentCard
-          key={item.id}
-          item={item}
-          isLoading={isLoading}
+      {isLoading
+        ? [...Array(4)].map((_, index) => (
+            <CandidateDocumentCardSkeleton key={index} />
+          ))
+        : documents?.data?.required_documents?.map((item: RequiredDocument) => (
+            <CandidateDocumentCard
+              key={item.key}
+              item={item}
+              isLoading={isLoading}
+              onUpload={handleUpload}
+            />
+          ))}
+
+      {isOpen && (
+        <CandidateUploadFrom
+          open={isOpen}
+          setOpen={setIsOpen}
+          documentKey={selectedDocumentKey}
         />
-      ))}
+      )}
     </div>
   );
 }

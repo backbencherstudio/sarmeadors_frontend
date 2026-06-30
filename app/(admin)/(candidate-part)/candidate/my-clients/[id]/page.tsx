@@ -66,7 +66,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
       <div className="space-y-3">
         <h3 className="text-lg font-semibold text-blackColor">Job History</h3>
         {currentJobs.map((job) => (
-          <CandidatejobsCard key={job.id} job={job} />
+          <CandidatejobsCard key={job.id} />
         ))}
       </div>
     </section>

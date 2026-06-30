@@ -1,7 +1,10 @@
+import { useState } from "react";
+import ReviewModal from "../client/MyCandidates/ReviewModal";
 import EmptyStarIcon from "../icon/EmptyStarIcon";
 import ButtonReuseable from "../reusable/CustomButton";
 
 function CandidateJobsReviewAction() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
       <div className="flex items-center h-full gap-2">
@@ -11,10 +14,14 @@ function CandidateJobsReviewAction() {
         />
         <ButtonReuseable
           title="Leave Review"
+          onClick={() => setIsOpen(true)}
           icon={<EmptyStarIcon />}
           className=" font-medium tex-sm py-[10.5px]! border border-borderColor text-white!"
         />
       </div>
+      {isOpen && (
+        <ReviewModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      )}
     </div>
   );
 }
