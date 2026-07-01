@@ -48,14 +48,14 @@ export default function RescheduleModal({ open, onClose }) {
             </label>
 
             <input
-              type="date"
+              type="datetime-local"
               {...register("date", { required: "Date is required" })}
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
           {/* Time Inputs */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">
                 Available from
@@ -79,7 +79,7 @@ export default function RescheduleModal({ open, onClose }) {
                 className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Reason */}
           <div>

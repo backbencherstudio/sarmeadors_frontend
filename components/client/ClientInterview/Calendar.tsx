@@ -8,12 +8,16 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 import InterviewScheduleInfoDialog from "./InterviewScheduleInfoDialog";
+import { useGetClientInterviewsQuery } from "@/feature/dashboard/client/interviews";
 
 export default function Calendar() {
   const calendarRef = useRef<any>(null);
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [isOpen, setIsOpen] = useState(false);
-  const [interviewData, setInterviewData] = useState<any>(null);
+  const { data } = useGetClientInterviewsQuery("calendar");
+
+  // console.log("----->", data);
+
   const interviewEvents = [
     {
       id: "1",
@@ -63,7 +67,7 @@ export default function Calendar() {
 
     return (
       <div
-        onClick={() =>  setIsOpen(true)}
+        onClick={() => setIsOpen(true)}
         className="flex items-center justify-between bg-[#F3F4F6] border px-2 py-1 text-xs rounded-md"
       >
         <div className="flex items-center gap-2">
