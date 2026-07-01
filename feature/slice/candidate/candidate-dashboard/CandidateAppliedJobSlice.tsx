@@ -1,0 +1,30 @@
+import { baseApi } from "@/feature/api/baseApi";
+
+const CandidateAppliedJobSlice = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getShortTermJobs: builder.query({
+      query: () => ({
+        url: `/candidate/jobs/short-term`,
+        method: "GET",
+      }),
+    }),
+    getLongTermJobs: builder.query({
+      query: () => ({
+        url: `/candidate/jobs/long-term`,
+        method: "GET",
+      }),
+    }),
+    getLongTermJobsList: builder.query({
+      query: ({ params }) => ({
+        url: `/candidate/jobs/long-term?${params}`,
+        method: "GET",
+      }),
+    }),
+  }),
+});
+
+export const {
+  useGetShortTermJobsQuery,
+  useGetLongTermJobsQuery,
+  useGetLongTermJobsListQuery,
+} = CandidateAppliedJobSlice;
