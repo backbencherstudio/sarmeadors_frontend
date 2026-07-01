@@ -13,12 +13,14 @@ const agencyDashboardSlice = baseApi.injectEndpoints({
         url: `/agency/clients`,
         method: "GET",
       }),
+      providesTags: ["AgencyClientTableColumns"],
     }),
     getAgencyClientTable: builder.query({
       query: () => ({
         url: `/agency/settings/client/table`,
         method: "GET",
       }),
+      providesTags: ["AgencyClientTableColumns"],
     }),
     getAgencyClientTableColumns: builder.query({
       query: () => ({
@@ -27,10 +29,25 @@ const agencyDashboardSlice = baseApi.injectEndpoints({
       }),
       providesTags: ["AgencyClientTableColumns"],
     }),
+    getAgencyStatuses: builder.query({
+      query: () => ({
+        url: `/agency/statuses`,
+        method: "GET",
+      }),
+      providesTags: ["AgencyClientTableColumns"],
+    }),
+
+    updateAgencyClientStatus: builder.mutation({
+      query: ({ clientId, statusId }) => ({
+        url: `/agency/clients/${clientId}/status?status_id=${statusId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["AgencyClientTableColumns"],
+    }),
     updateAgencyClientTableColumns: builder.mutation({
       query: (columns) => ({
         url: `/agency/settings/client/table/columns`,
-        method: "PUT",
+        method: "POST",
         body: { columns },
       }),
       invalidatesTags: ["AgencyClientTableColumns"],
@@ -43,5 +60,7 @@ export const {
   useGetAgencyClientListQuery,
   useGetAgencyClientTableQuery,
   useGetAgencyClientTableColumnsQuery,
+  useGetAgencyStatusesQuery,
+  useUpdateAgencyClientStatusMutation,
   useUpdateAgencyClientTableColumnsMutation,
 } = agencyDashboardSlice;

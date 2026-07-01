@@ -1,6 +1,7 @@
 "use client";
 
 import { demoData } from "@/demoData/DashboardData";
+import { useGetAgencyClientListQuery } from "@/feature/slice/agency/agencyDashboardSlice";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +22,12 @@ function DashboardUserTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(false);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
+  const { data, isLoading, isError } = useGetAgencyClientListQuery(
+    "AgencyClientTableColumns",
+  );
+
+  console.log(data, "data");
+
   const [visibleColumns, setVisibleColumns] = useState({
     full_name: true,
     email_address: true,
@@ -49,14 +56,14 @@ function DashboardUserTable() {
     {
       label: (
         <div className="flex items-center gap-3">
-          <input
+          {/* <input
             type="checkbox"
             checked={
               selectedRows.length === demoData.length && demoData.length > 0
             }
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
-          />
+          /> */}
           <span>Name</span>
           <button className="flex flex-col cursor-pointer">
             <IoMdArrowDropdown className=" rotate-180" />
@@ -64,16 +71,16 @@ function DashboardUserTable() {
           </button>
         </div>
       ),
-      accessor: "full_name",
+      accessor: "name",
       width: "250px",
       formatter: (value: string, record: any) => (
         <Link href="/clients" className="flex items-center gap-3">
-          <input
+          {/* <input
             type="checkbox"
             checked={selectedRows.includes(record.id)}
             onChange={() => toggleRowSelection(record.id)}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
-          />
+          /> */}
           <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
             <span className="text-xs font-medium text-gray-600">
               {record?.image_name ? (
@@ -108,7 +115,31 @@ function DashboardUserTable() {
     },
     {
       label: "Phone Number",
-      accessor: "mobile_number",
+      accessor: "phone_number",
+      width: "150px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
+      ),
+    },
+    {
+      label: "Position(s) Applying For",
+      accessor: "position_applying_for",
+      width: "150px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
+      ),
+    },
+    {
+      label: "Last Login",
+      accessor: "last_login",
+      width: "150px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
+      ),
+    },
+    {
+      label: "Locations",
+      accessor: "locations",
       width: "150px",
       formatter: (value: string) => (
         <span className="text-sm text-blackColor">{value}</span>
@@ -116,7 +147,7 @@ function DashboardUserTable() {
     },
     {
       label: "Registration Date",
-      accessor: "createdAt",
+      accessor: "registration_date",
       width: "180px",
       formatter: (value: string) => (
         <div className="flex items-center gap-2 text-sm text-blackColor">
@@ -129,12 +160,20 @@ function DashboardUserTable() {
       label: "Status",
       accessor: "status",
       width: "150px",
-      formatter: (value: string, record: any) => (
+      formatter: (value: { name: string; color: string }, record: any) => (
         <DashboardStatuse
           value={value}
           record={record}
           loadingStatusId={loadingStatusId}
         />
+      ),
+    },
+    {
+      label: "Hear About Us",
+      accessor: "hear_about_us",
+      width: "150px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
       ),
     },
     {
@@ -149,11 +188,11 @@ function DashboardUserTable() {
       width: "50px",
     },
   ];
-
-  // Filter columns based on visibility
-  const visibleColumnsArray = columns.filter(
-    (col) => visibleColumns[col.accessor as keyof typeof visibleColumns],
-  );
+  const filteredColumns = data?.columns
+    .map((apiCol) => {
+      return columns.find((mainCol) => mainCol.accessor === apiCol.key);
+    })
+    .filter(Boolean);
 
   const handleFilter = () => {
     setFilteredData((prev) => !prev);
@@ -166,6 +205,7 @@ function DashboardUserTable() {
   const handleStatuseSetting = () => {
     setFilterModalOpen(true);
   };
+  console.log(data?.data);
 
   return (
     <section>
@@ -179,8 +219,8 @@ function DashboardUserTable() {
           />
         </div>
         <DynamicTableTwo
-          columns={visibleColumnsArray}
-          data={demoData || []}
+          columns={isLoading ? columns : filteredColumns}
+          data={data?.data || []}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={(page) => setCurrentPage(page)}
@@ -188,7 +228,7 @@ function DashboardUserTable() {
             setItemsPerPage(newItemsPerPage);
             setCurrentPage(1); // Reset to page 1 when items per page changes
           }}
-          loading={false}
+          loading={isLoading}
           totalItems={10}
           totalpage={2}
         />
