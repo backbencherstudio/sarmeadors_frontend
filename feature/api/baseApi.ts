@@ -49,29 +49,29 @@ const baseQuery = fetchBaseQuery({
 });
 
 // Wrapper for handling unauthorized responses
-const baseQueryWithReAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  const result = await baseQuery(args, api, extraOptions);
+// const baseQueryWithReAuth: BaseQueryFn<
+//   string | FetchArgs,
+//   unknown,
+//   FetchBaseQueryError
+// > = async (args, api, extraOptions) => {
+//   const result = await baseQuery(args, api, extraOptions);
 
-  if (result.error?.status === 401 || result.error?.status === 403) {
-    // Clear auth state
-    await removeToken();
+//   if (result.error?.status === 401 || result.error?.status === 403) {
+//     // Clear auth state
+//     await removeToken();
 
-    // Redirect to login page
-    if (typeof window !== "undefined") {
-      window.location.href = "/login";
-    }
-  }
+//     // Redirect to login page
+//     if (typeof window !== "undefined") {
+//       window.location.href = "/login";
+//     }
+//   }
 
-  return result;
-};
+//   return result;
+// };
 
 export const baseApi = createApi({
   reducerPath: "api",
-  baseQuery: baseQueryWithReAuth,
+  baseQuery: baseQuery,
   tagTypes: ["subsciprions", "profile", "submissions"],
   endpoints: () => ({}),
 });

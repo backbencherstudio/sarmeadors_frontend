@@ -23,12 +23,26 @@ interface Interview {
   description: string;
   timeRange: string;
   meetType: "google" | "zoom" | "in-person";
+  meetLink?: string;
   isHighlighted?: boolean;
 }
 
 export default function InterviewCard({ interview }: { interview: Interview }) {
   const [openModal, setOpenModal] = useState(false);
   const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = async () => {
+    if (!interview.meetLink) return;
+    try {
+      await navigator.clipboard.writeText(interview.meetLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy meeting link:", err);
+    }
+  };
+
   return (
     <div
       className={`rounded-xl p-6 border-l-4 hover:border-l-[#96C0FF] border  hover:border-[#96C0FF] bg-[#F9FAFB] hover:shadow-lg`}
@@ -79,9 +93,25 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
               </p>
 
               <div className="flex items-center gap-x-2">
-                <button className="px-4 py-2 border border-[#E5E7EB] rounded-[8px] hover:bg-blue-100 cursor-pointer">
-                  <LinkIcon />
-                </button>
+                <div className="relative">
+                  <button
+                    onClick={handleCopyLink}
+                    disabled={!interview.meetLink}
+                    className="px-4 py-2 border border-[#E5E7EB] rounded-[8px] hover:bg-blue-100 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    title={
+                      interview.meetLink
+                        ? "Copy meeting link"
+                        : "No link available"
+                    }
+                  >
+                    <LinkIcon />
+                  </button>
+                  {copied && (
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111927] text-white text-xs px-2 py-1 rounded-md">
+                      Copied!
+                    </span>
+                  )}
+                </div>
                 <button
                   onClick={() => setOpen(true)}
                   className="flex items-center gap-x-1.5 px-4 py-2 border border-[#E5E7EB] hover:bg-green-100 rounded-[8px] cursor-pointer"
