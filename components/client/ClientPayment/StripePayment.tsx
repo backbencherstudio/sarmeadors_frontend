@@ -4,7 +4,10 @@ import DateIcon from "@/components/icon/DateIcon";
 import LocationIcon from "@/components/icon/LocationIcon";
 import StripeIcon from "@/components/icon/StripeIcon";
 import { useShortTermHireRequestMutation } from "@/feature/dashboard/client/myCandidate";
-import { usePaymentCheckQuery, usePaymentServiceMutation } from "@/feature/dashboard/client/myJob";
+import {
+  usePaymentCheckQuery,
+  usePaymentServiceMutation,
+} from "@/feature/dashboard/client/myJob";
 import {
   CardCvcElement,
   CardExpiryElement,
@@ -23,7 +26,7 @@ export type PaymentData = {
   stripe_publishable_key?: string;
   amount?: number;
   total?: number;
-  agency_fee?: number;
+  short_term_job_fee?: string;
   tax?: number | string;
   job_title?: string;
   compensation?: string;
@@ -163,9 +166,7 @@ function PaymentPageContent({
   const stripe = useStripe();
   const elements = useElements();
   const [createPayment] = usePaymentServiceMutation();
-  const [shortTermHireRequest, { isLoading: isSubmitting }] =
-    useShortTermHireRequestMutation();
-
+  const [shortTermHireRequest] = useShortTermHireRequestMutation();
   const [saveCard, setSaveCard] = useState(false);
   const [cardholderName, setCardholderName] = useState("");
   const [billingCountry, setBillingCountry] = useState("");
@@ -173,13 +174,20 @@ function PaymentPageContent({
   const [additionalNote, setAdditionalNote] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const name = useSearchParams()
-  const params = name.get("payment-page")
-  const id = name.get("id")
+  const name = useSearchParams();
+  const params = name.get("payment-page");
+  const id = name.get("id");
 
   const stored = localStorage.getItem("hire-request");
-  const hireRequestData = JSON.parse(stored)
+  const hireRequestData = JSON.parse(stored);
 
+  //   "data": {
+  //     "payment_required": true,
+  //     "payment_setup_incomplete": false,
+  //     "short_term_job_fee": "40.00",
+  //     "short_term_job_fee_currency": "usd",
+  //     "stripe_publishable_key": "pk_test_51OShfDLYYOt8KQaQKByiEmm4JBpCpeAhXBzwwoQdTO5MKtAGanjMU7PbYyX1UzCG5ZIyNGyBTp92TxFLxCDOhgYm00cJCM4lXA"
+  // }
 
   const jobTitle =
     paymentData?.job?.title ??
@@ -190,13 +198,9 @@ function PaymentPageContent({
     paymentData?.total_hours ?? paymentData?.total_hour ?? "8hr";
   const location = paymentData?.location ?? "Daactur, Georgia 30030";
   const jobDate = paymentData?.date ?? paymentData?.job_date ?? "11/03/2025";
-  const agencyFee = paymentData?.agency_fee ?? 40;
+  const agencyFee = paymentData?.short_term_job_fee ?? 0;
   const tax = paymentData?.tax ?? "-";
-  const total =
-    paymentData?.amount ??
-    paymentData?.total ??
-    paymentData?.agency_fee ??
-    40;
+  const total = paymentData?.short_term_job_fee ?? 0;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -238,29 +242,23 @@ function PaymentPageContent({
 
       const formData = buildPaymentFormData(storedData, {
         payment_method_id: paymentMethod.id,
-        cardholder_name: cardholderName,
-        billing_country: billingCountry,
-        billing_zip: billingZip,
-        additional_note: additionalNote,
-        save_card: saveCard,
+        // cardholder_name: cardholderName,
+        // billing_country: billingCountry,
+        // billing_zip: billingZip,
+        // additional_note: additionalNote,
+        // save_card: saveCard,
       });
 
       const hireData = {
         ...hireRequestData,
         payment_method_id: paymentMethod.id,
-        cardholder_name: cardholderName,
-        billing_country: billingCountry,
-        billing_zip: billingZip,
-        additional_note: additionalNote,
-        save_card: saveCard,
-      }
+      };
 
       if (params === "post-job") {
         await createPayment(formData).unwrap();
       } else if (params === "hire-requrest") {
         await shortTermHireRequest({ data: hireData, id }).unwrap();
       }
-
 
       toast.success("Payment successful!");
       // router.push(PENDING_JOBS_ROUTE);

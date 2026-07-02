@@ -10,8 +10,7 @@ import ReviewModal from "./ReviewModal";
 import { useParams } from "next/navigation";
 
 export function CandidatesDetailsTab() {
-
-  const { id } = useParams()
+  const { id } = useParams();
 
   const tabs = [
     {
@@ -82,7 +81,6 @@ export function CandidatesDetailsTab() {
       <HireRequestModal
         isHireModalOpen={hireModalOpen}
         onClose={() => setHireModalOpen(false)}
-
       />
     </div>
   );

@@ -27,26 +27,21 @@ export default function HireRequestModal({
 }: HireRequestModalProps) {
   const [jobType, setJobType] = useState("short-term");
   const [step, setStep] = useState(1);
-  const { id } = useParams()
+  const { id } = useParams();
   const [shortTermHireRequest, { isLoading: isSubmitting }] =
     useShortTermHireRequestMutation();
   const { data: locationsData } = useLocationsQuery({});
   const { data: paymentCheck, isLoading } = usePaymentCheckQuery({});
-  const router = useRouter()
-
+  const router = useRouter();
 
   // ===== Step 1: Booking dates =====
   const [dates, setDates] = useState<DateEntry[]>([
     { booking_date: "", start_time: "", end_time: "" },
   ]);
 
-  const updateDate = (
-    index: number,
-    field: keyof DateEntry,
-    value: string
-  ) => {
+  const updateDate = (index: number, field: keyof DateEntry, value: string) => {
     setDates((prev) =>
-      prev.map((d, i) => (i === index ? { ...d, [field]: value } : d))
+      prev.map((d, i) => (i === index ? { ...d, [field]: value } : d)),
     );
   };
 
@@ -70,7 +65,6 @@ export default function HireRequestModal({
   const [homePostalCode, setHomePostalCode] = useState("");
   const [country, setCountry] = useState("");
   const [location, setLocation] = useState("");
-
 
   const [error, setError] = useState<string | null>(null);
 
@@ -104,7 +98,9 @@ export default function HireRequestModal({
     try {
       if (paymentCheck?.data?.payment_required) {
         localStorage.setItem("hire-request", JSON.stringify(payload));
-        return router.push(`/client/payment?payment-page=hire-requrest&id=${id}`);
+        return router.push(
+          `/client/payment?payment-page=hire-requrest&id=${id}`,
+        );
       }
       await shortTermHireRequest({ data: payload, id }).unwrap();
       onClose();
@@ -176,16 +172,15 @@ export default function HireRequestModal({
             {/* ===== STEP 1 ===== */}
             {step === 1 && (
               <div className="">
-
                 {/* RIGHT SIDE */}
                 <div className="flex flex-col justify-between">
                   <div>
-
                     {/* LONG TERM */}
                     {jobType === "long-term" && (
                       <div>
                         <button className="bg-[#E6F0FF] text-[#2B7FFF] leading-[142.857%] text-sm px-2 py-1.5 rounded-sm">
-                          For long-term booking you need to schedule an interview.
+                          For long-term booking you need to schedule an
+                          interview.
                         </button>
                         <div className="flex justify-end mt-8">
                           <button
@@ -200,7 +195,7 @@ export default function HireRequestModal({
 
                     {/* SHORT TERM */}
                     {jobType === "short-term" && (
-                      <div className="mt-6 space-y-6 h-[500px] overflow-y-auto pr-3">
+                      <div className="mt-6 space-y-6 max-h-125 overflow-y-auto pr-3">
                         <div className="flex gap-2 mb-6">
                           <div className="h-1 flex-1 rounded-full bg-[#111927]" />
                           <div className="h-1 flex-1 rounded-full bg-gray-200" />
@@ -224,7 +219,11 @@ export default function HireRequestModal({
                               type="date"
                               value={date.booking_date}
                               onChange={(e) =>
-                                updateDate(index, "booking_date", e.target.value)
+                                updateDate(
+                                  index,
+                                  "booking_date",
+                                  e.target.value,
+                                )
                               }
                               className="border rounded-lg px-4 py-3 w-full"
                             />
@@ -320,7 +319,9 @@ export default function HireRequestModal({
                     <div className="flex gap-2 mt-1">
                       <select
                         value={compensationCurrency}
-                        onChange={(e) => setCompensationCurrency(e.target.value)}
+                        onChange={(e) =>
+                          setCompensationCurrency(e.target.value)
+                        }
                         className="border rounded-lg px-4 py-3 bg-gray-50 focus:outline-none"
                       >
                         <option value="USD">USD</option>
@@ -399,7 +400,8 @@ export default function HireRequestModal({
                     </div>
                     <div>
                       <label className="text-sm font-medium text-[#111927] leading-[142.857%]">
-                        Home Province/State <span className="text-red-500">*</span>
+                        Home Province/State{" "}
+                        <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -457,9 +459,7 @@ export default function HireRequestModal({
                   </div>
                 </div>
 
-                {error && (
-                  <p className="text-sm text-red-500 mt-4">{error}</p>
-                )}
+                {error && <p className="text-sm text-red-500 mt-4">{error}</p>}
 
                 <div className="flex justify-between mt-8">
                   <button

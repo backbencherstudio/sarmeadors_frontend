@@ -8,6 +8,13 @@ const ClientInterviewsApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    rescheduleInterview: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/client/interviews/${id}/reschedule`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
     // getDocumentDetails: builder.query({
     //   query: (id) => ({
     //     url: `client/documents/${id}`,
@@ -17,5 +24,5 @@ const ClientInterviewsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetClientInterviewsQuery } =
+export const { useGetClientInterviewsQuery, useRescheduleInterviewMutation } =
   ClientInterviewsApi;
