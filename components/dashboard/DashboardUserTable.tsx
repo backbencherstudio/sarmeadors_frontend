@@ -1,6 +1,5 @@
 "use client";
 
-import { demoData } from "@/demoData/DashboardData";
 import { useGetAgencyClientListQuery } from "@/feature/slice/agency/agencyDashboardSlice";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -12,6 +11,8 @@ import { LuCalendarRange } from "react-icons/lu";
 import ClientCreateForm from "../allForm/ClientCreateForm";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import FilterHeader from "../common/FilterHeader";
+import ButtonReuseable from "../reusable/CustomButton";
+import ClientTableSetting from "./ClientTableSetting";
 import DashboardStatuse from "./DashboardStatuse";
 
 function DashboardUserTable() {
@@ -20,13 +21,12 @@ function DashboardUserTable() {
   const [loadingStatusId, setLoadingStatusId] = useState<string | null>(null);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTableOpen, setTableSettingOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(false);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
-  const { data, isLoading, isError } = useGetAgencyClientListQuery(
+  const { data, isLoading } = useGetAgencyClientListQuery(
     "AgencyClientTableColumns",
   );
-
-  console.log(data, "data");
 
   const [visibleColumns, setVisibleColumns] = useState({
     full_name: true,
@@ -36,21 +36,6 @@ function DashboardUserTable() {
     status: true,
     action: true,
   });
-  const toggleSelectAll = () => {
-    if (selectedRows.length === demoData.length) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(demoData.map((row) => row.id));
-    }
-  };
-
-  const toggleRowSelection = (rowId: string) => {
-    setSelectedRows((prev) =>
-      prev.includes(rowId)
-        ? prev.filter((id) => id !== rowId)
-        : [...prev, rowId],
-    );
-  };
 
   const columns = [
     {
@@ -83,9 +68,9 @@ function DashboardUserTable() {
           /> */}
           <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
             <span className="text-xs font-medium text-gray-600">
-              {record?.image_name ? (
+              {record?.image_url ? (
                 <Image
-                  src={record?.image_name || `/empty-user.png`}
+                  src={record?.image_url || `/empty-user.png`}
                   alt="Uploaded Preview"
                   width={40}
                   height={40}
@@ -177,9 +162,25 @@ function DashboardUserTable() {
       ),
     },
     {
+      label: "Action",
+      accessor: "viewed",
+      width: "150px",
+      formatter: () => (
+        <div className="flex justify-end">
+          <ButtonReuseable
+            title=" View "
+            className="text-blackColor! py-2! bg-bgColor! border  font-semibold"
+          />
+        </div>
+      ),
+    },
+    {
       label: (
         <div className="text-right">
-          <button className="flex items-center cursor-pointer justify-end gap-2">
+          <button
+            onClick={() => setTableSettingOpen(true)}
+            className="flex items-center cursor-pointer justify-end gap-2"
+          >
             <IoSettingsSharp size={18} />
           </button>
         </div>
@@ -189,21 +190,17 @@ function DashboardUserTable() {
     },
   ];
   const filteredColumns = data?.columns
-    .map((apiCol) => {
-      return columns.find((mainCol) => mainCol.accessor === apiCol.key);
-    })
-    .filter(Boolean);
-
-  const handleFilter = () => {
-    setFilteredData((prev) => !prev);
-  };
+    ? columns.filter(
+        (mainCol) =>
+          data?.columns?.some((apiCol) => apiCol.key === mainCol.accessor) ||
+          mainCol.accessor === "action" ||
+          mainCol.accessor === "viewed",
+      )
+    : columns;
 
   const handleOpenModal = () => {
     // Logic to open the modal
     setIsModalOpen(true);
-  };
-  const handleStatuseSetting = () => {
-    setFilterModalOpen(true);
   };
   console.log(data?.data);
 
@@ -235,6 +232,9 @@ function DashboardUserTable() {
       </div>
       {isModalOpen && (
         <ClientCreateForm open={isModalOpen} setOpen={setIsModalOpen} />
+      )}
+      {isTableOpen && (
+        <ClientTableSetting open={isTableOpen} setOpen={setTableSettingOpen} />
       )}
     </section>
   );

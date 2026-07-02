@@ -375,3 +375,41 @@ input:checked ~ .checkmark {
 .epr_-1g1rx8 {
   padding: 0 0px !important;
 }
+.css-1p3m7a8-multiValue {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 0;
+
+  border-radius: 2px;
+  margin: 2px;
+  box-sizing: border-box;
+  color: #fff !important;
+  background-color: #000 !important;
+}
+
+.css-9jq23d {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 2px;
+  color: #fff !important;
+  font-size: 85%;
+  padding: 3px;
+  padding-left: 6px;
+  box-sizing: border-box;
+}
+
+.css-tj5bde-Svg {
+  display: inline-block;
+  fill: green !important;
+  line-height: 1;
+  stroke: green !important;
+  stroke-width: 0;
+}
+.css-v7duua:hover {
+    background-color: #000 !important;
+    fill: #DE350B !important;
+    stroke: #DE350B !important;
+}

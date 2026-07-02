@@ -46,9 +46,9 @@ const agencyDashboardSlice = baseApi.injectEndpoints({
     }),
     updateAgencyClientTableColumns: builder.mutation({
       query: (columns) => ({
-        url: `/agency/settings/client/table/columns`,
+        url: `/agency/settings/client/table`,
         method: "POST",
-        body: { columns },
+        body: columns,
       }),
       invalidatesTags: ["AgencyClientTableColumns"],
     }),

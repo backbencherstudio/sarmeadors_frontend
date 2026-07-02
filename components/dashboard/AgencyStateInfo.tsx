@@ -10,7 +10,7 @@ function AgencyStateInfo() {
   return (
     <div>
       {" "}
-      <StatCards statCards={data?.data} isLoading={isLoading} />
+      <StatCards statCards={data?.data || []} isLoading={isLoading} />
     </div>
   );
 }
