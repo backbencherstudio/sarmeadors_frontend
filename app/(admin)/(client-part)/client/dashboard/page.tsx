@@ -1,7 +1,6 @@
 "use client";
 
 import ClientCandiateInfo from "@/components/client/ClientMyJobs/ClientCandiateInfo";
-import ClientHeroSection from "@/components/client/ClientMyJobs/ClientHeroSection";
 import UserInfo from "@/components/clients/UserInfo";
 import StatCards from "@/components/dashboard/StatCards";
 import { useGetClientDashboardQuery } from "@/feature/dashboard/client/dashboard";
@@ -10,28 +9,23 @@ function CandidatesDashboard() {
   // const token = await getToken();
 
   const { data, isLoading } = useGetClientDashboardQuery({});
-  // console.log("----->", data?.data?.current_jobs);
 
   const statCards = [
     {
-      title: "Total Job Post",
-      value: data?.data?.stats?.total_job_posts || 0,
-      percentage: "0%",
+      title: "Total job posts",
+      value: data?.data?.stats?.total_job_posts,
     },
     {
       title: "Applications",
-      value: data?.data?.stats?.applications || 0,
-      percentage: "0%",
+      value: data?.data?.stats?.applications,
     },
     {
       title: "Messages",
-      value: data?.data?.stats?.messages || 0,
-      percentage: "0%",
+      value: data?.data?.stats?.messages,
     },
     {
       title: "Interviews",
-      value: data?.data?.stats?.interviews || 0,
-      percentage: "0%",
+      value: data?.data?.stats?.interviews,
     },
   ];
 
@@ -51,14 +45,12 @@ function CandidatesDashboard() {
   return (
     <div className="md:p-6 p-3">
       <UserInfo clientInfo={data?.data?.client} />
-      <div>
-        <ClientHeroSection />
-      </div>
+      <div>{/* <ClientHeroSection /> */}</div>
       <div className="mb-8">
         <h3 className="text-lg font-semibold text-blackColor mb-4">
           Status Statistics
         </h3>
-        <StatCards />
+        <StatCards statCards={statCards} isLoading={isLoading} />
       </div>
       <div className="mb-8">
         <ClientCandiateInfo data={data?.data} />

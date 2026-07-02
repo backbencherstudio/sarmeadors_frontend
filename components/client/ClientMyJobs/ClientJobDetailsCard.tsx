@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import ClientjobsCard from "./ClientjobsCard";
 import { useGetShortTermJobQuery } from "@/feature/dashboard/client/myJob";
 
-
 // interface CurrentJob {
 //   id: number;
 //   title: string;
@@ -33,8 +32,6 @@ function ClientJobDetailsCard({ status }: { status?: string }) {
       : pathname.split("/").filter(Boolean).pop();
 
   const { data } = useGetShortTermJobQuery(status);
-
-  console.log(data?.data?.jobs);
 
   return (
     <div className="space-y-4">
