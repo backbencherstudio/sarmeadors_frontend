@@ -1,6 +1,9 @@
 "use client";
 
-import { usePaymentCheckQuery, usePaymentServiceMutation } from "@/feature/dashboard/client/myJob";
+import {
+  usePaymentCheckQuery,
+  usePaymentServiceMutation,
+} from "@/feature/dashboard/client/myJob";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,10 +16,88 @@ const selectClass =
   "h-11 w-full appearance-none rounded-md border border-[#DDE3EA] bg-[#F8FAFC] px-3 pr-10 text-sm text-[#111827] outline-none transition-[color,box-shadow] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]";
 const inputClass =
   "h-11 w-full rounded-md border border-[#DDE3EA] bg-[#F8FAFC] px-3 text-sm text-[#111827] outline-none transition-[color,box-shadow] placeholder:text-[#8A94A6] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]";
-const errorInputClass = "border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]";
+const errorInputClass =
+  "border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]";
 const errorTextClass = "mt-1 text-xs text-[#EF4444]";
 
 const STORAGE_KEY = "short-term-job-details";
+
+function getStoredDraft(): Record<string, unknown> {
+  if (typeof window === "undefined") {
+    return {};
+  }
+
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : {};
+  } catch {
+    return {};
+  }
+}
+
+function isFilled(value: unknown): value is string {
+  return typeof value === "string" && value.trim() !== "";
+}
+
+function hasRequiredPreviousData(
+  storedData: Record<string, unknown> | undefined,
+): boolean {
+  const title = isFilled(storedData?.title) ? storedData?.title.trim() : "";
+  const description = isFilled(storedData?.description)
+    ? storedData?.description.trim()
+    : "";
+
+  const children = Array.isArray(storedData?.children)
+    ? storedData.children
+    : [];
+  const hasValidChildren =
+    children.length > 0 &&
+    children.every((child) => {
+      if (!child || typeof child !== "object") {
+        return false;
+      }
+
+      const childData = child as Record<string, unknown>;
+      return (
+        isFilled(childData.first_name) &&
+        isFilled(childData.last_name) &&
+        isFilled(childData.date_of_birth) &&
+        isFilled(childData.gender)
+      );
+    });
+
+  const dates = Array.isArray(storedData?.dates) ? storedData.dates : [];
+  const primaryDate = dates[0];
+  const hasValidPrimaryDate = Boolean(
+    primaryDate &&
+    typeof primaryDate === "object" &&
+    isFilled((primaryDate as Record<string, unknown>).booking_date) &&
+    isFilled((primaryDate as Record<string, unknown>).start_time) &&
+    isFilled((primaryDate as Record<string, unknown>).end_time) &&
+    String((primaryDate as Record<string, unknown>).end_time) >
+      String((primaryDate as Record<string, unknown>).start_time),
+  );
+
+  const jobAddress = isFilled(storedData?.job_address);
+  const homeCity = isFilled(storedData?.home_city);
+  const homeProvince = isFilled(storedData?.home_province);
+  const homePostalCode = isFilled(storedData?.home_postal_code);
+  const country = isFilled(storedData?.country);
+  const location = isFilled(storedData?.location_id);
+
+  return Boolean(
+    title &&
+    description &&
+    hasValidChildren &&
+    hasValidPrimaryDate &&
+    jobAddress &&
+    homeCity &&
+    homeProvince &&
+    homePostalCode &&
+    country &&
+    location,
+  );
+}
 
 function RequiredMark() {
   return <span className={requiredClass}>*</span>;
@@ -104,14 +185,13 @@ export default function Page() {
   const [rateType, setRateType] = useState("hour");
   const [submitting, setSubmitting] = useState(false);
   const [amountError, setAmountError] = useState<string | undefined>();
+  const [draftData, setDraftData] = useState<Record<string, unknown>>({});
   const router = useRouter();
-
   const { data: paymentCheck, isLoading } = usePaymentCheckQuery({});
   const [createPayment] = usePaymentServiceMutation();
 
   const saveDraft = () => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    const currentDraft = stored ? JSON.parse(stored) : {};
+    const currentDraft = getStoredDraft();
 
     const draft = {
       ...currentDraft,
@@ -121,39 +201,50 @@ export default function Page() {
       compensation_type: rateType,
     };
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    }
+
+    setDraftData(draft);
     return draft;
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const initialDraft = getStoredDraft();
+    setDraftData(initialDraft);
 
-    if (!stored) return;
+    if (Object.keys(initialDraft).length === 0) {
+      return;
+    }
 
     try {
-      const parsed = JSON.parse(stored);
-      setCurrency(parsed.compensation_currency || "usd");
+      setCurrency(
+        typeof initialDraft.compensation_currency === "string"
+          ? initialDraft.compensation_currency
+          : "usd",
+      );
       setCompensationAmount(
-        parsed.compensation_amount !== undefined &&
-          parsed.compensation_amount !== ""
-          ? String(parsed.compensation_amount)
+        initialDraft.compensation_amount !== undefined &&
+          initialDraft.compensation_amount !== ""
+          ? String(initialDraft.compensation_amount)
           : "",
       );
-      setRateType(parsed.compensation_type || "hour");
+      setRateType(
+        typeof initialDraft.compensation_type === "string"
+          ? initialDraft.compensation_type
+          : "hour",
+      );
     } catch {
-      localStorage.removeItem(STORAGE_KEY);
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem(STORAGE_KEY);
+      }
+      setDraftData({});
     }
   }, []);
 
   useEffect(() => {
     saveDraft();
   }, [currency, compensationAmount, rateType]);
-
-  const sendToPaymentPage = () => {
-    if (paymentCheck?.data?.payment_required) {
-      router.push("/client/payment?payment-page=post-job");
-    }
-  };
 
   const validate = (): string | undefined => {
     if (compensationAmount.trim() === "") {
@@ -164,6 +255,10 @@ export default function Page() {
     }
     return undefined;
   };
+
+  const isPreviousDataComplete = hasRequiredPreviousData(draftData);
+  const isBudgetValid =
+    compensationAmount.trim() !== "" && Number(compensationAmount) > 0;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -181,12 +276,21 @@ export default function Page() {
     const draft = saveDraft();
     const formData = buildJobFormData(draft);
 
+    if (!isPreviousDataComplete) {
+      toast.error("Please complete the previous job steps before submitting.");
+      return;
+    }
+
     setSubmitting(true);
     try {
+      if (paymentCheck?.data?.payment_required) {
+        router.push("/client/payment?payment-page=post-job");
+        return;
+      }
+
       await createPayment(formData).unwrap();
       toast.success("Job details saved!");
-      router.push('/client/post-job/short-term-booking/job-details')
-      sendToPaymentPage();
+      router.push("/client/post-job/short-term-booking/job-details");
     } catch (err: any) {
       toast.error(err?.data?.message ?? "Failed to submit job post");
     } finally {
@@ -255,7 +359,9 @@ export default function Page() {
 
         <button
           type="submit"
-          disabled={submitting || isLoading}
+          disabled={
+            submitting || isLoading || !isPreviousDataComplete || !isBudgetValid
+          }
           className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#111827] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#1F2937] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
         >
           {submitting ? "Submitting..." : "Submit Short-term Job Post"}

@@ -179,7 +179,11 @@ export default function InterviewCard({ interview }: { interview: Interview }) {
             }}
           />
         )}
-        <RescheduleModal open={open} onClose={() => setOpen(false)} />
+        <RescheduleModal
+          id={interview.id}
+          open={open}
+          onClose={() => setOpen(false)}
+        />
       </div>
     </div>
   );
