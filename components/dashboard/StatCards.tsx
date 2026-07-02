@@ -1,30 +1,14 @@
 "use client";
 
-import { useGetCandidateDashboardQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
 import { Skeleton } from "../ui/skeleton";
 
-export default function StatCards() {
-  const { data, isLoading, isError } = useGetCandidateDashboardQuery(
-    "candidate-dashboard",
-  );
-  const statCards = [
-    {
-      title: "Short-Term Job",
-      value: data?.data?.stats?.short_term_jobs,
-    },
-    {
-      title: "Long-Term Job",
-      value: data?.data?.stats?.long_term_jobs,
-    },
-    {
-      title: "My Jobs",
-      value: data?.data?.stats?.my_jobs,
-    },
-    {
-      title: "My Families",
-      value: data?.data?.stats?.my_families,
-    },
-  ];
+export default function StatCards({
+  statCards,
+  isLoading,
+}: {
+  statCards: any;
+  isLoading: boolean;
+}) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
       {isLoading

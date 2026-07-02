@@ -33,10 +33,11 @@ function ClientjobsCard({ job }: { job: any }) {
 
   // hourly/rate display built from compensation fields
   const compensationLabel = job.compensation_amount
-    ? `${job.compensation_currency?.toUpperCase() ?? ""} ${job.compensation_amount}${job.compensation_type
-      ? ` / ${job.compensation_type.replace("_", " ")}`
-      : ""
-    }`
+    ? `${job.compensation_currency?.toUpperCase() ?? ""} ${job.compensation_amount}${
+        job.compensation_type
+          ? ` / ${job.compensation_type.replace("_", " ")}`
+          : ""
+      }`
     : (job.hourlyRate ?? "");
 
   // candidate / assignee display name, may not exist on marketplace jobs yet
@@ -49,7 +50,7 @@ function ClientjobsCard({ job }: { job: any }) {
     running: "/client/running-view-details/job-description",
     pending: "/client/pending-view-details/job-description",
     marketplace: "/client/marketplace-view-details/job-description",
-    canceled: "/client/canceled-view-details",
+    cancelled: "/client/cancelled-view-details",
     rejected: "/client/rejected-view-details",
   };
   const viewDetailsHref =
@@ -66,23 +67,29 @@ function ClientjobsCard({ job }: { job: any }) {
                   {job.title}
                 </h3>
                 <p
-                  className={`text-xs md:text-sm px-2 py-1  rounded-sm font-semibold capitalize ${job.status === "running" && "bg-black text-white"
-                    }
-                                        ${job.status === "pending_approval" &&
-                    "px-2 py-1 text-sm bg-amber-400 text-white rounded-md"
-                    }
-                                        ${job.status === "marketplace" &&
-                    "px-2 py-1 text-sm bg-blue-600 text-white rounded-md"
-                    }
-                                        ${job.status === "completed" &&
-                    "px-2 py-1 text-sm bg-green-600 text-white rounded-md"
-                    }
-                                        ${job.status === "canceled" &&
-                    "px-2 py-1 text-sm bg-red-200 text-red-600 rounded-md"
-                    }
-                                        ${job.status === "rejected" &&
-                    "px-2 py-1 text-sm text-white bg-red-600 rounded-md"
-                    }
+                  className={`text-xs md:text-sm px-2 py-1  rounded-sm font-semibold capitalize ${
+                    job.status === "running" && "bg-black text-white"
+                  }
+                                        ${
+                                          job.status === "pending_approval" &&
+                                          "px-2 py-1 text-sm bg-amber-400 text-white rounded-md"
+                                        }
+                                        ${
+                                          job.status === "marketplace" &&
+                                          "px-2 py-1 text-sm bg-blue-600 text-white rounded-md"
+                                        }
+                                        ${
+                                          job.status === "completed" &&
+                                          "px-2 py-1 text-sm bg-green-600 text-white rounded-md"
+                                        }
+                                        ${
+                                          job.status === "cancelled" &&
+                                          "px-2 py-1 text-sm bg-red-200 text-red-600 rounded-md"
+                                        }
+                                        ${
+                                          job.status === "rejected" &&
+                                          "px-2 py-1 text-sm text-white bg-red-600 rounded-md"
+                                        }
                                         `}
                 >
                   {job.status === "pending_approval" ? "pending" : job.status}
@@ -113,19 +120,19 @@ function ClientjobsCard({ job }: { job: any }) {
                     </div>
                     {(job.status === "pending_approval" ||
                       job.status === "marketplace") && (
-                        <div className="flex gap-3 items-center">
-                          <div className="flex items-center gap-2">
-                            <CalenderIcon className="w-4 h-4" />
-                            <span>{jobStartDate}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <ClockICon className="w-4 h-4 fill-secondaryColor" />
-                            <span>
-                              {jobStartTime} - {jobEndTime}
-                            </span>
-                          </div>
+                      <div className="flex gap-3 items-center">
+                        <div className="flex items-center gap-2">
+                          <CalenderIcon className="w-4 h-4" />
+                          <span>{jobStartDate}</span>
                         </div>
-                      )}
+                        <div className="flex items-center gap-2">
+                          <ClockICon className="w-4 h-4 fill-secondaryColor" />
+                          <span>
+                            {jobStartTime} - {jobEndTime}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
                 {isEqualDay && (
@@ -197,7 +204,7 @@ function ClientjobsCard({ job }: { job: any }) {
           </div>
 
           <div>
-            {job.status === "canceled" && (
+            {job.status === "cancelled" && (
               <div className="">
                 <h4 className="text-lightblackColor text-sm font-semibold">
                   Cancel Reason
@@ -212,7 +219,7 @@ function ClientjobsCard({ job }: { job: any }) {
             <div className="flex items-center h-full gap-2 flex-wrap">
               {job.status === "pending_approval" ||
                 job.status === "marketplace" ||
-                job.status === "canceled" ||
+                job.status === "cancelled" ||
                 job.status === "rejected" || (
                   <ButtonReuseable
                     rightIcon={<SmsIcon className="w-5 h-5" />}
@@ -223,7 +230,7 @@ function ClientjobsCard({ job }: { job: any }) {
                 <div className="flex items-center justify-between w-full md:w-auto gap-2 flex-wrap">
                   <div className="flex items-center justify-between w-fit md:w-auto">
                     {/* Buttons */}
-                    <CandidatesReviewModal />
+                    <CandidatesReviewModal id={job.candidate_id} />
                   </div>
                 </div>
               )}
@@ -238,7 +245,7 @@ function ClientjobsCard({ job }: { job: any }) {
                   />
 
                   {job.status === "running" ||
-                    job.status === "canceled" ||
+                    job.status === "cancelled" ||
                     job.status === "rejected" || (
                       <ButtonReuseable
                         rightIcon={<Edit className="w-5 h-5" />}
@@ -247,15 +254,15 @@ function ClientjobsCard({ job }: { job: any }) {
                     )}
 
                   {job.status === "running" ||
-                    job.status === "canceled" ||
+                    job.status === "cancelled" ||
                     job.status === "rejected" || (
                       <div className="w-full md:w-auto">
-                        <CancelModal />
+                        <CancelModal id={job.id} />
                       </div>
                     )}
                 </>
               )}
-              {(job.status === "canceled" || job.status === "rejected") && (
+              {(job.status === "cancelled" || job.status === "rejected") && (
                 <ButtonReuseable
                   rightIcon={<Copy className="w-5 h-5" />}
                   className="bg-grayColor1! h-full border border-borderColor text-blackColor! w-fit md:w-auto"
@@ -278,7 +285,7 @@ function ClientjobsCard({ job }: { job: any }) {
                                 </div>
                             )}
 
-                        </div> */}
+             </div> */}
 
             {job.status === "marketplace" && (
               <div className="flex flex-col items-end">
@@ -313,7 +320,7 @@ function ClientjobsCard({ job }: { job: any }) {
             {/* Candidates */}
             {job.status === "completed" && <ViewInvoiceModal />}
 
-            {job.status === "canceled" && (
+            {job.status === "cancelled" && (
               <button className="bg-black! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-white cursor-pointer w-fit md:w-auto">
                 Request for Refund
               </button>

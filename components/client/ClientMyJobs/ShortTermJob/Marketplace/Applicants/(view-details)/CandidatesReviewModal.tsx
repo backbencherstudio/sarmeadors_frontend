@@ -3,98 +3,163 @@
 import Image from "next/image";
 import { useState } from "react";
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Star } from "lucide-react";
+import { toast } from "sonner";
+import {
+  useGetSingleClientMyCandidateQuery,
+  useShortTermHireReviewMutation,
+} from "@/feature/dashboard/client/myCandidate";
 
-export default function CandidatesReviewModal() {
-    const [rating, setRating] = useState(0);
+export default function CandidatesReviewModal({ id }: { id: string }) {
+  const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-    return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <button className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor! cursor-pointer">
-                    ⭐ Leave Review
-                </button>
-            </DialogTrigger>
+  const { data } = useGetSingleClientMyCandidateQuery(id, {
+    skip: !id || !open,
+  });
+  const [hireReview, { isLoading: isSubmitting }] =
+    useShortTermHireReviewMutation();
+  const candidateHeader = data?.data?.candidate?.header;
+  const roles = candidateHeader?.roles?.length
+    ? candidateHeader.roles.join(" | ")
+    : "Candidate";
 
-            <DialogContent className="max-w-md p-6">
-                <DialogHeader>
-                    <DialogTitle className="text-lg font-semibold">
-                        Leave Review
-                    </DialogTitle>
-                </DialogHeader>
+  const handleSubmit = async () => {
+    setError(null);
 
-                {/* Candidate Info */}
-                <div className="text-center space-y-2 mt-2">
-                    <Image
-                        src="/avatar.jpg"
-                        alt="Kristin Ben"
-                        width={60}
-                        height={60}
-                        className="rounded-full mx-auto object-cover"
-                    />
+    if (!rating) {
+      setError("Please select a rating before submitting.");
+      return;
+    }
 
-                    <h3 className="font-semibold text-gray-900">
-                        Kristin Ben
-                    </h3>
+    try {
+      const result = await hireReview({
+        data: {
+          rating,
+          review: review.trim() || null,
+        },
+        id,
+      }).unwrap();
 
-                    <p className="text-sm text-gray-500">
-                        Nanny | House Manager | Chef
-                    </p>
+      if (result?.success) {
+        toast.success(result?.message || "Review submitted successfully.");
+        setRating(0);
+        setReview("");
+        setOpen(false);
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to submit review.");
+      setError(
+        "Something went wrong while submitting your review. Please try again.",
+      );
+    }
+  };
 
-                    <p className="text-yellow-500 text-sm font-medium">
-                        ★ 4.5 Rating (8)
-                    </p>
-                </div>
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <button className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor! cursor-pointer">
+          ⭐ Leave Review
+        </button>
+      </DialogTrigger>
 
-                {/* Rating */}
-                <div className="flex justify-center gap-2 my-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                            key={star}
-                            size={28}
-                            onClick={() => setRating(star)}
-                            className={`cursor-pointer ${star <= rating
-                                ? "text-yellow-500 fill-yellow-500"
-                                : "text-gray-300"
-                                }`}
-                        />
-                    ))}
-                </div>
+      <DialogContent className="max-w-md p-6">
+        <DialogHeader>
+          <DialogTitle className="text-lg font-semibold">
+            Leave Review
+          </DialogTitle>
+        </DialogHeader>
 
-                <p className="text-center text-sm text-gray-500 mb-4">
-                    Click on a star to rate your experience with this candidate.
-                </p>
+        <div className="mt-2 space-y-2 text-center">
+          {candidateHeader?.image_url ? (
+            <Image
+              src={candidateHeader.image_url}
+              alt={candidateHeader?.name || "Candidate"}
+              width={60}
+              height={60}
+              className="mx-auto rounded-full object-cover"
+            />
+          ) : (
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 text-lg font-semibold text-slate-700">
+              {(candidateHeader?.name || "C")
+                .split(" ")
+                .slice(0, 2)
+                .map((part) => part[0])
+                .join("")}
+            </div>
+          )}
 
-                {/* Textarea */}
-                <div className="space-y-2">
-                    <label className="text-sm font-medium">
-                        Write a review for the Candidate
-                    </label>
+          <h3 className="font-semibold text-gray-900">
+            {candidateHeader?.name || "Candidate"}
+          </h3>
 
-                    <textarea
-                        placeholder="Describe your experience with the candidate..."
-                        className="w-full border rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800"
-                        rows={4}
-                    />
-                </div>
+          <p className="text-sm text-gray-500">{roles}</p>
 
-                <p className="text-xs text-gray-400 mt-3">
-                    Feedback is public and can't be changed. Make sure to be fair and factual. If there is a dispute, try to resolve it before leaving feedback.
-                </p>
+          <p className="text-sm font-medium text-yellow-500">
+            ★ {candidateHeader?.rating?.average || 0} Rating (
+            {candidateHeader?.rating?.count || 0})
+          </p>
+        </div>
 
-                {/* Submit */}
-                <div className="flex justify-end">
-                    <button className="w-fit mt-4 bg-slate-900 text-white py-4 px-6 rounded-lg hover:bg-slate-800 cursor-pointer">
-                        Submit
-                    </button>
-                </div>
-            </DialogContent>
-        </Dialog>
-    );
+        <div className="my-4 flex justify-center gap-2">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <Star
+              key={star}
+              size={28}
+              onClick={() => setRating(star)}
+              className={`cursor-pointer transition ${
+                star <= rating
+                  ? "fill-yellow-500 text-yellow-500"
+                  : "text-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+
+        <p className="mb-4 text-center text-sm text-gray-500">
+          Click on a star to rate your experience with this candidate.
+        </p>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Write a review for the Candidate
+          </label>
+
+          <textarea
+            value={review}
+            onChange={(event) => setReview(event.target.value)}
+            placeholder="Describe your experience with the candidate..."
+            className="w-full rounded-lg border p-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800"
+            rows={4}
+          />
+        </div>
+
+        {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
+
+        <p className="mt-3 text-xs text-gray-400">
+          Feedback is public and can't be changed. Make sure to be fair and
+          factual. If there is a dispute, try to resolve it before leaving
+          feedback.
+        </p>
+
+        <div className="flex justify-end">
+          <button
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="mt-4 w-fit rounded-lg bg-slate-900 px-6 py-4 text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isSubmitting ? "Submitting..." : "Submit"}
+          </button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }
