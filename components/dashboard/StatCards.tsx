@@ -22,7 +22,7 @@ export default function StatCards({
               <Skeleton className="w-12 h-4" />
             </div>
           ))
-        : statCards.map((card, idx) => (
+        : statCards?.map((card, idx: number) => (
             <div
               key={idx}
               className="p-4 group rounded-lg bg-bgColor hover:bg-blackColor hover:text-whiteColor  border border-gray2Color hover:shadow-lg transition-all duration-200 cursor-pointer relative"
