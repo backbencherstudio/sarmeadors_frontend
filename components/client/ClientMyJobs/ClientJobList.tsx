@@ -1,4 +1,5 @@
 "use client";
+
 import ClientJobCard from "./ClientJobCard";
 import ClientJobsCardSkeleton from "./ClientJobsCardSkeleton";
 

@@ -11,8 +11,6 @@ import { useLocationsQuery } from "@/feature/dashboard/client/myJob";
 import { toast } from "sonner";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
 export default function Page() {
   const [firstName, setFirstName] = useState("");
@@ -226,7 +224,7 @@ export default function Page() {
               type="button"
               onClick={handleSave}
               disabled={isSaving || isProfileLoading}
-              className="rounded-lg bg-gray-900 px-5 h-[52px] text-sm font-medium text-white transition-colors hover:bg-gray-800 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 cursor-pointer"
+              className="rounded-lg bg-gray-900 px-5 h-13 text-sm font-medium text-white transition-colors hover:bg-gray-800 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 cursor-pointer"
             >
               {isSaving ? "Saving…" : "Save Changes"}
             </button>
@@ -261,7 +259,7 @@ export default function Page() {
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
+              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
             />
           </div>
 
@@ -277,7 +275,7 @@ export default function Page() {
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
+              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
             />
           </div>
 
@@ -290,10 +288,11 @@ export default function Page() {
             </label>
             <Input
               id="email"
+              disabled
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
+              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
             />
           </div>
 
@@ -309,7 +308,7 @@ export default function Page() {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
+              className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors focus:border-gray-400 focus:bg-white"
             />
           </div>
 
@@ -326,7 +325,7 @@ export default function Page() {
               id="location"
               value={locationId}
               onChange={(event) => setLocationId(event.target.value)}
-              className="mt-2 h-[52px] w-full appearance-none rounded-md border border-[#DDE3EA] bg-[#F8FAFC] px-3 pr-10 text-sm text-[#111827] outline-none transition-[color,box-shadow] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]"
+              className="mt-2 h-13 w-full appearance-none rounded-md border border-[#DDE3EA] bg-[#F8FAFC] px-3 pr-10 text-sm text-[#111827] outline-none transition-[color,box-shadow] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]"
             >
               <option value="" disabled>
                 Start typing to filter
@@ -400,7 +399,7 @@ export default function Page() {
                         setCurrentPassword(e.target.value);
                         setPasswordError(null);
                       }}
-                      className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
+                      className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
                     />
                   </div>
 
@@ -420,7 +419,7 @@ export default function Page() {
                         setNewPassword(e.target.value);
                         setPasswordError(null);
                       }}
-                      className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
+                      className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
                     />
                   </div>
 
@@ -440,7 +439,7 @@ export default function Page() {
                         setRepeatPassword(e.target.value);
                         setPasswordError(null);
                       }}
-                      className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
+                      className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
                     />
                   </div>
                 </div>
@@ -463,7 +462,7 @@ export default function Page() {
                     type="button"
                     onClick={handleSavePassword}
                     disabled={isSavingPassword}
-                    className="rounded-lg bg-gray-900 px-4 h-[52px] text-sm font-medium text-white transition-colors hover:bg-gray-800 disabled:opacity-60 cursor-pointer"
+                    className="rounded-lg bg-gray-900 px-4 h-13 text-sm font-medium text-white transition-colors hover:bg-gray-800 disabled:opacity-60 cursor-pointer"
                   >
                     {isSavingPassword ? "Saving…" : "Save Password"}
                   </button>
@@ -533,7 +532,7 @@ export default function Page() {
                   setModalCurrentPassword(e.target.value);
                   setPasswordError(null);
                 }}
-                className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-[52px] text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
+                className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-4 h-13 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-gray-400 focus:bg-white"
               />
             </div>
             <div className="mt-5 flex justify-center gap-3">
@@ -543,13 +542,13 @@ export default function Page() {
                   setDeleteOpen(false);
                   setDeleteConfirmText("");
                 }}
-                className="rounded-lg w-[116px] h-[52px] text-sm font-medium text-gray-600 bg-[#F3F4F6] cursor-pointer"
+                className="rounded-lg w-29 h-13 text-sm font-medium text-gray-600 bg-[#F3F4F6] cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="rounded-lg bg-[#CB121D] w-[116px] h-[52px] text-sm font-medium text-white transition-colors hover:bg-red-700  cursor-pointer"
+                className="rounded-lg bg-[#CB121D] w-29 h-13 text-sm font-medium text-white transition-colors hover:bg-red-700  cursor-pointer"
               >
                 Delete Profile
               </button>

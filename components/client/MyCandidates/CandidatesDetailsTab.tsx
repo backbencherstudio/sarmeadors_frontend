@@ -35,9 +35,6 @@ export function CandidatesDetailsTab() {
     },
   ];
 
-  const [open, setOpen] = useState(false);
-  const [hireModalOpen, setHireModalOpen] = useState(false);
-
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -47,7 +44,7 @@ export function CandidatesDetailsTab() {
             alt="candidates-profile"
             height={100}
             width={100}
-            className="h-[56px] w-[56px]"
+            className="h-14 w-14"
           />
           <div>
             <h1 className="text-[#111927] text-[20px] leading-[120%] font-semibold">
@@ -59,29 +56,13 @@ export function CandidatesDetailsTab() {
           </div>
         </div>
         <div className="flex items-center gap-x-4">
-          <button
-            onClick={() => setOpen(true)}
-            className="flex items-center text-[#111927] gap-1.5 p-4 bg-white border border-[#384250] rounded-[12px] cursor-pointer"
-          >
-            <ReviewIcon />
-            <span>Review</span>
-          </button>
-          <button
-            onClick={() => setHireModalOpen(true)}
-            className="flex items-center text-white gap-1.5 p-4 bg-[#111927] hover:bg-[#111927]/90 border border-[#384250] rounded-[12px] cursor-pointer"
-          >
-            <SendIcon />
-            <span>Hire Request</span>
-          </button>
+          <ReviewModal hireId={id} />
+          <HireRequestModal />
         </div>
       </div>
-      <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link} />
 
-      <ReviewModal isOpen={open} onClose={() => setOpen(false)} hireId={id} />
-      <HireRequestModal
-        isHireModalOpen={hireModalOpen}
-        onClose={() => setHireModalOpen(false)}
-      />
+      {/* Tabs */}
+      <ReusableTabs tabs={tabs} initialPath={tabs[0]?.link} />
     </div>
   );
 }

@@ -10,10 +10,11 @@ interface ClientJobCardProps {
 }
 
 function ClientJobCard({ job, userType }: ClientJobCardProps) {
+  console.log(job);
   return (
     <div className="border flex flex-col md:flex-row justify-between border-borderColor hover:shadow-xl transition-all duration-200 p-5 rounded-lg">
       <div className="flex gap-4 flex-col md:flex-row items-center">
-        <div className="w-full md:w-[220px] md:h-[160px] lg:w-[280px] lg:h-[204px] h-[204px] rounded-lg overflow-hidden ">
+        <div className="w-full md:w-55 md:h-40 lg:w-70 lg:h-51 h-51 rounded-lg overflow-hidden ">
           <Image
             src={job.cover_image_url || candidateImage}
             alt={job.title}
@@ -48,7 +49,7 @@ function ClientJobCard({ job, userType }: ClientJobCardProps) {
           {job.compensation?.amount}{" "}
           {job.compensation?.type === "per_hour" ? "/hr" : ""}
         </h4>
-        <p className="text-xs px-2 py-1.5 font-semibold text-whiteColor rounded-sm bg-yellowColor  mt-1">
+        <p className="text-xs px-2 py-1.5 font-semibold text-whiteColor rounded-sm bg-yellowColor mt-1">
           {job.status}
         </p>
       </div>
