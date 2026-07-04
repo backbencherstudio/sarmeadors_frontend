@@ -4,9 +4,12 @@ import SearchIcon from "../icon/SearchIcon";
 import ButtonReuseable from "../reusable/CustomButton";
 import { useGetCandidateDashboardQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateDashboardSlice";
 function CandidateJobsAvailable() {
-const { data, isLoading, isError } = useGetCandidateDashboardQuery(
+  const { data, isLoading, isError } = useGetCandidateDashboardQuery(
     "candidate-dashboard",
   );
+
+  // console.log("data?.data?.running_jobs", data?.data);
+
   return (
     <div>
       <div className="flex h-full justify-between items-center mb-4">

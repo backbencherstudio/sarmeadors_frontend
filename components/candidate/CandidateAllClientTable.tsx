@@ -200,7 +200,7 @@ function CandidateAllClientTable() {
       formatter: (value: ClientStatus) => (
         <div className="p-1.5 rounded-lg border border-borderColor">
           <p
-            className={` min-w-[120px]  justify-center rounded  px-2.5 py-1 text-xs font-medium ${getStatusClass(value)}`}
+            className={`min-w-30 justify-center rounded  px-2.5 py-1 text-xs font-medium ${getStatusClass(value)}`}
           >
             {getStatusLabel(value)}
           </p>
@@ -242,32 +242,20 @@ function CandidateAllClientTable() {
           />
         </div>
 
-        {isLoading && (
-          <div className="flex items-center justify-center py-10">
-            <p className="text-gray-500">Loading clients...</p>
-          </div>
-        )}
-
-        {isError && (
-          <div className="flex items-center justify-center py-10">
-            <p className="text-red-500">Failed to load clients.</p>
-          </div>
-        )}
-
-        {!isLoading && !isError && (
-          <DynamicTableTwo
-            columns={columns}
-            data={clientListData}
-            currentPage={currentPage}
-            itemsPerPage={perPage}
-            onPageChange={(page) => setCurrentPage(page)}
-            totalpage={totalPages}
-            totalItems={totalItems}
-            border={true}
-            noDataMessage="No clients found."
-            onItemsPerPageChange={setPerPage}
-          />
-        )}
+        <DynamicTableTwo
+          columns={columns}
+          data={clientListData}
+          currentPage={currentPage}
+          itemsPerPage={perPage}
+          onPageChange={(page) => setCurrentPage(page)}
+          totalpage={totalPages}
+          totalItems={totalItems}
+          border={true}
+          noDataMessage="No clients found."
+          onItemsPerPageChange={setPerPage}
+          loading={isLoading}
+          error={isError ? "Failed to load clients" : undefined}
+        />
       </div>
     </section>
   );
