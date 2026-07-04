@@ -8,12 +8,28 @@ import CandidateHeroSection from "./CandidateHeroSection";
 import CandidateJobsAvailable from "./CandidateJobsAvailable";
 
 function CandidateDashboard() {
-  const { data, isLoading, isError } = useGetCandidateDashboardQuery(
+  const { data, isLoading } = useGetCandidateDashboardQuery(
     "candidate-dashboard",
   );
 
-  
-
+  const statCards = [
+    {
+      title: "Short-Term Job",
+      value: data?.data?.stats?.short_term_jobs,
+    },
+    {
+      title: "Long-Term Job",
+      value: data?.data?.stats?.long_term_jobs,
+    },
+    {
+      title: "My Jobs",
+      value: data?.data?.stats?.my_jobs,
+    },
+    {
+      title: "My Families",
+      value: data?.data?.stats?.my_families,
+    },
+  ];
 
   return (
     <div>
@@ -26,7 +42,7 @@ function CandidateDashboard() {
           <h3 className="text-lg font-semibold text-blackColor mb-4">
             Status Statistics
           </h3>
-          <StatCards  />
+          <StatCards statCards={statCards} isLoading={isLoading} />
         </div>
         <div>
           <CandidateCurrentJob />
