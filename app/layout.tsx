@@ -31,7 +31,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${archivo.className} ${change.variable} top-0!`}>
+      <body
+        suppressHydrationWarning
+        className={`${archivo.className} ${change.variable} top-0!`}
+      >
         <ToastContainer />
         <Toaster position="top-center" richColors />
         <ClientLayout>{children}</ClientLayout>

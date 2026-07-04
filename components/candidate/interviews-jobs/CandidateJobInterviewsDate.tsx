@@ -7,10 +7,16 @@ import { useState } from "react";
 import CandidateInterviewDialog from "./CandidateInterviewDialog";
 import CandidateInterviewFilter from "./CandidateInterviewFilter";
 import CandidateInterviewRender from "./CandidateInterviewRender";
+import { useGetCandidateInterviewsQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateInterviewsSlice";
 
 function CandidateJobInterviewsDate() {
   const [scheduledData, setScheduledData] = useState<any>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const { data, isLoading, isError } = useGetCandidateInterviewsQuery(
+    "candidate-dashboard",
+  );
+
+  // console.log("GetCandidateInterviewsQuery", data?.data);
 
   const handleOpen = (event: any) => {
     setScheduledData(event);

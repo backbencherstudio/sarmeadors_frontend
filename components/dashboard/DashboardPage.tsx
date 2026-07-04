@@ -80,7 +80,7 @@ async function DashboardPage() {
               </button>
             </div>
           </div>
-          <StatCards  />
+          {/* <StatCards /> */}
         </div>
 
         <div className="mt-10">

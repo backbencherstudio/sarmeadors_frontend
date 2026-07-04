@@ -7,6 +7,9 @@ function CandidateJobsAvailable() {
   const { data, isLoading } = useGetCandidateDashboardQuery(
     "candidate-dashboard",
   );
+
+  // console.log("data?.data?.running_jobs", data?.data);
+
   return (
     <div>
       <div className="flex h-full justify-between items-center mb-4">
