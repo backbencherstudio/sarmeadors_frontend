@@ -93,11 +93,9 @@ function ClientTableSetting({
   const [rejectedReasons, setRejectedReasons] = useState("");
   const [inactiveReasons, setInactiveReasons] = useState("");
 
-  // ১. সব কলামের লিস্ট নিয়ে আসার কোয়েরি
   const { data: allColsData, isLoading: isAllColsLoading } =
     useGetAgencyClientTableColumnsQuery("AgencyClientTableColumns");
 
-  // ২. বর্তমানে সিলেক্টেড/অ্যাক্টিভ কলামের লিস্ট নিয়ে আসার কোয়েরি
   const { data: activeListData, isLoading: isActiveListLoading } =
     useGetAgencyClientListQuery("AgencyClientTableColumns");
 
@@ -161,6 +159,9 @@ function ClientTableSetting({
   const updateLabel = (key: string, label: string) => {
     setDisplayLabels((prev) => ({ ...prev, [key]: label }));
   };
+  const handleSubmit = () => {
+    const tableFields = selectedKeys;
+  }
 
   return (
     <RootDrawer open={open} setOpen={setOpen}>
@@ -241,6 +242,12 @@ function ClientTableSetting({
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
+          <Button
+            onClick={handleSubmit}
+            className="bg-gray-900 text-white hover:bg-gray-800"
+          >
+            Submit
+          </Button>
         </DrawerFooter>
       </div>
     </RootDrawer>

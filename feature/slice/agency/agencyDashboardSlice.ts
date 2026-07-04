@@ -52,6 +52,14 @@ const agencyDashboardSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["AgencyClientTableColumns"],
     }),
+    createAgencyStatus: builder.mutation({
+      query: (statusData) => ({
+        url: `/agency/status-store`,
+        method: "POST",
+        body: statusData,
+      }),
+      invalidatesTags: ["AgencyClientTableColumns"],
+    }),
   }),
 });
 
@@ -63,4 +71,5 @@ export const {
   useGetAgencyStatusesQuery,
   useUpdateAgencyClientStatusMutation,
   useUpdateAgencyClientTableColumnsMutation,
+  useCreateAgencyStatusMutation,
 } = agencyDashboardSlice;

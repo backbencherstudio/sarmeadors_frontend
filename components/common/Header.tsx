@@ -1,8 +1,7 @@
 "use client";
 
 import { useToken } from "@/hooks/useToken";
-import { UserService } from "@/service/user/user.service";
-import { useQuery } from "@tanstack/react-query";
+
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,20 +35,9 @@ const Header: React.FC<HeaderProps> = ({
   const router = useRouter();
   const { token } = useToken();
 
-  const {
-    data: userDetails,
-    error,
-  } = useQuery({
-    queryKey: ["notifications"],
-    queryFn: () => UserService.getUserDetails(token),
-    enabled: !!token, // Only run the query when token exists
-  });
 
-  // Handle authentication errors
-  if (error) {
-    const { handleAuthError } = require("@/helper/auth.helper");
-    handleAuthError(error, router);
-  }
+
+
 
   return (
     <nav className=" text-blackColor border-b bg-grayColor1 border-borderColor  py-3">
@@ -108,7 +96,7 @@ const Header: React.FC<HeaderProps> = ({
                       <div className=" w-6 h-6 lg:w-8 lg:h-8 rounded-md overflow-hidden">
                         <Image
                           src={
-                            userDetails?.data?.data?.avatar_url ||
+                            
                             "/profile.png"
                           }
                           alt="Admin Avatar"
@@ -128,10 +116,10 @@ const Header: React.FC<HeaderProps> = ({
                 <DropdownMenuContent align="end" className="w-48">
                   <div className="px-4 py-2">
                     <p className="text-sm font-semibold text-headerColor">
-                      {userDetails?.data?.data?.name || "User"}
+                      { "User"}
                     </p>
                     <p className="text-xs text-textColor">
-                      {userDetails?.data?.data?.email}
+                      {"example.com"}
                     </p>
                   </div>
 

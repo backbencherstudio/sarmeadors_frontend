@@ -12,6 +12,7 @@ import {
 } from "../ui/dropdown-menu";
 import ColorPickerDialog from "./ColorPickerDialog";
 import SimpleColorPicker from "./SimpleColorPicker";
+import { useCreateAgencyStatusMutation } from "@/feature/slice/agency/agencyDashboardSlice";
 interface Status {
   id: string;
   color: string;
@@ -58,7 +59,7 @@ function StatusUpdatePart({
   const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
   const [newStatusName, setNewStatusName] = useState("");
   const [newStatusColor, setNewStatusColor] = useState("#3B82F6");
-
+ const [createAgencyStatus] = useCreateAgencyStatusMutation();
   const {
     items,
     setItems: setBlocks,

@@ -24,48 +24,17 @@ function DashboardUserTable() {
   const [isTableOpen, setTableSettingOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(false);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
+
   const { data, isLoading } = useGetAgencyClientListQuery(
     "AgencyClientTableColumns",
   );
 
-  const [visibleColumns, setVisibleColumns] = useState({
-    full_name: true,
-    email_address: true,
-    mobile_number: true,
-    createdAt: true,
-    status: true,
-    action: true,
-  });
-
-  const columns = [
+  const baseColumns = [
     {
-      label: (
-        <div className="flex items-center gap-3">
-          {/* <input
-            type="checkbox"
-            checked={
-              selectedRows.length === demoData.length && demoData.length > 0
-            }
-            onChange={toggleSelectAll}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300"
-          /> */}
-          <span>Name</span>
-          <button className="flex flex-col cursor-pointer">
-            <IoMdArrowDropdown className=" rotate-180" />
-            <IoMdArrowDropdown />
-          </button>
-        </div>
-      ),
       accessor: "name",
       width: "250px",
       formatter: (value: string, record: any) => (
         <Link href="/clients" className="flex items-center gap-3">
-          {/* <input
-            type="checkbox"
-            checked={selectedRows.includes(record.id)}
-            onChange={() => toggleRowSelection(record.id)}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300"
-          /> */}
           <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
             <span className="text-xs font-medium text-gray-600">
               {record?.image_url ? (
@@ -79,7 +48,7 @@ function DashboardUserTable() {
               ) : (
                 value
                   ?.split(" ")
-                  ?.map((n) => n[0])
+                  ?.map((n: string) => n[0])
                   ?.join("")
               )}
             </span>
@@ -89,7 +58,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Email Address",
       accessor: "email_address",
       width: "250px",
       formatter: (value: string) => (
@@ -99,7 +67,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Phone Number",
       accessor: "phone_number",
       width: "150px",
       formatter: (value: string) => (
@@ -107,7 +74,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Position(s) Applying For",
       accessor: "position_applying_for",
       width: "150px",
       formatter: (value: string) => (
@@ -115,7 +81,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Last Login",
       accessor: "last_login",
       width: "150px",
       formatter: (value: string) => (
@@ -123,7 +88,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Locations",
       accessor: "locations",
       width: "150px",
       formatter: (value: string) => (
@@ -131,7 +95,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Registration Date",
       accessor: "registration_date",
       width: "180px",
       formatter: (value: string) => (
@@ -142,7 +105,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Status",
       accessor: "status",
       width: "150px",
       formatter: (value: { name: string; color: string }, record: any) => (
@@ -154,7 +116,6 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Hear About Us",
       accessor: "hear_about_us",
       width: "150px",
       formatter: (value: string) => (
@@ -162,47 +123,81 @@ function DashboardUserTable() {
       ),
     },
     {
-      label: "Action",
-      accessor: "viewed",
+      accessor: "payment_status",
       width: "150px",
-      formatter: () => (
-        <div className="flex justify-end">
-          <ButtonReuseable
-            title=" View "
-            className="text-blackColor! py-2! bg-bgColor! border  font-semibold"
-          />
-        </div>
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
       ),
-    },
-    {
-      label: (
-        <div className="text-right">
-          <button
-            onClick={() => setTableSettingOpen(true)}
-            className="flex items-center cursor-pointer justify-end gap-2"
-          >
-            <IoSettingsSharp size={18} />
-          </button>
-        </div>
-      ),
-      accessor: "action",
-      width: "50px",
     },
   ];
-  const filteredColumns = data?.columns
-    ? columns.filter(
-        (mainCol) =>
-          data?.columns?.some((apiCol) => apiCol.key === mainCol.accessor) ||
-          mainCol.accessor === "action" ||
-          mainCol.accessor === "viewed",
-      )
-    : columns;
+
+  let filteredColumns: any[] = [];
+
+  if (data?.columns && data.columns.length > 0) {
+    filteredColumns = data.columns
+      .map((apiCol) => {
+        const matchedCol = baseColumns.find((c) => c.accessor === apiCol.key);
+        if (!matchedCol) return null;
+        let finalLabel: React.ReactNode = apiCol.label;
+
+        if (apiCol.key === "name") {
+          finalLabel = (
+            <div className="flex items-center gap-3">
+              <span>{apiCol.label}</span>
+              <button className="flex flex-col cursor-pointer">
+                <IoMdArrowDropdown className="rotate-180" />
+                <IoMdArrowDropdown />
+              </button>
+            </div>
+          );
+        }
+
+        return {
+          ...matchedCol,
+          label: finalLabel,
+        };
+      })
+      .filter(Boolean);
+
+    filteredColumns.push(
+      {
+        label: "Action",
+        accessor: "viewed",
+        width: "150px",
+        formatter: () => (
+          <div className="flex justify-end">
+            <ButtonReuseable
+              title=" View "
+              className="text-blackColor! py-2! bg-bgColor! border   font-semibold"
+            />
+          </div>
+        ),
+      },
+      {
+        label: (
+          <div className="text-right">
+            <button
+              onClick={() => setTableSettingOpen(true)}
+              className="flex items-center cursor-pointer justify-end gap-2"
+            >
+              <IoSettingsSharp size={18} />
+            </button>
+          </div>
+        ),
+        accessor: "action",
+        width: "50px",
+      },
+    );
+  } else {
+    filteredColumns = baseColumns.map((col) => ({
+      ...col,
+      label: col.accessor.replace(/_/g, " "),
+    }));
+  }
 
   const handleOpenModal = () => {
-    // Logic to open the modal
     setIsModalOpen(true);
   };
-  console.log(data?.data);
 
   return (
     <section>
@@ -216,14 +211,14 @@ function DashboardUserTable() {
           />
         </div>
         <DynamicTableTwo
-          columns={isLoading ? columns : filteredColumns}
+          columns={filteredColumns}
           data={data?.data || []}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={(page) => setCurrentPage(page)}
           onItemsPerPageChange={(newItemsPerPage) => {
             setItemsPerPage(newItemsPerPage);
-            setCurrentPage(1); // Reset to page 1 when items per page changes
+            setCurrentPage(1);
           }}
           loading={isLoading}
           totalItems={10}

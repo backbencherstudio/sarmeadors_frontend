@@ -21,6 +21,7 @@ import RootDrawer from "../common/RootDrawer";
 import ButtonReuseable from "../reusable/CustomButton";
 import ColorPickerDialog from "./ColorPickerDialog";
 import SimpleColorPicker from "./SimpleColorPicker";
+import { useCreateAgencyStatusMutation } from "@/feature/slice/agency/agencyDashboardSlice";
 
 interface Status {
   id: string;
@@ -130,6 +131,7 @@ function StatuseSetting({
     handleDragOver,
     handleDragEnd,
   } = useDraggableList(statuses);
+ const [createAgencyStatus] = useCreateAgencyStatusMutation();
 
   const handleColorChange = (id: string, color: string) => {
     setStatuses(
