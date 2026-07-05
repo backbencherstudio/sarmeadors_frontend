@@ -13,7 +13,7 @@ import {
   statuse,
   typeFilters,
 } from "@/demoData/DashboardData";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type KeyboardEvent } from "react";
 import { FiX } from "react-icons/fi";
 import ReactSelect from "react-select";
@@ -21,12 +21,14 @@ import ReactSelect from "react-select";
 function ClientDashboardFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathName = usePathname();
   const [applicationDate, setApplicationDate] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterLocation, setFilterLocation] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [hiddenStatuses, setHiddenStatuses] = useState<string[]>([]);
+  console.log(pathName, "pathName===");
 
   const statusOptions = statuse.map((s) => ({
     value: s.value,
@@ -110,6 +112,15 @@ function ClientDashboardFilter() {
     setFilterLocation("");
     setSearchKeyword("");
     setHiddenStatuses([]);
+
+    const emptyParams = new URLSearchParams();
+    emptyParams.delete("date");
+    emptyParams.delete("status");
+    emptyParams.delete("type");
+    emptyParams.delete("location");
+    emptyParams.delete("keyword");
+    emptyParams.delete("hideStatuses");
+    router.push(pathName, { scroll: false });
   };
 
   const handleKeywordSearch = (e: KeyboardEvent<HTMLInputElement>) => {

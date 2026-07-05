@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useDraggableList = (initialItems: any[]) => {
   const [items, setItems] = useState(initialItems);
   const [draggedItemId, setDraggedItemId] = useState<string | number | null>(null);
+
+  useEffect(() => {
+    setItems(initialItems);
+  }, [initialItems]);
 
   const handleDragStart = (e: React.DragEvent, id: string | number) => {
     setDraggedItemId(id);

@@ -42,7 +42,7 @@ export default function TransferMaidForm({ open, setOpen, record }: {open: boole
         formState: { errors },
     } = useForm()
     const { token } = useToken()
-    const queryClient = useQueryClient()
+
     const addEnquiryMutation = useMutation({
         mutationFn: async (formData: FormData) => {
             if (record?.id) {
@@ -66,7 +66,7 @@ export default function TransferMaidForm({ open, setOpen, record }: {open: boole
             setHasEmployer("")
             setDob(undefined)
             setTransferDate(undefined)
-            queryClient.invalidateQueries({ queryKey: ["enquiriesData"] })
+            
         },
         onError: (error: any) => {
             const message = record?.id ? "Failed to update registration. Please try again." : "Failed to submit registration. Please try again."
