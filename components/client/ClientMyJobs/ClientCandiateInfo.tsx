@@ -1,6 +1,6 @@
 import NewCandidatesPage from "@/app/(admin)/(client-part)/client/client-my-candidates/page";
-import { jobs } from "@/demoData/DashboardData";
 import ClientJobList from "./ClientJobList";
+
 function ClientCandiateInfo({ data }) {
   // console.log(data?.current_jobs);
 

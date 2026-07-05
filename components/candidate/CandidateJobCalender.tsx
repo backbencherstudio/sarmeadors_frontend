@@ -18,7 +18,6 @@ function CandidateJobCalender() {
     setIsOpen(true);
   };
 
-
   const renderJobEvent = (eventInfo: EventContentArg) => (
     <CandidateJobRenderSection eventInfo={eventInfo} onOpen={handleOpen} />
   );

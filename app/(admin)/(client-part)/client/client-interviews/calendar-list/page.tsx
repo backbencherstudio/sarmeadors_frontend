@@ -1,4 +1,5 @@
 "use client";
+
 import InterviewCard from "@/components/client/ClientInterview/InterviewCard";
 import IconDatePicker from "@/components/common/DatePicker";
 import ClockICon from "@/components/icon/ClockICon";
@@ -9,14 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
+import { useGetClientInterviewsQuery } from "@/feature/dashboard/client/interviews";
 
 interface Interview {
   id: string;
   date: number;
   month: string;
   day: string;
+  year: number;
   title: string;
   badge: "Next" | "Upcoming";
   avatarInitials: string;
@@ -25,109 +26,142 @@ interface Interview {
   description: string;
   timeRange: string;
   meetType: "google" | "zoom" | "in-person";
+  meetLink?: string;
   isHighlighted?: boolean;
 }
 
-const interviews: Interview[] = [
-  {
-    id: "1",
-    date: 18,
-    month: "JAN",
-    day: "SUN",
-    title: "1st Interview",
-    badge: "Next",
-    avatarInitials: "OP",
-    avatarColor: "bg-[#6BA6FF]",
-    participants: "You and Charlotte Hamlin",
-    description:
-      "Full responsibility for three energetic children, ages 2, 5, and 7, including crafting delicious and...",
-    timeRange: "10:00AM - 11:00AM",
-    meetType: "google",
-    isHighlighted: true,
-  },
-  {
-    id: "2",
-    date: 18,
-    month: "JAN",
-    day: "SUN",
-    title: "Morning Babysitter",
-    badge: "Upcoming",
-    avatarInitials: "PE",
-    avatarColor: "bg-green-500",
-    participants: "You and Admin",
-    description:
-      "Provide homework assistance and create a supportive learning environment for two bright, school-aged...",
-    timeRange: "1:00PM - 2:00PM",
-    meetType: "zoom",
-  },
-  {
-    id: "3",
-    date: 19,
-    month: "JAN",
-    day: "MON",
-    title: "Weekend Nanny",
-    badge: "Upcoming",
-    avatarInitials: "MW",
-    avatarColor: "bg-yellow-500",
-    participants: "You and Marelle Wijeleton",
-    description:
-      "Plan and execute stimulating and age-appropriate activities for active toddlers, fostering their dev...",
-    timeRange: "1:00PM - 2:00PM",
-    meetType: "in-person",
-  },
-  {
-    id: "4",
-    date: 20,
-    month: "JAN",
-    day: "TUE",
-    title: "Temporary Nanny",
-    badge: "Upcoming",
-    avatarInitials: "TO",
-    avatarColor: "bg-orange-400",
-    participants: "You and Tyrnisha Obey",
-    description:
-      "Design and lead engaging art projects, creative crafts, and fun outdoor games to keep children enter...",
-    timeRange: "3:00PM - 4:00PM",
-    meetType: "google",
-  },
-  {
-    id: "5",
-    date: 20,
-    month: "JAN",
-    day: "TUE",
-    title: "Full-time Nanny",
-    badge: "Upcoming",
-    avatarInitials: "DB",
-    avatarColor: "bg-purple-500",
-    participants: "You and Darnell Ballentine",
-    description:
-      "Create and serve nutritious and appealing snacks and meals for children, accommodating dietary restr...",
-    timeRange: "3:00PM - 4:00PM",
-    meetType: "in-person",
-  },
+// ---- API shapes (only the fields we use) ----
+interface ApiCandidate {
+  id: number;
+  name: string | null;
+  email?: string | null;
+  mobile?: string | null;
+  image_url?: string | null;
+}
+
+interface ApiJob {
+  id: number | null;
+  title: string | null;
+}
+
+interface ApiInterview {
+  id: number;
+  title: string | null;
+  description: string | null;
+  description_preview: string | null;
+  date: string; // "2026-07-04"
+  day: string; // "04"
+  month: string; // "Jul"
+  time: { from: string; to: string; range: string };
+  status: string;
+  period: string;
+  meeting: {
+    type: "google" | "zoom" | "in-person";
+    link: string;
+    can_join: boolean;
+  };
+  candidate: ApiCandidate;
+  job?: ApiJob;
+}
+
+// ---- helpers ----
+const WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+function getWeekdayAbbr(dateStr: string) {
+  const d = new Date(`${dateStr}T00:00:00`);
+  return WEEKDAYS[d.getDay()];
+}
+
+function getYear(dateStr: string) {
+  return new Date(`${dateStr}T00:00:00`).getFullYear();
+}
+
+function getInitials(name?: string | null) {
+  if (!name) return "NA";
+  return name
+    .trim()
+    .split(" ")
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+const AVATAR_COLORS = [
+  "bg-[#6BA6FF]",
+  "bg-green-500",
+  "bg-yellow-500",
+  "bg-orange-400",
+  "bg-purple-500",
+  "bg-pink-500",
+  "bg-teal-500",
 ];
 
-export default function CalendarList() {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  function groupInterviews(list: Interview[]) {
-    const groups: { label: string; items: Interview[] }[] = [];
-    const seen = new Map<string, number>();
+function getAvatarColor(seed: number) {
+  return AVATAR_COLORS[seed % AVATAR_COLORS.length];
+}
 
-    for (const item of list) {
-      const key = `${item.month} ${item.date}, 2026`;
-      if (!seen.has(key)) {
-        seen.set(key, groups.length);
-        groups.push({ label: key, items: [] });
-      }
-      groups[seen.get(key)!].items.push(item);
+function mapApiInterview(item: ApiInterview): Interview {
+  return {
+    id: String(item.id),
+    date: Number(item.day),
+    month: item.month.toUpperCase(),
+    day: getWeekdayAbbr(item.date),
+    year: getYear(item.date),
+    title:
+      item.title || item.job?.title || item.description_preview || "Interview",
+    badge: "Upcoming",
+    avatarInitials: getInitials(item.candidate?.name),
+    avatarColor: getAvatarColor(item.candidate?.id ?? item.id),
+    participants: item.candidate?.name
+      ? `You and ${item.candidate.name}`
+      : "You and Candidate",
+    description: item.description_preview || item.description || "",
+    timeRange: item.time?.range || "",
+    meetType: item.meeting?.type || "in-person",
+    meetLink: item.meeting?.link || undefined,
+  };
+}
+
+function mapNextInterview(item: ApiInterview): Interview {
+  return {
+    ...mapApiInterview(item),
+    badge: "Next",
+    isHighlighted: true,
+  };
+}
+
+function groupInterviews(list: Interview[]) {
+  const groups: { label: string; items: Interview[] }[] = [];
+  const seen = new Map<string, number>();
+
+  for (const item of list) {
+    const key = `${item.month} ${item.date}, ${item.year}`;
+    if (!seen.has(key)) {
+      seen.set(key, groups.length);
+      groups.push({ label: key, items: [] });
     }
-    return groups;
+    groups[seen.get(key)!].items.push(item);
   }
-  const nextInterview = interviews.find((i) => i.badge === "Next");
-  const upcoming = interviews.filter((i) => i.badge === "Upcoming");
-  const groups = groupInterviews(upcoming);
+  return groups;
+}
 
-  // Today's group label
+export default function CalendarList() {
+  const { data } = useGetClientInterviewsQuery("list");
+
+  const apiNextInterview = data?.data?.next_interview as
+    | ApiInterview
+    | undefined;
+  const apiInterviews = (data?.data?.interviews?.data ?? []) as ApiInterview[];
+
+  // First card: next_interview data
+  const nextInterview = apiNextInterview
+    ? mapNextInterview(apiNextInterview)
+    : undefined;
+
+  // All interview data below — no filtering, no exclusions
+  const allInterviews = apiInterviews.map(mapApiInterview);
+
+  const groups = groupInterviews(allInterviews);
   const todayGroup = groups[0];
   const restGroups = groups.slice(1);
 
@@ -143,15 +177,23 @@ export default function CalendarList() {
           <IconDatePicker />
           <div>
             <Select defaultValue="all">
-              <SelectTrigger className="flex items-center gap-1.5 text-sm text-[#111927] border border-[#E5E7EB] rounded-[8px] p-4.5 cursor-pointer">
+              <SelectTrigger className="flex items-center gap-1.5 text-sm text-[#111927] border border-[#E5E7EB] rounded-xl p-4.5 cursor-pointer">
                 <SelectValue placeholder="All Interviews" />
               </SelectTrigger>
 
               <SelectContent>
-                <SelectItem className="cursor-pointer" value="all">All Interviews</SelectItem>
-                <SelectItem className="cursor-pointer" value="scheduled">Scheduled</SelectItem>
-                <SelectItem className="cursor-pointer" value="completed">Completed</SelectItem>
-                <SelectItem className="cursor-pointer" value="cancelled">Cancelled</SelectItem>
+                <SelectItem className="cursor-pointer" value="all">
+                  All Interviews
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="scheduled">
+                  Scheduled
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="completed">
+                  Completed
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="cancelled">
+                  Cancelled
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -172,11 +214,11 @@ export default function CalendarList() {
           </section>
         )}
 
-        {/* Today */}
+        {/* Today / first group */}
         {todayGroup && (
           <section>
             <div className="text-sm font-semibold text-gray-700 mb-3">
-              Today - JAN 18, 2026
+              Today - {todayGroup.label.toUpperCase()}
             </div>
             <div className="space-y-3">
               {todayGroup.items.map((item) => (

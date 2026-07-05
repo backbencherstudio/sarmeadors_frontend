@@ -9,12 +9,62 @@ import ButtonReuseable from "../reusable/CustomButton";
 import LinkReuseable from "../reusable/CustomLink";
 import CandidateJobsReviewAction from "./CandidateJobsReviewAction";
 
-function CandidatejobsCard({ job }: { job?: Job }) {
+function CandidatejobsCard({
+  job,
+}: {
+  job?: Job & {
+    job_type_label?: string;
+    schedule?: Array<{
+      id: number;
+      booking_date?: string;
+      day_of_week?: number;
+      start_time: string;
+      end_time: string;
+    }>;
+    my_review?: any;
+    can_leave_review?: boolean;
+    can_view_review?: boolean;
+    can_report_client?: boolean;
+  };
+}) {
   const today = dayjs();
-  const jobDate = dayjs(job?.latest_attendance?.booking_date);
+  const scheduleFirst = job?.schedule?.[0];
+  const attendance = job?.latest_attendance as any;
+  const scheduleDate = scheduleFirst
+    ? dayjs(scheduleFirst.booking_date)
+    : attendance?.booking_date
+      ? dayjs(attendance.booking_date)
+      : null;
 
-  const isEqualDay = jobDate.isSame(today, "day");
-  const isScheduled = jobDate.isBefore(today, "day");
+  const isEqualDay = scheduleDate?.isSame(today, "day");
+  const isScheduled = scheduleDate?.isBefore(today, "day");
+
+  const jobTypeLabel =
+    job?.job_type_label || job?.job_type?.replace("_", " ") || "";
+
+  const getStatusClass = (status: string) => {
+    switch (status) {
+      case "draft":
+        return "bg-gray-200 text-gray-700";
+      case "pending_payment":
+        return "bg-yellow-100 text-yellow-700";
+      case "pending_approval":
+        return "bg-orange-100 text-orange-700";
+      case "marketplace":
+        return "bg-purple-100 text-purple-700";
+      case "running":
+        return "bg-greenColor/20 text-greenColor";
+      case "completed":
+        return "bg-blackColor text-whiteColor";
+      case "cancelled":
+      case "canceled":
+        return "bg-borderColor text-blackColor";
+      case "rejected":
+        return "bg-red-100 text-red-700";
+      default:
+        return "bg-borderColor text-blackColor";
+    }
+  };
 
   return (
     <div>
@@ -33,29 +83,27 @@ function CandidatejobsCard({ job }: { job?: Job }) {
                       : "bg-blueColor/20 text-blueColor"
                   }`}
                 >
-                  {job?.job_type}
+                  {jobTypeLabel}
                 </p>
-                {job?.status == "cancelled" && (
-                  <p className="text-xs md:text-sm px-2 py-1 bg-borderColor rounded-sm font-semibold">
-                    {job?.status}
-                  </p>
-                )}
-                {job?.status == "completed" && (
-                  <p className="text-xs md:text-sm px-2 py-1 bg-blackColor text-whiteColor rounded-sm font-semibold">
-                    {job?.status}
+                {job?.status && (
+                  <p
+                    className={`text-xs md:text-sm px-2 py-1 rounded-sm font-semibold ${getStatusClass(job.status)}`}
+                  >
+                    {job.status}
                   </p>
                 )}
               </div>
               {!isScheduled &&
                 job?.status !== "cancelled" &&
-                job?.status !== "completed" && (
+                job?.status !== "completed" &&
+                job?.status !== "rejected" && (
                   <div
                     className={`${isEqualDay ? "text-blackColor" : "text-secondaryColor"} text-sm flex items-center gap-1.5 bg-bgColor px-2 py-1 font-medium rounded-sm `}
                   >
                     <div
                       className={`${isEqualDay ? "bg-greenColor text-blackColor!" : "bg-secondaryColor"} w-3 h-3  rounded-full`}
                     ></div>{" "}
-                    <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${dayjs(job?.latest_attendance?.date).format("MMM DD, YYYY")}`}</p>
+                    <p>{`${isEqualDay ? "Today" : "Next Schedule"}: ${scheduleDate?.format("MMM DD, YYYY")}`}</p>
                   </div>
                 )}
             </div>
@@ -68,10 +116,12 @@ function CandidatejobsCard({ job }: { job?: Job }) {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-8 h-8 rounded-full bg-[#96C0FF] flex items-center justify-center text-xs font-semibold text-headerColor">
-                  {job?.title
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
+                  {(
+                    job?.title
+                      ?.split(" ")
+                      .map((n) => n[0])
+                      .join("") || ""
+                  ).slice(0, 2)}
                 </div>
                 <span className="text-sm text-lightblackColor">
                   {job?.title}
@@ -89,52 +139,42 @@ function CandidatejobsCard({ job }: { job?: Job }) {
                   </span>
                 </div>
                 <div className="flex gap-3 items-center">
-                  {job?.latest_attendance && (
+                  {scheduleDate && (
                     <div className="flex items-center gap-2">
                       <CalenderIcon className="w-4 h-4" />
-                      <span>
-                        {dayjs(job?.latest_attendance?.booking_date).format(
-                          "MMM DD, YYYY",
-                        )}
-                      </span>
+                      <span>{scheduleDate.format("MMM DD, YYYY")}</span>
                     </div>
                   )}
 
-                  {job?.latest_attendance && (
+                  {scheduleFirst && (
                     <div className="flex items-center gap-2">
                       <ClockICon className="w-4 h-4 fill-secondaryColor" />
                       <span>
-                        {job?.latest_attendance?.check_in} -{" "}
-                        {job?.latest_attendance?.check_out}
+                        {scheduleFirst.start_time} - {scheduleFirst.end_time}
                       </span>
                     </div>
                   )}
                 </div>
               </div>
             </div>
-            {isEqualDay && job?.latest_attendance && (
+            {isEqualDay && (attendance || scheduleFirst) && (
               <div className="md:space-y-1 flex justify-between md:flex-col md:items-end w-full  text-right text-xs items-center md:text-sm">
                 <div>
                   <p className="text-blackColor w-full py-1.5 px-2 bg-bgColor rounded-sm font-medium">
                     <span className="text-greenColor">Check In</span>{" "}
-                    {job?.latest_attendance?.check_in || "Not checked in yet"}
+                    {attendance?.checked_in_at || scheduleFirst
+                      ? "Scheduled"
+                      : "Not checked in yet"}
                   </p>
                 </div>
                 <div>
                   <p className="text-blackColor py-1.5 w-full px-2 bg-bgColor rounded-sm font-medium">
                     <span className="text-redColor">Check Out</span>{" "}
-                    {job?.latest_attendance?.check_out || "Not checked out yet"}
+                    {attendance?.checked_out_at || scheduleFirst
+                      ? "Scheduled"
+                      : "Not checked out yet"}
                   </p>
                 </div>
-                {/* {job?.total && (
-                  <div className="  mt-1">
-                    <p className="text-gray-900 font-medium">
-                      {" "}
-                      <span className="text-secondaryColor">Total</span>{" "}
-                      {job.total}
-                    </p>
-                  </div>
-                )} */}
               </div>
             )}
           </div>
@@ -146,7 +186,7 @@ function CandidatejobsCard({ job }: { job?: Job }) {
                 </h4>
 
                 <p className="px-3 py-4 mt-2 text-secondaryColor border border-borderColor  bg-grayColor1 rounded-sm ">
-                  {job?.latest_attendance?.notes || "No reason provided"}
+                  {attendance?.notes || "No reason provided"}
                 </p>
               </div>
             )}
@@ -159,13 +199,18 @@ function CandidatejobsCard({ job }: { job?: Job }) {
               />
               <LinkReuseable
                 title="View Details"
-                href="/candidate/candidate-job-details/1/attendance-calendar"
+                href={`/candidate/candidate-job-details/${job?.id}/attendance-calendar`}
                 rightIcon={<ArrowTopBoxIcon />}
                 className="bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!"
               />
             </div>
             <div className="text-right ml-4">
-              {job?.status === "cancelled" || job?.status === "completed" ? (
+              {(job?.status === "cancelled" ||
+                job?.status === "completed" ||
+                job?.status === "rejected") &&
+              job?.can_view_review ? (
+                <CandidateJobsReviewAction />
+              ) : job?.can_leave_review ? (
                 <CandidateJobsReviewAction />
               ) : (
                 <div className="flex flex-col items-end gap-1">

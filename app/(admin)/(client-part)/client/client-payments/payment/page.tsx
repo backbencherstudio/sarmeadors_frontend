@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 export default function PaymentPage() {
   return (
     <div>
-      <div className="p-5 border boder-[#E5E7EB] rounded-2xl bg-[#F9FAFB] mt-4">
+      {/* <div className="p-5 border boder-[#E5E7EB] rounded-2xl bg-[#F9FAFB] mt-4">
         <div className="mb-4">
           <h1 className="text-[#111927] text-[20px] font-medium leading-[120%]">
             Your Invoice
@@ -22,7 +22,7 @@ export default function PaymentPage() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="mt-6">
         <PaymentHistoryTable />
       </div>

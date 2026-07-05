@@ -1,62 +1,6 @@
 "use client";
-import { useState } from "react";
 
-const initialData = [
-  {
-    id: 1,
-    item: "Felicia reid",
-    rate: 200,
-    quantity: 5,
-    discount: "$50",
-    tax: "15%",
-    total: "$2,018",
-  },
-  {
-    id: 2,
-    item: "Felicia reid",
-    rate: 300,
-    quantity: 4,
-    discount: "$20",
-    tax: "20%",
-    total: "$2,018",
-  },
-  {
-    id: 3,
-    item: "Felicia reid",
-    rate: 45,
-    quantity: 1,
-    discount: "$30",
-    tax: "33%",
-    total: "$2,018",
-  },
-  {
-    id: 4,
-    item: "Felicia reid",
-    rate: 564,
-    quantity: 32,
-    discount: "$40",
-    tax: "40%",
-    total: "$2,018",
-  },
-  {
-    id: 5,
-    item: "Felicia reid",
-    rate: 4564,
-    quantity: 8,
-    discount: "$40",
-    tax: "60%",
-    total: "$2,018",
-  },
-  {
-    id: 6,
-    item: "Felicia reid",
-    rate: 455,
-    quantity: 6,
-    discount: "$80",
-    tax: "10%",
-    total: "$2,018",
-  },
-];
+import { useState } from "react";
 
 const columns = ["Item", "Rate", "Quantity", "Discount", "Tax", "Total"];
 
@@ -71,8 +15,10 @@ const SortIcon = () => (
   </svg>
 );
 
-export default function InvoiceTable() {
+export default function InvoiceTable({ data }: any) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+
+  console.log(data);
 
   const handleSort = (col) => {
     setSortConfig((prev) =>
@@ -109,7 +55,7 @@ export default function InvoiceTable() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-100">
-            {initialData.map((row) => (
+            {data?.items?.map((row) => (
               <tr key={row.id} className="hover:bg-gray-50 transition-colors">
                 <td className="px-5 py-4 text-gray-800">{row.item}</td>
                 <td className="px-5 py-4 text-gray-700">{row.rate}</td>
@@ -117,7 +63,7 @@ export default function InvoiceTable() {
                 <td className="px-5 py-4 text-gray-700">{row.discount}</td>
                 <td className="px-5 py-4 text-gray-700">{row.tax}</td>
                 <td className="px-5 py-4 text-gray-800 font-medium flex items-end justify-end">
-                  {row.total}
+                  ${row.total}
                 </td>
               </tr>
             ))}
@@ -129,25 +75,31 @@ export default function InvoiceTable() {
           {/* Subtotal */}
           <div className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
             <span className="text-gray-800 font-semibold">Subtotal</span>
-            <span className="text-gray-800 font-semibold">$7,592.40</span>
+            <span className="text-gray-800 font-semibold">
+              {data?.subtotal}
+            </span>
           </div>
           {/* Paid Amount */}
           <div className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
             <span className="text-gray-800 font-semibold">Paid Amount</span>
-            <span className="text-gray-800 font-semibold">$0.00</span>
+            <span className="text-gray-800 font-semibold">
+              ${data?.paid_amount}
+            </span>
           </div>
           {/* Balance Due */}
           <div className="flex justify-between items-center px-5 py-4 bg-gray-100">
             <span className="text-gray-900 font-bold text-base">
               Balance Due
             </span>
-            <span className="text-gray-900 font-bold text-base">$7,592.40</span>
+            <span className="text-gray-900 font-bold text-base">
+              ${data?.balance_due}
+            </span>
           </div>
         </div>
       </div>
 
       {/* Mobile Cards */}
-      <div className="md:hidden space-y-4">
+      {/* <div className="md:hidden space-y-4">
         {initialData.map((row) => (
           <div
             key={row.id}
@@ -173,7 +125,6 @@ export default function InvoiceTable() {
           </div>
         ))}
 
-        {/* Mobile Footer */}
         <div className="rounded-xl border border-gray-200 shadow-sm overflow-hidden text-sm">
           <div className="flex justify-between px-4 py-3 border-b border-gray-100 bg-white">
             <span className="text-gray-800 font-semibold">Subtotal</span>
@@ -188,7 +139,7 @@ export default function InvoiceTable() {
             <span className="text-gray-900 font-bold">$7,592.40</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

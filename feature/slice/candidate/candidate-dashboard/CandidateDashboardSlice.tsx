@@ -23,5 +23,8 @@ const candidateDashboardSlice = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetCandidateDashboardQuery, useGetCandidateMyJobsQuery, useGetCandidateMyJobsListQuery } =
-  candidateDashboardSlice;
+export const {
+  useGetCandidateDashboardQuery,
+  useGetCandidateMyJobsQuery,
+  useGetCandidateMyJobsListQuery,
+} = candidateDashboardSlice;

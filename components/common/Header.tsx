@@ -133,7 +133,7 @@ const Header: React.FC<HeaderProps> = ({
 
                   <DropdownMenuItem asChild>
                     <Link
-                      href="/my-profile/personal-information"
+                      href="/client/client-profile"
                       className="cursor-pointer"
                     >
                       Profile Settings
