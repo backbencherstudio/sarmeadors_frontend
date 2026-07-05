@@ -1,8 +1,10 @@
 "use client";
+import { useDeleteAgencyStatusMutation } from "@/feature/slice/agency/agencyStatusSlice";
 import { useDraggableList } from "@/hooks/useDraggableList";
-import { ChevronDown, GripVertical, Trash2, X } from "lucide-react";
+import { ChevronDown, GripVertical, Loader, Trash2, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import ButtonReuseable from "../reusable/CustomButton";
 import {
   DropdownMenu,
@@ -12,7 +14,6 @@ import {
 } from "../ui/dropdown-menu";
 import ColorPickerDialog from "./ColorPickerDialog";
 import SimpleColorPicker from "./SimpleColorPicker";
-import { useCreateAgencyStatusMutation } from "@/feature/slice/agency/agencyDashboardSlice";
 interface Status {
   id: string;
   color: string;
@@ -57,9 +58,10 @@ function StatusUpdatePart({
 }) {
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteAgencyStatus, { isLoading }] = useDeleteAgencyStatusMutation();
   const [newStatusName, setNewStatusName] = useState("");
   const [newStatusColor, setNewStatusColor] = useState("#3B82F6");
- const [createAgencyStatus] = useCreateAgencyStatusMutation();
   const {
     items,
     setItems: setBlocks,
@@ -92,7 +94,15 @@ function StatusUpdatePart({
     );
   };
 
-  const handleDeleteStatus = (id: string) => {
+  const handleDeleteStatus = async (id: string) => {
+    setDeleteId(id);
+    try {
+      await deleteAgencyStatus({ id }).unwrap();
+    } catch (error) {
+      toast.error(error?.message || "Error deleting status. Please try again.");
+    } finally {
+      setDeleteId(null);
+    }
     setStatuses(statuses.filter((status) => status.id !== id));
   };
 
@@ -100,7 +110,7 @@ function StatusUpdatePart({
     setStatuses(statuses.map((s) => (s.id === id ? { ...s, name } : s)));
   };
 
-  const handleAddStatus = () => {
+  const handleAddStatus = async () => {
     const newStatus: Status = {
       id: Date.now().toString(),
       color: newStatusColor,
@@ -108,6 +118,7 @@ function StatusUpdatePart({
       textColor: "#ffffff",
       backgroundColor: newStatusColor,
     };
+
     setStatuses([...statuses, newStatus]);
     setNewStatusName("");
     setNewStatusColor("#3B82F6");
@@ -123,7 +134,7 @@ function StatusUpdatePart({
     }
   };
 
-  const removeStatusForReason = (statusName: string) => {
+  const removeStatusForReason = async (statusName: string) => {
     setSelectedStatusesForReason(
       selectedStatusesForReason.filter((s) => s !== statusName),
     );
@@ -223,9 +234,14 @@ function StatusUpdatePart({
               {/* Delete Button */}
               <button
                 onClick={() => handleDeleteStatus(status.id)}
+                disabled={isLoading && deleteId === status.id}
                 className="text-redColor cursor-pointer hover:text-red-700"
               >
-                <Trash2 className="w-4 h-4" />
+                {isLoading && deleteId === status.id ? (
+                  <Loader className="animate-spin w-4 h-4 text-descriptionColor" />
+                ) : (
+                  <Trash2 className="w-4 h-4" />
+                )}
               </button>
             </div>
           ))}

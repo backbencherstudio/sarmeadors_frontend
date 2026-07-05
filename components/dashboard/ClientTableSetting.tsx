@@ -8,11 +8,14 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import {
+  useCreateAgencyStatusMutation,
   useGetAgencyClientListQuery,
   useGetAgencyClientTableColumnsQuery,
+  useGetAgencyStatusesQuery,
   useUpdateAgencyClientTableColumnsMutation,
 } from "@/feature/slice/agency/agencyDashboardSlice";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import ReusableInput from "../common/InputFiled/ReusableInput";
 import RootDrawer from "../common/RootDrawer";
 import MultiSelecte from "../reusable/MultiSelecte";
@@ -35,57 +38,15 @@ function ClientTableSetting({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
-  const [statuses, setStatuses] = useState([
-    {
-      id: "1",
-      color: "#3B82F6",
-      name: "Pre Application",
-      textColor: "#ffffff",
-      backgroundColor: "#3B82F6",
-    },
-    {
-      id: "2",
-      color: "#EF4444",
-      name: "Application Started",
-      textColor: "#ffffff",
-      backgroundColor: "#EF4444",
-    },
-    {
-      id: "3",
-      color: "#14B8A6",
-      name: "Active",
-      textColor: "#ffffff",
-      backgroundColor: "#14B8A6",
-    },
-    {
-      id: "4",
-      color: "#3B82F6",
-      name: "Complete",
-      textColor: "#ffffff",
-      backgroundColor: "#3B82F6",
-    },
-    {
-      id: "5",
-      color: "#EAB308",
-      name: "Inactive",
-      textColor: "#000000",
-      backgroundColor: "#EAB308",
-    },
-    {
-      id: "6",
-      color: "#3B82F6",
-      name: "Complete",
-      textColor: "#ffffff",
-      backgroundColor: "#3B82F6",
-    },
-    {
-      id: "7",
-      color: "#10B981",
-      name: "Lost",
-      textColor: "#ffffff",
-      backgroundColor: "#10B981",
-    },
-  ]);
+  const [statuses, setStatuses] = useState<any[]>([]);
+  const { data: statusesData, isLoading: isStatusesLoading } =
+    useGetAgencyStatusesQuery("agency-statuses");
+
+  useEffect(() => {
+    if (statusesData?.data) {
+      setStatuses(statusesData.data);
+    }
+  }, [statusesData]);
 
   const [selectedStatusesForReason, setSelectedStatusesForReason] = useState<
     string[]
@@ -100,6 +61,7 @@ function ClientTableSetting({
     useGetAgencyClientListQuery("AgencyClientTableColumns");
 
   const [updateColumns] = useUpdateAgencyClientTableColumnsMutation();
+  const [createAgencyStatus] = useCreateAgencyStatusMutation();
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [displayLabels, setDisplayLabels] = useState<Record<string, string>>(
@@ -159,9 +121,28 @@ function ClientTableSetting({
   const updateLabel = (key: string, label: string) => {
     setDisplayLabels((prev) => ({ ...prev, [key]: label }));
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const tableFields = selectedKeys;
-  }
+
+    const originalIds = new Set(
+      (statusesData?.data || []).map((s: any) => s.id),
+    );
+    const newStatuses = statuses.filter((s) => !originalIds.has(s.id));
+    try {
+      for (const status of newStatuses) {
+        await createAgencyStatus({
+          name: status.name,
+          color: status.backgroundColor || status.color,
+          type: "client",
+        }).unwrap();
+      }
+    } catch (error) {
+      toast.error(
+        error?.data?.data?.name[0] ||
+          "Error creating new statuses. Please try again.",
+      );
+    }
+  };
 
   return (
     <RootDrawer open={open} setOpen={setOpen}>
