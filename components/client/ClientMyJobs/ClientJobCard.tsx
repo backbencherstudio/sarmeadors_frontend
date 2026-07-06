@@ -1,5 +1,5 @@
 import LocationIcon from "@/components/icon/LocationIcon";
-import candidateImage from "@/public/candidates/candidates-2.png";
+import candidateImage from "@/public/jobs/Rectangle 856.png";
 import { Job } from "@/types";
 import Image from "next/image";
 import ClientJobcardAction from "./ClientJobcardAction";
@@ -10,7 +10,6 @@ interface ClientJobCardProps {
 }
 
 function ClientJobCard({ job, userType }: ClientJobCardProps) {
-  console.log(job);
   return (
     <div className="border flex flex-col md:flex-row justify-between border-borderColor hover:shadow-xl transition-all duration-200 p-5 rounded-lg">
       <div className="flex gap-4 flex-col md:flex-row items-center">
