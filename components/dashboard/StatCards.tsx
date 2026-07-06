@@ -29,17 +29,19 @@ export default function StatCards({
             >
               {/* Title */}
               <p className="text-sm text-secondaryColor group-hover:text-whiteColor transition-all duration-200 font-medium mb-5">
-                {card.title}
+                {card.name}
               </p>
 
               {/* Large Number with Percentage */}
               <div className="flex items-end justify-between">
                 <div className="text-[20px] font-semibold group-hover:text-whiteColor transition-all duration-200 text-blackColor">
-                  {card.value}
+                  {card.count}
                 </div>
-                {/* <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
-                  {card.percentage ? <span>{card.percentage}</span> : null}
-                </span> */}
+                {card.percentage && (
+                  <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
+                    <span>{card.percentage}%</span>
+                  </span>
+                )}
               </div>
 
               {/* Hover Effect - Show Arrow */}

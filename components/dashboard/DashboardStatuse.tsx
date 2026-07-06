@@ -1,4 +1,4 @@
-import { statuse } from "@/demoData/DashboardData";
+import { useGetAgencyStatusesQuery, useUpdateAgencyClientStatusMutation } from "@/feature/slice/agency/agencyDashboardSlice"; 
 import { useEffect, useState } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
@@ -19,24 +19,28 @@ function DashboardStatuse({
   record,
   loadingStatusId,
 }: {
-  value: string;
+  value: {
+    name: string;
+    color: string;
+  };
   record?: any;
   loadingStatusId?: string | null;
 }) {
+  const { data, isLoading: statusLoading } = useGetAgencyStatusesQuery("agency-statuses");
+  
+  const [updateAgencyClientStatus, { isLoading: isUpdating }] = useUpdateAgencyClientStatusMutation();
+
   const [statuseSearchTerm, setStatuseSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectOpen, setSelectOpen] = useState(false);
-  const filteredStatus = statuse.filter(
-    (s) =>
-      s.value.toLowerCase().includes(statuseSearchTerm.toLowerCase()) ||
-      s.value === statuseSearchTerm,
-  );
+
   useEffect(() => {
     const handler = setTimeout(() => {
       // Handle status search filtering if needed
     }, 300);
     return () => clearTimeout(handler);
   }, [statuseSearchTerm]);
+
   const handleSettingClick = () => {
     setSelectOpen(false);
     setTimeout(() => {
@@ -44,29 +48,40 @@ function DashboardStatuse({
     }, 10);
   };
 
+  const handleValueChange = async (selectedValueString: string) => {
+    try {
+      const selectedStatus = JSON.parse(selectedValueString);
+      await updateAgencyClientStatus({
+        clientId: record?._id || record?.id, 
+        statusId: selectedStatus._id || selectedStatus.id,
+      }).unwrap();
+
+    } catch (error) {
+      console.error("Status update failed:", error);
+    } finally {
+      setSelectOpen(false);
+    }
+  };
+
   return (
     <div>
       <div className="change-arrow">
         <Select
-          value={value || "Pre Application"}
+          value={value?.name || "Pre Application"}
           open={selectOpen}
           onOpenChange={setSelectOpen}
-        // disabled={loadingStatusId === record?._id}
+          onValueChange={handleValueChange} 
+          disabled={isUpdating || loadingStatusId === record?._id} 
         >
           <SelectTrigger className="flex items-center gap-1.5 p-1 !h-9 w-full justify-between">
             <div
-              className={`px-2 cursor-pointer flex items-center  py-2.5!  h-full w-full text-xs justify-center focus-visible:ring-0 font-medium rounded-md border-0 ${value === "Applied"
-                  ? "bg-purple-500/15 text-purple-600"
-                  : value === "Pre Application"
-                    ? "bg-green-500/15 text-green-600"
-                    : value === "Inactive"
-                      ? "bg-red-500/15 text-red-600"
-                      : value === "Pending"
-                        ? "bg-orange-500/15 text-orange-600"
-                        : "bg-gray-500/15 text-gray-600"
-                }`}
+              className={`px-2 cursor-pointer flex items-center  py-2.5!  h-full w-full text-xs justify-center focus-visible:ring-0 font-medium rounded-md border-0 `}
+              style={{
+                backgroundColor: value?.color ? `${value.color}26` : undefined,
+                color: value?.color || undefined,
+              }}
             >
-              <SelectValue />
+              <SelectValue  >{value?.name || "Pre Application"}</SelectValue>
             </div>
             <div>
               <IoIosArrowDown />
@@ -99,14 +114,21 @@ function DashboardStatuse({
               </div>
             </div>
             <div>
-              {filteredStatus.length > 0 ? (
-                filteredStatus.map((status) => (
+              {data?.data?.length > 0 ? (
+                data?.data?.map((status) => (
                   <SelectItem
-                    key={status.value}
+                    key={status.name}
                     className={`${status.color} cursor-pointer mb-1.5`}
-                    value={status.value}
+                    style={{
+                      backgroundColor: status?.color
+                        ? `${status.color}26`
+                        : undefined,
+                      color: status?.color || undefined,
+                    }}
+                   
+                    value={JSON.stringify(status)} 
                   >
-                    {status.value}
+                    {status.name}
                   </SelectItem>
                 ))
               ) : (

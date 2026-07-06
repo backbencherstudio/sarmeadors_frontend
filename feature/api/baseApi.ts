@@ -71,7 +71,30 @@ const baseQuery = fetchBaseQuery({
 
 export const baseApi = createApi({
   reducerPath: "api",
-  baseQuery: baseQuery,
-  tagTypes: ["subsciprions", "profile", "submissions"],
-  endpoints: () => ({}),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
+    credentials: "include",
+    prepareHeaders: async (headers) => {
+      if (typeof window !== "undefined") {
+        const token = await getToken();
+        // console.log(token, "token");
+        if (token) {
+          headers.set("Authorization", `Bearer ${token}`);
+        }
+      }
+      headers.set("Accept", "application/json");
+      headers.set("X-Subdomain", subDomain);
+
+      return headers;
+    },
+  }),
+  tagTypes: [
+    "subsciprions",
+    "profile",
+    "submissions",
+    "candidateDocuments",
+    "candidateAvailability",
+    "AgencyClientTableColumns",
+  ],
+  endpoints: (builder) => ({}),
 });
