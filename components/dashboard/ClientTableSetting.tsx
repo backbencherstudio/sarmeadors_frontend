@@ -14,10 +14,12 @@ import {
   useGetAgencyStatusesQuery,
   useUpdateAgencyClientTableColumnsMutation,
 } from "@/feature/slice/agency/agencyDashboardSlice";
+import { useUpdateSingleAgencyStatusMutation } from "@/feature/slice/agency/agencyStatusSlice";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import ReusableInput from "../common/InputFiled/ReusableInput";
 import RootDrawer from "../common/RootDrawer";
+import ButtonReuseable from "../reusable/CustomButton";
 import MultiSelecte from "../reusable/MultiSelecte";
 import StatusUpdatePart from "./StatusUpdatePart";
 
@@ -45,14 +47,28 @@ function ClientTableSetting({
   useEffect(() => {
     if (statusesData?.data) {
       setStatuses(statusesData.data);
+
+      const reasonNames = statusesData.data
+        .filter((s: any) => s.any_reason == 1 || s.any_reason == true)
+        .map((s: any) => s.name);
+      setSelectedStatusesForReason(reasonNames);
+
+      const reasons: Record<string, string> = {};
+      statusesData.data.forEach((s: any) => {
+        if (s.reason) {
+          reasons[s.name] = s.reason;
+        }
+      });
+      setStatusReasons(reasons);
     }
   }, [statusesData]);
 
   const [selectedStatusesForReason, setSelectedStatusesForReason] = useState<
     string[]
-  >(["Inactive", "Rejected"]);
-  const [rejectedReasons, setRejectedReasons] = useState("");
-  const [inactiveReasons, setInactiveReasons] = useState("");
+  >([]);
+  const [statusReasons, setStatusReasons] = useState<Record<string, string>>(
+    {},
+  );
 
   const { data: allColsData, isLoading: isAllColsLoading } =
     useGetAgencyClientTableColumnsQuery("AgencyClientTableColumns");
@@ -61,7 +77,10 @@ function ClientTableSetting({
     useGetAgencyClientListQuery("AgencyClientTableColumns");
 
   const [updateColumns] = useUpdateAgencyClientTableColumnsMutation();
-  const [createAgencyStatus] = useCreateAgencyStatusMutation();
+  const [createAgencyStatus, { isLoading: isCreatingStatus }] =
+    useCreateAgencyStatusMutation();
+  const [updateSingleAgencyStatus, { isLoading: isUpdatingStatus }] =
+    useUpdateSingleAgencyStatusMutation();
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [displayLabels, setDisplayLabels] = useState<Record<string, string>>(
@@ -127,19 +146,28 @@ function ClientTableSetting({
     const originalIds = new Set(
       (statusesData?.data || []).map((s: any) => s.id),
     );
-    const newStatuses = statuses.filter((s) => !originalIds.has(s.id));
     try {
-      for (const status of newStatuses) {
-        await createAgencyStatus({
+      for (const status of statuses) {
+        const isNew = !originalIds.has(status.id);
+        const body = {
           name: status.name,
           color: status.backgroundColor || status.color,
           type: "client",
-        }).unwrap();
+          any_reason: selectedStatusesForReason.includes(status.name),
+          reason: statusReasons[status.name] || null,
+        };
+
+        if (isNew) {
+          await createAgencyStatus(body).unwrap();
+        } else {
+          await updateSingleAgencyStatus({ id: status.id, ...body }).unwrap();
+        }
       }
-    } catch (error) {
+      toast.success("Statuses saved successfully!");
+    } catch (error: any) {
       toast.error(
-        error?.data?.data?.name[0] ||
-          "Error creating new statuses. Please try again.",
+        error?.data?.data?.name?.[0] ||
+          "Error saving statuses. Please try again.",
       );
     }
   };
@@ -210,10 +238,8 @@ function ClientTableSetting({
           <StatusUpdatePart
             statuses={statuses}
             setStatuses={setStatuses}
-            rejectedReasons={rejectedReasons}
-            inactiveReasons={inactiveReasons}
-            setRejectedReasons={setRejectedReasons}
-            setInactiveReasons={setInactiveReasons}
+            statusReasons={statusReasons}
+            setStatusReasons={setStatusReasons}
             selectedStatusesForReason={selectedStatusesForReason}
             setSelectedStatusesForReason={setSelectedStatusesForReason}
           />
@@ -221,14 +247,15 @@ function ClientTableSetting({
 
         <DrawerFooter className="flex flex-row justify-end gap-2 p-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <ButtonReuseable title="Cancel" className="bg-bgColor! text-headerColor! b" onClick={() => setOpen(false)} />
           </DrawerClose>
-          <Button
+          <ButtonReuseable
             onClick={handleSubmit}
+            loading={isCreatingStatus || isUpdatingStatus}
+            title="Save"
+            sendingMsg={"Saving..."}
             className="bg-gray-900 text-white hover:bg-gray-800"
-          >
-            Submit
-          </Button>
+          />
         </DrawerFooter>
       </div>
     </RootDrawer>

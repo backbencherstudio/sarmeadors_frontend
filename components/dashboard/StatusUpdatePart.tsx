@@ -51,10 +51,15 @@ function StatusUpdatePart({
   setStatuses,
   selectedStatusesForReason,
   setSelectedStatusesForReason,
-  rejectedReasons,
-  setRejectedReasons,
-  inactiveReasons,
-  setInactiveReasons,
+  statusReasons,
+  setStatusReasons,
+}: {
+  statuses: any[];
+  setStatuses: any;
+  selectedStatusesForReason: string[];
+  setSelectedStatusesForReason: any;
+  statusReasons: Record<string, string>;
+  setStatusReasons: any;
 }) {
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
@@ -155,6 +160,9 @@ function StatusUpdatePart({
     }
     setColorPickerOpen(false);
   };
+
+
+
   return (
     <div>
       {" "}
@@ -248,7 +256,6 @@ function StatusUpdatePart({
         </div>
 
         {/* Add Another Item */}
-
         <ButtonReuseable
           title="Add Another Status"
           onClick={handleAddStatus}
@@ -312,30 +319,25 @@ function StatusUpdatePart({
 
         {/* Reason Text Areas */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:mb-4">
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              List of reasons to change to Rejected{" "}
-              <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              value={rejectedReasons}
-              onChange={(e) => setRejectedReasons(e.target.value)}
-              placeholder="Each line for one reason"
-              className="w-full h-24 p-2 border rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              List of reasons to change to Inactive{" "}
-              <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              value={inactiveReasons}
-              onChange={(e) => setInactiveReasons(e.target.value)}
-              placeholder="Each line for one reason"
-              className="w-full h-24 p-2 border rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          {selectedStatusesForReason.map((statusName) => (
+            <div key={statusName}>
+              <label className="text-sm font-medium mb-2 block">
+                List of reasons to change to {statusName}{" "}
+                <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                value={statusReasons[statusName] || ""}
+                onChange={(e) =>
+                  setStatusReasons({
+                    ...statusReasons,
+                    [statusName]: e.target.value,
+                  })
+                }
+                placeholder="Each line for one reason"
+                className="w-full h-24 p-2 border rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
