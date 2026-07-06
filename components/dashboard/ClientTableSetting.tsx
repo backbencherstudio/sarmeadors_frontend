@@ -247,7 +247,7 @@ function ClientTableSetting({
 
         <DrawerFooter className="flex flex-row justify-end gap-2 p-2">
           <DrawerClose asChild>
-            <ButtonReuseable title="Cancel" className="bg-bgColor! text-headerColor! b" onClick={() => setOpen(false)} />
+            <ButtonReuseable title="Cancel" className="bg-bgColor! text-headerColor! border " onClick={() => setOpen(false)} />
           </DrawerClose>
           <ButtonReuseable
             onClick={handleSubmit}

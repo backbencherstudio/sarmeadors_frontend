@@ -140,7 +140,7 @@ function ClientDashboardFilter() {
   return (
     <section className="pb-4">
       <div className="bg-white border border-borderColor rounded-md p-4 md:p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-blackColor">Filters</h3>
           {hasActiveFilters && (
             <button
@@ -155,7 +155,7 @@ function ClientDashboardFilter() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Keyword Search Filter */}
-          <div className="col-span-2 md:col-span-2">
+          {/* <div className="col-span-2 md:col-span-2">
             <label className="sr-only">Keyword Search</label>
             <div className="relative">
               <input
@@ -181,7 +181,7 @@ function ClientDashboardFilter() {
                 </svg>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="grid col-span-2 md:col-span-2 grid-cols-1 md:grid-cols-3 gap-4">
             {/* Application Date Filter */}
             <div className="space-y-2">
