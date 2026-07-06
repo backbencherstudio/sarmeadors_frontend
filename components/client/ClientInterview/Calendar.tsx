@@ -10,36 +10,44 @@ import { useRef, useState } from "react";
 import InterviewScheduleInfoDialog from "./InterviewScheduleInfoDialog";
 import { useGetClientInterviewsQuery } from "@/feature/dashboard/client/interviews";
 
+const formatTo24Hour = (value: string) => {
+  const match = value.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+
+  if (!match) return value;
+
+  let hour = parseInt(match[1], 10);
+  const minute = match[2];
+  const meridiem = match[3].toUpperCase();
+
+  if (meridiem === "PM" && hour < 12) hour += 12;
+  if (meridiem === "AM" && hour === 12) hour = 0;
+
+  return `${String(hour).padStart(2, "0")}:${minute}`;
+};
+
 export default function Calendar() {
   const calendarRef = useRef<any>(null);
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedInterview, setSelectedInterview] = useState<any>(null);
   const { data } = useGetClientInterviewsQuery("calendar");
 
-  // console.log("----->", data);
+  const interviewEvents = (data?.data?.events ?? []).map((event: any) => {
+    const startDate = event?.date;
+    const startTime = event?.time?.from
+      ? formatTo24Hour(event.time.from)
+      : null;
+    const endTime = event?.time?.to ? formatTo24Hour(event.time.to) : null;
 
-  const interviewEvents = [
-    {
-      id: "1",
-      title: "Jacob Jones",
-      start: new Date().toISOString().split("T")[0],
-    },
-    {
-      id: "2",
-      title: "Jacob Jones",
-      start: new Date().toISOString().split("T")[0],
-    },
-    {
-      id: "3",
-      title: "Jacob Jones",
-      start: new Date().toISOString().split("T")[0],
-    },
-    {
-      id: "4",
-      title: "Jacob Jones",
-      start: new Date().toISOString().split("T")[0],
-    },
-  ];
+    return {
+      id: event?.id,
+      title: event?.candidate?.name || event?.title || "Interview",
+      start: startTime ? `${startDate}T${startTime}` : startDate,
+      end: endTime ? `${startDate}T${endTime}` : startDate,
+      allDay: !startTime && !endTime,
+      extendedProps: event,
+    };
+  });
 
   const handleEventDrop = (info: any) => {
     console.log("Event moved to:", info.event.start);
@@ -64,23 +72,25 @@ export default function Calendar() {
 
   const renderEvent = (eventInfo: EventContentArg) => {
     const { event } = eventInfo;
+    const interview = event.extendedProps as any;
+    const candidateName = interview?.candidate?.name || event.title;
+    const candidateImage = interview?.candidate?.image_url || "/empty-user.png";
+    const timeLabel =
+      interview?.time?.from || interview?.modal?.time_range || "";
 
     return (
-      <div
-        onClick={() => setIsOpen(true)}
-        className="flex items-center justify-between bg-[#F3F4F6] border px-2 py-1 text-xs rounded-md"
-      >
+      <div className="flex items-center justify-between bg-[#F3F4F6] border px-2 py-1 text-xs rounded-md">
         <div className="flex items-center gap-2">
           <img
-            src="/empty-user.png"
-            alt={event.title}
+            src={candidateImage}
+            alt={candidateName}
             className="w-5 h-5 rounded-full object-cover"
           />
 
-          <span className="font-medium text-[#6B7280]">{event.title}</span>
+          <span className="font-medium text-[#6B7280]">{candidateName}</span>
         </div>
 
-        <span className="text-[#6B7280]">4:25 pm</span>
+        <span className="text-[#6B7280]">{timeLabel}</span>
       </div>
     );
   };
@@ -144,12 +154,17 @@ export default function Calendar() {
         headerToolbar={false}
         eventDrop={handleEventDrop}
         eventContent={renderEvent}
+        eventClick={(info) => {
+          setSelectedInterview(info.event.extendedProps);
+          setIsOpen(true);
+        }}
       />
 
       {isOpen && (
         <InterviewScheduleInfoDialog
           isOpen={isOpen}
           setOpen={() => setIsOpen(false)}
+          interview={selectedInterview}
         />
       )}
     </div>

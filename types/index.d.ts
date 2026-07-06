@@ -46,6 +46,7 @@ export interface Job {
   latest_attendance: Attendance | null;
   can_check_in: boolean;
   can_check_out: boolean;
+  services: string[];
 }
 
 export interface Candidate {
@@ -204,22 +205,30 @@ export interface RequiredDocument {
 
 export interface AvailabilityDayType {
   id: number;
-  day_of_week: number; 
-  day_name: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday' | string;
+  day_of_week: number;
+  day_name:
+    | "Monday"
+    | "Tuesday"
+    | "Wednesday"
+    | "Thursday"
+    | "Friday"
+    | "Saturday"
+    | "Sunday"
+    | string;
   is_available: boolean;
-  start_time: string; 
-  end_time: string;   
+  start_time: string;
+  end_time: string;
 }
 
 export interface UnavailabilityType {
   id: number;
   title: string;
-  start_date: string; 
-  end_date: string;   
+  start_date: string;
+  end_date: string;
 }
 // Main Availability Sub-Object
 export interface AvailabilityDataType {
   id: number;
-  timezone: string; 
+  timezone: string;
   days: AvailabilityDayType[];
 }
