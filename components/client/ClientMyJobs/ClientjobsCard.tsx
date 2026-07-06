@@ -14,6 +14,8 @@ import { Copy, Edit } from "lucide-react";
 function ClientjobsCard({ job }: { job: any }) {
   const today = dayjs();
 
+  // console.log(job);
+
   // Real API shape: dates is an array, primary date is the first item.
   const primaryDate =
     Array.isArray(job.dates) && job.dates.length > 0 ? job.dates[0] : null;
@@ -49,12 +51,13 @@ function ClientjobsCard({ job }: { job: any }) {
   const viewDetailsHrefByStatus: Record<string, string> = {
     running: "/client/running-view-details/job-description",
     pending: "/client/pending-view-details/job-description",
-    marketplace: "/client/marketplace-view-details/job-description",
-    cancelled: "/client/cancelled-view-details",
+    marketplace: "/client/marketplace-view-details/applicants",
+    cancelled: "/client/canceled-view-details",
     rejected: "/client/rejected-view-details",
   };
   const viewDetailsHref =
-    viewDetailsHrefByStatus[job.status] ?? "/client/my-jobs";
+    viewDetailsHrefByStatus[job.status] ??
+    "/client/pending-view-details/job-description";
 
   return (
     <div>
@@ -116,7 +119,9 @@ function ClientjobsCard({ job }: { job: any }) {
                   <div className="space-y-2 text-sm text-gray-500 mb-4">
                     <div className="flex items-center gap-2">
                       <LocationIcon className="w-4 h-4" />
-                      <span>{locationLabel}</span>
+                      <span>
+                        {locationLabel ? locationLabel : job.location.label}
+                      </span>
                     </div>
                     {(job.status === "pending_approval" ||
                       job.status === "marketplace") && (
@@ -239,7 +244,7 @@ function ClientjobsCard({ job }: { job: any }) {
                 <>
                   <LinkReuseable
                     title="View Details"
-                    href={viewDetailsHref}
+                    href={`${viewDetailsHref}?jobId=${job.id}`}
                     rightIcon={<ArrowTopBoxIcon />}
                     className="w-fit bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!  md:w-auto"
                   />

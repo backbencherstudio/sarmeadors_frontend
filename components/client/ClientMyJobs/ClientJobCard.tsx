@@ -1,5 +1,5 @@
 import LocationIcon from "@/components/icon/LocationIcon";
-import candidateImage from "@/public/candidates/candidates-2.png";
+import candidateImage from "@/public/jobs/Rectangle 856.png";
 import { Job } from "@/types";
 import Image from "next/image";
 import ClientJobcardAction from "./ClientJobcardAction";
@@ -10,7 +10,6 @@ interface ClientJobCardProps {
 }
 
 function ClientJobCard({ job, userType }: ClientJobCardProps) {
-  console.log(job);
   return (
     <div className="border flex flex-col md:flex-row justify-between border-borderColor hover:shadow-xl transition-all duration-200 p-5 rounded-lg">
       <div className="flex gap-4 flex-col md:flex-row items-center">
@@ -25,16 +24,20 @@ function ClientJobCard({ job, userType }: ClientJobCardProps) {
         </div>
         <div>
           <h4 className="text-lg font-semibold text-blackColor leading-6">
-            {job.client_name}{" "}
+            {job.client_name || job.title}{" "}
             <span
               className={` px-2 py-1 text-sm rounded-sm ${job?.job_type === "long_term" ? "bg-blueColor/20 text-blueColor" : "bg-greenColor/20 text-greenColor"}`}
             >
               {job?.job_type == "long_term" ? "Long-Term" : "Short-Term"}
             </span>
           </h4>
-          {/* <p className="text-base text-descriptionColor mt-1">
-            {job.position} | {job.roles.join(" | ")}
-          </p> */}
+          <p className="text-base text-descriptionColor mt-1">
+            {job?.services?.map((service, index) => (
+              <span key={index}>
+                {service} {index < job.services.length - 1 ? "| " : ""}
+              </span>
+            ))}
+          </p>
           <p className="text-base text-descriptionColor mt-1 flex items-center gap-1.5">
             <LocationIcon className="w-4 h-4" />
             {job.address?.city}, {job.address?.province}, {job.address?.country}

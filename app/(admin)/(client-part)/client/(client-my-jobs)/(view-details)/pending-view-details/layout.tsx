@@ -7,10 +7,10 @@ export default function PendingViewDetailsLayout({ children }) {
       label: "Job Description",
       link: "/client/pending-view-details/job-description",
     },
-    {
-      label: "Applicants (0)",
-      link: "/client/pending-view-details/applicants",
-    },
+    // {
+    //   label: "Applicants (0)",
+    //   link: "/client/pending-view-details/applicants",
+    // },
   ];
   return (
     <div className="p-6">
