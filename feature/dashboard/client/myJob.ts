@@ -40,6 +40,18 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    getApplicants: builder.query({
+      query: (id) => ({
+        url: `/client/jobs/short-term/${id}/applicants`,
+        method: "GET",
+      }),
+    }),
+    getSingleApplicant: builder.query({
+      query: ({ jobId, applicantId }) => ({
+        url: `/client/jobs/short-term/${jobId}/applicants/${applicantId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -50,4 +62,6 @@ export const {
   usePaymentCheckQuery,
   useLocationsQuery,
   useCancelShortTermJobMutation,
+  useGetApplicantsQuery,
+  useGetSingleApplicantQuery,
 } = ClientMyCandidatedApi;
