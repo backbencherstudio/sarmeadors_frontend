@@ -6,7 +6,7 @@ export function ShortTermJobTabs() {
   const tabs = [
     {
       label: "Running (1)",
-      link: "/client/client-my-jobs/short-term-job",
+      link: "/client/client-my-jobs/short-term-job/running",
     },
     {
       label: "Pending (0) ",
