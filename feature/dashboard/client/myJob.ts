@@ -52,6 +52,12 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    hireCandidate: builder.mutation({
+      query: ({ jobId, applicantId }) => ({
+        url: `/client/jobs/short-term/${jobId}/applicants/${applicantId}/hire`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -64,4 +70,5 @@ export const {
   useCancelShortTermJobMutation,
   useGetApplicantsQuery,
   useGetSingleApplicantQuery,
+  useHireCandidateMutation,
 } = ClientMyCandidatedApi;

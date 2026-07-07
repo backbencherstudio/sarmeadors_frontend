@@ -23,12 +23,9 @@ function ApplicantsTable() {
   const params = useSearchParams();
   const jobId = params.get("jobId");
 
-  const { data: applicantsData, isLoading } = useGetApplicantsQuery(
-    jobId ?? "",
-    {
-      skip: !jobId,
-    },
-  );
+  const { data: applicantsData, isLoading } = useGetApplicantsQuery(jobId, {
+    skip: !jobId,
+  });
 
   const formatDate = (dateString: string | null | undefined) => {
     if (!dateString) return "";
@@ -52,6 +49,8 @@ function ApplicantsTable() {
       application_date: formatDate(application.created_at),
       application_message: application.application_message,
       status: application.status,
+      short_term_job_id: application.short_term_job_id,
+      candidate_id: application.candidate_id,
     }),
   );
 
@@ -93,7 +92,7 @@ function ApplicantsTable() {
       width: "200px",
       formatter: (value: string, record: any) => (
         <Link
-          href={`/client/marketplace-view-details/applicants/${record.id}/personal-information`}
+          href={`/client/marketplace-view-details/applicants/${record?.id}/personal-information?jobId=${record?.short_term_job_id}&candidateId=${record?.candidate_id}`}
           className="flex items-center gap-3"
         >
           <input
@@ -133,17 +132,18 @@ function ApplicantsTable() {
       formatter: (_: any, record: any) => (
         <div className="flex items-center gap-2 justify-end">
           <Link
-            href={`/client/marketplace-view-details/applicants/${record?.id}/personal-information`}
+            href={`/client/marketplace-view-details/applicants/${record?.id}/personal-information?jobId=${record?.short_term_job_id}&candidateId=${record?.candidate_id}`}
             className="p-2 rounded-[10px] border"
           >
             <Eye />
           </Link>
-
           {/* Schedule Interview Modal */}
           {/* <ScheduleInterviewModal /> */}
-
           {/* Modal */}
-          <HireCandidateModal />
+          <HireCandidateModal
+            jobId={record?.short_term_job_id}
+            applicantId={record?.candidate_id}
+          />
         </div>
       ),
     },

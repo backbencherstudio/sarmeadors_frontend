@@ -30,7 +30,7 @@ interface NavItem {
   icon: any;
   label: string;
   href: string;
-  type?: "client" | "agency_admin"  | "candidate" | "super-admin";
+  type?: "client" | "agency_admin" | "candidate" | "super-admin";
 }
 
 interface SidebarProps {
@@ -81,37 +81,37 @@ const navItems: NavItem[] = [
     icon: ClientIcon,
     label: "Clients",
     href: "/clients/admin/list",
-    type: "agency_admin" ,
+    type: "agency_admin",
   },
   {
     icon: CandidateIcon,
     label: "Candidates",
     href: "/candidates",
-    type: "agency_admin" ,
+    type: "agency_admin",
   },
   {
     icon: InterviewIcon,
     label: "Interviews",
     href: "/interviews",
-    type: "agency_admin" ,
+    type: "agency_admin",
   },
   {
     icon: JobsIcon,
     label: "Short-term Job",
     href: "/agency-short-term-job",
-    type: "agency_admin" ,
+    type: "agency_admin",
   },
   {
     icon: JobsIcon,
     label: "Long-term Job",
     href: "/agency-long-term-job/agency-requested-job",
-    type: "agency_admin" ,
+    type: "agency_admin",
   },
   {
     icon: CopyIcon,
     label: "Templates",
     href: "/templates",
-    type: "agency_admin" ,
+    type: "agency_admin",
   },
   {
     label: "Dashboard",
@@ -122,7 +122,7 @@ const navItems: NavItem[] = [
   {
     label: "My Jobs",
     icon: JobsIcon,
-    href: "/client/client-my-jobs/short-term-job",
+    href: "/client/client-my-jobs/short-term-job/running",
     type: "client",
   },
   {
@@ -219,7 +219,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState("agency_admin" );
+  const [isLoggedIn, setIsLoggedIn] = useState("agency_admin");
 
   const [templatesOpen, setTemplatesOpen] = useState<boolean>(() =>
     pathname.startsWith("/templates"),
@@ -229,7 +229,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   useEffect(() => {
     const stored = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(stored || "agency_admin" );
+    setIsLoggedIn(stored || "agency_admin");
   }, [pathname]);
 
   useEffect(() => {
@@ -427,7 +427,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Other Section */}
-        {isLoggedIn === "agency_admin"  && (
+        {isLoggedIn === "agency_admin" && (
           <div className="pt-4 border-t border-white/10">
             <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">
               Other
