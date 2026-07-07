@@ -67,7 +67,6 @@ export default function LoginForm() {
         data,
         subDomain,
       }).unwrap();
-      console.log(response, "check");
 
       const payload = response?.data ?? response;
       const userType = payload?.user?.role ?? payload?.role ?? "admin";
@@ -92,10 +91,8 @@ export default function LoginForm() {
       } else if (userType === "super-admin") {
         router.push("/super-admin/dashboard");
       } else {
-        router.push("/dashboard");
+        router.push("/");
       }
-
-      localStorage.setItem("isLoggedIn", userType);
       // localStorage.setItem("accessToken", response?.token);
       reset();
     } catch (error: any) {

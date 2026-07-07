@@ -9,10 +9,12 @@ import dayjs from "dayjs";
 import ViewInvoiceModal from "./LongTermJob/Completed/ViewInvoiceModal";
 import CancelModal from "./ShortTermJob/Common/CancelModal";
 import CandidatesReviewModal from "./ShortTermJob/Marketplace/Applicants/(view-details)/CandidatesReviewModal";
-import { Copy, Edit } from "lucide-react";
+import { Copy, Edit, User } from "lucide-react";
 
 function ClientjobsCard({ job }: { job: any }) {
   const today = dayjs();
+
+  // console.log(job);
 
   // Real API shape: dates is an array, primary date is the first item.
   const primaryDate =
@@ -49,12 +51,13 @@ function ClientjobsCard({ job }: { job: any }) {
   const viewDetailsHrefByStatus: Record<string, string> = {
     running: "/client/running-view-details/job-description",
     pending: "/client/pending-view-details/job-description",
-    marketplace: "/client/marketplace-view-details/job-description",
-    cancelled: "/client/cancelled-view-details",
+    marketplace: "/client/marketplace-view-details/applicants",
+    cancelled: "/client/canceled-view-details",
     rejected: "/client/rejected-view-details",
   };
   const viewDetailsHref =
-    viewDetailsHrefByStatus[job.status] ?? "/client/my-jobs";
+    viewDetailsHrefByStatus[job.status] ??
+    "/client/pending-view-details/job-description";
 
   return (
     <div>
@@ -116,21 +119,31 @@ function ClientjobsCard({ job }: { job: any }) {
                   <div className="space-y-2 text-sm text-gray-500 mb-4">
                     <div className="flex items-center gap-2">
                       <LocationIcon className="w-4 h-4" />
-                      <span>{locationLabel}</span>
+                      <span>
+                        {locationLabel ? locationLabel : job.location.label}
+                      </span>
                     </div>
                     {(job.status === "pending_approval" ||
                       job.status === "marketplace") && (
                       <div className="flex gap-3 items-center">
-                        <div className="flex items-center gap-2">
-                          <CalenderIcon className="w-4 h-4" />
-                          <span>{jobStartDate}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <ClockICon className="w-4 h-4 fill-secondaryColor" />
-                          <span>
-                            {jobStartTime} - {jobEndTime}
-                          </span>
-                        </div>
+                        {job.booking_dates.map((date) => (
+                          <>
+                            <div className="flex items-center gap-2">
+                              <CalenderIcon className="w-4 h-4" />
+                              <span>{date.date_label}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <ClockICon className="w-4 h-4 fill-secondaryColor" />
+                              <span>{date.time_range}</span>
+                            </div>
+                            {job.status === "marketplace" && (
+                              <div className="flex items-center gap-2">
+                                <User className="w-4 h-4 fill-secondaryColor" />
+                                <span>{job.applicants.count} Applicants</span>
+                              </div>
+                            )}
+                          </>
+                        ))}
                       </div>
                     )}
                   </div>
@@ -163,10 +176,12 @@ function ClientjobsCard({ job }: { job: any }) {
             <div className="space-y-4 w-full md:w-1/3 mt-2 md:mt-0">
               {job.status === "completed" || (
                 <div className="flex items-center gap-2 justify-start md:justify-end">
-                  {/* <ClockICon className="w-4 h-4 fill-secondaryColor" /> */}
-                  <span className="font-medium">
-                    {jobStartTime} - {jobEndTime}
-                  </span>
+                  {job.booking_dates.map((date) => (
+                    <div className="flex items-center gap-2">
+                      <ClockICon className="w-4 h-4 fill-secondaryColor" />
+                      <span>{date.time_range}</span>
+                    </div>
+                  ))}
                 </div>
               )}
               {job.status === "completed" && (
@@ -238,8 +253,8 @@ function ClientjobsCard({ job }: { job: any }) {
               {job.status === "completed" || (
                 <>
                   <LinkReuseable
-                    title="View Details"
-                    href={viewDetailsHref}
+                    title={`${job.status === "marketplace" ? "View Applicants" : "View Details"}`}
+                    href={`${viewDetailsHref}?jobId=${job.id}`}
                     rightIcon={<ArrowTopBoxIcon />}
                     className="w-fit bg-grayColor1! px-4 rounded-md font-medium tex-sm py-[10.5px]! border border-borderColor text-blackColor!  md:w-auto"
                   />

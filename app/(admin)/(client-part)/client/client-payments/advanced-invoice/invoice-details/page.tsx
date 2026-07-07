@@ -1,7 +1,6 @@
 "use client";
 
 import InvoiceTable from "@/components/client/ClientPayment/InvoiceTable";
-import PaymentForm from "@/components/client/ClientPayment/PaymentForm";
 import { useGetPaymentInvoiceDetailsQuery } from "@/feature/dashboard/client/payment";
 import ArrowLeftIcon from "@/public/icon/ArrowLeftIcon";
 import Image from "next/image";
@@ -76,7 +75,7 @@ export default function InvoiceDetails() {
         </div>
 
         <div>
-          <h1 className="text-[#111927] text-2xl font-semibold leading-[116.667%] mt-[34px]">
+          <h1 className="text-[#111927] text-2xl font-semibold leading-[116.667%] mt-8.5">
             Bill to:
           </h1>
           <div className="mt-4">

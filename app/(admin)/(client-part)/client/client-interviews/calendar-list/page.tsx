@@ -1,4 +1,5 @@
 "use client";
+
 import InterviewCard from "@/components/client/ClientInterview/InterviewCard";
 import IconDatePicker from "@/components/common/DatePicker";
 import ClockICon from "@/components/icon/ClockICon";
@@ -10,8 +11,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useGetClientInterviewsQuery } from "@/feature/dashboard/client/interviews";
-import { useState } from "react";
-// import "react-datepicker/dist/react-datepicker.css";
 
 interface Interview {
   id: string;

@@ -1,8 +1,7 @@
 "use client";
 import { ReduxProvider } from "@/feature/provider";
 import { TokenProvider } from "@/hooks/useToken";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient } from "@tanstack/react-query";
 import React, { Suspense, useState } from "react";
 
 interface ClientLayoutProps {
@@ -16,12 +15,9 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
 
   return (
     <ReduxProvider>
-      <QueryClientProvider client={queryClient}>
-        <TokenProvider>
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-        </TokenProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <TokenProvider>
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+      </TokenProvider>
     </ReduxProvider>
   );
 };

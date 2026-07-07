@@ -30,7 +30,7 @@ interface NavItem {
   icon: any;
   label: string;
   href: string;
-  type?: "client" | "admin" | "candidate" | "super-admin";
+  type?: "client" | "agency_admin" | "candidate" | "super-admin";
 }
 
 interface SidebarProps {
@@ -81,37 +81,37 @@ const navItems: NavItem[] = [
     icon: ClientIcon,
     label: "Clients",
     href: "/clients/admin/list",
-    type: "admin",
+    type: "agency_admin",
   },
   {
     icon: CandidateIcon,
     label: "Candidates",
     href: "/candidates",
-    type: "admin",
+    type: "agency_admin",
   },
   {
     icon: InterviewIcon,
     label: "Interviews",
     href: "/interviews",
-    type: "admin",
+    type: "agency_admin",
   },
   {
     icon: JobsIcon,
     label: "Short-term Job",
     href: "/agency-short-term-job",
-    type: "admin",
+    type: "agency_admin",
   },
   {
     icon: JobsIcon,
     label: "Long-term Job",
     href: "/agency-long-term-job/agency-requested-job",
-    type: "admin",
+    type: "agency_admin",
   },
   {
     icon: CopyIcon,
     label: "Templates",
     href: "/templates",
-    type: "admin",
+    type: "agency_admin",
   },
   {
     label: "Dashboard",
@@ -122,7 +122,7 @@ const navItems: NavItem[] = [
   {
     label: "My Jobs",
     icon: JobsIcon,
-    href: "/client/client-my-jobs/short-term-job",
+    href: "/client/client-my-jobs/short-term-job/running",
     type: "client",
   },
   {
@@ -219,7 +219,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState("admin");
+  const [isLoggedIn, setIsLoggedIn] = useState("agency_admin");
 
   const [templatesOpen, setTemplatesOpen] = useState<boolean>(() =>
     pathname.startsWith("/templates"),
@@ -229,7 +229,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   useEffect(() => {
     const stored = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(stored || "admin");
+    setIsLoggedIn(stored || "agency_admin");
   }, [pathname]);
 
   useEffect(() => {
@@ -237,7 +237,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       setTemplatesOpen(true);
     }
   }, [pathname]);
-
+  console.log(isLoggedIn, "isLoggedIn=====");
   const isActive = (href: string): boolean => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
@@ -290,7 +290,6 @@ const Sidebar: React.FC<SidebarProps> = ({
             }}
             className="flex items-center cursor-pointer justify-center w-8 h-8 rounded-lg transition-all duration-200"
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-            
           >
             <span className="xl:hidden">
               <X className="text-blackColor" size={20} />
@@ -428,7 +427,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Other Section */}
-        {isLoggedIn === "admin" && (
+        {isLoggedIn === "agency_admin" && (
           <div className="pt-4 border-t border-white/10">
             <p className="text-xs font-semibold text-gray-500 uppercase px-3 py-2 mb-2">
               Other

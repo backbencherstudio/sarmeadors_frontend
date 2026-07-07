@@ -13,7 +13,7 @@ function CandidateHeroSection({
   return (
     <div>
       <div>
-        <div className="bg-gradient-to-t px-3 lg:px-8 from-[#049EC0]/5 to-[#049EC0]/30 rounded-2xl  mb-8 flex items-center justify-between">
+        <div className="bg-linear-to-t px-3 lg:px-8 from-[#049EC0]/5 to-[#049EC0]/30 rounded-2xl  mb-8 flex items-center justify-between">
           <div>
             <h2 className="md:text-xl text-lg lg:text-2xl font-bold text-blackColor mb-2">
               {title || "All your nannies needs in one place"}
@@ -37,7 +37,7 @@ function CandidateHeroSection({
               />
             </div>
           </div>
-          <div className="max-w-[551px] h-[190px]">
+          <div className="max-w-137.75 h-47.5">
             <Image
               src="/client/client-dashboard.png"
               alt="Hero illustration"

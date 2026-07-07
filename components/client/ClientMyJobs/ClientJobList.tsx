@@ -1,4 +1,5 @@
 "use client";
+
 import ClientJobCard from "./ClientJobCard";
 import ClientJobsCardSkeleton from "./ClientJobsCardSkeleton";
 
@@ -20,8 +21,6 @@ function ClientJobList({
       </div>
     );
   }
-
-  console.log("jobs", jobs);
 
   // if (jobs.length === 0) return <ClientJobNotFound />;
 

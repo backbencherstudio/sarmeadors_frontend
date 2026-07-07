@@ -22,24 +22,26 @@ export default function StatCards({
               <Skeleton className="w-12 h-4" />
             </div>
           ))
-        : statCards.map((card, idx) => (
+        : statCards?.map((card, idx: number) => (
             <div
               key={idx}
               className="p-4 group rounded-lg bg-bgColor hover:bg-blackColor hover:text-whiteColor  border border-gray2Color hover:shadow-lg transition-all duration-200 cursor-pointer relative"
             >
               {/* Title */}
               <p className="text-sm text-secondaryColor group-hover:text-whiteColor transition-all duration-200 font-medium mb-5">
-                {card.title}
+                {card.name || card.title}
               </p>
 
               {/* Large Number with Percentage */}
               <div className="flex items-end justify-between">
                 <div className="text-[20px] font-semibold group-hover:text-whiteColor transition-all duration-200 text-blackColor">
-                  {card.value}
+                  {card.count ?? card.value ?? 0}
                 </div>
-                {/* <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
-                  {card.percentage ? <span>{card.percentage}</span> : null}
-                </span> */}
+                {card.percentage && (
+                  <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
+                    <span>{card.percentage}%</span>
+                  </span>
+                )}
               </div>
 
               {/* Hover Effect - Show Arrow */}
