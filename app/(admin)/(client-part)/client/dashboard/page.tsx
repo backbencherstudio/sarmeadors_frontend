@@ -9,7 +9,6 @@ function CandidatesDashboard() {
   // const token = await getToken();
 
   const { data, isLoading } = useGetClientDashboardQuery({});
-  console.log(data?.data?.stats?.total_job_posts);
 
   const statCards = [
     {

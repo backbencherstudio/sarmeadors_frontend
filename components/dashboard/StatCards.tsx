@@ -29,13 +29,13 @@ export default function StatCards({
             >
               {/* Title */}
               <p className="text-sm text-secondaryColor group-hover:text-whiteColor transition-all duration-200 font-medium mb-5">
-                {card.name}
+                {card.name || card.title}
               </p>
 
               {/* Large Number with Percentage */}
               <div className="flex items-end justify-between">
                 <div className="text-[20px] font-semibold group-hover:text-whiteColor transition-all duration-200 text-blackColor">
-                  {card.count}
+                  {card.count ?? card.value ?? 0}
                 </div>
                 {card.percentage && (
                   <span className="text-xs font-medium group-hover:text-[#E5B400] transition-all duration-200  px-2 py-1 rounded">
