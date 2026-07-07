@@ -16,6 +16,7 @@ const CandidateInterviewRender = ({
     title: event.title,
     start: event.start ? new Date(event.start).toISOString() : null,
     allDay: event.allDay,
+    interview_id: interview?.interview_id,
     date: interview?.date,
     time: interview?.time,
     status: interview?.status,

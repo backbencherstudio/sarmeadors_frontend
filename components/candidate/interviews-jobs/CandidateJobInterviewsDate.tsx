@@ -101,6 +101,7 @@ function CandidateJobInterviewsDate() {
           isOpen={isOpen}
           setOpen={() => setIsOpen(false)}
           data={scheduledData}
+          onJoinSuccess={refetch}
         />
       )}
     </div>

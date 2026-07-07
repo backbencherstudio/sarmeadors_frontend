@@ -31,10 +31,17 @@ const CandidateInterviewsSlice = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    joinInterview: builder.mutation({
+      query: (interview_id) => ({
+        url: `/candidate/interviews/${interview_id}/join`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
 export const {
   useGetCandidateInterviewsQuery,
   useGetCandidateInterviewsShowQuery,
+  useJoinInterviewMutation,
 } = CandidateInterviewsSlice;

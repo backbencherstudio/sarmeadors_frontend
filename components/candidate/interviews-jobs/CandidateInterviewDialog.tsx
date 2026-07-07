@@ -13,9 +13,11 @@ import dayjs from "dayjs";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
+import { useJoinInterviewMutation } from "@/feature/slice/candidate/candidate-dashboard/CandidateInterviewsSlice";
 
 interface InterviewData {
   id?: string;
+  interview_id?: number;
   title: string;
   client?: {
     name: string;
@@ -62,12 +64,15 @@ function CandidateInterviewDialog({
   isOpen,
   setOpen,
   data,
+  onJoinSuccess,
 }: {
   isOpen: boolean;
   setOpen: () => void;
   data: InterviewData | null;
+  onJoinSuccess?: () => void;
 }) {
   const [isActionOpen, setIsActionOpen] = useState(false);
+  const [joinInterview, { isLoading: isJoining }] = useJoinInterviewMutation();
 
   if (!data) return null;
 
@@ -130,10 +135,25 @@ function CandidateInterviewDialog({
     }
   }
 
-  const handleJoinClick = () => {
-    if (meetingLink) {
-      window.open(meetingLink, "_blank");
-    }
+  const statusValue = String(data.status || "").toLowerCase();
+  const isDisabledStatus =
+    statusValue === "completed" ||
+    statusValue === "scheduled_missed" ||
+    statusValue === "cancelled";
+
+  const isJoinDisabled = !isCurrentTime || isJoining || isDisabledStatus;
+
+  const handleJoinClick = async () => {
+    if (!data.interview_id || !meetingLink) return;
+
+    try {
+      const res = await joinInterview(data.interview_id).unwrap();
+      if (res?.success) {
+        onJoinSuccess?.();
+        setOpen();
+        window.open(meetingLink, "_blank");
+      }
+    } catch {}
   };
 
   return (
@@ -223,10 +243,10 @@ function CandidateInterviewDialog({
               <ButtonReuseable
                 title="Join"
                 icon={<MeetingZoomIcon />}
-                loading={false}
+                loading={isJoining}
                 sendingMsg="Join"
                 className="py-2!"
-                disabled={!isCurrentTime}
+                disabled={isJoinDisabled}
                 onClick={handleJoinClick}
               />
             </div>

@@ -14,6 +14,7 @@ const statusOptions = [
   { value: "scheduled", label: "Scheduled" },
   { value: "completed", label: "Completed" },
   { value: "cancelled", label: "Cancelled" },
+  { value: "scheduled_missed", label: "Scheduled Missed" },
 ];
 
 function CandidateInterviewFilter({
@@ -23,10 +24,7 @@ function CandidateInterviewFilter({
 }: {
   period: string;
   status: string;
-  onChange: (values: {
-    period?: string;
-    status?: string;
-  }) => void;
+  onChange: (values: { period?: string; status?: string }) => void;
 }) {
   const [localPeriod, setLocalPeriod] = useState(period);
   const [localStatus, setLocalStatus] = useState(status);
