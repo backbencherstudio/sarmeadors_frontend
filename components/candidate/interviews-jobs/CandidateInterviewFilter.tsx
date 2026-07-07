@@ -1,7 +1,7 @@
 "use client";
 
 import SelecteInputField from "@/components/common/InputFiled/SelecteInputField";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const periodOptions = [
   { value: "month", label: "Month" },
@@ -9,46 +9,65 @@ const periodOptions = [
   { value: "day", label: "Day" },
 ];
 
-const interviewOptions = [
-  { value: "all", label: "All Interviews" },
+const statusOptions = [
+  { value: "all", label: "All Status" },
   { value: "scheduled", label: "Scheduled" },
   { value: "completed", label: "Completed" },
   { value: "cancelled", label: "Cancelled" },
 ];
 
-function CandidateInterviewFilter() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+function CandidateInterviewFilter({
+  period,
+  status,
+  onChange,
+}: {
+  period: string;
+  status: string;
+  onChange: (values: {
+    period?: string;
+    status?: string;
+  }) => void;
+}) {
+  const [localPeriod, setLocalPeriod] = useState(period);
+  const [localStatus, setLocalStatus] = useState(status);
 
-  const selectedPeriod = searchParams.get("period") || "month";
-  const selectedInterview = searchParams.get("interview") || "all";
+  useEffect(() => {
+    setLocalPeriod(period);
+  }, [period]);
 
-  const updateParam = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set(key, value);
-    router.push(`${pathname}?${params.toString()}`);
-  };
+  useEffect(() => {
+    setLocalStatus(status);
+  }, [status]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      onChange({
+        period: localPeriod !== "month" ? localPeriod : undefined,
+        status: localStatus !== "all" ? localStatus : "",
+      });
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [localPeriod, localStatus, onChange]);
 
   return (
     <div className="flex items-center gap-2">
       <div className="w-[150px]">
         <SelecteInputField
-          value={selectedPeriod}
-          onValueChange={(value) => updateParam("period", value)}
+          value={localPeriod}
+          onValueChange={(value) => setLocalPeriod(value)}
           options={periodOptions}
           placeholder="Month"
-          className=" border bg-whiteColor! border-borderColor px-3!  font-medium text-headerColor"
+          className="border bg-whiteColor! border-borderColor px-3! font-medium text-headerColor"
         />
       </div>
 
-      <div className="w-[200px]">
+      <div className="w-[150px]">
         <SelecteInputField
-          value={selectedInterview}
-          onValueChange={(value) => updateParam("interview", value)}
-          options={interviewOptions}
-          placeholder="All Interviews"
-          className=" border bg-whiteColor! border-borderColor px-3!  font-medium text-headerColor"
+          value={localStatus}
+          onValueChange={(value) => setLocalStatus(value)}
+          options={statusOptions}
+          placeholder="All Status"
+          className="border bg-whiteColor! border-borderColor px-3! font-medium text-headerColor"
         />
       </div>
     </div>

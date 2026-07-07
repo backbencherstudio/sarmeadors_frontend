@@ -6,11 +6,16 @@ export const useCalendarLogic = () => {
   const [currentTitle, setCurrentTitle] = useState(
     new Date().toLocaleString("en-US", { month: "long", year: "numeric" })
   );
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   const syncTitle = useCallback(() => {
     const api = calendarRef.current?.getApi();
     if (api) {
       setCurrentTitle(api.view.title);
+      const date = api.getDate();
+      setCurrentMonth(date.getMonth() + 1);
+      setCurrentYear(date.getFullYear());
     }
   }, []);
 
@@ -32,6 +37,8 @@ export const useCalendarLogic = () => {
   return {
     calendarRef,
     currentTitle,
+    currentMonth,
+    currentYear,
     handlePrev,
     handleNext,
     handleToday,

@@ -57,7 +57,6 @@ function CandidateScheduleInfoDialog({
   const isEqualDay = jobDate.isSame(today, "day");
   const isScheduled = jobDate.isBefore(today, "day");
 
-
   return (
     <RootDialog open={isOpen} setOpen={setOpen}>
       <div className="w-full  rounded-2xl  p-6">

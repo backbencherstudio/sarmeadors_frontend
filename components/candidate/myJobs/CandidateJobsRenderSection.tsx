@@ -10,20 +10,28 @@ const CandidateJobRenderSection = ({
   onOpen: (event: any) => void;
 }) => {
   const event = eventInfo.event;
-  const { job_id, job_type, dotColor, time, description, location, client, modal } =
-    event.extendedProps as {
-      job_id: number;
-      job_type: string;
-      dotColor: string;
-      description?: string;
-      location?: JobLocation;
-      client?: JobClient;
-      modal: JobModal;
-      time: {
-        from: string;
-        to: string;
-      };
+  const {
+    job_id,
+    job_type,
+    dotColor,
+    time,
+    description,
+    location,
+    client,
+    modal,
+  } = event.extendedProps as {
+    job_id: number;
+    job_type: string;
+    dotColor: string;
+    description?: string;
+    location?: JobLocation;
+    client?: JobClient;
+    modal: JobModal;
+    time: {
+      from: string;
+      to: string;
     };
+  };
 
   // Full object access
   const fullEventObject = {

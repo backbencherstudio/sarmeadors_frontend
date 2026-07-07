@@ -6,20 +6,19 @@ const CandidateInterviewsSlice = baseApi.injectEndpoints({
       query: (args = {}) => {
         const {
           period = "month",
-          view = "list",
+          view = "calendar",
           search = "",
           month,
           year,
-          filter_search = "",
+          status = "",
         } = args;
         const params = new URLSearchParams();
-        if (period) params.append("period", period);
-        if (view) params.append("view", view);
-        if (search !== undefined) params.append("search", search);
-        if (month) params.append("month", month);
-        if (year) params.append("year", year);
-        if (filter_search !== undefined)
-          params.append("filter[search]", filter_search);
+        params.set("view", view);
+        params.set("period", period);
+        params.set("search", search);
+        if (month) params.set("month", String(month));
+        if (year) params.set("year", String(year));
+        params.set("status", status);
         return {
           url: `/candidate/interviews?${params.toString()}`,
           method: "GET",
