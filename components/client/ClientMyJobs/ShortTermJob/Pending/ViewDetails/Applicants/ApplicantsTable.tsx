@@ -6,7 +6,6 @@ import DynamicTableTwo from "@/components/common/DynamicTableTwo";
 import TableColAscDsc from "@/components/dashboard/TableColAscDsc";
 import { Eye } from "lucide-react";
 import HireCandidateModal from "../../../Marketplace/Applicants/HireCandidateModal";
-import ScheduleInterviewModal from "../../../Marketplace/Applicants/ScheduleInterviewModla";
 import { useGetApplicantsQuery } from "@/feature/dashboard/client/myJob";
 import { useSearchParams } from "next/navigation";
 
@@ -24,105 +23,43 @@ function ApplicantsTable() {
   const params = useSearchParams();
   const jobId = params.get("jobId");
 
-  const { data: applicantsData } = useGetApplicantsQuery(jobId);
-  console.log(applicantsData?.data);
+  const { data: applicantsData, isLoading } = useGetApplicantsQuery(
+    jobId ?? "",
+    {
+      skip: !jobId,
+    },
+  );
 
-  // Sample data matching the image
-  const [data, setData] = useState([
-    {
-      id: "1",
-      full_name: "Bessie Cooper",
-      application_date: "15 May 2020 9:30 am",
-      application_message:
-        "Looking for a dedicated Nanny and House Manager to help keep everything running smoothly at home.",
-      status: "pending",
-    },
-    {
-      id: "2",
-      full_name: "Marvin McKinney",
-      application_date: "15 May 2020 9:00 am",
-      application_message:
-        "Seeking a caring Baby/Night Nurse to provide support during nighttime hours.",
-      status: "pending",
-    },
-    {
-      id: "3",
-      full_name: "Brooklyn Simmons",
-      application_date: "15 May 2020 9:30 am",
-      application_message:
-        "In need of a nurturing Nanny to care for our little ones.",
-      status: "pending",
-    },
-    {
-      id: "4",
-      full_name: "Courtney Henry",
-      application_date: "15 May 2020 9:00 am",
-      application_message:
-        "Looking for a skilled Nurse to provide medical care and support.",
-      status: "pending",
-    },
-    {
-      id: "5",
-      full_name: "Arlene McCoy",
-      application_date: "15 May 2020 8:30 am",
-      application_message:
-        "Looking for a reliable Nanny to assist with childcare.",
-      status: "pending",
-    },
-    {
-      id: "6",
-      full_name: "Floyd Miles",
-      application_date: "15 May 2020 8:30 am",
-      application_message: "Seeking a reliable Nanny to assist with childcare.",
-      status: "pending",
-    },
-    {
-      id: "7",
-      full_name: "Cody Fisher",
-      application_date: "15 May 2020 9:00 am",
-      application_message:
-        "Looking for a compassionate Nanny to help with daily activities.",
-      status: "pending",
-    },
-    {
-      id: "8",
-      full_name: "Jerome Bell",
-      application_date: "15 May 2020 9:30 am",
-      application_message:
-        "Searching for an experienced Nanny to care for our children.",
-      status: "pending",
-    },
-    {
-      id: "9",
-      full_name: "Guy Hawkins",
-      application_date: "15 May 2020 9:00 am",
-      application_message:
-        "Searching for an experienced Nanny to care for our children.",
-      status: "pending",
-    },
-    {
-      id: "10",
-      full_name: "Kristin Watson",
-      application_date: "15 May 2020 8:00 am",
-      application_message:
-        "Looking for a Nanny and House Manager, along with a Baby/Night Nurse, to provide comprehensive care.",
-      status: "pending",
-    },
-    {
-      id: "11",
-      full_name: "Esther Howard",
-      application_date: "15 May 2020 8:30 am",
-      application_message:
-        "Looking for a Nanny and House Manager, along with a Baby/Night Nurse, to provide comprehensive care.",
-      status: "pending",
-    },
-  ]);
+  const formatDate = (dateString: string | null | undefined) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return dateString;
+    return date.toLocaleString("en-US", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  const rows = applicantsData?.data?.applications?.data?.map(
+    (application: any) => ({
+      id: String(application.id),
+      full_name:
+        `${application.candidate?.first_name ?? ""} ${application.candidate?.last_name ?? ""}`.trim(),
+      application_date: formatDate(application.created_at),
+      application_message: application.application_message,
+      status: application.status,
+    }),
+  );
 
   const toggleSelectAll = () => {
-    if (selectedRows.length === data.length) {
+    if (selectedRows.length === rows?.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(data.map((row) => row.id));
+      setSelectedRows(rows?.map((row) => row.id));
     }
   };
 
@@ -144,7 +81,7 @@ function ApplicantsTable() {
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
-            checked={selectedRows.length === data.length && data.length > 0}
+            checked={selectedRows.length === rows?.length && rows.length > 0}
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
           />
@@ -203,7 +140,7 @@ function ApplicantsTable() {
           </Link>
 
           {/* Schedule Interview Modal */}
-          <ScheduleInterviewModal />
+          {/* <ScheduleInterviewModal /> */}
 
           {/* Modal */}
           <HireCandidateModal />
@@ -221,7 +158,7 @@ function ApplicantsTable() {
     <section>
       <DynamicTableTwo
         columns={visibleColumnsArray}
-        data={data || []}
+        data={rows || []}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={(page) => setCurrentPage(page)}
@@ -229,9 +166,9 @@ function ApplicantsTable() {
           setItemsPerPage(newItemsPerPage);
           setCurrentPage(1);
         }}
-        loading={false}
-        totalItems={data.length}
-        totalpage={Math.ceil(data.length / itemsPerPage)}
+        loading={isLoading}
+        totalItems={rows?.length}
+        totalpage={Math.max(1, Math.ceil(rows?.length / itemsPerPage))}
       />
     </section>
   );

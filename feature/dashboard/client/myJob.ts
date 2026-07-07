@@ -46,6 +46,12 @@ const ClientMyCandidatedApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getSingleApplicant: builder.query({
+      query: ({ jobId, applicantId }) => ({
+        url: `/client/jobs/short-term/${jobId}/applicants/${applicantId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -57,4 +63,5 @@ export const {
   useLocationsQuery,
   useCancelShortTermJobMutation,
   useGetApplicantsQuery,
+  useGetSingleApplicantQuery,
 } = ClientMyCandidatedApi;
