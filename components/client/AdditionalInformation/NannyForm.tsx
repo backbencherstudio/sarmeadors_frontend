@@ -1,7 +1,5 @@
 "use client";
 
-import { useGetSingleClientMyCandidateQuery } from "@/feature/dashboard/client/myCandidate";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface FormData {
@@ -23,30 +21,25 @@ interface FormData {
   hearAboutUs: string;
 }
 
-export function NannyForm() {
+export function NannyForm({ additionalInformation }) {
   const [formData, setFormData] = useState<FormData>({
-    interestedMidwest: "yes",
-    yearsExperience: "5-10",
-    commitment: "long-term",
+    interestedMidwest: "",
+    yearsExperience: "",
+    commitment: "",
     availableFor: {
-      partTime: true,
-      liveIn: true,
+      partTime: false,
+      liveIn: false,
     },
-    driverLicense: "drivers-license",
-    cprCertified: "willing",
-    vaccinations: "yes",
-    petsHome: "cat",
-    travel: "international",
-    usWork: "yes",
-    paidLegally: "yes",
-    ssn: "yes",
-    hearAboutUs: "google",
+    driverLicense: "",
+    cprCertified: "",
+    vaccinations: "",
+    petsHome: "",
+    travel: "",
+    usWork: "",
+    paidLegally: "",
+    ssn: "",
+    hearAboutUs: "",
   });
-
-  const { id } = useParams();
-  const { data } = useGetSingleClientMyCandidateQuery(id);
-
-  const additionalInformation = data?.data?.candidate?.additional_information;
 
   useEffect(() => {
     if (!additionalInformation) return;
