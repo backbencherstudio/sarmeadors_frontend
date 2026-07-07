@@ -1,4 +1,7 @@
-import { useGetAgencyStatusesQuery, useUpdateAgencyClientStatusMutation } from "@/feature/slice/agency/agencyDashboardSlice"; 
+import {
+  useGetAgencyStatusesQuery,
+  useUpdateAgencyClientStatusMutation,
+} from "@/feature/slice/agency/agencyDashboardSlice";
 import { useEffect, useState } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
@@ -13,10 +16,12 @@ import {
   SelectValue,
 } from "../ui/select";
 import StatuseSetting from "./StatuseSetting";
+import { useUpdateAgencyCandidateMutation } from "@/feature/slice/agency/agencyCandidateSlice";
 
 function DashboardStatuse({
   value,
   record,
+  type,
   loadingStatusId,
 }: {
   value: {
@@ -24,11 +29,17 @@ function DashboardStatuse({
     color: string;
   };
   record?: any;
+  type?: "candidate" | "client";
   loadingStatusId?: string | null;
 }) {
-  const { data, isLoading: statusLoading } = useGetAgencyStatusesQuery("agency-statuses");
-  
-  const [updateAgencyClientStatus, { isLoading: isUpdating }] = useUpdateAgencyClientStatusMutation();
+  const { data, isLoading: statusLoading } =
+    useGetAgencyStatusesQuery("agency-statuses");
+  console.log(data, "data");
+
+  const [updateAgencyClientStatus, { isLoading: isUpdating }] =
+    useUpdateAgencyClientStatusMutation();
+  const [updateAgencyCandidate, { isLoading: isUpdatingCandidate }] =
+    useUpdateAgencyCandidateMutation();
 
   const [statuseSearchTerm, setStatuseSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,11 +62,17 @@ function DashboardStatuse({
   const handleValueChange = async (selectedValueString: string) => {
     try {
       const selectedStatus = JSON.parse(selectedValueString);
-      await updateAgencyClientStatus({
-        clientId: record?._id || record?.id, 
-        statusId: selectedStatus._id || selectedStatus.id,
-      }).unwrap();
-
+      if (type === "candidate") {
+        await updateAgencyCandidate({
+          candidateId: record?._id || record?.id,
+          statusId: selectedStatus._id || selectedStatus.id,
+        }).unwrap();
+      } else {
+        await updateAgencyClientStatus({
+          clientId: record?._id || record?.id,
+          statusId: selectedStatus._id || selectedStatus.id,
+        }).unwrap();
+      }
     } catch (error) {
       console.error("Status update failed:", error);
     } finally {
@@ -70,8 +87,8 @@ function DashboardStatuse({
           value={value?.name || "Pre Application"}
           open={selectOpen}
           onOpenChange={setSelectOpen}
-          onValueChange={handleValueChange} 
-          disabled={isUpdating || loadingStatusId === record?._id} 
+          onValueChange={handleValueChange}
+          disabled={isUpdating || isUpdatingCandidate || loadingStatusId === record?.id}
         >
           <SelectTrigger className="flex items-center gap-1.5 p-1 !h-9 w-full justify-between">
             <div
@@ -81,7 +98,7 @@ function DashboardStatuse({
                 color: value?.color || undefined,
               }}
             >
-              <SelectValue  >{value?.name || "Pre Application"}</SelectValue>
+              <SelectValue>{value?.name || "Pre Application"}</SelectValue>
             </div>
             <div>
               <IoIosArrowDown />
@@ -125,8 +142,7 @@ function DashboardStatuse({
                         : undefined,
                       color: status?.color || undefined,
                     }}
-                   
-                    value={JSON.stringify(status)} 
+                    value={JSON.stringify(status)}
                   >
                     {status.name}
                   </SelectItem>
