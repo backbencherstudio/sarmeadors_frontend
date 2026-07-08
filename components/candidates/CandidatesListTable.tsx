@@ -11,6 +11,7 @@ import { LuCalendarRange } from "react-icons/lu";
 import ClientCreateForm from "../allForm/ClientCreateForm";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import FilterHeader from "../common/FilterHeader";
+import ClientTableSetting from "../dashboard/ClientTableSetting";
 import DashboardStatuse from "../dashboard/DashboardStatuse";
 import ButtonReuseable from "../reusable/CustomButton";
 
@@ -250,6 +251,13 @@ function CandidatesListTable() {
       </div>
       {isModalOpen && (
         <ClientCreateForm open={isModalOpen} setOpen={setIsModalOpen} />
+      )}
+      {isTableOpen && (
+        <ClientTableSetting
+          open={isTableOpen}
+          type="candidate"
+          setOpen={setTableSettingOpen}
+        />
       )}
     </section>
   );

@@ -1,3 +1,4 @@
+import { useUpdateAgencyCandidateMutation } from "@/feature/slice/agency/agencyCandidateSlice";
 import {
   useGetAgencyStatusesQuery,
   useUpdateAgencyClientStatusMutation,
@@ -16,7 +17,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import StatuseSetting from "./StatuseSetting";
-import { useUpdateAgencyCandidateMutation } from "@/feature/slice/agency/agencyCandidateSlice";
 
 function DashboardStatuse({
   value,
@@ -32,9 +32,9 @@ function DashboardStatuse({
   type?: "candidate" | "client";
   loadingStatusId?: string | null;
 }) {
-  const { data, isLoading: statusLoading } =
-    useGetAgencyStatusesQuery("agency-statuses");
-  console.log(data, "data");
+  const { data, isLoading: statusLoading } = useGetAgencyStatusesQuery(
+    type || "candidate",
+  );
 
   const [updateAgencyClientStatus, { isLoading: isUpdating }] =
     useUpdateAgencyClientStatusMutation();
@@ -62,6 +62,7 @@ function DashboardStatuse({
   const handleValueChange = async (selectedValueString: string) => {
     try {
       const selectedStatus = JSON.parse(selectedValueString);
+      console.log(selectedStatus, "check=====");
       if (type === "candidate") {
         await updateAgencyCandidate({
           candidateId: record?._id || record?.id,
@@ -88,7 +89,9 @@ function DashboardStatuse({
           open={selectOpen}
           onOpenChange={setSelectOpen}
           onValueChange={handleValueChange}
-          disabled={isUpdating || isUpdatingCandidate || loadingStatusId === record?.id}
+          disabled={
+            isUpdating || isUpdatingCandidate || loadingStatusId === record?.id
+          }
         >
           <SelectTrigger className="flex items-center gap-1.5 p-1 !h-9 w-full justify-between">
             <div
@@ -169,7 +172,11 @@ function DashboardStatuse({
       </div>
 
       {isModalOpen && (
-        <StatuseSetting open={isModalOpen} setOpen={setIsModalOpen} />
+        <StatuseSetting
+          type={type}
+          open={isModalOpen}
+          setOpen={setIsModalOpen}
+        />
       )}
     </div>
   );

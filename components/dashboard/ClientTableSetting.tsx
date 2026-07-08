@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   DrawerClose,
   DrawerFooter,
@@ -36,13 +35,15 @@ interface SelectOption {
 function ClientTableSetting({
   open,
   setOpen,
+  type,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  type: string;
 }) {
   const [statuses, setStatuses] = useState<any[]>([]);
   const { data: statusesData, isLoading: isStatusesLoading } =
-    useGetAgencyStatusesQuery("agency-statuses");
+    useGetAgencyStatusesQuery(type || "client");
 
   useEffect(() => {
     if (statusesData?.data) {
@@ -152,7 +153,7 @@ function ClientTableSetting({
         const body = {
           name: status.name,
           color: status.backgroundColor || status.color,
-          type: "client",
+          type: type || "client",
           any_reason: selectedStatusesForReason.includes(status.name),
           reason: statusReasons[status.name] || null,
         };
@@ -247,7 +248,11 @@ function ClientTableSetting({
 
         <DrawerFooter className="flex flex-row justify-end gap-2 p-2">
           <DrawerClose asChild>
-            <ButtonReuseable title="Cancel" className="bg-bgColor! text-headerColor! border " onClick={() => setOpen(false)} />
+            <ButtonReuseable
+              title="Cancel"
+              className="bg-bgColor! text-headerColor! border "
+              onClick={() => setOpen(false)}
+            />
           </DrawerClose>
           <ButtonReuseable
             onClick={handleSubmit}

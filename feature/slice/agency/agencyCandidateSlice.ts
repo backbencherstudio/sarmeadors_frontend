@@ -39,9 +39,9 @@ const agencyCandidateSlice = baseApi.injectEndpoints({
       invalidatesTags: ["AgencyCandidates"],
     }),
     updateAgencyCandidate: builder.mutation({
-      query: ({ id, pramsId }) => ({
-        url: `/agency/candidates/${id}/status?status_id=${pramsId}`,
-        method: "PUT",
+      query: ({ candidateId, statusId }) => ({
+        url: `/agency/candidates/${candidateId}/status?status_id=${statusId}`,
+        method: "PATCH",
       }),
       invalidatesTags: ["AgencyCandidates"],
     }),
