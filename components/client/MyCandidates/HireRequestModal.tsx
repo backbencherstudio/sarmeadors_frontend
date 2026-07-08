@@ -62,6 +62,28 @@ export default function HireRequestModal() {
 
   const [error, setError] = useState<string | null>(null);
 
+  // ===== Validation Functions =====
+  const isStep1Valid = () => {
+    return dates.every(
+      (date) => date.booking_date && date.start_time && date.end_time,
+    );
+  };
+
+  const isStep2Valid = () => {
+    return title.trim() && description.trim() && compensationAmount.trim();
+  };
+
+  const isStep3Valid = () => {
+    return (
+      jobAddress.trim() &&
+      homeCity.trim() &&
+      homeProvince.trim() &&
+      homePostalCode.trim() &&
+      country.trim() &&
+      location.trim()
+    );
+  };
+
   const handleSubmit = async () => {
     setError(null);
 
@@ -198,7 +220,8 @@ export default function HireRequestModal() {
                             </div>
                             <div>
                               <h4 className="font-medium text-[#111927]">
-                                Booking Date & Time
+                                Booking Date & Time{" "}
+                                <span className="text-red-500">*</span>
                               </h4>
                               <p className="text-sm text-gray-500">
                                 Schedule when this job will take place
@@ -262,7 +285,8 @@ export default function HireRequestModal() {
                             <div className="flex justify-end mt-8">
                               <button
                                 onClick={() => setStep(2)}
-                                className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer"
+                                disabled={!isStep1Valid()}
+                                className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-[#111927]"
                               >
                                 Next
                               </button>
@@ -354,7 +378,8 @@ export default function HireRequestModal() {
                       </button>
                       <button
                         onClick={() => setStep(3)}
-                        className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer"
+                        disabled={!isStep2Valid()}
+                        className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-[#111927]"
                       >
                         Next
                       </button>
@@ -478,8 +503,8 @@ export default function HireRequestModal() {
                       </button>
                       <button
                         onClick={handleSubmit}
-                        disabled={isSubmitting}
-                        className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                        disabled={isSubmitting || !isStep3Valid()}
+                        className="bg-[#111927] text-white px-6 py-3 rounded-lg hover:bg-[#111927]/90 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-[#111927]"
                       >
                         {isSubmitting ? "Submitting..." : "Submit"}
                       </button>

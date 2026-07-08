@@ -8,7 +8,10 @@ export default function MyJobsLayout({
   children: React.ReactNode;
 }) {
   const TabsData = [
-    { label: "Short-Term Job", link: "/client/client-my-jobs/short-term-job" },
+    {
+      label: "Short-Term Job",
+      link: "/client/client-my-jobs/short-term-job",
+    },
     {
       label: "Long-Term Job",
       link: "/client/client-my-jobs/long-term-job/running",
@@ -35,7 +38,7 @@ export default function MyJobsLayout({
       {/* Reusable Line Tabs */}
       <ReusableLineTabs
         tabs={TabsData}
-        currentPath="/client/client-my-jobs/short-term-job"
+        currentPath="/client/client-my-jobs/short-term-job/running"
       />
       {/* Children */}
 

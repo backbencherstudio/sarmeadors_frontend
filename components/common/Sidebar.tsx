@@ -229,7 +229,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   useEffect(() => {
     const stored = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(stored || "agency_admin");
+    setIsLoggedIn(stored);
   }, [pathname]);
 
   useEffect(() => {

@@ -93,7 +93,7 @@ export default function LoginForm() {
       } else {
         router.push("/");
       }
-      // localStorage.setItem("accessToken", response?.token);
+      localStorage.setItem("isLoggedIn", userType);
       reset();
     } catch (error: any) {
       console.log(error);

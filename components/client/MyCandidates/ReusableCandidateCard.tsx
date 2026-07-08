@@ -6,13 +6,13 @@ import Image from "next/image";
 import { useState } from "react";
 import ClientNoteModal from "./ClientNoteModal";
 
-function ReusableCandidateCard({ profile }: any) {
+function ReusableCandidateCard({ profile, path }: any) {
   const [open, setOpen] = useState(false);
 
   return (
     <div>
-      <div className="border flex flex-col justify-between h-full border-[#E5E7EB] rounded-2xl md:rounded-[24px]">
-        <div className="md:p-6 p-4 bg-[#F9FAFB] rounded-2xl md:rounded-[24px] flex items-start justify-between">
+      <div className="border flex flex-col justify-between h-full border-[#E5E7EB] rounded-2xl md:rounded-3xl">
+        <div className="md:p-6 p-4 bg-[#F9FAFB] rounded-2xl md:rounded-3xl flex items-start justify-between">
           <div className="flex flex-col md:flex-row items-start gap-x-6">
             <div className="overflow-hidden rounded-full">
               <Image
@@ -20,7 +20,7 @@ function ReusableCandidateCard({ profile }: any) {
                 alt="image"
                 height={180}
                 width={132}
-                className="h-[124px] w-[124px] object-cover"
+                className="h-31 w-31 object-cover"
               />
             </div>
             <div className="flex md:h-full flex-col mt-3 md:mt-0 gap-4 md:justify-between">
@@ -67,46 +67,46 @@ function ReusableCandidateCard({ profile }: any) {
             </div>
           )}
           {/* {profile?.clientInterviewAvailability && (
-                        <div className="my-3">
+                  <div className="my-3">
                             <p className="text-[#111927] font-semibold">
                                 Client Interview Availability
                             </p>
                             <p className="text-gray-500">
                                 {profile?.clientInterviewAvailability}
                             </p>
-                        </div>
+                  </div>
           )} */}
           <div className="mt-10 w-full">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               {profile?.status === "not-interested" ? (
                 <LinkReuseable
-                  href={`/client/client-my-candidates/new-candidates/${profile.id}/personal-information`}
+                  href={`/client/client-my-candidates/${path}/${profile.id}/personal-information`}
                   title="View Details"
                   icon={<EyeIcon size={15} />}
-                  className="flex items-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto"
+                  className="flex items-center py-2 px-4 text-nowrap text-sm! rounded-xl hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto"
                 />
               ) : (
                 <>
                   <LinkReuseable
-                    href={`/client/client-my-candidates/new-candidates/${profile.id}/personal-information`}
+                    href={`/client/client-my-candidates/${path}/${profile.id}/personal-information`}
                     title="View Details"
                     icon={<EyeIcon size={15} />}
-                    className="flex items-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto"
+                    className="flex items-center py-2 px-4 text-nowrap text-sm! rounded-xl hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto"
                   />
 
                   {profile?.status === "interested" ? (
-                    <button className="flex items-center justify-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto gap-2 h-full transition-all duration-200">
+                    <button className="flex items-center justify-center py-2 px-4 text-nowrap text-sm! rounded-xl hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto gap-2 h-full transition-all duration-200">
                       <span>Extend Offer</span>
                     </button>
                   ) : (
                     <>
                       <button
                         // onClick={() => setOpen(true)}
-                        className="flex items-center justify-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto gap-2 h-full transition-all duration-200"
+                        className="flex items-center justify-center py-2 px-4 text-nowrap text-sm! rounded-xl hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto gap-2 h-full transition-all duration-200"
                       >
                         <span>I'm interested</span>
                       </button>
-                      <button className="flex items-center justify-center py-2 px-4 text-nowrap text-sm! rounded-[8px] hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto gap-2 h-full transition-all duration-200">
+                      <button className="flex items-center justify-center py-2 px-4 text-nowrap text-sm! rounded-xl hover:bg-[#111927] border hover:text-white hover:border-black cursor-pointer  w-full mx-auto gap-2 h-full transition-all duration-200">
                         <span>I'm not interested</span>
                       </button>
                     </>
