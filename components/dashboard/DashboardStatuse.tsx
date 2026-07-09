@@ -40,7 +40,6 @@ function DashboardStatuse({
     useUpdateAgencyClientStatusMutation();
   const [updateAgencyCandidate, { isLoading: isUpdatingCandidate }] =
     useUpdateAgencyCandidateMutation();
-
   const [statuseSearchTerm, setStatuseSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectOpen, setSelectOpen] = useState(false);
@@ -62,7 +61,6 @@ function DashboardStatuse({
   const handleValueChange = async (selectedValueString: string) => {
     try {
       const selectedStatus = JSON.parse(selectedValueString);
-      console.log(selectedStatus, "check=====");
       if (type === "candidate") {
         await updateAgencyCandidate({
           candidateId: record?._id || record?.id,
@@ -133,7 +131,7 @@ function DashboardStatuse({
                 />
               </div>
             </div>
-            <div>
+            <div>           
               {data?.data?.length > 0 ? (
                 data?.data?.map((status) => (
                   <SelectItem
