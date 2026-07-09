@@ -30,8 +30,8 @@ const agencyDashboardSlice = baseApi.injectEndpoints({
       providesTags: ["AgencyClientTableColumns"],
     }),
     getAgencyStatuses: builder.query({
-      query: () => ({
-        url: `/agency/statuses`,
+      query: (type) => ({
+        url: `/agency/statuses?type=${type}`,
         method: "GET",
       }),
       providesTags: ["AgencyClientTableColumns"],
