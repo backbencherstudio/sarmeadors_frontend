@@ -111,6 +111,7 @@ function DashboardUserTable() {
         <DashboardStatuse
           value={value}
           record={record}
+          type="client"
           loadingStatusId={loadingStatusId}
         />
       ),
@@ -229,7 +230,7 @@ function DashboardUserTable() {
         <ClientCreateForm open={isModalOpen} setOpen={setIsModalOpen} />
       )}
       {isTableOpen && (
-        <ClientTableSetting open={isTableOpen} setOpen={setTableSettingOpen} />
+        <ClientTableSetting open={isTableOpen} type="client" setOpen={setTableSettingOpen} />
       )}
     </section>
   );

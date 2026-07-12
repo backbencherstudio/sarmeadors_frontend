@@ -95,6 +95,7 @@ export const baseApi = createApi({
     "candidateDocuments",
     "candidateAvailability",
     "AgencyClientTableColumns",
+    "AgencyCandidates",
   ],
   endpoints: (builder) => ({}),
 });

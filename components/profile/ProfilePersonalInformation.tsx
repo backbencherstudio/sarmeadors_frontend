@@ -3,16 +3,10 @@
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import ButtonReuseable from "../reusable/CustomButton";
-import { useGetSingleClientMyCandidateQuery } from "@/feature/dashboard/client/myCandidate";
-import { useParams } from "next/navigation";
 
-function ProfilePersonalInformation() {
+function ProfilePersonalInformation({ personalInfo }) {
   const [isHidden, setIsHidden] = useState(false);
   const [hiddenField, setHiddenField] = useState("");
-  const { id } = useParams();
-  const { data } = useGetSingleClientMyCandidateQuery(id);
-
-  const personalInfo = data?.data?.candidate?.personal_information;
 
   const address = personalInfo?.address || {};
 

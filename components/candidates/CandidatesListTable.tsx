@@ -1,20 +1,25 @@
 "use client";
 
-import { candidateListData, candidatesStatuse } from "@/demoData/DashboardData";
+import { useAllAgencyCandidatesQuery } from "@/feature/slice/agency/agencyCandidateSlice";
 import dayjs from "dayjs";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSettingsSharp } from "react-icons/io5";
+import { LuCalendarRange } from "react-icons/lu";
 import ClientCreateForm from "../allForm/ClientCreateForm";
-import StatuseChange from "../clients/AdminTabs/payment/StatuseChange";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import FilterHeader from "../common/FilterHeader";
-import TableColAscDsc from "../dashboard/TableColAscDsc";
+import ClientTableSetting from "../dashboard/ClientTableSetting";
+import DashboardStatuse from "../dashboard/DashboardStatuse";
+import ButtonReuseable from "../reusable/CustomButton";
 
 function CandidatesListTable() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState(candidateListData);
+
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isTableOpen, setTableSettingOpen] = useState(false);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState({
@@ -47,113 +52,171 @@ function CandidatesListTable() {
     console.log("Column sorting clicked");
   };
 
-  const columns = [
+  const { data, isLoading } = useAllAgencyCandidatesQuery(
+    "AgencyClientTableColumns",
+  );
+
+  const baseColumns = [
     {
-      label: (
-        <div className="flex items-center gap-3">
-          <input
-            type="checkbox"
-            checked={selectedRows.length === data.length && data.length > 0}
-            onChange={toggleSelectAll}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300"
-          />
-          <span>Name</span>
-          <TableColAscDsc onClick={handleColShort} />
-        </div>
-      ),
-      accessor: "full_name",
+      accessor: "name",
       width: "250px",
       formatter: (value: string, record: any) => (
-        <Link
-          href={`/candidates/${record.id}/admin/list`}
-          className="flex items-center gap-3"
-        >
-          <input
-            type="checkbox"
-            checked={selectedRows.includes(record.id)}
-            onChange={() => toggleRowSelection(record.id)}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300"
-          />
+        <Link href="/clients" className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+            <span className="text-xs font-medium text-gray-600">
+              {record?.image_url ? (
+                <Image
+                  src={record?.image_url || `/empty-user.png`}
+                  alt="Uploaded Preview"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : (
+                value
+                  ?.split(" ")
+                  ?.map((n: string) => n[0])
+                  ?.join("")
+              )}
+            </span>
+          </div>
           <span className="text-sm font-medium text-blackColor">{value}</span>
         </Link>
       ),
     },
     {
-      label: "Email Address",
       accessor: "email_address",
       width: "250px",
-      formatter: (value: string, record: any) => (
-        <Link
-          href={`/candidates/${record.id}/admin/list`}
-          className="text-sm text-blackColor"
-        >
+      formatter: (value: string) => (
+        <Link href="/clients" className="text-sm text-blackColor">
           {value}
         </Link>
       ),
     },
     {
-      label: "Phone Number",
-      accessor: "mobile_number",
+      accessor: "phone_number",
       width: "150px",
       formatter: (value: string) => (
         <span className="text-sm text-blackColor">{value}</span>
       ),
     },
     {
-      label: "Position(s) Applying For",
-      accessor: "position",
-      width: "220px",
+      accessor: "position_applying_for",
+      width: "150px",
       formatter: (value: string) => (
         <span className="text-sm text-blackColor">{value}</span>
       ),
     },
     {
-      label: "Last Login",
       accessor: "last_login",
-      width: "170px",
+      width: "150px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
+      ),
+    },
+    {
+      accessor: "locations",
+      width: "150px",
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
+      ),
+    },
+    {
+      accessor: "registration_date",
+      width: "180px",
       formatter: (value: string) => (
         <div className="flex items-center gap-2 text-sm text-blackColor">
-          {dayjs(value).format("ddd MMM DD YYYY")}
+          <LuCalendarRange size={16} className="text-gray3Color" />
+          {dayjs(value).format("M/D/YY")}
         </div>
       ),
     },
     {
-      label: "Locations",
-      accessor: "location",
-      width: "220px",
+      accessor: "status",
+      width: "150px",
+      formatter: (value: { name: string; color: string }, record: any) => (
+        <DashboardStatuse type="candidate" value={value} record={record} />
+      ),
+    },
+    {
+      accessor: "hear_about_us",
+      width: "150px",
       formatter: (value: string) => (
         <span className="text-sm text-blackColor">{value}</span>
       ),
     },
     {
-      label: "Status",
-      accessor: "status",
+      accessor: "payment_status",
       width: "150px",
-      formatter: (value: string, record: any) => (
-        <StatuseChange
-          setData={setData}
-          row={record}
-          statuse={candidatesStatuse}
-        />
+      formatter: (value: string) => (
+        <span className="text-sm text-blackColor">{value}</span>
       ),
-    },
-    {
-      label: (
-        <div className="text-right">
-          <button className="flex items-center cursor-pointer justify-end gap-2">
-            <IoSettingsSharp size={18} />
-          </button>
-        </div>
-      ),
-      accessor: "action",
-      width: "50px",
     },
   ];
 
-  // Filter columns based on visibility
-  const visibleColumnsArray = columns.filter(
-    (col) => visibleColumns[col.accessor as keyof typeof visibleColumns],
-  );
+  let filteredColumns: any[] = [];
+
+  if (data?.columns && data.columns.length > 0) {
+    filteredColumns = data.columns
+      .map((apiCol) => {
+        const matchedCol = baseColumns.find((c) => c.accessor === apiCol.key);
+        if (!matchedCol) return null;
+        let finalLabel: React.ReactNode = apiCol.label;
+
+        if (apiCol.key === "name") {
+          finalLabel = (
+            <div className="flex items-center gap-3">
+              <span>{apiCol.label}</span>
+              <button className="flex flex-col cursor-pointer">
+                <IoMdArrowDropdown className="rotate-180" />
+                <IoMdArrowDropdown />
+              </button>
+            </div>
+          );
+        }
+
+        return {
+          ...matchedCol,
+          label: finalLabel,
+        };
+      })
+      .filter(Boolean);
+
+    filteredColumns.push(
+      {
+        label: "Action",
+        accessor: "viewed",
+        width: "150px",
+        formatter: () => (
+          <div className="flex justify-end">
+            <ButtonReuseable
+              title=" View "
+              className="text-blackColor! py-2! bg-bgColor! border   font-semibold"
+            />
+          </div>
+        ),
+      },
+      {
+        label: (
+          <div className="text-right">
+            <button
+              onClick={() => setTableSettingOpen(true)}
+              className="flex items-center cursor-pointer justify-end gap-2"
+            >
+              <IoSettingsSharp size={18} />
+            </button>
+          </div>
+        ),
+        accessor: "action",
+        width: "50px",
+      },
+    );
+  } else {
+    filteredColumns = baseColumns.map((col) => ({
+      ...col,
+      label: col.accessor.replace(/_/g, " "),
+    }));
+  }
 
   const handleOpenModal = () => {
     // Logic to open the modal
@@ -172,22 +235,29 @@ function CandidatesListTable() {
           />
         </div>
         <DynamicTableTwo
-          columns={visibleColumnsArray}
-          data={data || []}
+          columns={filteredColumns}
+          data={data?.data || []}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={(page) => setCurrentPage(page)}
           onItemsPerPageChange={(newItemsPerPage) => {
             setItemsPerPage(newItemsPerPage);
-            setCurrentPage(1); // Reset to page 1 when items per page changes
+            setCurrentPage(1);
           }}
-          loading={false}
-          totalItems={data.length}
+          loading={isLoading}
+          totalItems={10}
           totalpage={2}
         />
       </div>
       {isModalOpen && (
         <ClientCreateForm open={isModalOpen} setOpen={setIsModalOpen} />
+      )}
+      {isTableOpen && (
+        <ClientTableSetting
+          open={isTableOpen}
+          type="candidate"
+          setOpen={setTableSettingOpen}
+        />
       )}
     </section>
   );

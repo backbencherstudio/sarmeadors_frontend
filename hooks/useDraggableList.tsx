@@ -6,7 +6,7 @@ export const useDraggableList = (initialItems: any[]) => {
 
   useEffect(() => {
     setItems(initialItems);
-  }, [initialItems]);
+  }, [JSON.stringify(initialItems)]);
 
   const handleDragStart = (e: React.DragEvent, id: string | number) => {
     setDraggedItemId(id);
