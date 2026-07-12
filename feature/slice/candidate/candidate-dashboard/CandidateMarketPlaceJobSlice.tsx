@@ -14,9 +14,9 @@ const CandidateMarketPlaceJobSlice = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getCandidateMyJobsList: builder.query({
+    getCandidateMarketPlaceJobsDetails: builder.query({
       query: ({ params }) => ({
-        url: `/candidate/jobs?${params}`,
+        url: `/candidate/jobs/short-term-marketplace/${params}`,
         method: "GET",
       }),
     }),
@@ -26,5 +26,5 @@ const CandidateMarketPlaceJobSlice = baseApi.injectEndpoints({
 export const {
   useGetCandidateMarketPlaceShortTermJobQuery,
   useGetCandidateMarketPlaceLongTermJobQuery,
-  useGetCandidateMyJobsListQuery,
+  useGetCandidateMarketPlaceJobsDetailsQuery,
 } = CandidateMarketPlaceJobSlice;

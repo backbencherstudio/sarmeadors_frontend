@@ -1,7 +1,7 @@
 "use client";
-import ClientJobList from "@/components/client/ClientMyJobs/ClientJobList";
 import { useGetCandidateMarketPlaceShortTermJobQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateMarketPlaceJobSlice";
 import React from "react";
+import MarketPlaceJobList from "./MarketPlaceJobList";
 
 export default function ShortTermJobs() {
   const { data, isLoading, isError } =
@@ -12,7 +12,7 @@ export default function ShortTermJobs() {
   return (
     <div>
       <div className="space-y-4">
-        <ClientJobList
+        <MarketPlaceJobList
           userType="candidate"
           jobs={data?.data?.data}
           isLoading={isLoading}

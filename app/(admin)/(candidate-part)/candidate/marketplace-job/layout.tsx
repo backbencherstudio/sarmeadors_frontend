@@ -17,7 +17,7 @@ function MarketPlaceJobLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="p-4 md:p-6">
       <h3 className="text-lg font-semibold text-headerColor mb-5">
-        Applied Job
+        Job Opportunities
       </h3>
       <ResuableMenu
         initialPath="/candidate/marketplace-job"
