@@ -7,7 +7,7 @@ export default function ShortTermJobs() {
   const { data, isLoading, isError } =
     useGetCandidateMarketPlaceShortTermJobQuery("market-place");
 
-  console.log("data=======", data?.data);
+  // console.log("data=======", data?.data);
 
   return (
     <div>
