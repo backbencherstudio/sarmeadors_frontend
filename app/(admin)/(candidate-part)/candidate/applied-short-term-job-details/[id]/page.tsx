@@ -15,5 +15,12 @@ export default function AppliedShortTermJobDetailsPage() {
 
   const job = data?.data;
 
-  return <JobDescription job={job} isLoading={isLoading} error={error} />;
+  return (
+    <JobDescription
+      job={job}
+      jobType="short-term"
+      isLoading={isLoading}
+      error={error}
+    />
+  );
 }

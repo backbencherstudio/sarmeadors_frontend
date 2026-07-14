@@ -20,6 +20,12 @@ const CandidateMarketPlaceJobSlice = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    ApplyShortTermJob: builder.mutation({
+      query: (jobId) => ({
+        url: `/candidate/jobs/short-term/${jobId}/apply`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -27,4 +33,5 @@ export const {
   useGetCandidateMarketPlaceShortTermJobQuery,
   useGetCandidateMarketPlaceLongTermJobQuery,
   useGetCandidateMarketPlaceJobsDetailsQuery,
+  useApplyShortTermJobMutation,
 } = CandidateMarketPlaceJobSlice;

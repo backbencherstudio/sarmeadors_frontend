@@ -16,5 +16,12 @@ export default function MarketPlaceDetailsPage() {
 
   const job = data?.data;
 
-  return <JobDescription job={job} isLoading={isLoading} error={error} />;
+  return (
+    <JobDescription
+      job={job}
+      jobType="marketplace-job"
+      isLoading={isLoading}
+      error={error}
+    />
+  );
 }
