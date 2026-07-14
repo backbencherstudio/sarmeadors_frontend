@@ -31,7 +31,6 @@ const candidateDocumentSlice = baseApi.injectEndpoints({
         data: FormData;
         documentKey: string | null;
       }) => {
-       
         return {
           url: `/candidate/documents/required/${documentKey}/upload`,
           method: "POST",

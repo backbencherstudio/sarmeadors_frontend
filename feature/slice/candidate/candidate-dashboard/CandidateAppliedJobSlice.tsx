@@ -20,6 +20,13 @@ const CandidateAppliedJobSlice = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getCandidateAppliedShortTermJobDetails: builder.query({
+      query: (id) => ({
+        url: `/candidate/jobs/short-term-applications/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -27,4 +34,5 @@ export const {
   useGetShortTermJobsQuery,
   useGetLongTermJobsQuery,
   useGetLongTermJobsListQuery,
+  useGetCandidateAppliedShortTermJobDetailsQuery,
 } = CandidateAppliedJobSlice;
