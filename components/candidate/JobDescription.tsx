@@ -36,13 +36,20 @@ export default function JobDescription({
 
   return (
     <div className="max-w-full mx-auto bg-white font-sans p-5">
-      <Link
-        href="/candidate/marketplace-job"
-        className="inline-flex items-center gap-1.5 text-xl font-medium text-blackColor py-5"
-      >
-        <ChevronLeft className="h-4 w-4" />
-        Job Details
-      </Link>
+      <div className="flex justify-between items-center">
+        <Link
+          href="/candidate/marketplace-job"
+          className="inline-flex items-center gap-1.5 text-xl font-medium text-blackColor py-5"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Job Details
+        </Link>
+        <div>
+          <button type="submit" className="bg-black text-white p-4 rounded-md">
+            Interested for this job
+          </button>
+        </div>
+      </div>
       <Image
         src={job?.cover_image || jobImage}
         alt={"img"}

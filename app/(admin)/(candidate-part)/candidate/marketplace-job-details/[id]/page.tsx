@@ -7,9 +7,12 @@ export default function MarketPlaceDetailsPage() {
   const params = useParams();
   const id = params?.id as string | undefined;
 
-  const { data, isLoading, error } = useGetCandidateMarketPlaceJobsDetailsQuery(id, {
-    skip: !id,
-  });
+  const { data, isLoading, error } = useGetCandidateMarketPlaceJobsDetailsQuery(
+    id,
+    {
+      skip: !id,
+    },
+  );
 
   const job = data?.data;
 
