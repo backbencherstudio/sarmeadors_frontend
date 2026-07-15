@@ -11,6 +11,7 @@ export default function MarketPlaceDetailsPage() {
     id,
     {
       skip: !id,
+      refetchOnMountOrArgChange: true,
     },
   );
 

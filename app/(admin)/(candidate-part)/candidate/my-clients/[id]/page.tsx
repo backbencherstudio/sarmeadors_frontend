@@ -14,9 +14,14 @@ function ClientDetailsPage() {
   const params = useParams();
   const id = params.id as string;
 
-  const { data, isLoading, isError } = useGetCandidateMyClientsDetailsQuery({
-    clientId: id,
-  });
+  const { data, isLoading, isError } = useGetCandidateMyClientsDetailsQuery(
+    {
+      clientId: id,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    },
+  );
 
   const client = data?.data?.client;
   const jobHistory = data?.data?.job_history || [];

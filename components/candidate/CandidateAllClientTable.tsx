@@ -56,6 +56,7 @@ function CandidateAllClientTable() {
     },
     {
       skip: false,
+      refetchOnMountOrArgChange: true,
     },
   );
 

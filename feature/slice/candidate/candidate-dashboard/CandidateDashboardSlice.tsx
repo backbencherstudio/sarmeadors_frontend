@@ -7,18 +7,21 @@ const candidateDashboardSlice = baseApi.injectEndpoints({
         url: `/candidate/dashboard`,
         method: "GET",
       }),
+      providesTags: ["candidateDashboard"],
     }),
     getCandidateMyJobs: builder.query({
       query: () => ({
         url: `/candidate/jobs`,
         method: "GET",
       }),
+      providesTags: ["candidateMyJobs"],
     }),
     getCandidateMyJobsList: builder.query({
       query: ({ params }) => ({
         url: `/candidate/jobs?${params}`,
         method: "GET",
       }),
+      providesTags: ["candidateMyJobs"],
     }),
   }),
 });

@@ -5,7 +5,9 @@ import MarketPlaceJobList from "./MarketPlaceJobList";
 
 export default function ShortTermJobs() {
   const { data, isLoading, isError } =
-    useGetCandidateMarketPlaceShortTermJobQuery("market-place");
+    useGetCandidateMarketPlaceShortTermJobQuery("market-place", {
+      refetchOnMountOrArgChange: true,
+    });
 
   // console.log("data=======", data?.data);
 

@@ -101,7 +101,12 @@ function groupInterviews(list: InterviewItem[]) {
 }
 
 function CandidateInterviewList() {
-  const { data, isLoading } = useGetCandidateInterviewsQuery({ view: "list" });
+  const { data, isLoading } = useGetCandidateInterviewsQuery(
+    { view: "list" },
+    {
+      refetchOnMountOrArgChange: true,
+    },
+  );
 
   const apiNextInterview = data?.data?.next_interview as any | undefined;
   const apiInterviews = (data?.data?.interviews?.data ??
