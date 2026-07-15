@@ -8,14 +8,14 @@ function page() {
     "candidate-dashboard",
   );
 
-  // console.log("data=======", data?.data);
+  // console.log("data=======", data?.data?.jobs);
 
   return (
     <div>
       <div className="space-y-4">
         <ClientJobList
           userType="candidate"
-          jobs={data?.data?.jobs}
+          jobs={data?.data?.jobs?.data}
           isLoading={isLoading}
         />
       </div>

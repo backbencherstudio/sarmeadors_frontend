@@ -73,14 +73,27 @@ export default function JobDescription({
           </Link>
         )}
         <div>
-          <button
-            type="submit"
-            onClick={handleApply}
-            disabled={isApplying}
-            className="bg-black text-white p-4 rounded-md disabled:opacity-50 cursor-pointer"
-          >
-            {isApplying ? "Applying..." : "Interested for this job"}
-          </button>
+          {jobType === "marketplace-job" && (
+            <button
+              type="submit"
+              onClick={handleApply}
+              disabled={isApplying}
+              className="bg-black text-white p-4 rounded-md disabled:opacity-50 cursor-pointer"
+            >
+              {isApplying ? "Applying..." : "Interested for this job"}
+            </button>
+          )}
+
+          {jobType === "long-term" && (
+            <button
+              type="submit"
+              // onClick={handleApply}
+              disabled={isApplying}
+              className="bg-black text-white p-4 rounded-md disabled:opacity-50 cursor-pointer"
+            >
+              {isApplying ? "Applying..." : "Interested for this job"}
+            </button>
+          )}
         </div>
       </div>
       <Image
