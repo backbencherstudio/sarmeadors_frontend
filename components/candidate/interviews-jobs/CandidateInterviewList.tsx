@@ -1,6 +1,9 @@
+"use client";
+
 import ClockICon from "@/components/icon/ClockICon";
 import dayjs from "dayjs";
 import CandidateInterviewListCard from "./CandidateInterviewListCard";
+import { useGetCandidateInterviewsQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateInterviewsSlice";
 
 type InterviewItem = {
   id: number;
@@ -19,132 +22,161 @@ type InterviewItem = {
   section: string;
 };
 
-const interviewItems: InterviewItem[] = [
-  {
-    id: 1,
-    dateNumber: "18",
-    dateMeta: "JAN,SUN",
-    title: "After School Nanny",
-    status: "Upcoming",
-    participants: "Charlotte Hamlin",
-    participantInitials: "OP",
-    participantBadgeClass: "bg-blueColor/20 text-blueColor",
-    description:
-      "Full responsibility for three energetic children, ages 2, 5, and 7, including crafting delicious and... ",
-    timeRange: "10:00AM - 11:00AM",
-    actionLabel: "Join Google Meet",
-    actionType: "primary",
-    highlighted: true,
-    section: "top",
-  },
-  {
-    id: 2,
-    dateNumber: "18",
-    dateMeta: "JAN,SUN",
-    title: "Morning Babysitter",
-    status: "Upcoming",
-    participants: "Phoebe Ehrman",
-    participantInitials: "FY",
-    participantBadgeClass: "bg-greenColor/20 text-greenColor",
-    description:
-      "Provide homework assistance and create a supportive learning environment for two bright, school-aged children, ages 6 and 9, ensuring they stay on track with their studies and enjoy fun educational activi View ",
-    timeRange: "1:00PM - 2:00PM",
-    actionLabel: "Join Zoom Meeting",
-    actionType: "secondary",
-    section: "TODAY - JAN 18, 2026",
-  },
-  {
-    id: 3,
-    dateNumber: "19",
-    dateMeta: "JAN,MON",
-    title: "Weekend Nanny",
-    status: "Upcoming",
-    participants: "Marlie Wigleton",
-    participantInitials: "MW",
-    participantBadgeClass: "bg-grayColor1 text-headerColor",
-    description:
-      "Plan and execute stimulating and age-appropriate activities for active toddlers, fostering their dev Provide homework assistance and create a supportive learning environment for two bright, school-aged children, ages 6 and 9, ensuring they stay on track with their studies and enjoy fun educational activi View",
-    timeRange: "1:00PM - 2:00PM",
-    actionLabel: "In Person",
-    actionType: "secondary",
-    section: "JAN 19, 2026",
-  },
-  {
-    id: 4,
-    dateNumber: "20",
-    dateMeta: "JAN,TUE",
-    title: "Temporary Nanny",
-    status: "Upcoming",
-    participants: "Tynisha Obey",
-    participantInitials: "TO",
-    participantBadgeClass: "bg-[#FDE68A] text-[#92400E]",
-    description:
-      "Design and lead engaging art projects, creative crafts, and fun outdoor games to keep children enter",
-    timeRange: "3:00PM - 4:00PM",
-    actionLabel: "Join Google Meet",
-    actionType: "secondary",
-    section: "JAN 20, 2026",
-  },
-  {
-    id: 5,
-    dateNumber: "20",
-    dateMeta: "JAN,TUE",
-    title: "Full-time Nanny",
-    status: "Upcoming",
-    participants: "Danell Balkentine",
-    participantInitials: "DB",
-    participantBadgeClass: "bg-purpleColor/20 text-purpleColor",
-    description:
-      "Create and serve nutritious and appealing snacks and meals for children, accommodating dietary rest",
-    timeRange: "3:00PM - 4:00PM",
-    actionLabel: "In Person",
-    actionType: "secondary",
-    section: "JAN 20, 2026",
-  },
-  {
-    id: 6,
-    dateNumber: "21",
-    dateMeta: "JAN,WED",
-    title: "Newborn Caregiver",
-    status: "Upcoming",
-    participants: "Georgette Strobel",
-    participantInitials: "GS",
-    participantBadgeClass: "bg-[#E5E7EB] text-headerColor",
-    description:
-      "Assist with bath time routines and create a calming bedtime routine, including stories and lullabies",
-    timeRange: "4:00PM - 5:00PM",
-    actionLabel: "Join Zoom Meeting",
-    actionType: "secondary",
-    section: "JAN 21, 2026",
-  },
+const WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+const AVATAR_COLORS = [
+  "bg-blueColor/20 text-blueColor",
+  "bg-greenColor/20 text-greenColor",
+  "bg-grayColor1 text-headerColor",
+  "bg-purpleColor/20 text-purpleColor",
+  "bg-[#FDE68A] text-[#92400E]",
+  "bg-[#E5E7EB] text-headerColor",
 ];
 
+function getInitials(name?: string | null) {
+  if (!name) return "NA";
+  return name
+    .trim()
+    .split(" ")
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+function getAvatarColor(seed: number) {
+  return AVATAR_COLORS[seed % AVATAR_COLORS.length];
+}
+
+function mapApiInterview(item: any, isFeatured = false): InterviewItem {
+  const dateObj = item.date ? new Date(`${item.date}T00:00:00`) : new Date();
+  const day = item.day || String(dateObj.getDate()).padStart(2, "0");
+  const month = (
+    item.month || dateObj.toLocaleString("en-US", { month: "short" })
+  ).toUpperCase();
+  const weekday = WEEKDAYS[dateObj.getDay()];
+  const timeRange =
+    item.time?.range || `${item.time?.from || ""} - ${item.time?.to || ""}`;
+  const meetingType = item.meeting?.type || "in-person";
+  const candidateName = item.candidate?.name || "Candidate";
+
+  return {
+    id: item.id,
+    dateNumber: day,
+    dateMeta: `${month},${weekday}`,
+    title:
+      item.title || item.job?.title || item.description_preview || "Interview",
+    status: item.status === "completed" ? "Completed" : "Upcoming",
+    participants: candidateName,
+    participantInitials: getInitials(candidateName),
+    participantBadgeClass: getAvatarColor(item.candidate?.id ?? item.id),
+    description: item.description_preview || item.description || "",
+    timeRange,
+    actionLabel:
+      meetingType === "google"
+        ? "Join Google Meet"
+        : meetingType === "zoom"
+          ? "Join Zoom Meeting"
+          : "In Person",
+    actionType: meetingType === "google" ? "primary" : "secondary",
+    highlighted: isFeatured,
+    section: isFeatured
+      ? "top"
+      : dayjs(dateObj).format("MMM D, YYYY").toUpperCase(),
+  };
+}
+
+function groupInterviews(list: InterviewItem[]) {
+  const groups: { label: string; items: InterviewItem[] }[] = [];
+  const seen = new Map<string, number>();
+
+  for (const item of list) {
+    const key = item.section;
+    if (!seen.has(key)) {
+      seen.set(key, groups.length);
+      groups.push({ label: key, items: [] });
+    }
+    groups[seen.get(key)!].items.push(item);
+  }
+  return groups;
+}
+
 function CandidateInterviewList() {
-  const featuredItem = interviewItems.find((item) => item.section === "top");
-  const groupedEntries = interviewItems.filter(
-    (item) => item.section !== "top",
+  const { data, isLoading } = useGetCandidateInterviewsQuery({ view: "list" });
+
+  const apiNextInterview = data?.data?.next_interview as any | undefined;
+  const apiInterviews = (data?.data?.interviews?.data ??
+    data?.data?.data ??
+    []) as any[];
+
+  const featuredItem = apiNextInterview
+    ? mapApiInterview(apiNextInterview, true)
+    : undefined;
+  const mappedInterviews = apiInterviews.map((item) =>
+    mapApiInterview(item, false),
   );
+
+  const allInterviews = featuredItem
+    ? [featuredItem, ...mappedInterviews]
+    : mappedInterviews;
+
+  const groups = groupInterviews(allInterviews);
+  const today = dayjs().format("MMM D, YYYY").toUpperCase();
+  const todayGroup = groups.find((g) => g.label === today);
+  const restGroups = groups.filter(
+    (g) => g.label !== today && g.label !== "top",
+  );
+
+  if (isLoading) {
+    return (
+      <div className="w-full rounded-xl border border-borderColor bg-white p-3 sm:p-4">
+        <div className="text-center py-8 text-secondaryColor">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full rounded-xl border border-borderColor bg-white p-3 sm:p-4">
       <div className="space-y-5">
-        <div>
-          <h3 className="mb-2 flex items-center gap-2 text-base md:text-lg font-medium  text-headerColor">
-            <ClockICon /> Next Interview
-          </h3>
-          {featuredItem && <CandidateInterviewListCard {...featuredItem} />}
-        </div>
-
-        <div>
-          <h3 className="mb-2 text-base md:text-lg font-medium  text-headerColor">
-            Today - {dayjs().format("MMM D, YYYY")}
-          </h3>
-          <div className="space-y-3">
-            {groupedEntries.map((item) => (
-              <CandidateInterviewListCard key={item.id} {...item} />
-            ))}
+        {featuredItem && (
+          <div>
+            <h3 className="mb-2 flex items-center gap-2 text-base md:text-lg font-medium text-headerColor">
+              <ClockICon /> Next Interview
+            </h3>
+            <CandidateInterviewListCard {...featuredItem} />
           </div>
-        </div>
+        )}
+
+        {todayGroup && (
+          <div>
+            <h3 className="mb-2 text-base md:text-lg font-medium text-headerColor">
+              Today - {todayGroup.label}
+            </h3>
+            <div className="space-y-3">
+              {todayGroup.items.map((item) => (
+                <CandidateInterviewListCard key={item.id} {...item} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {restGroups.map((group) => (
+          <div key={group.label}>
+            <h3 className="mb-2 text-base md:text-lg font-medium text-headerColor">
+              {group.label}
+            </h3>
+            <div className="space-y-3">
+              {group.items.map((item) => (
+                <CandidateInterviewListCard key={item.id} {...item} />
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {allInterviews.length === 0 && (
+          <div className="text-center py-8 text-secondaryColor">
+            No interviews found.
+          </div>
+        )}
       </div>
     </div>
   );

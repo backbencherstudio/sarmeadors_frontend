@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import jobImage from "@/public/jobs/Rectangle 856.png";
-import { useGetSingleShortTermJobQuery } from "@/feature/dashboard/client/myJob";
-import { useSearchParams } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import { useApplyShortTermJobMutation } from "@/feature/slice/candidate/candidate-dashboard/CandidateMarketPlaceJobSlice";
+import { useRouter } from "next/navigation";
 
 const formatDateFromISO = (dateString: string) => {
   const date = new Date(dateString);
@@ -22,15 +24,78 @@ const formatTimeFromISO = (timeString: string) => {
   return `${displayHour}:${minutes} ${meridiem}`;
 };
 
-export default function ClientJobDescription() {
-  const params = useSearchParams();
-  const jobId = params.get("jobId") || "";
+export default function JobDescription({
+  job,
+  jobType,
+  isLoading,
+  error,
+}: {
+  job?: any;
+  jobType?: string;
+  isLoading?: boolean;
+  error?: any;
+}) {
+  const [applyJob, { isLoading: isApplying }] = useApplyShortTermJobMutation();
+  const router = useRouter();
 
-  const { data } = useGetSingleShortTermJobQuery(jobId);
-  const job = data?.data;
+  if (isLoading) return <div className="p-5">Loading...</div>;
+  if (error) return <div className="p-5">Error loading job details</div>;
+
+  const handleApply = async () => {
+    if (!job?.job?.id) return;
+    try {
+      await applyJob(job?.job?.id).unwrap();
+      router.push("/candidate/candidate-applied-job");
+    } catch (err) {
+      console.error("Failed to apply", err);
+    }
+  };
 
   return (
-    <div className="max-w-full mx-auto bg-white font-sans">
+    <div className="max-w-full mx-auto bg-white font-sans p-5">
+      <div className="flex justify-between items-center">
+        {jobType === "short-term" && (
+          <Link
+            href="/candidate/candidate-applied-job"
+            className="inline-flex items-center gap-1.5 text-xl font-medium text-blackColor py-5"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Job Details
+          </Link>
+        )}
+        {jobType === "marketplace-job" && (
+          <Link
+            href="/candidate/marketplace-job"
+            className="inline-flex items-center gap-1.5 text-xl font-medium text-blackColor py-5"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Job Details
+          </Link>
+        )}
+        <div>
+          {jobType === "marketplace-job" && (
+            <button
+              type="submit"
+              onClick={handleApply}
+              disabled={isApplying}
+              className="bg-black text-white p-4 rounded-md disabled:opacity-50 cursor-pointer"
+            >
+              {isApplying ? "Applying..." : "Interested for this job"}
+            </button>
+          )}
+
+          {jobType === "long-term" && (
+            <button
+              type="submit"
+              // onClick={handleApply}
+              disabled={isApplying}
+              className="bg-black text-white p-4 rounded-md disabled:opacity-50 cursor-pointer"
+            >
+              {isApplying ? "Applying..." : "Interested for this job"}
+            </button>
+          )}
+        </div>
+      </div>
       <Image
         src={job?.cover_image || jobImage}
         alt={"img"}

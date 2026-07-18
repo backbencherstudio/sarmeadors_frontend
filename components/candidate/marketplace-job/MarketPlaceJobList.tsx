@@ -1,9 +1,9 @@
 "use client";
 
-import ClientJobCard from "./ClientJobCard";
-import ClientJobsCardSkeleton from "./ClientJobsCardSkeleton";
+import ClientJobsCardSkeleton from "@/components/client/ClientMyJobs/ClientJobsCardSkeleton";
+import MarketPlaceJobCard from "./MarketPlaceJobCard";
 
-function ClientJobList({
+function MarketPlaceJobList({
   jobs,
   userType,
   isLoading,
@@ -28,11 +28,11 @@ function ClientJobList({
     <div>
       <div className="space-y-5">
         {jobs?.map((job) => (
-          <ClientJobCard key={job.id} job={job} userType={userType} />
+          <MarketPlaceJobCard key={job.id} job={job} userType={userType} />
         ))}
       </div>
     </div>
   );
 }
 
-export default ClientJobList;
+export default MarketPlaceJobList;

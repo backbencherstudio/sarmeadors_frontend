@@ -3,16 +3,18 @@ import { useCalendarLogic } from "@/hooks/useCalendarLogic";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
-import React from "react";
+import { useCallback } from "react";
 import FullCalenderHeader from "./FullCalenderHeader";
 function FullCalenderCustomize({
   filterSection,
   renderEvent,
   data,
+  onSync,
 }: {
   filterSection?: React.ReactNode;
   renderEvent?: any;
   data: any;
+  onSync?: (month: number, year: number) => void;
 }) {
   const {
     calendarRef,
@@ -22,6 +24,16 @@ function FullCalenderCustomize({
     handleToday,
     syncTitle,
   } = useCalendarLogic();
+
+  const handleDatesSet = useCallback(() => {
+    const api = calendarRef.current?.getApi();
+    if (api) {
+      const date = api.getDate();
+      onSync?.(date.getMonth() + 1, date.getFullYear());
+    }
+    syncTitle();
+  }, [syncTitle, calendarRef, onSync]);
+
   return (
     <div className="w-full rounded-xl border border-borderColor bg-white p-3 sm:p-4">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
@@ -42,19 +54,19 @@ function FullCalenderCustomize({
       </div>
 
       <div className="overflow-x-auto">
-        <div className="calendar-wrapper min-w-[1200px] [&_.fc]:text-sm [&_.fc-toolbar]:hidden [&_.fc-scrollgrid]:border-borderColor [&_.fc-scrollgrid-section-header_td]:border-borderColor [&_.fc-col-header-cell]:bg-grayColor1 [&_.fc-col-header-cell]:py-2 [&_.fc-col-header-cell-cushion]:text-sm [&_.fc-col-header-cell-cushion]:font-medium [&_.fc-col-header-cell-cushion]:text-blackColor [&_.fc-daygrid-day]:border-borderColor [&_.fc-daygrid-day-frame]:min-h-[116px] [&_.fc-daygrid-day-number]:p-3 [&_.fc-daygrid-day-number]:text-sm [&_.fc-daygrid-day-number]:font-medium [&_.fc-daygrid-day-number]:text-blackColor [&_.fc-daygrid-day-events]:space-y-1 [&_.fc-daygrid-day-events]:px-2 [&_.fc-daygrid-day-events]:pb-2 [&_.fc-daygrid-event]:m-0 [&_.fc-daygrid-event]:border-0 [&_.fc-daygrid-event]:bg-transparent [&_.fc-daygrid-event]:p-0 [&_.fc-daygrid-day.fc-day-today]:bg-transparent [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:rounded-md [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:bg-blackColor [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:text-white">
+        <div className="calendar-wrapper min-w-300 [&_.fc]:text-sm [&_.fc-toolbar]:hidden [&_.fc-scrollgrid]:border-borderColor [&_.fc-scrollgrid-section-header_td]:border-borderColor [&_.fc-col-header-cell]:bg-grayColor1 [&_.fc-col-header-cell]:py-2 [&_.fc-col-header-cell-cushion]:text-sm [&_.fc-col-header-cell-cushion]:font-medium [&_.fc-col-header-cell-cushion]:text-blackColor [&_.fc-daygrid-day]:border-borderColor [&_.fc-daygrid-day-frame]:min-h-[116px] [&_.fc-daygrid-day-number]:p-3 [&_.fc-daygrid-day-number]:text-sm [&_.fc-daygrid-day-number]:font-medium [&_.fc-daygrid-day-number]:text-blackColor [&_.fc-daygrid-day-events]:space-y-1 [&_.fc-daygrid-day-events]:px-2 [&_.fc-daygrid-day-events]:pb-2 [&_.fc-daygrid-event]:m-0 [&_.fc-daygrid-event]:border-0 [&_.fc-daygrid-event]:bg-transparent [&_.fc-daygrid-event]:p-0 [&_.fc-daygrid-day.fc-day-today]:bg-transparent [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:rounded-md [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:bg-blackColor [&_.fc-daygrid-day.fc-day-today_.fc-daygrid-day-number]:text-white">
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             initialDate={new Date()}
             headerToolbar={false}
-            events={data}
+            events={Array.isArray(data) ? data : []}
             eventContent={renderEvent}
             dayMaxEvents={3}
             fixedWeekCount={true}
             showNonCurrentDates={true}
-            datesSet={syncTitle}
+            datesSet={handleDatesSet}
           />
         </div>
       </div>

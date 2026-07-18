@@ -8,9 +8,11 @@ import { useEffect, useRef, useState } from "react";
 function InterviewScheduleInfoDialog({
   isOpen,
   setOpen,
+  interview,
 }: {
   isOpen: boolean;
   setOpen: () => void;
+  interview?: any | null;
 }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -30,6 +32,20 @@ function InterviewScheduleInfoDialog({
   }, []);
 
   if (!isOpen) return null;
+
+  const candidateName = interview?.candidate?.name || "Interview";
+  const candidateInitials = candidateName
+    .split(" ")
+    .map((part: string) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+  const title = interview?.modal?.title || interview?.title || "Interview";
+  const subtitle = interview?.candidate?.name || interview?.modal?.subtitle || "Interview";
+  const description =
+    interview?.description_preview || interview?.description || "No details available.";
+  const dateLabel = interview?.modal?.date || interview?.date_label || "";
+  const timeRange = interview?.modal?.time_range || interview?.time?.range || "TBD";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -92,13 +108,11 @@ function InterviewScheduleInfoDialog({
         <div className="mb-2">
           <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 mb-2">
             <div>
-              <h2 className="text-xl font-semibold text-blackColor">
-                After School Nanny
-              </h2>
+              <h2 className="text-xl font-semibold text-blackColor">{title}</h2>
             </div>
             <div className="flex items-center gap-2">
               <span className="px-2 py-1 text-sm font-medium rounded-sm bg-[#E6F0FF] text-[#5799FF]">
-                1st interview
+                {interview?.status_label || "Scheduled"}
               </span>
             </div>
           </div>
@@ -107,28 +121,28 @@ function InterviewScheduleInfoDialog({
         {/* Candidate Info */}
         <div className="flex items-center gap-3 pb-2">
           <div className="w-8 h-8 rounded-full bg-[#96C0FF] flex items-center justify-center text-blackColor text-sm">
-            OP
+            {candidateInitials}
           </div>
           <div>
             <h3 className="text-base text-blackColor">
-              You and <span className="font-semibold">Charlotte Hamlin</span>
+              You and <span className="font-semibold">{subtitle}</span>
             </h3>
           </div>
         </div>
 
         {/* Description */}
         <p className="text-sm text-secondaryColor mb-1 leading-relaxed">
-          Full responsibility for three energetic children, ages 2, 5, and 7,
-          including crafting delicious and...
+          {description}
           <span className="text-[#5799FF] cursor-pointer">View details</span>
         </p>
 
         {/* Date and Time */}
         <div className="flex items-center justify-between pt-4">
           <div>
-            <p className="text-base text-black font-semibold">
-              10:00AM - 11:00AM
-            </p>
+            {dateLabel ? (
+              <p className="text-sm text-gray-500">{dateLabel}</p>
+            ) : null}
+            <p className="text-base text-black font-semibold">{timeRange}</p>
           </div>
           <div>
             <ButtonReuseable

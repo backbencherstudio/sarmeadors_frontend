@@ -1,15 +1,23 @@
+import ArrowRightUp from "@/components/icon/ArrowRightUp";
 import LocationIcon from "@/components/icon/LocationIcon";
+import ButtonReuseable from "@/components/reusable/CustomButton";
 import candidateImage from "@/public/jobs/Rectangle 856.png";
 import { Job } from "@/types";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import ClientJobcardAction from "./ClientJobcardAction";
+// import ClientJobcardAction from "./ClientJobcardAction";
 interface ClientJobCardProps {
   job?: Job;
   loading?: boolean;
   userType?: string;
 }
 
-function ClientJobCard({ job, userType }: ClientJobCardProps) {
+function MarketPlaceJobCard({ job }: ClientJobCardProps) {
+  const router = useRouter();
+
+  const handleViewDetail = () => {
+    router.push(`/candidate/marketplace-job-details/${job.id}`);
+  };
   return (
     <div className="border flex flex-col md:flex-row justify-between border-borderColor hover:shadow-xl transition-all duration-200 p-5 rounded-lg">
       <div className="flex gap-4 flex-col md:flex-row items-center">
@@ -43,21 +51,29 @@ function ClientJobCard({ job, userType }: ClientJobCardProps) {
             {job.address?.city}, {job.address?.province}, {job.address?.country}
           </p>
           <div>
-            <ClientJobcardAction job={job} userType={userType} />
+            {/* <ClientJobcardAction job={job} userType={userType} /> */}
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-end ">
+      <div className="flex flex-col justify-center items-end gap-4 ">
         <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-blackColor leading-6 ">
           {job.compensation?.amount}{" "}
           {job.compensation?.type === "per_hour" ? "/hr" : ""}
         </h4>
-        <p className="text-xs px-2 py-1.5 font-semibold text-whiteColor rounded-sm bg-yellowColor mt-1">
+        {/* <p className="text-xs px-2 py-1.5 font-semibold text-whiteColor rounded-sm bg-yellowColor mt-1">
           {job.status}
-        </p>
+        </p> */}
+        <div>
+          <ButtonReuseable
+            onClick={handleViewDetail}
+            title="View Details"
+            rightIcon={<ArrowRightUp />}
+            className="bg-grayColor1! border border-borderColor text-blackColor!"
+          />
+        </div>
       </div>
     </div>
   );
 }
 
-export default ClientJobCard;
+export default MarketPlaceJobCard;
