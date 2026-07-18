@@ -1,11 +1,5 @@
-import {
-  createApi,
-  fetchBaseQuery,
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-} from "@reduxjs/toolkit/query/react";
-import { getToken, removeToken } from "../token/token";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getToken } from "../token/token";
 // import { logout } from "../features/auth/authSlice"; // Update this path if needed
 
 const getSubDomain = () => {
@@ -96,6 +90,7 @@ export const baseApi = createApi({
     "candidateAvailability",
     "AgencyClientTableColumns",
     "AgencyCandidates",
+    "ProcessFlow",
   ],
   endpoints: (builder) => ({}),
 });
