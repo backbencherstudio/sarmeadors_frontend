@@ -12,7 +12,9 @@ import CandidateJobRenderSection from "./myJobs/CandidateJobsRenderSection";
 function CandidateJobCalender() {
   const [scheduledData, setScheduledData] = useState<any>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { data, isLoading } = useGetCandidateMyJobsQuery("candidate-my-jobs");
+  const { data, isLoading } = useGetCandidateMyJobsQuery("candidate-my-jobs", {
+    refetchOnMountOrArgChange: true,
+  });
   const handleOpen = (event: any) => {
     setScheduledData(event);
     setIsOpen(true);

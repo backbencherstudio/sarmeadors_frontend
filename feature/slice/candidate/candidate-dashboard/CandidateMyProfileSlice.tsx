@@ -1,33 +1,33 @@
 import { baseApi } from "@/feature/api/baseApi";
 
-const candidateDashboardSlice = baseApi.injectEndpoints({
+const CandidateMyProfileSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCandidateDashboard: builder.query({
+    getCandidateMyProfile: builder.query({
       query: () => ({
-        url: `/candidate/dashboard`,
+        url: `/candidate/profile`,
         method: "GET",
       }),
-      providesTags: ["candidateDashboard"],
+      providesTags: ["candidateMyProfile"],
     }),
     getCandidateMyJobs: builder.query({
       query: () => ({
         url: `/candidate/jobs`,
         method: "GET",
       }),
-      providesTags: ["candidateMyJobs"],
+      providesTags: ["candidateMyProfile"],
     }),
     getCandidateMyJobsList: builder.query({
       query: ({ params }) => ({
         url: `/candidate/jobs?${params}`,
         method: "GET",
       }),
-      providesTags: ["candidateMyJobs"],
+      providesTags: ["candidateMyProfile"],
     }),
   }),
 });
 
 export const {
-  useGetCandidateDashboardQuery,
+  useGetCandidateMyProfileQuery,
   useGetCandidateMyJobsQuery,
   useGetCandidateMyJobsListQuery,
-} = candidateDashboardSlice;
+} = CandidateMyProfileSlice;

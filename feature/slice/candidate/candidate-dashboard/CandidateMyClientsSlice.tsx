@@ -16,12 +16,14 @@ const CandidateMyClientsSlice = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["candidateMyClients"],
     }),
     getCandidateMyClientsDetails: builder.query({
       query: ({ clientId }) => ({
         url: `/candidate/clients/${clientId}`,
         method: "GET",
       }),
+      providesTags: ["candidateMyClients"],
     }),
   }),
 });

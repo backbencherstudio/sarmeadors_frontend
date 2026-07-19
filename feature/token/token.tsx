@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export default async function setToken(token: string, role?: string) {
   (await cookies()).set("accessToken", token);
   if (role) {
-    (await cookies()).set("userRole", role);
+    (await cookies()).set("isLoggedIn", role);
   }
 }
 
@@ -16,11 +16,11 @@ export const getToken = async () => {
 };
 
 export const getRole = async () => {
-  const role = (await cookies()).get("userRole")?.value;
+  const role = (await cookies()).get("isLoggedIn")?.value;
   return role;
 };
 
 export async function removeToken() {
   (await cookies()).delete("accessToken");
-  (await cookies()).delete("userRole");
+  (await cookies()).delete("isLoggedIn");
 }
