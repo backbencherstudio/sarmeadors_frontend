@@ -9,7 +9,22 @@ const processFlowSlice = baseApi.injectEndpoints({
       }),
       providesTags: ["ProcessFlow"],
     }),
+    getMessageTemplate: builder.query({
+      query: () => ({
+        url: `/agency/message_template`,
+        method: "GET",
+      }),
+      providesTags: ["ProcessFlow"],
+    }),
+    getDocumentTemplatesList: builder.query({
+      query: () => ({
+        url: `/agency/document-templates`,
+        method: "GET",
+      }),
+      providesTags: ["ProcessFlow"],
+    }),
   }),
 });
 
-export const { useGetProcessFlowQuery } = processFlowSlice;
+export const { useGetProcessFlowQuery, useGetMessageTemplateQuery,useGetDocumentTemplatesListQuery } =
+  processFlowSlice;
