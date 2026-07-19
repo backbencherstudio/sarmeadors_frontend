@@ -20,7 +20,11 @@ export default function page() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
         {data?.data?.map((profile) => (
-          <ReusableCandidateCard key={profile.id} profile={profile} />
+          <ReusableCandidateCard
+            key={profile.id}
+            profile={profile}
+            path="new-candidates"
+          />
         ))}
       </div>
     </div>

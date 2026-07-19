@@ -1,7 +1,6 @@
 "use client";
 
 import ReusableCandidateCard from "@/components/client/MyCandidates/ReusableCandidateCard";
-import { PROFILES } from "@/demoData/DashboardData";
 import { useGetClientMyCandidateQuery } from "@/feature/dashboard/client/myCandidate";
 
 export default function page() {
@@ -20,7 +19,11 @@ export default function page() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
         {data?.data?.map((profile) => (
-          <ReusableCandidateCard key={profile.id} profile={profile} />
+          <ReusableCandidateCard
+            key={profile.id}
+            profile={profile}
+            path="previous-candidates"
+          />
         ))}
       </div>
     </div>

@@ -116,7 +116,7 @@ export default function ReviewModal({ hireId }: ReviewModalProps) {
             {/* Submit */}
             <div className="flex justify-end mt-6">
               <button
-                disabled={isSubmitting}
+                disabled={isSubmitting || rating === 0}
                 className="bg-[#111927] border border-[#384250] text-white px-6 py-2 rounded-lg hover:bg-black cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 onClick={handleSubmit}
               >

@@ -1,7 +1,4 @@
 import ReusableCandidateCard from "@/components/client/MyCandidates/ReusableCandidateCard";
-import SearchIcon from "@/components/icon/SearchIcon";
-import ButtonReuseable from "@/components/reusable/CustomButton";
-import { PROFILES } from "@/demoData/DashboardData";
 
 export default function NewCandidatesPage({ data }) {
   return (
@@ -18,7 +15,11 @@ export default function NewCandidatesPage({ data }) {
       </div> */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
         {data?.map((profile) => (
-          <ReusableCandidateCard key={profile.id} profile={profile} />
+          <ReusableCandidateCard
+            key={profile.id}
+            profile={profile}
+            path="new-candidates"
+          />
         ))}
       </div>
     </div>
