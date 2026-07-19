@@ -11,6 +11,7 @@ export default function AppliedShortTermJobDetailsPage() {
   const { data, isLoading, error } =
     useGetCandidateAppliedShortTermJobDetailsQuery(id, {
       skip: !id,
+      refetchOnMountOrArgChange: true,
     });
 
   const job = data?.data;

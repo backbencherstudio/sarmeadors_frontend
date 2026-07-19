@@ -6,6 +6,9 @@ import { useGetShortTermJobsQuery } from "@/feature/slice/candidate/candidate-da
 function page() {
   const { data, isLoading, isError } = useGetShortTermJobsQuery(
     "candidate-dashboard",
+    {
+      refetchOnMountOrArgChange: true,
+    },
   );
 
   // console.log("data=======", data?.data?.jobs);

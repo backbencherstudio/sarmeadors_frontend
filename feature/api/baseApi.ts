@@ -96,6 +96,13 @@ export const baseApi = createApi({
     "candidateAvailability",
     "AgencyClientTableColumns",
     "AgencyCandidates",
+    "candidateAppliedJob",
+    "candidateMarketPlaceJob",
+    "candidateInterviews",
+    "candidateDashboard",
+    "candidateMyJobs",
+    "candidateMyClients",
+    "candidateMyProfile",
   ],
   endpoints: (builder) => ({}),
 });

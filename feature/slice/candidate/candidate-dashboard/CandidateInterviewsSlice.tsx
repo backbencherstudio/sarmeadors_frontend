@@ -24,18 +24,21 @@ const CandidateInterviewsSlice = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["candidateInterviews"],
     }),
     getCandidateInterviewsShow: builder.query({
       query: ({ params }) => ({
         url: `/candidate/interviews?${params}`,
         method: "GET",
       }),
+      providesTags: ["candidateInterviews"],
     }),
     joinInterview: builder.mutation({
       query: (interview_id) => ({
         url: `/candidate/interviews/${interview_id}/join`,
         method: "POST",
       }),
+      invalidatesTags: ["candidateInterviews"],
     }),
   }),
 });

@@ -16,14 +16,19 @@ function CandidateJobInterviewsDate() {
   const [period, setPeriod] = useState("month");
   const [filterStatus, setFilterStatus] = useState("");
 
-  const { data, isLoading, isError, refetch } = useGetCandidateInterviewsQuery({
-    view: "calendar",
-    period,
-    search: "",
-    month: calendarMonth,
-    year: calendarYear,
-    status: filterStatus,
-  });
+  const { data, isLoading, isError, refetch } = useGetCandidateInterviewsQuery(
+    {
+      view: "calendar",
+      period,
+      search: "",
+      month: calendarMonth,
+      year: calendarYear,
+      status: filterStatus,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    },
+  );
 
   const handleFilterChange = (values: { period?: string; status?: string }) => {
     if (values.period !== undefined) setPeriod(values.period);
