@@ -128,7 +128,7 @@ const navItems: NavItem[] = [
   {
     label: "My Candidates",
     icon: CandidateIcon,
-    href: "/client/client-my-candidates",
+    href: "/client/client-my-candidates/new-candidates",
     type: "client",
   },
   {

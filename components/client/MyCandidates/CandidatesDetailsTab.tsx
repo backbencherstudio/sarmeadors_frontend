@@ -1,36 +1,33 @@
 "use client";
 
-import ReviewIcon from "@/components/icon/ReviewIcon";
-import SendIcon from "@/components/icon/SendIcon";
 import ReusableTabs from "@/components/reusable/ReusableTabs";
 import Image from "next/image";
-import { useState } from "react";
 import HireRequestModal from "./HireRequestModal";
 import ReviewModal from "./ReviewModal";
 import { useParams } from "next/navigation";
 
-export function CandidatesDetailsTab() {
+export function CandidatesDetailsTab({ path }) {
   const { id } = useParams();
 
   const tabs = [
     {
       label: "Personal Information",
-      link: `/client/client-my-candidates/new-candidates/${id}/personal-information`,
+      link: `/client/client-my-candidates/${path}/${id}/personal-information`,
       // icon: <HiOutlineMenu className="w-5 h-5" />,
     },
     {
       label: "Professional Information",
-      link: `/client/client-my-candidates/new-candidates/${id}/professional-information`,
+      link: `/client/client-my-candidates/${path}/${id}/professional-information`,
       // icon: <HiOutlineDocumentText className="w-5 h-5" />,
     },
     {
       label: "Documents",
-      link: `/client/client-my-candidates/new-candidates/${id}/documents`,
+      link: `/client/client-my-candidates/${path}/${id}/documents`,
       // icon: <MdSms className="w-5 h-5" />,
     },
     {
       label: "Additional Information",
-      link: `/client/client-my-candidates/new-candidates/${id}/additional-information`,
+      link: `/client/client-my-candidates/${path}/${id}/additional-information`,
       // icon: <FaTrophy className="w-5 h-5" />,
     },
   ];

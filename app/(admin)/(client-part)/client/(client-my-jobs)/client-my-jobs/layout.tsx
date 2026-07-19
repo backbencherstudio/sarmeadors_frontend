@@ -29,8 +29,8 @@ export default function MyJobsLayout({
           </p>
         </div>
         <Link
-          href={"/client/post-job"}
-          className="w-fit flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-[17px] px-4 py-2 rounded-[12px]"
+          href={"/client/post-job/short-term-booking/job-details"}
+          className="w-fit flex items-center gap-1.5 bg-[#111927] text-white cursor-pointer  md:px-4 md:py-4.25 px-4 py-2 rounded-[12px]"
         >
           <Plus /> Post a Job
         </Link>
