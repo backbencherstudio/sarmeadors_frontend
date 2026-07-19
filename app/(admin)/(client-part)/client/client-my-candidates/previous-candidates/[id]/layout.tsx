@@ -7,7 +7,7 @@ export default function MyCandidatesDetailLayout({
 }) {
   return (
     <div className="mt-4 space-y-4">
-      <CandidatesDetailsTab />
+      <CandidatesDetailsTab path={"previous-candidates"} />
       {children}
     </div>
   );

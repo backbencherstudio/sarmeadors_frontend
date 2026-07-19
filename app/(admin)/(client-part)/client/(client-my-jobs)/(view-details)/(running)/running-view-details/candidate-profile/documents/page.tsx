@@ -1,57 +1,17 @@
 "use client";
 
-import DocumentCard from "@/components/clients/AdminTabs/Documents/DocumentCard";
-import { useState } from "react";
-interface Document {
-    id: string;
-    title: string;
-    addedDate: string;
-    signedDate?: string;
-    isSigned: boolean;
-    linkText: string;
+import { NannyForm } from "@/components/client/AdditionalInformation/NannyForm";
+import { useGetSingleClientMyCandidateQuery } from "@/feature/dashboard/client/myCandidate";
+import { useParams } from "next/navigation";
+
+export default function AdditionalInformation() {
+  const { id } = useParams();
+  const { data } = useGetSingleClientMyCandidateQuery(id);
+
+  const additionalInformation = data?.data?.candidate?.additional_information;
+  return (
+    <div className="p-6 border border-gray-300 rounded-xl">
+      {/* <NannyForm additionalInformation={additionalInformation} /> */}
+    </div>
+  );
 }
-
-function DocumentListPage() {
-    const [documents] = useState<Document[]>([
-        {
-            id: "1",
-            title: "Client - Agency Agreement Placement Fee & Refund Policy",
-            addedDate: "Please review and sign this agreement.",
-            isSigned: false,
-            linkText: "Sign Agreement",
-        },
-        {
-            id: "2",
-            title: "Client - Agency Agreement Placement Fee & Refund Policy",
-            addedDate: "Please review and sign this agreement.",
-            signedDate: "Tue Dec 02 2025",
-            isSigned: true,
-            linkText: "Sign Agreement",
-        },
-    ]);
-
-    const handleAction = (id: string) => {
-        // console.log("Document clicked:", id);
-    };
-
-    return (
-        <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {documents.map((doc) => (
-                    <DocumentCard
-                        key={doc.id}
-                        id={doc.id}
-                        title={doc.title}
-                        addedDate={doc.addedDate}
-                        isSigned={doc.isSigned}
-                        link={`/client/client-documents/document-details?id=${doc.id}`}
-                        onAction={handleAction}
-                        linkText={doc?.linkText}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-}
-
-export default DocumentListPage;
