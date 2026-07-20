@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import {
   useCreateTemplateMutation,
   useGetMessageTemplateQuery,
+  useUpdateTemplateMutation,
 } from "@/feature/slice/agency/processFlowSlice";
 import { useState } from "react";
 
@@ -24,6 +25,8 @@ function EmailTemplateSate({
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [createTemplate, { isLoading: isCreating }] =
     useCreateTemplateMutation();
+  const [updateTemplate, { isLoading: isUpdating }] =
+    useUpdateTemplateMutation();
   const templateOptions =
     messageTemplates?.data?.data?.map((template) => ({
       value: String(template.id),
@@ -37,14 +40,25 @@ function EmailTemplateSate({
   const handleSubmit = async () => {
     if (!selectedData) return;
     try {
-      await createTemplate({
-        status_id: statusId,
-        template_id: selectedData.id,
-        template_type: "email_template",
-      }).unwrap();
+      if (isEditeTemplateOpen) {
+        await updateTemplate({
+          TmpId: selectedData.id,
+          data: {
+            status_id: statusId,
+            template_id: selectedData.id,
+            template_type: "email_template",
+          },
+        }).unwrap();
+      } else {
+        await createTemplate({
+          status_id: statusId,
+          template_id: selectedData.id,
+          template_type: "email_template",
+        }).unwrap();
+      }
       setOpen(false);
     } catch (error) {
-      console.error("Failed to create template:", error);
+      console.error("Failed to save template:", error);
     }
   };
 
@@ -82,11 +96,11 @@ function EmailTemplateSate({
 
         <div className="flex justify-end pt-2">
           <ButtonReuseable
-            title="Submit"
+            title={isEditeTemplateOpen ? "Update" : "Submit"}
             onClick={handleSubmit}
             disabled={!selectedData}
             sendingMsg={"Saving..."}
-            loading={isCreating}
+            loading={isCreating || isUpdating}
           />
         </div>
       </div>

@@ -31,6 +31,14 @@ const processFlowSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ProcessFlow"],
     }),
+    UpdateTemplate: builder.mutation({
+      query: ({ TmpId, data }) => ({
+        url: `/agency/status-template-update/${TmpId}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["ProcessFlow"],
+    }),
   }),
 });
 
@@ -39,4 +47,5 @@ export const {
   useGetMessageTemplateQuery,
   useGetDocumentTemplatesListQuery,
   useCreateTemplateMutation,
+  useUpdateTemplateMutation,
 } = processFlowSlice;
