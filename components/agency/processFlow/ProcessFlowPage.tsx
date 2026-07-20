@@ -6,6 +6,8 @@ import DeleteIcon from "@/public/icon/DeleteIcon";
 import EmailIcon from "@/public/icon/EmailIcon";
 import TemplateIcon from "@/public/icon/TemplateIcon";
 import { Edit2, Plus } from "lucide-react";
+import { useState } from "react";
+import EmailTemplateSate from "./EmailTemplateSate";
 
 // API Response TypeScript Interfaces
 interface EmailTemplate {
@@ -32,8 +34,16 @@ interface ProcessFlowStatus {
 }
 
 function ProcessFlowPage() {
+  const [isEmailTemplateOpen, setIsEmailTemplateOpen] = useState(false);
+  
+  const [isEditeTemplateOpen, setIsEditeTemplateOpen] = useState(false);
+  const [selectedStatusId, setSelectedStatusId] = useState<number | null>(null);
   const { data, isLoading: statusLoading } = useGetProcessFlowQuery("client");
-
+  const handleEmailTemplateUpdate = (statusId: number) => {
+    setSelectedStatusId(statusId);
+     setIsEditeTemplateOpen(true);
+    setIsEmailTemplateOpen(true);
+  }
   if (statusLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px] text-sm font-medium text-gray-500">
@@ -127,14 +137,20 @@ function ProcessFlowPage() {
                         </p>
                       </div>
                     </div>
-                    <button className="text-headerColor p-1 rounded transition-colors">
+                    <button onClick={() => handleEmailTemplateUpdate(flow.status_id)} className="text-headerColor p-1 rounded transition-colors">
                       <EditeIcon className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 ))}
 
                 {/* Always visible Add (+) Button */}
-                <button className="w-10 h-8 rounded-md border bg-bgColor flex items-center justify-center text-headerColor transition-colors shadow-sm cursor-pointer mt-1">
+                <button
+                  onClick={() => {
+                    setSelectedStatusId(flow.status_id);
+                    setIsEmailTemplateOpen(true);
+                  }}
+                  className="w-10 h-8 rounded-md border bg-bgColor flex items-center justify-center text-headerColor transition-colors shadow-sm cursor-pointer mt-1"
+                >
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
@@ -142,6 +158,14 @@ function ProcessFlowPage() {
           </div>
         ))}
       </div>
+      {isEmailTemplateOpen && (
+        <EmailTemplateSate
+          statusId={selectedStatusId}
+          open={isEmailTemplateOpen}
+          isEditeTemplateOpen={isEditeTemplateOpen}
+          setOpen={setIsEmailTemplateOpen}
+        />
+      )}
     </div>
   );
 }

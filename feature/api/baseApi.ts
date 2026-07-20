@@ -90,9 +90,7 @@ export const baseApi = createApi({
     "candidateAvailability",
     "AgencyClientTableColumns",
     "AgencyCandidates",
-<<<<<<< HEAD
     "ProcessFlow",
-=======
     "candidateAppliedJob",
     "candidateMarketPlaceJob",
     "candidateInterviews",
@@ -100,7 +98,6 @@ export const baseApi = createApi({
     "candidateMyJobs",
     "candidateMyClients",
     "candidateMyProfile",
->>>>>>> 7b20d6bda46123c4e4fd985f07977226fee6724a
   ],
   endpoints: (builder) => ({}),
 });
