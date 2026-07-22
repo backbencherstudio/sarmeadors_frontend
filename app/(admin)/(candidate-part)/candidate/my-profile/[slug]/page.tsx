@@ -1,8 +1,6 @@
 "use client";
 
-import ProfilePersonalInformation from "@/components/profile/ProfilePersonalInformation";
-import ProfileProfessionalInformation from "@/components/profile/ProfileProfessionalInformation";
-import ProfileAdditionalInformation from "@/components/profile/ProfileAdditionalInformation";
+import MyProfileInformation from "@/components/candidate/my-profile/MyProfileInformation";
 import { useGetCandidateMyProfileQuery } from "@/feature/slice/candidate/candidate-dashboard/CandidateMyProfileSlice";
 import { useParams } from "next/navigation";
 
@@ -42,32 +40,7 @@ function CandidateMyProfileSlugPage() {
     );
   }
 
-  const profile = data?.data;
-
-  console.log("profile==========", profile);
-
-  if (slug === "basic-information") {
-    return <ProfilePersonalInformation personalInfo={profile?.personal_info} />;
-  }
-
-  if (slug === "professional-information") {
-    return (
-      <ProfileProfessionalInformation
-        professionalInfo={profile?.professional_info}
-        reference={profile?.reference}
-      />
-    );
-  }
-
-  if (slug === "additional-information") {
-    return <ProfileAdditionalInformation />;
-  }
-
-  return (
-    <div className="flex items-center justify-center py-10">
-      <p className="text-gray-500">This section is under development.</p>
-    </div>
-  );
+  return <MyProfileInformation block={block} />;
 }
 
 export default CandidateMyProfileSlugPage;
