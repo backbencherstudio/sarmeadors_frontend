@@ -9,8 +9,8 @@ export default function SelectRenderer({ field }: { field: any }) {
   return (
     <div className="space-y-1.5 w-full">
       <label className="block text-sm font-semibold text-headerColor">
-        {field.label || "Dropdown"}
-        {field.required && "*"}
+        {field.label || "Dropdown"}{" "}
+        {field.required &&  <span className="text-redColor">*</span>}
       </label>
       <SelecteInputField
         value={value}
