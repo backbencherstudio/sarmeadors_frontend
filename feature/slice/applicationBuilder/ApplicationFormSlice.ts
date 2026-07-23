@@ -72,6 +72,14 @@ const INTRO_BLOCK: Block = {
 
 const FIXED_REGISTRATION_FIELDS: InputField[] = [
   {
+    id: "fixed_image",
+    type: "file",
+    label: "Profile Picture",
+    required: false,
+    isFixed: true,
+    width: "1",
+  },
+  {
     id: "fixed_first_name",
     type: "text",
     label: "First Name",
@@ -107,29 +115,14 @@ const FIXED_REGISTRATION_FIELDS: InputField[] = [
     isFixed: true,
     width: "1/2",
   },
-  {
-    id: "fixed_hear_about_us",
-    type: "select",
-    label: "How did you hear about us?",
-    required: false,
-    isFixed: true,
-    width: "1/2",
-  },
-  {
-    id: "fixed_image",
-    type: "file",
-    label: "Profile Picture",
-    required: false,
-    isFixed: true,
-    width: "1/2",
-  },
+
   {
     id: "fixed_type",
     type: "select",
-    label: "Type",
+    label: "User Type",
     required: false,
     isFixed: true,
-    width: "1/2",
+    width: "1",
   },
   {
     id: "fixed_location",
@@ -138,7 +131,15 @@ const FIXED_REGISTRATION_FIELDS: InputField[] = [
     placeholder: "Enter location",
     required: false,
     isFixed: true,
-    width: "1/2",
+    width: "1",
+  },
+  {
+    id: "fixed_hear_about_us",
+    type: "textarea",
+    label: "How did you hear about us?",
+    required: false,
+    isFixed: true,
+    width: "1",
   },
 ];
 
@@ -372,7 +373,7 @@ const FIXED_SCHEDULE_INTERVIEW_BLOCK: Block = {
       isFixed: true,
       width: "1",
     },
-    
+
     {
       id: "si_interview_time",
       type: "select",

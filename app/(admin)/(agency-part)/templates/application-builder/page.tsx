@@ -20,7 +20,7 @@ function page() {
             </button>
           </div>
         </div>
-        <StatCards />
+        {/* <StatCards /> */}
       </div>
       <div className="mt-10">
         <InitialFormCreate />

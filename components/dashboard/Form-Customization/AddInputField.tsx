@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddInputFieldPreview from "./AddInputFieldPreview";
+import ButtonReuseable from "@/components/reusable/CustomButton";
 
 interface AddInputFieldProps {
   open: boolean;
@@ -170,20 +171,13 @@ export default function AddInputField({
 
             {/* Execution Control Footer */}
             <div className="pt-4 border-t border-gray-100 flex items-center justify-between bg-white">
-              <button
-                onClick={() => setOpen(false)}
-                className="px-4 py-2 text-xs font-semibold border rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleAddField}
-                className="px-6 py-2.5 text-xs font-semibold bg-[#111827] text-white rounded-lg hover:bg-black transition-colors"
-              >
-                {selectedElement.type === "section"
+             
+              
+              <ButtonReuseable  onClick={() => setOpen(false)} title={"Cancel"} className="bg-bgColor! text-blackColor! border"/>
+            
+              <ButtonReuseable onClick={handleAddField} title={selectedElement.type === "section"
                   ? "+ Add Section"
-                  : "+ Add Field"}
-              </button>
+                  : "+ Add Field"}/>
             </div>
           </div>
         </div>
