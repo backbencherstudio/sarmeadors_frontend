@@ -35,15 +35,22 @@ interface ProcessFlowStatus {
 
 function ProcessFlowPage() {
   const [isEmailTemplateOpen, setIsEmailTemplateOpen] = useState(false);
-  
+
   const [isEditeTemplateOpen, setIsEditeTemplateOpen] = useState(false);
   const [selectedStatusId, setSelectedStatusId] = useState<number | null>(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(
+    null,
+  );
   const { data, isLoading: statusLoading } = useGetProcessFlowQuery("client");
-  const handleEmailTemplateUpdate = (statusId: number) => {
+  const handleEmailTemplateUpdate = (
+    templateId: number,
+    statusId: number | null,
+  ) => {
     setSelectedStatusId(statusId);
-     setIsEditeTemplateOpen(true);
+    setSelectedTemplateId(templateId);
+    setIsEditeTemplateOpen(true);
     setIsEmailTemplateOpen(true);
-  }
+  };
   if (statusLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px] text-sm font-medium text-gray-500">
@@ -137,7 +144,12 @@ function ProcessFlowPage() {
                         </p>
                       </div>
                     </div>
-                    <button onClick={() => handleEmailTemplateUpdate(flow.status_id)} className="text-headerColor p-1 rounded transition-colors">
+                    <button
+                      onClick={() =>
+                        handleEmailTemplateUpdate(email.id, flow.status_id)
+                      }
+                      className="text-headerColor p-1 rounded transition-colors"
+                    >
                       <EditeIcon className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -162,6 +174,7 @@ function ProcessFlowPage() {
         <EmailTemplateSate
           statusId={selectedStatusId}
           open={isEmailTemplateOpen}
+          selectedTemplateId={selectedTemplateId}
           isEditeTemplateOpen={isEditeTemplateOpen}
           setOpen={setIsEmailTemplateOpen}
         />

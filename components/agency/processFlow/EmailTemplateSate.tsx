@@ -13,11 +13,13 @@ function EmailTemplateSate({
   open,
   setOpen,
   isEditeTemplateOpen,
+  selectedTemplateId,
   statusId,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
   isEditeTemplateOpen?: boolean;
+  selectedTemplateId?: number | null;
   statusId: number | string | null;
 }) {
   const { data: messageTemplates, isLoading: messageTemplateLoading } =
@@ -36,13 +38,14 @@ function EmailTemplateSate({
   const selectedData = messageTemplates?.data?.data?.find(
     (t) => String(t.id) === selectedTemplate,
   );
-
+  console.log(selectedData);
   const handleSubmit = async () => {
+    console.log(selectedData);
     if (!selectedData) return;
     try {
       if (isEditeTemplateOpen) {
         await updateTemplate({
-          TmpId: selectedData.id,
+          TmpId: selectedTemplateId,
           data: {
             status_id: statusId,
             template_id: selectedData.id,
