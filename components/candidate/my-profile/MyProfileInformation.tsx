@@ -171,7 +171,7 @@ function MyProfileInformation({ block }: MyProfileInformationProps) {
     if (field.type === "file_upload") {
       if (!field.value) {
         return (
-          <p className="text-lightblackColor text-[16px] leading-[137.5%] font-medium text-gray-400">
+          <p className="text-gray-400 text-[16px] leading-[137.5%] font-medium">
             -
           </p>
         );
