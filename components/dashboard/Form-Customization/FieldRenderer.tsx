@@ -70,7 +70,7 @@ export default function FieldRenderer({
         <ReusableTextarea
           label={field.label}
           required={field.required}
-          placeholder={field.placeholder}
+          placeholder={field.placeholder || "type here..."}
           className="w-full bg-bgColor text-sm"
         />
       );

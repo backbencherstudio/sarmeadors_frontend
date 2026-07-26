@@ -1,5 +1,5 @@
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 type ReusableTextareaProps = {
   label?: string;
@@ -19,7 +19,7 @@ const ReusableTextarea = ({
     <div className="space-y-1.5">
       {label && (
         <Label className="text-sm text-headerColor font-medium">
-          {label}
+          {label} {props.required && <span className="text-redColor">*</span>}
         </Label>
       )}
 

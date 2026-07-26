@@ -163,6 +163,10 @@ export default function MiddleFieldsColumn() {
       reorderBlockFields({ blockId: activeBlockId, fields: blockFields }),
     );
   };
+  const handleCreateCustomForm = () => {
+    // Implement your form submission logic here
+    console.log("Form submitted!");
+  }
 
   const selectField = (sectionId: string | null, fieldId: string | null) => {
     dispatch(setActiveField({ sectionId, fieldId }));
@@ -409,6 +413,9 @@ export default function MiddleFieldsColumn() {
             </div>
           </div>
         )}
+        <div className="mt-4 flex justify-end">
+          <ButtonReuseable title="submit" onClick={handleCreateCustomForm}/>
+        </div>
       </div>
 
       {addFieldOpen && (
