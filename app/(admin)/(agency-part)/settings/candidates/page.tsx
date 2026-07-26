@@ -1,3 +1,6 @@
+"use client";
+
+import { useGetCandidateSettingsQuery } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
 import AccessControlAndVisibilitySettings from "@/components/agency/globalSetting/candidates/AccessControlAndVisibilitySettings";
 import CandidateDashboardSettings from "@/components/agency/globalSetting/candidates/CandidateDashboardSettings";
 import CandidateTypesTagsChecklistSettings from "@/components/agency/globalSetting/candidates/CandidateTypesTagsChecklistSettings";
@@ -8,9 +11,17 @@ import RegistrationFeeSettings from "@/components/agency/globalSetting/candidate
 import ScheduleAvailabilitySettings from "@/components/agency/globalSetting/candidates/ScheduleAvailabilitySettings";
 
 export default function CandidatesPage() {
+  const { data: settingsData, isLoading } =
+    useGetCandidateSettingsQuery("candidateSettings");
+
+  const dashboardData = settingsData?.data?.dashboard;
+
   return (
     <div className="space-y-4">
-      <CandidateDashboardSettings />
+      <CandidateDashboardSettings
+        dashboardData={dashboardData}
+        isLoading={isLoading}
+      />
       <CandidateTypesTagsChecklistSettings />
       <ProfileSettings />
       <AccessControlAndVisibilitySettings />

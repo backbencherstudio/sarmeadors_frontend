@@ -30,6 +30,14 @@ const agencyCandidateSlice = baseApi.injectEndpoints({
       }),
       providesTags: ["AgencyCandidates"],
     }),
+    updateAgencyCandidateTableColumn: builder.mutation({
+      query: (columns) => ({
+        url: `/agency/settings/candidate/table`,
+        method: "POST",
+        body: columns,
+      }),
+      invalidatesTags: ["AgencyCandidates"],
+    }),
     createAgencyCandidate: builder.mutation({
       query: (candidateData) => ({
         url: `/agency/settings/candidate/table`,
@@ -51,7 +59,9 @@ const agencyCandidateSlice = baseApi.injectEndpoints({
 export const {
   useAllAgencyCandidatesQuery,
   useGetAgencyCandidatesStatisticsQuery,
+  useGetAgencyCandidateTableSettingQuery,
   useGetAgencyCandidateTableColumnsQuery,
+  useUpdateAgencyCandidateTableColumnMutation,
   useCreateAgencyCandidateMutation,
   useUpdateAgencyCandidateMutation,
 } = agencyCandidateSlice;

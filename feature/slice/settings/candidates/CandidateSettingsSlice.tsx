@@ -9,7 +9,18 @@ const CandidateSettingsSlice = baseApi.injectEndpoints({
       }),
       providesTags: ["candidateSettings"],
     }),
+    postCandidateSettingsUpdate: builder.mutation({
+      query: (settingsData) => ({
+        url: `/agency/settings/candidate`,
+        method: "POST",
+        body: { settings: settingsData },
+      }),
+      invalidatesTags: ["candidateSettings"],
+    }),
   }),
 });
 
-export const { useGetCandidateSettingsQuery } = CandidateSettingsSlice;
+export const {
+  useGetCandidateSettingsQuery,
+  usePostCandidateSettingsUpdateMutation,
+} = CandidateSettingsSlice;
