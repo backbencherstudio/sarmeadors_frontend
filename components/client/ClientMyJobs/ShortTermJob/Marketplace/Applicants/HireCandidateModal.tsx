@@ -13,8 +13,8 @@ export default function HireCandidateModal({
   jobId,
   applicantId,
 }: {
-  jobId: string;
-  applicantId: string;
+  jobId?: string;
+  applicantId?: string;
 }) {
   const [hireCandidate] = useHireCandidateMutation();
 

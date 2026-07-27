@@ -51,7 +51,7 @@ export default function page() {
     <div className="p-6">
       <ApplicantTopBar />
       <div className="pt-12">
-        <StatCards  />
+        <StatCards statCards={[]} isLoading={false} />
       </div>
       <ApplicantsFilter />
       <ApplicantsTable />

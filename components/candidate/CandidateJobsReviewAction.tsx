@@ -20,7 +20,7 @@ function CandidateJobsReviewAction() {
         />
       </div>
       {isOpen && (
-        <ReviewModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        <ReviewModal  />
       )}
     </div>
   );
