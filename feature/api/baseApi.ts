@@ -102,6 +102,7 @@ export const baseApi = createApi({
     "tagStore",
     "locations",
     "clientsSettings",
+    "typeStore",
   ],
   endpoints: (builder) => ({}),
 });

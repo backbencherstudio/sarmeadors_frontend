@@ -11,11 +11,16 @@ import { LocationsModal } from "./LocationsModal";
 import { UpdateLocationModal } from "./UpdateLocationModal";
 import { TagsModal } from "./TagsModal";
 import { UpdateTagsModal } from "./UpdateTagsModal";
+import { UpdateTypesModal } from "./UpdateTypesModal";
 import {
   useGetTagsQuery,
   useUpdateTagStatusMutation,
   useGetLocationsQuery,
   useUpdateLocationStatusMutation,
+  useGetTypesQuery,
+  usePostTypeStoreMutation,
+  useDeleteTypeMutation,
+  useUpdateTypeStatusMutation,
 } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
 
 interface FilterItem {
@@ -42,6 +47,10 @@ export default function List({ type }: ListProps) {
   const { data: locationsData, isLoading: isLoadingLocations } =
     useGetLocationsQuery(type || "candidate");
 
+  const { data: typesData, isLoading: isLoadingTypes } = useGetTypesQuery(
+    type || "client",
+  );
+
   const locationItems: FilterItem[] = isLoadingLocations
     ? [{ id: "loading", label: "Loading...", checked: false }]
     : (locationsData?.data || []).map((loc: any) => ({
@@ -50,14 +59,26 @@ export default function List({ type }: ListProps) {
         checked: loc.status === 1,
       }));
 
+  const typeItems: FilterItem[] = isLoadingTypes
+    ? [{ id: "loading", label: "Loading...", checked: false }]
+    : (typesData?.data || []).map((t: any) => ({
+        id: String(t.id),
+        label: t.name || t,
+        checked: t.status === 1,
+      }));
+
   const [updateTagStatus] = useUpdateTagStatusMutation();
   const [updateLocationStatus] = useUpdateLocationStatusMutation();
+  const [postTypeStore, { isLoading: isSavingType }] =
+    usePostTypeStoreMutation();
+  const [deleteType, { isLoading: isDeletingType }] = useDeleteTypeMutation();
+  const [updateTypeStatus] = useUpdateTypeStatusMutation();
 
   const [filters, setFilters] = useState<FilterCard[]>([
     {
       title: "Types",
       placeholder: "Search by tag",
-      items: [{ id: "1", label: "Midwest Elite Nannies", checked: false }],
+      items: [],
     },
     {
       title: "Checklist",
@@ -108,6 +129,13 @@ export default function List({ type }: ListProps) {
         updateLocationStatus({ id: Number(itemId), status: newStatus });
       }
     }
+    if (cardTitle === "Types") {
+      const t = typeItems.find((item) => item.id === itemId);
+      if (t) {
+        const newStatus = t.checked ? 0 : 1;
+        updateTypeStatus({ id: Number(itemId), status: newStatus });
+      }
+    }
     setFilters((prevFilters) =>
       prevFilters.map((card) =>
         card.title === cardTitle
@@ -145,7 +173,9 @@ export default function List({ type }: ListProps) {
               ? tagItems
               : card.title === "Locations"
                 ? locationItems
-                : card.items;
+                : card.title === "Types"
+                  ? typeItems
+                  : card.items;
           const filteredItems = getFilteredItems(card, items);
           return (
             <div
@@ -212,7 +242,12 @@ export default function List({ type }: ListProps) {
                     <Pencil className="w-4 h-4 text-gray-600" />
                   </Button> */}
 
-                  {card.title === "Types" && <ClientTypesModal />}
+                  {card.title === "Types" && (
+                    <>
+                      <UpdateTypesModal typeItems={typeItems} />
+                      <ClientTypesModal type={type} typeItems={typeItems} />
+                    </>
+                  )}
                   {card.title === "Checklist" && <ChecklistModal />}
                   {card.title === "Locations" && (
                     <>

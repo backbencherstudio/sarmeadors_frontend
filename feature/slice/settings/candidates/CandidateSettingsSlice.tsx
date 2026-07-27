@@ -93,6 +93,44 @@ const CandidateSettingsSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["locations"],
     }),
+    getTypes: builder.query({
+      query: (type: string) => ({
+        url: `/agency/types?type=${type}`,
+        method: "GET",
+      }),
+      providesTags: ["typeStore"],
+    }),
+    postTypeStore: builder.mutation({
+      query: (typeData) => ({
+        url: `/agency/type-store`,
+        method: "POST",
+        body: typeData,
+      }),
+      invalidatesTags: ["typeStore"],
+    }),
+    deleteType: builder.mutation({
+      query: (id: number) => ({
+        url: `/agency/type-destroy/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["typeStore"],
+    }),
+    updateTypeStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/agency/type-change-status/${id}`,
+        method: "PATCH",
+        body: { status },
+      }),
+      invalidatesTags: ["typeStore"],
+    }),
+    updateTypeBulk: builder.mutation({
+      query: (updates) => ({
+        url: `/agency/type-bulk-update`,
+        method: "PUT",
+        body: { updates },
+      }),
+      invalidatesTags: ["typeStore"],
+    }),
   }),
 });
 
@@ -109,4 +147,9 @@ export const {
   useDeleteLocationMutation,
   useUpdateLocationStatusMutation,
   useUpdateLocationBulkMutation,
+  useGetTypesQuery,
+  usePostTypeStoreMutation,
+  useDeleteTypeMutation,
+  useUpdateTypeStatusMutation,
+  useUpdateTypeBulkMutation,
 } = CandidateSettingsSlice;
