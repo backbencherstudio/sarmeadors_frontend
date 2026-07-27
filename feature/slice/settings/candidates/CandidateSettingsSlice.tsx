@@ -131,6 +131,44 @@ const CandidateSettingsSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["typeStore"],
     }),
+    getChecklist: builder.query({
+      query: (type: string) => ({
+        url: `/agency/checklist?type=${type}`,
+        method: "GET",
+      }),
+      providesTags: ["checklist"],
+    }),
+    postChecklistStore: builder.mutation({
+      query: (checklistData) => ({
+        url: `/agency/checklist-store`,
+        method: "POST",
+        body: checklistData,
+      }),
+      invalidatesTags: ["checklist"],
+    }),
+    deleteChecklist: builder.mutation({
+      query: (id: number) => ({
+        url: `/agency/checklist-destroy/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["checklist"],
+    }),
+    updateChecklistStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/agency/checklist-change-status/${id}`,
+        method: "PATCH",
+        body: { status },
+      }),
+      invalidatesTags: ["checklist"],
+    }),
+    updateChecklistBulk: builder.mutation({
+      query: (updates) => ({
+        url: `/agency/checklist-bulk-update`,
+        method: "PUT",
+        body: { updates },
+      }),
+      invalidatesTags: ["checklist"],
+    }),
   }),
 });
 
@@ -152,4 +190,9 @@ export const {
   useDeleteTypeMutation,
   useUpdateTypeStatusMutation,
   useUpdateTypeBulkMutation,
+  useGetChecklistQuery,
+  usePostChecklistStoreMutation,
+  useDeleteChecklistMutation,
+  useUpdateChecklistStatusMutation,
+  useUpdateChecklistBulkMutation,
 } = CandidateSettingsSlice;

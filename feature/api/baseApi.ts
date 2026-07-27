@@ -103,6 +103,7 @@ export const baseApi = createApi({
     "locations",
     "clientsSettings",
     "typeStore",
+    "checklist",
   ],
   endpoints: (builder) => ({}),
 });

@@ -12,6 +12,7 @@ import { UpdateLocationModal } from "./UpdateLocationModal";
 import { TagsModal } from "./TagsModal";
 import { UpdateTagsModal } from "./UpdateTagsModal";
 import { UpdateTypesModal } from "./UpdateTypesModal";
+import { UpdateChecklistModal } from "./UpdateChecklistModal";
 import {
   useGetTagsQuery,
   useUpdateTagStatusMutation,
@@ -19,8 +20,9 @@ import {
   useUpdateLocationStatusMutation,
   useGetTypesQuery,
   usePostTypeStoreMutation,
-  useDeleteTypeMutation,
   useUpdateTypeStatusMutation,
+  useGetChecklistQuery,
+  useUpdateChecklistStatusMutation,
 } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
 
 interface FilterItem {
@@ -51,6 +53,9 @@ export default function List({ type }: ListProps) {
     type || "client",
   );
 
+  const { data: checklistData, isLoading: isLoadingChecklist } =
+    useGetChecklistQuery(type || "client");
+
   const locationItems: FilterItem[] = isLoadingLocations
     ? [{ id: "loading", label: "Loading...", checked: false }]
     : (locationsData?.data || []).map((loc: any) => ({
@@ -67,12 +72,20 @@ export default function List({ type }: ListProps) {
         checked: t.status === 1,
       }));
 
+  const checklistItems: FilterItem[] = isLoadingChecklist
+    ? [{ id: "loading", label: "Loading...", checked: false }]
+    : (checklistData?.data || []).map((c: any) => ({
+        id: String(c.id),
+        label: c.name || c,
+        checked: c.status === 1,
+      }));
+
   const [updateTagStatus] = useUpdateTagStatusMutation();
   const [updateLocationStatus] = useUpdateLocationStatusMutation();
   const [postTypeStore, { isLoading: isSavingType }] =
     usePostTypeStoreMutation();
-  const [deleteType, { isLoading: isDeletingType }] = useDeleteTypeMutation();
   const [updateTypeStatus] = useUpdateTypeStatusMutation();
+  const [updateChecklistStatus] = useUpdateChecklistStatusMutation();
 
   const [filters, setFilters] = useState<FilterCard[]>([
     {
@@ -83,10 +96,7 @@ export default function List({ type }: ListProps) {
     {
       title: "Checklist",
       placeholder: "Search by tag",
-      items: [
-        { id: "1", label: "qwqe", checked: false },
-        { id: "2", label: "wqregre", checked: false },
-      ],
+      items: [],
     },
     {
       title: "Locations",
@@ -136,6 +146,13 @@ export default function List({ type }: ListProps) {
         updateTypeStatus({ id: Number(itemId), status: newStatus });
       }
     }
+    if (cardTitle === "Checklist") {
+      const c = checklistItems.find((item) => item.id === itemId);
+      if (c) {
+        const newStatus = c.checked ? 0 : 1;
+        updateChecklistStatus({ id: Number(itemId), status: newStatus });
+      }
+    }
     setFilters((prevFilters) =>
       prevFilters.map((card) =>
         card.title === cardTitle
@@ -175,12 +192,14 @@ export default function List({ type }: ListProps) {
                 ? locationItems
                 : card.title === "Types"
                   ? typeItems
-                  : card.items;
+                  : card.title === "Checklist"
+                    ? checklistItems
+                    : card.items;
           const filteredItems = getFilteredItems(card, items);
           return (
             <div
               key={card.title}
-              className="bg-white flex flex-col h-[400px] relative"
+              className="bg-white flex flex-col h-100 relative"
             >
               {/* Title */}
               <h3 className="text-base font-semibold text-gray-900 mb-3">
@@ -248,7 +267,15 @@ export default function List({ type }: ListProps) {
                       <ClientTypesModal type={type} typeItems={typeItems} />
                     </>
                   )}
-                  {card.title === "Checklist" && <ChecklistModal />}
+                  {card.title === "Checklist" && (
+                    <>
+                      <UpdateChecklistModal checklistItems={checklistItems} />
+                      <ChecklistModal
+                        type={type}
+                        checklistItems={checklistItems}
+                      />
+                    </>
+                  )}
                   {card.title === "Locations" && (
                     <>
                       <UpdateLocationModal locationItems={locationItems} />
