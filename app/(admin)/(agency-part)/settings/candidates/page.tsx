@@ -26,7 +26,10 @@ export default function CandidatesPage() {
       <ProfileSettings />
       <AccessControlAndVisibilitySettings />
       <RegistrationFeeSettings />
-      <Documents />
+      <Documents
+        settingsData={settingsData}
+        isLoading={isLoading}
+      />
       <ProfileSettings2 />
       <ScheduleAvailabilitySettings />
     </div>
