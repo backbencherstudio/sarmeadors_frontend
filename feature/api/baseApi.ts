@@ -99,6 +99,8 @@ export const baseApi = createApi({
     "candidateMyClients",
     "candidateMyProfile",
     "candidateSettings",
+    "tagStore",
+    "locations",
     "clientsSettings",
   ],
   endpoints: (builder) => ({}),

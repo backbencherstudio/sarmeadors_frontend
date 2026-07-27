@@ -24,7 +24,7 @@ export default function CandidatesPage() {
         dashboardData={dashboardData}
         isLoading={isLoading}
       />
-      <CandidateTypesTagsChecklistSettings />
+      <CandidateTypesTagsChecklistSettings type="candidate" />
       <ProfileSettings />
       <AccessControlAndVisibilitySettings
         accessControlData={accessControlData}
