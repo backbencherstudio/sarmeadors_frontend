@@ -43,7 +43,6 @@ const processFlowSlice = baseApi.injectEndpoints({
       query: ({ TmpId }) => ({
         url: `/agency/status-template-update/${TmpId}`,
         method: "DELETE",
-     
       }),
       invalidatesTags: ["ProcessFlow"],
     }),
