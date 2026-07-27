@@ -3,7 +3,6 @@ import StatCards from "@/components/dashboard/StatCards";
 import ReusableLineTabs from "@/components/reusable/ReusableLineTabs";
 import React from "react";
 
-
 const TabsData = [
   {
     label: "Requested Job (12)",
@@ -34,7 +33,7 @@ export default function LongTermJobLayout({
 }) {
   return (
     <div className="md:p-6 p-4 ">
-      <StatCards />
+      <StatCards statCards={[]} isLoading={false} />
       <div className="mt-6">
         <JobsChart />
       </div>

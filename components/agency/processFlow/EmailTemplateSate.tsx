@@ -45,7 +45,7 @@ function EmailTemplateSate({
     try {
       if (isEditeTemplateOpen) {
         await updateTemplate({
-          TmpId: selectedTemplateId,
+          TmpId: selectedData.id,
           data: {
             status_id: statusId,
             template_id: selectedData.id,

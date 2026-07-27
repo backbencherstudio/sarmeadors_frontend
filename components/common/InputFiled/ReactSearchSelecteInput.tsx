@@ -158,30 +158,35 @@ function ReactSearchSelecteInput({
     onChange?.((nextValue as FlatOption | null)?.value || "");
   };
 
-  const SelectComponent = allowCustomInput ? CreatableSelect : Select;
+  const commonProps = {
+    placeholder,
+    isMulti,
+    isDisabled,
+    isClearable: true,
+    isSearchable: true,
+    isOptionDisabled: () =>
+      Boolean(isMulti && maxCount && (values?.length || 0) >= maxCount),
+    options: options as any,
+    value: selectedValue as any,
+    onChange: handleChange,
+    onInputChange: (inputValue: string) => handleInputChange(inputValue),
+    onKeyDown: handleKeyDown,
+    className,
+    classNamePrefix: "common-select",
+    styles: selectStyles,
+    noOptionsMessage: () => "No options",
+  };
 
-  return (
-    <SelectComponent
-      placeholder={placeholder}
-      isMulti={isMulti}
-      isDisabled={isDisabled}
-      isClearable
-      isSearchable
-      isOptionDisabled={() =>
-        Boolean(isMulti && maxCount && (values?.length || 0) >= maxCount)
-      }
-      options={options as any}
-      value={selectedValue as any}
-      onChange={handleChange}
-      onInputChange={(inputValue) => handleInputChange(inputValue)}
-      onKeyDown={handleKeyDown}
-      className={className}
-      classNamePrefix="common-select"
-      styles={selectStyles}
-      formatCreateLabel={(inputValue) => `Create "${inputValue}"`}
-      noOptionsMessage={() => "No options"}
-    />
-  );
+  if (allowCustomInput) {
+    return (
+      <CreatableSelect
+        {...commonProps}
+        formatCreateLabel={(inputValue) => `Create "${inputValue}"`}
+      />
+    );
+  }
+
+  return <Select {...commonProps} />;
 }
 
 export default ReactSearchSelecteInput;

@@ -1,5 +1,10 @@
-function ProfileProfessionalInformation({ professionalInfo, reference }) {
-
+function ProfileProfessionalInformation({
+  professionalInfo,
+  reference,
+}: {
+  professionalInfo?: any;
+  reference?: any;
+}) {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-4 sm:p-5 md:p-6 border border-borderColor rounded-[20px]">

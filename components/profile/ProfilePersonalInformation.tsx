@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import ButtonReuseable from "../reusable/CustomButton";
 
-function ProfilePersonalInformation({ personalInfo }) {
+function ProfilePersonalInformation({ personalInfo }: { personalInfo?: any }) {
   const [isHidden, setIsHidden] = useState(false);
   const [hiddenField, setHiddenField] = useState("");
 
