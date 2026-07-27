@@ -12,44 +12,41 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Plus, Trash2, Save, X } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import {
   usePostLocationStoreMutation,
   useDeleteLocationMutation,
-  useUpdateLocationStatusMutation,
-  useUpdateLocationBulkMutation,
 } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
 
 interface LocationItem {
   id: string;
   label: string;
-  checked: boolean;
 }
 
 interface LocationsModalProps {
+  type: string;
   locationItems?: LocationItem[];
 }
 
-export function LocationsModal({ locationItems = [] }: LocationsModalProps) {
+export function LocationsModal({
+  type,
+  locationItems = [],
+}: LocationsModalProps) {
   const [postLocationStore, { isLoading: isSaving }] =
     usePostLocationStoreMutation();
   const [deleteLocation, { isLoading: isDeleting }] =
     useDeleteLocationMutation();
-  const [updateLocationStatus] = useUpdateLocationStatusMutation();
-  const [updateLocationBulk, { isLoading: isBulkSaving }] =
-    useUpdateLocationBulkMutation();
 
   const [open, setOpen] = useState(false);
 
-  const [locations, setLocations] = useState<
-    { id: string; value: string }[]
-  >([{ id: "1", value: "" }]);
+  const [locations, setLocations] = useState<{ id: string; value: string }[]>([
+    { id: "1", value: "" },
+  ]);
 
-  const [existingLocations, setExistingLocations] = useState<LocationItem[]>(
-    locationItems,
-  );
+  const [existingLocations, setExistingLocations] =
+    useState<LocationItem[]>(locationItems);
 
   useEffect(() => {
     setExistingLocations(locationItems);
@@ -66,9 +63,7 @@ export function LocationsModal({ locationItems = [] }: LocationsModalProps) {
 
   const handleInputChange = (id: string, value: string) => {
     setLocations(
-      locations.map((item) =>
-        item.id === id ? { ...item, value } : item,
-      ),
+      locations.map((item) => (item.id === id ? { ...item, value } : item)),
     );
   };
 
@@ -76,54 +71,10 @@ export function LocationsModal({ locationItems = [] }: LocationsModalProps) {
     try {
       await deleteLocation(Number(id)).unwrap();
       toast.success("Location deleted successfully!");
-      setExistingLocations(
-        existingLocations.filter((loc) => loc.id !== id),
-      );
+      setExistingLocations(existingLocations.filter((loc) => loc.id !== id));
     } catch (error: any) {
       toast.error(
         error?.data?.message || "Error deleting location. Please try again.",
-      );
-    }
-  };
-
-  const handleStatusChange = async (id: string) => {
-    const loc = existingLocations.find((l) => l.id === id);
-    if (!loc) return;
-    const newStatus = loc.checked ? 0 : 1;
-    try {
-      await updateLocationStatus({
-        id: Number(id),
-        status: newStatus,
-      }).unwrap();
-      setExistingLocations(
-        existingLocations.map((l) =>
-          l.id === id ? { ...l, checked: newStatus === 1 } : l,
-        ),
-      );
-      toast.success("Location status updated!");
-    } catch (error: any) {
-      toast.error(
-        error?.data?.message ||
-          "Error updating location status. Please try again.",
-      );
-    }
-  };
-
-  const handleBulkUpdate = async () => {
-    const updates = existingLocations.map((loc) => ({
-      id: Number(loc.id),
-      name: loc.label,
-      status: loc.checked ? 1 : 0,
-    }));
-
-    try {
-      await updateLocationBulk(updates).unwrap();
-      toast.success("Locations updated successfully!");
-      setOpen(false);
-    } catch (error: any) {
-      toast.error(
-        error?.data?.message ||
-          "Error updating locations. Please try again.",
       );
     }
   };
@@ -139,8 +90,9 @@ export function LocationsModal({ locationItems = [] }: LocationsModalProps) {
 
     try {
       await postLocationStore({
-        names,
-        status: 1,
+        locations: names,
+        type,
+        status: 0,
       }).unwrap();
       toast.success("Locations created successfully!");
       setLocations([{ id: Date.now().toString(), value: "" }]);
@@ -163,14 +115,14 @@ export function LocationsModal({ locationItems = [] }: LocationsModalProps) {
           <Plus className="w-4 h-4 text-white" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[850px]! max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-212.5! max-h-[80vh] overflow-y-auto">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold text-start">
               Add Locations
             </DialogTitle>
             <DialogDescription className="text-sm text-gray-600 pt-2 text-start">
-              Add locations for candidates.
+              Add locations for {type} entities.
             </DialogDescription>
           </DialogHeader>
 
@@ -187,19 +139,6 @@ export function LocationsModal({ locationItems = [] }: LocationsModalProps) {
                   <span className="flex-1 text-sm text-gray-700">
                     {loc.label}
                   </span>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleStatusChange(loc.id)}
-                    className={`h-8 w-16 p-0 border-0 cursor-pointer text-xs font-semibold ${
-                      loc.checked
-                        ? "bg-green-100 text-green-600 hover:bg-green-200"
-                        : "bg-gray-100 text-gray-400 hover:bg-gray-200"
-                    }`}
-                  >
-                    {loc.checked ? "ON" : "OFF"}
-                  </Button>
                   <Button
                     type="button"
                     variant="ghost"
@@ -250,24 +189,11 @@ export function LocationsModal({ locationItems = [] }: LocationsModalProps) {
                 Add another item
               </Button>
             </div>
-            {existingLocations.length > 0 && (
-              <>
-                <hr />
-                <ButtonReuseable
-                  title="Update Locations"
-                  sendingMsg="Updating"
-                  type="button"
-                  onClick={handleBulkUpdate}
-                  loading={isBulkSaving}
-                  className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px]"
-                />
-              </>
-            )}
             <hr />
             <div className="flex justify-start gap-2">
               <ButtonReuseable
                 title="Submit"
-                sendingMsg="Submiting"
+                sendingMsg="Submitting"
                 type="submit"
                 loading={isSaving}
                 className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px]"

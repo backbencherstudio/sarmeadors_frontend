@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { ClientTypesModal } from "./ClientTypesModal";
 import { ChecklistModal } from "./ChecklistModal";
 import { LocationsModal } from "./LocationsModal";
+import { UpdateLocationModal } from "./UpdateLocationModal";
 import { TagsModal } from "./TagsModal";
 import { UpdateTagsModal } from "./UpdateTagsModal";
 import {
   useGetTagsQuery,
   useUpdateTagStatusMutation,
   useGetLocationsQuery,
+  useUpdateLocationStatusMutation,
 } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
 
 interface FilterItem {
@@ -38,7 +40,7 @@ export default function List({ type }: ListProps) {
   );
 
   const { data: locationsData, isLoading: isLoadingLocations } =
-    useGetLocationsQuery();
+    useGetLocationsQuery(type || "candidate");
 
   const locationItems: FilterItem[] = isLoadingLocations
     ? [{ id: "loading", label: "Loading...", checked: false }]
@@ -49,6 +51,7 @@ export default function List({ type }: ListProps) {
       }));
 
   const [updateTagStatus] = useUpdateTagStatusMutation();
+  const [updateLocationStatus] = useUpdateLocationStatusMutation();
 
   const [filters, setFilters] = useState<FilterCard[]>([
     {
@@ -96,6 +99,13 @@ export default function List({ type }: ListProps) {
       if (tag) {
         const newStatus = tag.checked ? 0 : 1;
         updateTagStatus({ id: Number(itemId), status: newStatus });
+      }
+    }
+    if (cardTitle === "Locations") {
+      const loc = locationItems.find((l) => l.id === itemId);
+      if (loc) {
+        const newStatus = loc.checked ? 0 : 1;
+        updateLocationStatus({ id: Number(itemId), status: newStatus });
       }
     }
     setFilters((prevFilters) =>
@@ -205,7 +215,13 @@ export default function List({ type }: ListProps) {
                   {card.title === "Types" && <ClientTypesModal />}
                   {card.title === "Checklist" && <ChecklistModal />}
                   {card.title === "Locations" && (
-                    <LocationsModal locationItems={locationItems} />
+                    <>
+                      <UpdateLocationModal locationItems={locationItems} />
+                      <LocationsModal
+                        type={type}
+                        locationItems={locationItems}
+                      />
+                    </>
                   )}
                   {card.title === "Tags" && (
                     <>

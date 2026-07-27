@@ -56,8 +56,8 @@ const CandidateSettingsSlice = baseApi.injectEndpoints({
       invalidatesTags: ["tagStore"],
     }),
     getLocations: builder.query({
-      query: (_?: void) => ({
-        url: `/agency/locations`,
+      query: (type: string) => ({
+        url: `/agency/locations?type=${type}`,
         method: "GET",
       }),
       providesTags: ["locations"],
