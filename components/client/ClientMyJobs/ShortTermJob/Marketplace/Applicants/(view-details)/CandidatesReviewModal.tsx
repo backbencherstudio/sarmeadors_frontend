@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,14 +7,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Star } from "lucide-react";
-import { toast } from "sonner";
 import {
   useGetSingleClientMyCandidateQuery,
   useShortTermHireReviewMutation,
 } from "@/feature/dashboard/client/myCandidate";
+import { Star } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import { toast } from "sonner";
 
-export default function CandidatesReviewModal({ id }: { id: string }) {
+export default function CandidatesReviewModal({ id }: { id?: string }) {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");

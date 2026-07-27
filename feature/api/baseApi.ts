@@ -98,6 +98,8 @@ export const baseApi = createApi({
     "candidateMyJobs",
     "candidateMyClients",
     "candidateMyProfile",
+    "candidateSettings",
+    "clientsSettings",
   ],
   endpoints: (builder) => ({}),
 });

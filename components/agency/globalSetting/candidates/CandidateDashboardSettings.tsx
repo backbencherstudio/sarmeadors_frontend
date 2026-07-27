@@ -1,83 +1,75 @@
 "use client";
 
-import { useState } from "react";
 import CommonAccordion from "../CommonAccordion";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronDown, GripVertical, Trash2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import MultiSelecte from "@/components/reusable/MultiSelecte";
+import ReusableInput from "@/components/common/InputFiled/ReusableInput";
+import StatusUpdatePart from "@/components/dashboard/StatusUpdatePart";
 import ButtonReuseable from "@/components/reusable/CustomButton";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Image from "next/image";
-import ColorPickerDialog from "@/components/dashboard/ColorPickerDialog";
-import SimpleColorPicker from "@/components/dashboard/SimpleColorPicker";
-import { Textarea } from "@/components/ui/textarea";
+import { usePostCandidateSettingsUpdateMutation } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
 
-interface Status {
-  id: string;
-  color: string;
-  name: string;
-  textColor?: string;
-  backgroundColor?: string;
+const defaultColumns: Record<string, string> = {
+  name: "Name",
+  email_address: "Email",
+  phone_number: "Phone",
+  registration_date: "Registration Date",
+  status: "Status",
+};
+
+interface DashboardData {
+  table_fields: string[];
+  display_labels: Record<string, string> | string[];
+  use_admin_level_setting?: boolean;
+  quick_search_field?: string | null;
+  default_sort_field?: string | null;
+  last_login_retrieval_days?: number | null;
+  show_status_statistical_breakdowns?: boolean;
 }
 
-interface StatusColor {
-  name: string;
+interface SelectOption {
   value: string;
+  label: string;
 }
 
-const FONTS = [
-  "Start typing to filter",
-  "Inter",
-  "Roboto",
-  "Open Sans",
-  "Lato",
-  "Montserrat",
-  "Poppins",
-  "Raleway",
-  "Nunito",
-  "Source Sans Pro",
-];
+export default function CandidateDashboardSettings({
+  dashboardData,
+  isLoading,
+}: {
+  dashboardData?: DashboardData;
+  isLoading?: boolean;
+}) {
+  const availableColumns = (dashboardData?.table_fields || []).map((key) => ({
+    key,
+    label: defaultColumns[key] || key.replace(/_/g, " "),
+  }));
 
-export default function CandidateDashboardSettings() {
-  const [countries, setCountries] = useState<string[]>([
-    "United States",
-    "Bangladesh",
-  ]);
-  const [tagInput, setTagInput] = useState("");
-
-  const handleTagKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim()) {
-      setCountries((prev) => [...prev, tagInput.trim()]);
-      setTagInput("");
-    }
-  };
-
-  const removeCountry = (c: string) =>
-    setCountries((prev) => prev.filter((x) => x !== c));
-
-  const statusColors: StatusColor[] = [
-    { name: "Blue", value: "#3B82F6" },
-    { name: "Red", value: "#EF4444" },
-    { name: "Teal", value: "#14B8A6" },
-    { name: "Yellow", value: "#EAB308" },
-    { name: "Green", value: "#10B981" },
-    { name: "Purple", value: "#A855F7" },
-    { name: "Orange", value: "#F97316" },
-    { name: "Pink", value: "#EC4899" },
-    { name: "Cyan", value: "#000000" },
-    { name: "Indigo", value: "#252B37" },
-    { name: "Indigo", value: "#414651" },
-    { name: "Indigo", value: "#535862" },
-    { name: "Indigo", value: "#717680" },
-    { name: "Indigo", value: "#A4A7AE" },
-    { name: "Gray", value: "#D5D7DA" },
-    { name: "Lime", value: "#ffffff" },
-  ];
-
-  const [statuses, setStatuses] = useState<Status[]>([
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(
+    dashboardData?.table_fields || [],
+  );
+  const [displayLabels, setDisplayLabels] = useState<Record<string, string>>(
+    () => {
+      const fields = dashboardData?.table_fields || [];
+      const labels: Record<string, string> = {};
+      fields.forEach((key) => {
+        labels[key] = dashboardData?.display_labels?.[key] || "";
+      });
+      return labels;
+    },
+  );
+  const [useAdminLevelSetting, setUseAdminLevelSetting] = useState(
+    dashboardData?.use_admin_level_setting ?? false,
+  );
+  const [quickSearchField, setQuickSearchField] = useState(
+    dashboardData?.quick_search_field || "",
+  );
+  const [defaultSortField, setDefaultSortField] = useState(
+    dashboardData?.default_sort_field || "",
+  );
+  const [lastLoginRetrievalDays, setLastLoginRetrievalDays] = useState(
+    dashboardData?.last_login_retrieval_days?.toString() || "",
+  );
+  const [statuses, setStatuses] = useState<any[]>([
     {
       id: "1",
       color: "#3B82F6",
@@ -115,449 +107,262 @@ export default function CandidateDashboardSettings() {
     },
     {
       id: "6",
-      color: "#3B82F6",
-      name: "Complete",
-      textColor: "#ffffff",
-      backgroundColor: "#3B82F6",
-    },
-    {
-      id: "7",
       color: "#10B981",
       name: "Lost",
       textColor: "#ffffff",
       backgroundColor: "#10B981",
     },
   ]);
+  const [selectedStatusesForReason, setSelectedStatusesForReason] = useState<
+    string[]
+  >([]);
+  const [statusReasons, setStatusReasons] = useState<Record<string, string>>(
+    {},
+  );
+  const [postCandidateSettingsUpdate, { isLoading: isSaving }] =
+    usePostCandidateSettingsUpdateMutation();
 
-  const [draggedItem, setDraggedItem] = useState<string | null>(null);
-  const [colorPickerOpen, setColorPickerOpen] = useState(false);
-  const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
-  const [newStatusName, setNewStatusName] = useState("");
-  const [newStatusColor, setNewStatusColor] = useState("#3B82F6");
+  useEffect(() => {
+    if (!dashboardData) return;
 
-  const handleDragStart = (e: React.DragEvent, id: string) => {
-    setDraggedItem(id);
-    e.dataTransfer.effectAllowed = "move";
-  };
+    setSelectedKeys(dashboardData.table_fields || []);
+    setUseAdminLevelSetting(dashboardData.use_admin_level_setting ?? false);
+    setQuickSearchField(dashboardData.quick_search_field || "");
+    setDefaultSortField(dashboardData.default_sort_field || "");
+    setLastLoginRetrievalDays(
+      dashboardData.last_login_retrieval_days?.toString() || "",
+    );
 
-  const handleDragOver = (e: React.DragEvent, id: string) => {
-    e.preventDefault();
-    if (draggedItem === id) return;
+    const labels: Record<string, string> = {};
+    (dashboardData.table_fields || []).forEach((key) => {
+      labels[key] =
+        (
+          dashboardData.display_labels as
+            | Record<string, string | null>
+            | undefined
+        )?.[key] || "";
+    });
 
-    const draggedIndex = statuses.findIndex((s) => s.id === draggedItem);
-    const targetIndex = statuses.findIndex((s) => s.id === id);
-
-    if (draggedIndex !== -1 && targetIndex !== -1) {
-      const newStatuses = [...statuses];
-      const [removed] = newStatuses.splice(draggedIndex, 1);
-      newStatuses.splice(targetIndex, 0, removed);
-      setStatuses(newStatuses);
+    if (
+      dashboardData.display_labels &&
+      Array.isArray(dashboardData.display_labels)
+    ) {
+      dashboardData.display_labels.forEach((label: string) => {
+        const col = availableColumns.find((c) => c.label === label);
+        if (col) {
+          labels[col.key] = label;
+        }
+      });
     }
-  };
 
-  const handleDragEnd = () => {
-    setDraggedItem(null);
-  };
+    setDisplayLabels(labels);
+  }, [dashboardData]);
 
-  const handleColorChange = (id: string, color: string) => {
-    setStatuses(
-      statuses.map((status) =>
-        status.id === id
-          ? { ...status, color, backgroundColor: color }
-          : status,
-      ),
-    );
-  };
+  const handleSubmit = async () => {
+    const displayLabelsPayload: Record<string, string> = {};
+    selectedKeys.forEach((key) => {
+      displayLabelsPayload[key] = displayLabels[key] || "";
+    });
 
-  const handleCustomizeColor = (
-    statusId: string,
-    textColor: string,
-    backgroundColor: string,
-  ) => {
-    setStatuses(
-      statuses.map((status) =>
-        status.id === statusId
-          ? { ...status, textColor, backgroundColor, color: backgroundColor }
-          : status,
-      ),
-    );
-  };
-
-  const handleDeleteStatus = (id: string) => {
-    setStatuses(statuses.filter((status) => status.id !== id));
-  };
-
-  const handleStatusNameChange = (id: string, name: string) => {
-    setStatuses(statuses.map((s) => (s.id === id ? { ...s, name } : s)));
-  };
-
-  const handleAddStatus = () => {
-    const newStatus: Status = {
-      id: Date.now().toString(),
-      color: newStatusColor,
-      name: newStatusName || "New Status",
-      textColor: "#ffffff",
-      backgroundColor: newStatusColor,
+    const dashboardPayload = {
+      table_fields: selectedKeys,
+      display_labels: displayLabelsPayload,
+      use_admin_level_setting: useAdminLevelSetting,
+      quick_search_field: quickSearchField || null,
+      default_sort_field: defaultSortField || null,
+      last_login_retrieval_days: lastLoginRetrievalDays
+        ? parseInt(lastLoginRetrievalDays, 10)
+        : null,
+      show_status_statistical_breakdowns: false,
     };
-    setStatuses([...statuses, newStatus]);
-    setNewStatusName("");
-    setNewStatusColor("#3B82F6");
-  };
 
-  const initialTextColor =
-    statuses.find((s) => s.id === selectedStatusId)?.textColor || "#000000";
-  const initialBackgroundColor =
-    statuses.find((s) => s.id === selectedStatusId)?.backgroundColor ||
-    "#3B82F6";
+    try {
+      const response = await postCandidateSettingsUpdate({
+        dashboard: dashboardPayload,
+      }).unwrap();
+      toast.success("Dashboard settings saved successfully!");
 
-  const onSaveCustomColor = (textColor: string, backgroundColor: string) => {
-    if (selectedStatusId) {
-      handleCustomizeColor(selectedStatusId, textColor, backgroundColor);
+      if (response?.data?.dashboard) {
+        setSelectedKeys(response.data.dashboard.table_fields || []);
+        setUseAdminLevelSetting(
+          response.data.dashboard.use_admin_level_setting ?? false,
+        );
+        setQuickSearchField(response.data.dashboard.quick_search_field || "");
+        setDefaultSortField(response.data.dashboard.default_sort_field || "");
+        setLastLoginRetrievalDays(
+          response.data.dashboard.last_login_retrieval_days?.toString() || "",
+        );
+
+        const labels: Record<string, string> = {};
+        (response.data.dashboard.table_fields || []).forEach((key) => {
+          labels[key] =
+            (
+              response.data.dashboard.display_labels as
+                | Record<string, string | null>
+                | undefined
+            )?.[key] || "";
+        });
+
+        if (
+          response.data.dashboard.display_labels &&
+          Array.isArray(response.data.dashboard.display_labels)
+        ) {
+          response.data.dashboard.display_labels.forEach((label: string) => {
+            const col = availableColumns.find((c) => c.label === label);
+            if (col) {
+              labels[col.key] = label;
+            }
+          });
+        }
+
+        setDisplayLabels(labels);
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message || "Error saving settings. Please try again.",
+      );
     }
-    setColorPickerOpen(false);
   };
 
   return (
     <CommonAccordion title="Candidate Dashboard Settings">
-      <div>
-        {/* Fields */}
-        <p className="font-medium mb-1.5">
-          Fields which are showed in the Client table of agency dashboard
-          (Agency Level)
-        </p>
-        <div
-          className="flex flex-wrap gap-1.5 border border-gray-200 rounded-lg p-4 min-h-[42px] items-center cursor-text mb-4"
-          onClick={() => document.getElementById("countryInput")?.focus()}
-        >
-          {countries?.map((c) => (
-            <span
-              key={c}
-              className="flex items-center gap-1 bg-[#111927] text-white rounded-[8px] px-2 py-0.5 text-xs"
+      <div className="px-4 space-y-4">
+        {isLoading ? (
+          <div className="text-sm text-gray-500">Loading columns...</div>
+        ) : (
+          <>
+            <label
+              htmlFor="column-select"
+              className="block text-sm font-medium text-gray-700"
             >
-              {c}
-              <span
-                onClick={() => removeCountry(c)}
-                className="cursor-pointer text-green-400 hover:text-green-700 text-sm leading-none"
-              >
-                ×
-              </span>
-            </span>
-          ))}
-          <input
-            id="countryInput"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={handleTagKey}
-            className="border-none outline-none text-xs flex-1 min-w-[60px] bg-transparent"
-          />
-        </div>
-        {/* Original & Display */}
-        <div className="flex gap-4">
-          {/* Original Label */}
-          <div>
-            <label className="block text-base font-medium mb-1">
-              Original Label
+              Fields which are showed in the Candidate table of agency dashboard
+              (Agency Level)
             </label>
-            <div className="space-y-4">
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your original label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your original label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your original label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your original label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your original label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-            </div>
-          </div>
-          {/* Display Label */}
-          <div>
-            <label className="block text-base font-medium mb-1">
-              Display Label
-            </label>
-            <div className="space-y-4">
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your display label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your display label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your display label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your display label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-              <input
-                type="text"
-                // value={logoHeight}
-                // onChange={(e) => setLogoHeight(e.target.value)}
-                placeholder="Enter your display label"
-                className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-            </div>
-          </div>
-        </div>
-        {/* Checkbox */}
-        <div className="flex gap-3 items-center mt-8 mb-6">
-          <Checkbox />
-          <p className=" text-[#384250]">
-            Use admin level setting for fields which are showed in the client
-            table of agency dashboard
-          </p>
-        </div>
-        {/*  */}
-        <div className="space-y-4">
-          {/* Quick search field */}
-          <div>
-            <label className="block text-base font-medium mb-1">
-              Quick search field for Client table of agency dashboard for Client
-              table of agency dashboard
-            </label>
-            <div className="relative">
-              <select
-                // value={font}
-                // onChange={(e) => setFont(e.target.value)}
-                className="w-full appearance-none border border-gray-300 rounded-lg p-4 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
-              >
-                {FONTS.map((f) => (
-                  <option key={f} value={f}>
-                    {f}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                size={16}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
-              />
-            </div>
-          </div>
-          {/* Default sort field */}
-          <div>
-            <label className="block text-base font-medium mb-1">
-              Default sort field for Client table of agency dashboard
-            </label>
-            <div className="relative">
-              <select
-                // value={font}
-                // onChange={(e) => setFont(e.target.value)}
-                className="w-full appearance-none border border-gray-300 rounded-lg p-4 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
-              >
-                {FONTS.map((f) => (
-                  <option key={f} value={f}>
-                    {f}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                size={16}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
-              />
-            </div>
-          </div>
-          {/* Number of last */}
-          <div>
-            <label className="block text-base font-medium mb-1">
-              Number of last login retrieval days for Client table of agency
-              dashboard
-            </label>
-            <input
-              type="text"
-              // value={logoHeight}
-              // onChange={(e) => setLogoHeight(e.target.value)}
-              placeholder="Start typing to filter"
-              className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
+            <MultiSelecte
+              placeholder="Select columns to display"
+              value={availableColumns
+                .filter((col) => selectedKeys.includes(col.key))
+                .map((col) => ({
+                  value: col.key,
+                  label: col.key,
+                }))}
+              onChange={(opts: SelectOption[]) =>
+                setSelectedKeys(opts.map((o) => o.value))
+              }
+              options={availableColumns.map((col) => ({
+                value: col.key,
+                label: col.key,
+              }))}
             />
-          </div>
-        </div>
-        {/* color */}
-        <div className="mt-8">
-          {/* Status List */}
-          <div className="space-y-4 mb-4">
-            {statuses.map((status) => (
-              <div
-                key={status.id}
-                draggable
-                onDragStart={(e) => handleDragStart(e, status.id)}
-                onDragOver={(e) => handleDragOver(e, status.id)}
-                onDragEnd={handleDragEnd}
-                className="flex items-center gap-2 md:gap-3  bg-white rounded-md cursor-move"
-              >
-                <GripVertical className="md:w-5 w-4 h-4 md:h-5 text-secondaryColor" />
-                {/* Color Dropdown */}
-                <div className=" border p-3 rounded-sm">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button className="flex cursor-pointer items-center gap-2 focus:outline-none">
-                        <div
-                          className="md:w-5 w-4 h-4 md:h-5 rounded-full border-2 border-gray-300"
-                          style={{
-                            backgroundColor:
-                              status.backgroundColor || status.color,
-                          }}
-                        />
-                        <Image
-                          src="/icon/arrowdown.svg"
-                          alt="Dropdown Icon"
-                          width={16}
-                          height={16}
-                          className="w-3 h-3 md:w-4 md:h-4"
-                        />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-64 p-4">
-                      {colorPickerOpen && selectedStatusId ? (
-                        <ColorPickerDialog
-                          open={colorPickerOpen}
-                          onOpenChange={setColorPickerOpen}
-                          onSave={onSaveCustomColor}
-                          initialTextColor={initialTextColor}
-                          initialBackgroundColor={initialBackgroundColor}
-                        />
-                      ) : (
-                        <SimpleColorPicker
-                          status={status}
-                          statusColors={statusColors}
-                          onColorChange={handleColorChange}
-                          onCustomizeClick={(statusId) => {
-                            setSelectedStatusId(statusId);
-                            setColorPickerOpen(true);
-                          }}
-                          onResetClick={() => {
-                            handleColorChange(status.id, "#3B82F6");
-                          }}
-                        />
-                      )}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
+            <div className="grid grid-cols-2 items-center gap-3">
+              {selectedKeys.map((key) => {
+                const col = availableColumns.find((c) => c.key === key);
+                if (!col) return null;
+                return (
+                  <div key={key} className="">
+                    <label className="text-sm font-medium text-gray-700 capitalize mb-2 block">
+                      {col.label}
+                    </label>
+                    <ReusableInput
+                      value={displayLabels[key] || ""}
+                      onChange={(e) =>
+                        setDisplayLabels((prev) => ({
+                          ...prev,
+                          [key]: e.target.value,
+                        }))
+                      }
+                      placeholder="Enter display label"
+                    />
+                  </div>
+                );
+              })}
+            </div>
 
-                {/* Status Name (editable, submitted via main Submit) */}
-                <div className=" flex-1 ">
-                  <input
-                    type="text"
-                    value={status.name}
-                    onChange={(e) =>
-                      handleStatusNameChange(status.id, e.target.value)
-                    }
-                    className="w-full px-3 py-[11px] bg-white border rounded-md text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blackColor"
-                  />
-                </div>
+            <div className="flex gap-3 items-center mt-4 mb-2">
+              <input
+                type="checkbox"
+                checked={useAdminLevelSetting}
+                onChange={(e) => setUseAdminLevelSetting(e.target.checked)}
+                id="admin-level"
+              />
+              <label htmlFor="admin-level" className="text-sm text-[#384250]">
+                Use admin level setting for fields which are showed in the
+                candidate table of agency dashboard
+              </label>
+            </div>
 
-                {/* Delete Button */}
-                <button
-                  onClick={() => handleDeleteStatus(status.id)}
-                  className="text-redColor cursor-pointer hover:text-red-700"
+            <div className="space-y-4">
+              <div>
+                <label className="block text-base font-medium mb-1">
+                  Quick search field for Candidate table of agency dashboard
+                </label>
+                <select
+                  value={quickSearchField}
+                  onChange={(e) => setQuickSearchField(e.target.value)}
+                  className="w-full appearance-none border border-gray-300 rounded-lg p-4 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
                 >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                  <option value="">Select field</option>
+                  {availableColumns.map((col) => (
+                    <option key={col.key} value={col.key}>
+                      {col.label}
+                    </option>
+                  ))}
+                </select>
               </div>
-            ))}
-          </div>
+              <div>
+                <label className="block text-base font-medium mb-1">
+                  Default sort field for Candidate table of agency dashboard
+                </label>
+                <select
+                  value={defaultSortField}
+                  onChange={(e) => setDefaultSortField(e.target.value)}
+                  className="w-full appearance-none border border-gray-300 rounded-lg p-4 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
+                >
+                  <option value="">Select field</option>
+                  {availableColumns.map((col) => (
+                    <option key={col.key} value={col.key}>
+                      {col.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-base font-medium mb-1">
+                  Number of last login retrieval days for Candidate table of
+                  agency dashboard
+                </label>
+                <input
+                  type="text"
+                  value={lastLoginRetrievalDays}
+                  onChange={(e) => setLastLoginRetrievalDays(e.target.value)}
+                  placeholder="Enter number of days"
+                  className="w-full bg-white border border-gray-300 rounded-lg p-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
 
-          {/* Add Another Item */}
+      <div className="mt-6">
+        <StatusUpdatePart
+          statuses={statuses}
+          setStatuses={setStatuses}
+          selectedStatusesForReason={selectedStatusesForReason}
+          setSelectedStatusesForReason={setSelectedStatusesForReason}
+          statusReasons={statusReasons}
+          setStatusReasons={setStatusReasons}
+        />
+      </div>
 
-          <ButtonReuseable
-            title="Add Another Status"
-            onClick={handleAddStatus}
-            className=" text-sm! px-3! py-2! border bg-white!  border-gray-300 rounded-md! text-headerColor! font-medium hover:bg-gray-100 transition shadow-none! mb-6"
-          />
-        </div>
-        {/* Select statuses */}
-        <p className="font-medium mb-1.5">
-          Select statuses which need a reason when client status was changed to
-        </p>
-        <div
-          className="flex flex-wrap gap-1.5 border border-gray-200 rounded-lg p-4 min-h-[42px] items-center cursor-text mb-4"
-          onClick={() => document.getElementById("countryInput")?.focus()}
-        >
-          {countries?.map((c) => (
-            <span
-              key={c}
-              className="flex items-center gap-1 bg-[#111927] text-white rounded-[8px] px-2 py-0.5 text-xs"
-            >
-              {c}
-              <span
-                onClick={() => removeCountry(c)}
-                className="cursor-pointer text-green-400 hover:text-green-700 text-sm leading-none"
-              >
-                ×
-              </span>
-            </span>
-          ))}
-          <input
-            id="countryInput"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={handleTagKey}
-            className="border-none outline-none text-xs flex-1 min-w-[60px] bg-transparent"
-          />
-        </div>
-        {/* Textarea */}
-        <div className="flex gap-4">
-          <div className="w-full">
-            <label className="block text-base font-medium mb-1">
-              List of reasons to change to Rejected
-            </label>
-            <Textarea className="h-20" placeholder="Each line for one reason" />
-          </div>
-          <div className="w-full">
-            <label className="block text-base font-medium mb-1">
-              List of reasons to change to Inactive
-            </label>
-            <Textarea className="h-20" placeholder="Each line for one reason" />
-          </div>
-        </div>
-        {/* Button */}
-        <div className="flex justify-end mt-6 gap-2">
-          <ButtonReuseable
-            className="bg-white text-[#111927]! border border-[#E5E7EB]"
-            title="Cancel"
-          />
-          <ButtonReuseable className="" title="Submit" />
-        </div>
+      <div className="flex justify-end mt-6 gap-2 px-4 pb-4">
+        <ButtonReuseable
+          onClick={handleSubmit}
+          loading={isSaving}
+          title="Save"
+          sendingMsg={"Saving..."}
+          className="bg-gray-900 text-white hover:bg-gray-800"
+        />
       </div>
     </CommonAccordion>
   );
