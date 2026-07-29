@@ -43,18 +43,18 @@ interface ListProps {
 
 export default function List({ type }: ListProps) {
   const { data: tagsData, isLoading: isLoadingTags } = useGetTagsQuery(
-    type || "candidate",
+    type || "candidate" || "client",
   );
 
   const { data: locationsData, isLoading: isLoadingLocations } =
-    useGetLocationsQuery(type || "candidate");
+    useGetLocationsQuery(type || "candidate" || "client");
 
   const { data: typesData, isLoading: isLoadingTypes } = useGetTypesQuery(
-    type || "client",
+    type || "candidate" || "client",
   );
 
   const { data: checklistData, isLoading: isLoadingChecklist } =
-    useGetChecklistQuery(type || "client");
+    useGetChecklistQuery(type || "candidate" || "client");
 
   const locationItems: FilterItem[] = isLoadingLocations
     ? [{ id: "loading", label: "Loading...", checked: false }]

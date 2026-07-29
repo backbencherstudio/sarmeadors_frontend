@@ -104,6 +104,7 @@ export const baseApi = createApi({
     "clientsSettings",
     "typeStore",
     "checklist",
+    "jobsSettings",
   ],
   endpoints: (builder) => ({}),
 });

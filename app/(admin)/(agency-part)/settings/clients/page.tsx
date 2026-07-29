@@ -11,7 +11,7 @@ export default function ClientsPage() {
   return (
     <div className="space-y-4">
       <CandidateDashboardSettings />
-      <CandidateTypesTagsChecklistSettings />
+      <CandidateTypesTagsChecklistSettings type="client" />
       <ProfileSettings />
       <AccessControlAndVisibilitySettings />
       <RegistrationFeeSettings />
