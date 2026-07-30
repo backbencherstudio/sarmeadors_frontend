@@ -88,7 +88,7 @@ export default function LoginForm() {
         router.push("/client/dashboard");
       } else if (userType === "candidate") {
         router.push("/candidate/dashboard");
-      } else if (userType === "super-admin") {
+      } else if (userType === "super_admin") {
         router.push("/super-admin/dashboard");
       } else {
         router.push("/");
@@ -96,7 +96,7 @@ export default function LoginForm() {
       localStorage.setItem("isLoggedIn", userType);
       reset();
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       const message =
         error?.data?.message || error?.message || "Wrong Email or Password";
 
