@@ -30,7 +30,7 @@ interface NavItem {
   icon: any;
   label: string;
   href: string;
-  type?: "client" | "agency_admin" | "candidate" | "super-admin";
+  type?: "client" | "agency_admin" | "candidate" | "super_admin";
 }
 
 interface SidebarProps {
@@ -69,13 +69,13 @@ const navItems: NavItem[] = [
     label: "Dashboard",
     icon: DashboardIcon,
     href: "/super-admin/dashboard",
-    type: "super-admin",
+    type: "super_admin",
   },
   {
     label: "Agencies",
     icon: BriefcaseIcon,
     href: "/super-admin/agencies",
-    type: "super-admin",
+    type: "super_admin",
   },
   {
     icon: ClientIcon,
@@ -237,7 +237,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       setTemplatesOpen(true);
     }
   }, [pathname]);
-  console.log(isLoggedIn, "isLoggedIn=====");
+  // console.log(isLoggedIn, "isLoggedIn=====");
   const isActive = (href: string): boolean => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);

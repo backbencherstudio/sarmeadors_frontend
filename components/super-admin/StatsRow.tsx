@@ -1,37 +1,54 @@
-const stats = [
-  {
-    label: "Total Agencies",
-    value: "148",
-    badge: "(0.1%)",
-    badgeColor: "text-[#04A755]",
-  },
-  {
-    label: "Active Agencies",
-    value: "112",
-    badge: "(75.7% of total)",
-    badgeColor: "text-[#04A755]",
-  },
-  {
-    label: "Suspended",
-    value: "21",
-    badge: "(14.2% of total)",
-    badgeColor: "text-[#CB121D]",
-  },
-  {
-    label: "Total Clients",
-    value: "8,340",
-    badge: "(last month)",
-    badgeColor: "text-[#A5600D]",
-  },
-  {
-    label: "Total Candidates",
-    value: "54,920",
-    badge: "(last month)",
-    badgeColor: "text-[#AD0AFD]",
-  },
-];
+type StatsRowProps = {
+  total_agencies?: number;
+  active_agencies?: number;
+  suspended_agencies?: number;
+  total_clients?: number;
+  total_candidates?: number;
+};
 
-export default function StatsRow() {
+export default function StatsRow({
+  total_agencies = 0,
+  active_agencies = 0,
+  suspended_agencies = 0,
+  total_clients = 0,
+  total_candidates = 0,
+}: StatsRowProps) {
+  const inactive_agencies =
+    total_agencies - active_agencies - suspended_agencies;
+
+  const stats = [
+    {
+      label: "Total Agencies",
+      value: total_agencies.toString(),
+      // badge: `(${total_agencies > 0 ? "100%" : "0%"})`,
+      badgeColor: "text-[#04A755]",
+    },
+    {
+      label: "Active Agencies",
+      value: active_agencies.toString(),
+      // badge: `(${total_agencies > 0 ? Math.round((active_agencies / total_agencies) * 100) : 0}% of total)`,
+      badgeColor: "text-[#04A755]",
+    },
+    {
+      label: "Suspended",
+      value: suspended_agencies.toString(),
+      // badge: `(${total_agencies > 0 ? Math.round((suspended_agencies / total_agencies) * 100) : 0}% of total)`,
+      badgeColor: "text-[#CB121D]",
+    },
+    {
+      label: "Total Clients",
+      value: total_clients.toLocaleString(),
+      // badge: "(total)",
+      badgeColor: "text-[#A5600D]",
+    },
+    {
+      label: "Total Candidates",
+      value: total_candidates.toLocaleString(),
+      // badge: "(total)",
+      badgeColor: "text-[#AD0AFD]",
+    },
+  ];
+
   return (
     <div>
       <h1 className="text-[#111927] font-semibold text-xl mb-4">
@@ -48,7 +65,7 @@ export default function StatsRow() {
               <span className="text-2xl font-medium text-gray-900">
                 {stat.value}
               </span>
-              <span className={`text-lg ${stat.badgeColor}`}>{stat.badge}</span>
+              {/* <span className={`text-lg ${stat.badgeColor}`}>{stat.badge}</span> */}
             </div>
           </div>
         ))}

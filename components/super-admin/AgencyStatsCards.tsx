@@ -1,18 +1,26 @@
 // components/AgencyStatsCards.tsx
 
-type StatCard = {
-  label: string;
-  value: number;
+type AgencyStatsCardsProps = {
+  total_agencies?: number;
+  active_agencies?: number;
+  suspended_agencies?: number;
 };
 
-const stats: StatCard[] = [
-  { label: "Total Agencies", value: 3000 },
-  { label: "Active Agencies", value: 112 },
-  { label: "Suspended", value: 21 },
-  { label: "Inactive", value: 2900 },
-];
+export default function AgencyStatsCards({
+  total_agencies = 0,
+  active_agencies = 0,
+  suspended_agencies = 0,
+}: AgencyStatsCardsProps) {
+  const stats = [
+    { label: "Total Agencies", value: total_agencies },
+    { label: "Active Agencies", value: active_agencies },
+    { label: "Suspended", value: suspended_agencies },
+    {
+      label: "Inactive",
+      value: total_agencies - active_agencies - suspended_agencies,
+    },
+  ];
 
-export default function AgencyStatsCards() {
   return (
     <div className="grid grid-cols-4 gap-3">
       {stats.map((stat) => (
