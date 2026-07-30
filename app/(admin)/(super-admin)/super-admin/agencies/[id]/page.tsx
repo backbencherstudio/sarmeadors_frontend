@@ -26,8 +26,8 @@ type FormValues = {
   email: string;
   mobile: string;
   address: string;
-  password: string;
-  password_confirmation: string;
+  // password: string;
+  // password_confirmation: string;
   max_users: string;
   max_clients: string;
   max_candidates: string;
@@ -210,7 +210,7 @@ export default function AddNewAgency() {
             </div>
 
             {/* Password + Confirm Password */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <Label className="text-xs font-medium text-[#111927]">
                   Password <span className="text-red-500">*</span>
@@ -253,7 +253,7 @@ export default function AddNewAgency() {
                   </p>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* Status */}
             <div className="space-y-1">
