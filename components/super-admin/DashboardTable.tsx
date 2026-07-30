@@ -1,5 +1,4 @@
 "use client";
-import { SuperAdminDashboardData } from "@/demoData/DashboardData";
 import { useState } from "react";
 import DynamicTableTwo from "../common/DynamicTableTwo";
 import TableColAscDsc from "../dashboard/TableColAscDsc";
@@ -22,15 +21,30 @@ const statusConfig: Record<string, { label: string; className: string }> = {
 function AgencyAvatar({ name }: { name: string }) {
   const initial = name?.charAt(0).toUpperCase() ?? "?";
   return (
-    <div className="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-xs font-medium text-gray-600 flex-shrink-0">
+    <div className="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-xs font-medium text-gray-600 shrink-0">
       {initial}
     </div>
   );
 }
 
-export default function DashboardTable() {
+type RecentAgency = {
+  id: number;
+  name: string;
+  email: string;
+  status: string;
+  created_at: string;
+};
+
+type DashboardTableProps = {
+  recent_agencies?: RecentAgency[];
+  loading?: boolean;
+};
+
+export default function DashboardTable({
+  recent_agencies = [],
+  loading = false,
+}: DashboardTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState(SuperAdminDashboardData);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [tooltipRow, setTooltipRow] = useState<string | null>(null);
@@ -43,11 +57,33 @@ export default function DashboardTable() {
     joined: true,
   });
 
+  // Map API data to table rows
+  const tableData = (recent_agencies || []).map((agency) => ({
+    id: String(agency.id),
+    agency_name: agency.name,
+    domain: agency.email,
+    status:
+      agency.status === "active"
+        ? "Active"
+        : agency.status === "suspended"
+          ? "Suspended"
+          : "Inactive",
+    client: "-",
+    candidate: "-",
+    joined: agency.created_at
+      ? new Date(agency.created_at).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "-",
+  }));
+
   const toggleSelectAll = () => {
-    if (selectedRows.length === data.length) {
+    if (selectedRows.length === tableData.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(data.map((row) => row.id));
+      setSelectedRows(tableData.map((row) => row.id));
     }
   };
 
@@ -69,7 +105,9 @@ export default function DashboardTable() {
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
-            checked={selectedRows.length === data.length && data.length > 0}
+            checked={
+              selectedRows.length === tableData.length && tableData.length > 0
+            }
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
           />
@@ -169,11 +207,13 @@ export default function DashboardTable() {
     (col) => visibleColumns[col.accessor as keyof typeof visibleColumns],
   );
 
+  const totalPages = Math.max(1, Math.ceil(tableData.length / itemsPerPage));
+
   return (
     <div>
       <DynamicTableTwo
         columns={visibleColumnsArray}
-        data={data || []}
+        data={tableData || []}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={(page) => setCurrentPage(page)}
@@ -181,9 +221,9 @@ export default function DashboardTable() {
           setItemsPerPage(newItemsPerPage);
           setCurrentPage(1);
         }}
-        loading={false}
-        totalItems={data.length}
-        totalpage={2}
+        loading={loading}
+        totalItems={tableData.length}
+        totalpage={totalPages}
       />
     </div>
   );
