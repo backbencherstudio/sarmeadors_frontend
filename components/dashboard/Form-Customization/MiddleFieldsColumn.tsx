@@ -130,9 +130,13 @@ export default function MiddleFieldsColumn() {
   const activeBlockId = useSelector(
     (state: any) => state.applicationForm.activeBlockId,
   );
+  const active = useSelector(
+    (state: any) => state.applicationForm,
+  );
   const activeBlock = useSelector((state: any) =>
     state.applicationForm.blocks.find((b: any) => b.id === activeBlockId),
   );
+  console.log(active, "applicationForm");
 
   const isDraggingBlock = useRef(false);
   const {
@@ -166,7 +170,7 @@ export default function MiddleFieldsColumn() {
   const handleCreateCustomForm = () => {
     // Implement your form submission logic here
     console.log("Form submitted!");
-  }
+  };
 
   const selectField = (sectionId: string | null, fieldId: string | null) => {
     dispatch(setActiveField({ sectionId, fieldId }));
@@ -414,7 +418,7 @@ export default function MiddleFieldsColumn() {
           </div>
         )}
         <div className="mt-4 flex justify-end">
-          <ButtonReuseable title="submit" onClick={handleCreateCustomForm}/>
+          <ButtonReuseable title="submit" onClick={handleCreateCustomForm} />
         </div>
       </div>
 

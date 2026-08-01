@@ -105,6 +105,7 @@ export const baseApi = createApi({
     "typeStore",
     "checklist",
     "jobsSettings",
+    "AgencyTemplate",
   ],
   endpoints: (builder) => ({}),
 });
