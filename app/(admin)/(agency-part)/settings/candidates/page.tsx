@@ -10,11 +10,14 @@ import ProfileSettings2 from "@/components/agency/globalSetting/candidates/Profi
 import RegistrationFeeSettings from "@/components/agency/globalSetting/candidates/RegistrationFeeSettings";
 import ScheduleAvailabilitySettings from "@/components/agency/globalSetting/candidates/ScheduleAvailabilitySettings";
 
+
 export default function CandidatesPage() {
   const { data: settingsData, isLoading } =
     useGetCandidateSettingsQuery("candidateSettings");
 
   const dashboardData = settingsData?.data?.dashboard;
+  const registrationFeeData = settingsData?.data?.registration_fee;
+  const accessControlData = settingsData?.data?.access_control;
 
   return (
     <div className="space-y-4">
@@ -24,9 +27,15 @@ export default function CandidatesPage() {
       />
       <CandidateTypesTagsChecklistSettings />
       <ProfileSettings />
-      <AccessControlAndVisibilitySettings />
-      <RegistrationFeeSettings />
-      <Documents />
+      <AccessControlAndVisibilitySettings
+        accessControlData={accessControlData}
+        isLoading={isLoading}
+      />
+      <RegistrationFeeSettings
+        registrationFeeData={registrationFeeData}
+        isLoading={isLoading}
+      />
+      <Documents settingsData={settingsData} isLoading={isLoading} />
       <ProfileSettings2 />
       <ScheduleAvailabilitySettings />
     </div>
