@@ -9,9 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCreateAgencyMutation } from "@/feature/dashboard/super-admin/agency";
+import {
+  useCreateAgencyMutation,
+  useGetSingleAgencieQuery,
+  useUpdateAgencyMutation,
+} from "@/feature/dashboard/super-admin/agency";
 import { ChevronLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -21,8 +26,8 @@ type FormValues = {
   email: string;
   mobile: string;
   address: string;
-  password: string;
-  password_confirmation: string;
+  // password: string;
+  // password_confirmation: string;
   max_users: string;
   max_clients: string;
   max_candidates: string;
@@ -30,7 +35,9 @@ type FormValues = {
 };
 
 export default function AddNewAgency() {
-  const [createAgency, { isLoading }] = useCreateAgencyMutation();
+  const { id } = useParams();
+  const { data: agencyData, refetch } = useGetSingleAgencieQuery(id);
+  const [updateAgency, { isLoading }] = useUpdateAgencyMutation();
 
   const router = useRouter();
   const {
@@ -42,6 +49,22 @@ export default function AddNewAgency() {
     defaultValues: { status: "active" },
   });
 
+  // Populate form fields when agency data is fetched
+  useEffect(() => {
+    if (agencyData?.data) {
+      const agency = agencyData.data;
+      setValue("name", agency.name || "");
+      setValue("subdomain_prefix", agency.subdomain_prefix || "");
+      setValue("email", agency.email || "");
+      setValue("mobile", agency.mobile || "");
+      setValue("address", agency.address || "");
+      setValue("status", agency.status || "active");
+      setValue("max_users", String(agency.max_users ?? ""));
+      setValue("max_clients", String(agency.max_clients ?? ""));
+      setValue("max_candidates", String(agency.max_candidates ?? ""));
+    }
+  }, [agencyData, setValue]);
+
   const onSubmit = async (data: FormValues) => {
     try {
       const payload = {
@@ -50,10 +73,11 @@ export default function AddNewAgency() {
         max_clients: Number(data.max_clients),
         max_candidates: Number(data.max_candidates),
       };
-      const result = await createAgency(payload).unwrap();
+      const result = await updateAgency({ id, data: payload }).unwrap();
       console.log(result.status);
       if (result.status) {
-        toast.success(result.message || "Agency create successfully");
+        toast.success(result.message || "Agency update successfully");
+        refetch();
         router.push("/super-admin/agencies");
       }
     } catch (error) {
@@ -186,7 +210,7 @@ export default function AddNewAgency() {
             </div>
 
             {/* Password + Confirm Password */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <Label className="text-xs font-medium text-[#111927]">
                   Password <span className="text-red-500">*</span>
@@ -229,7 +253,7 @@ export default function AddNewAgency() {
                   </p>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* Status */}
             <div className="space-y-1">
@@ -339,7 +363,7 @@ export default function AddNewAgency() {
           <Button
             type="button"
             variant="outline"
-            className="text-sm"
+            className="text-sm cursor-pointer"
             onClick={() => router.back()}
           >
             Cancel
@@ -347,9 +371,9 @@ export default function AddNewAgency() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-[#111927] hover:bg-[#1f2937] text-white text-sm"
+            className="bg-[#111927] hover:bg-[#1f2937] text-white text-sm cursor-pointer"
           >
-            {isLoading ? "Creating..." : "Create Agency"}
+            {isLoading ? "Update..." : "Update Agency"}
           </Button>
         </div>
       </form>

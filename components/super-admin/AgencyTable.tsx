@@ -1,81 +1,108 @@
 "use client";
+import { Plus, Search, Eye, MoreHorizontal } from "lucide-react";
+import { useState, useEffect } from "react";
+import DynamicTableTwo from "../common/DynamicTableTwo";
+import TableColAscDsc from "../dashboard/TableColAscDsc";
+import LinkReuseable from "../reusable/CustomLink";
+import {
+  useDeleteAgencyMutation,
+  useGetAllAgenciesQuery,
+  useSuspendsAgencyMutation,
+} from "@/feature/dashboard/super-admin/agency";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AgencyDashboardData } from "@/demoData/DashboardData";
-import { MoreVertical, Plus, Search } from "lucide-react";
-import { useState } from "react";
-import DynamicTableTwo from "../common/DynamicTableTwo";
-import TableColAscDsc from "../dashboard/TableColAscDsc";
-import LinkReuseable from "../reusable/CustomLink";
-
-const statusConfig: Record<string, { label: string; className: string }> = {
-  Active: {
-    label: "Active",
-    className: "text-[#217D43] bg-[#E8FAEF]",
-  },
-  Suspended: {
-    label: "Suspended",
-    className: "text-[#CB121D] bg-[#FEF1F1]",
-  },
-  Inactive: {
-    label: "Inactive",
-    className: "text-[#4F5865] bg-[#F3F4F6]",
-  },
-};
+import { toast } from "sonner";
+import Link from "next/link";
 
 const tabs = [
-  { label: "All", key: "All", count: 3000 },
-  { label: "Active", key: "Active", count: 189 },
-  { label: "Suspended", key: "Suspended", count: 18 },
-  { label: "Inactive", key: "Inactive", count: 2900 },
+  { label: "All", key: "" },
+  { label: "Active", key: "active" },
+  { label: "Suspended", key: "suspended" },
 ];
 
 function AgencyAvatar({ name }: { name: string }) {
   const initial = name?.charAt(0).toUpperCase() ?? "?";
   return (
-    <div className="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-xs font-medium text-gray-600 flex-shrink-0">
+    <div className="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-xs font-medium text-gray-600 shrink-0">
       {initial}
     </div>
   );
 }
 
+const statusConfig: Record<string, { label: string; className: string }> = {
+  active: {
+    label: "Active",
+    className: "text-[#217D43] bg-[#E8FAEF]",
+  },
+  suspended: {
+    label: "Suspended",
+    className: "text-[#CB121D] bg-[#FEF1F1]",
+  },
+  inactive: {
+    label: "Inactive",
+    className: "text-[#4F5865] bg-[#F3F4F6]",
+  },
+};
+
+function formatDate(dateStr: string): string {
+  if (!dateStr) return "-";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export default function AgencyTable() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState(AgencyDashboardData);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState("All");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [activeTab, setActiveTab] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const [visibleColumns] = useState({
-    agency_name: true,
-    contact: true,
-    status: true,
-    client: true,
-    candidate: true,
-    joined: true,
-    action: true,
+  const [deleteAgency] = useDeleteAgencyMutation();
+  const [suspendsAgency] = useSuspendsAgencyMutation();
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setCurrentPage(1);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const {
+    data: agenciesData,
+    isLoading,
+    refetch,
+  } = useGetAllAgenciesQuery({
+    search: debouncedSearch || undefined,
+    status: activeTab || undefined,
+    page: currentPage,
+    per_page: itemsPerPage,
   });
 
-  const filteredData = data.filter((row) => {
-    const matchesTab = activeTab === "All" || row.status === activeTab;
-    const matchesSearch =
-      search === "" ||
-      row.agency_name.toLowerCase().includes(search.toLowerCase()) ||
-      row.email.toLowerCase().includes(search.toLowerCase()) ||
-      row.phone.includes(search);
-    return matchesTab && matchesSearch;
-  });
+  const agencies = agenciesData?.data ?? [];
+  const pagination = agenciesData?.pagination ?? {
+    current_page: 1,
+    per_page: 10,
+    total: 0,
+    last_page: 1,
+  };
+
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
   const toggleSelectAll = () => {
-    if (selectedRows.length === filteredData.length) {
+    if (selectedRows.length === agencies.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(filteredData.map((row) => row.id));
+      setSelectedRows(agencies.map((row: any) => String(row.id)));
     }
   };
 
@@ -91,6 +118,34 @@ export default function AgencyTable() {
     console.log("Column sorting clicked");
   };
 
+  const handleView = (row: any) => {
+    console.log("View agency:", row.id);
+  };
+
+  const handleSuspendToggle = async (row: any) => {
+    try {
+      const result = await suspendsAgency(row.id).unwrap();
+      if (result.status) {
+        toast.success(result.message);
+        refetch();
+      }
+    } catch (error) {
+      console.error("Failed to toggle suspend:", error);
+    }
+  };
+
+  const handleDelete = async (row: any) => {
+    try {
+      const result = await deleteAgency(row.id).unwrap();
+      if (result.status) {
+        toast.success(result.message);
+        refetch();
+      }
+    } catch (error) {
+      console.error("Failed to delete agency:", error);
+    }
+  };
+
   const columns = [
     {
       label: (
@@ -98,8 +153,7 @@ export default function AgencyTable() {
           <input
             type="checkbox"
             checked={
-              selectedRows.length === filteredData.length &&
-              filteredData.length > 0
+              selectedRows.length === agencies.length && agencies.length > 0
             }
             onChange={toggleSelectAll}
             className="w-4 h-4 cursor-pointer rounded border-gray-300"
@@ -108,22 +162,22 @@ export default function AgencyTable() {
           <TableColAscDsc onClick={handleColShort} />
         </div>
       ),
-      accessor: "agency_name",
+      accessor: "name",
       width: "260px",
       formatter: (value: string, record: any) => (
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
-            checked={selectedRows.includes(record.id)}
-            onChange={() => toggleRowSelection(record.id)}
-            className="w-4 h-4 cursor-pointer rounded border-gray-300 flex-shrink-0"
+            checked={selectedRows.includes(String(record.id))}
+            onChange={() => toggleRowSelection(String(record.id))}
+            className="w-4 h-4 cursor-pointer rounded border-gray-300 shrink-0"
           />
           <AgencyAvatar name={value} />
           <div className="min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">
               {value}
             </p>
-            <p className="text-xs text-gray-400 truncate">{record.domain}</p>
+            <p className="text-xs text-gray-400 truncate">{record.subdomain}</p>
           </div>
         </div>
       ),
@@ -135,13 +189,56 @@ export default function AgencyTable() {
           <TableColAscDsc onClick={handleColShort} />
         </div>
       ),
-      accessor: "contact",
+      accessor: "email",
       width: "220px",
       formatter: (_: any, record: any) => (
         <div>
           <p className="text-sm text-gray-700">{record.email}</p>
-          <p className="text-xs text-gray-400">{record.phone}</p>
+          <p className="text-xs text-gray-400">{record.mobile}</p>
         </div>
+      ),
+    },
+    {
+      label: (
+        <div className="flex items-center gap-1">
+          <span>Clients</span>
+          <TableColAscDsc onClick={handleColShort} />
+        </div>
+      ),
+      accessor: "total_clients",
+      width: "120px",
+      formatter: (value: number) => (
+        <span className="text-sm text-gray-700">
+          {value?.toLocaleString() ?? 0}
+        </span>
+      ),
+    },
+    {
+      label: (
+        <div className="flex items-center gap-1">
+          <span>Candidates</span>
+          <TableColAscDsc onClick={handleColShort} />
+        </div>
+      ),
+      accessor: "total_candidates",
+      width: "130px",
+      formatter: (value: number) => (
+        <span className="text-sm text-gray-700">
+          {value?.toLocaleString() ?? 0}
+        </span>
+      ),
+    },
+    {
+      label: (
+        <div className="flex items-center gap-1">
+          <span>Joined</span>
+          <TableColAscDsc onClick={handleColShort} />
+        </div>
+      ),
+      accessor: "created_at",
+      width: "160px",
+      formatter: (value: string) => (
+        <span className="text-sm text-gray-700">{formatDate(value)}</span>
       ),
     },
     {
@@ -152,94 +249,54 @@ export default function AgencyTable() {
         </div>
       ),
       accessor: "status",
-      width: "140px",
-      formatter: (value: string, record: any) => {
-        const config = statusConfig[value] ?? statusConfig.Inactive;
+      width: "130px",
+      formatter: (value: string) => {
+        const config =
+          statusConfig[value?.toLowerCase()] ?? statusConfig.inactive;
         return (
-          <div className="relative inline-block group">
-            {record.revenue && (
-              <div
-                className="absolute -top-9 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-sm font-medium px-3 py-1.5 rounded-md whitespace-nowrap z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                style={{ pointerEvents: "none" }}
-              >
-                {record.revenue}
-                <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-900" />
-              </div>
-            )}
-            <span
-              className={`inline-flex items-center px-3 py-1.5 text-sm rounded-md font-medium ${config.className}`}
-            >
-              {config.label}
-            </span>
-          </div>
+          <span
+            className={`inline-flex items-center px-3 py-1.5 text-sm rounded-md font-medium ${config.className}`}
+          >
+            {config.label}
+          </span>
         );
       },
     },
     {
       label: (
         <div className="flex items-center gap-1">
-          <span>Clients</span>
-          <TableColAscDsc onClick={handleColShort} />
-        </div>
-      ),
-      accessor: "client",
-      width: "120px",
-      formatter: (value: number) => (
-        <span className="text-sm text-gray-700">{value?.toLocaleString()}</span>
-      ),
-    },
-    {
-      label: (
-        <div className="flex items-center gap-1">
-          <span>Candidates</span>
-          <TableColAscDsc onClick={handleColShort} />
-        </div>
-      ),
-      accessor: "candidate",
-      width: "130px",
-      formatter: (value: number) => (
-        <span className="text-sm text-gray-700">{value?.toLocaleString()}</span>
-      ),
-    },
-    {
-      label: (
-        <div className="flex items-center gap-1">
-          <span>Joined</span>
-          <TableColAscDsc onClick={handleColShort} />
-        </div>
-      ),
-      accessor: "joined",
-      width: "160px",
-      formatter: (value: string) => (
-        <span className="text-sm text-gray-700">{value}</span>
-      ),
-    },
-    {
-      label: (
-        <div className="flex items-center gap-1">
           <span>Action</span>
-          <TableColAscDsc onClick={handleColShort} />
         </div>
       ),
-      accessor: "action",
-      width: "80px",
+      accessor: "id",
+      width: "100px",
       formatter: (_: any, record: any) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="p-1.5 rounded-md hover:bg-gray-100 transition-colors">
-              <MoreVertical className="w-4 h-4 text-gray-500" />
+              <MoreHorizontal className="w-4 h-4 text-gray-500" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuItem onClick={() => console.log("View", record.id)}>
-              View
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Edit", record.id)}>
-              Edit
+          <DropdownMenuContent align="end" className="min-w-40">
+            <Link href={`/super-admin/agencies/${record.id}`}>
+              <DropdownMenuItem
+                onClick={() => handleView(record)}
+                className="cursor-pointer text-sm"
+              >
+                Edit
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem
+              onClick={() => handleSuspendToggle(record)}
+              className="cursor-pointer text-sm"
+            >
+              {record.status?.toLowerCase() === "suspended"
+                ? "Activate Agency"
+                : "Suspend Agency"}
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="text-red-600"
-              onClick={() => console.log("Delete", record.id)}
+              onClick={() => handleDelete(record)}
+              className="cursor-pointer text-sm hover:text-red-500! hover:bg-red-100!"
             >
               Delete
             </DropdownMenuItem>
@@ -248,10 +305,6 @@ export default function AgencyTable() {
       ),
     },
   ];
-
-  const visibleColumnsArray = columns.filter(
-    (col) => visibleColumns[col.accessor as keyof typeof visibleColumns],
-  );
 
   return (
     <div className="space-y-4">
@@ -262,14 +315,17 @@ export default function AgencyTable() {
           {tabs.map((tab) => (
             <button
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => {
+                setActiveTab(tab.key);
+                setCurrentPage(1);
+              }}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.key
                   ? "bg-gray-900 text-white"
                   : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
               }`}
             >
-              {tab.label} ({tab.count.toLocaleString()})
+              {tab.label}
             </button>
           ))}
         </div>
@@ -283,7 +339,7 @@ export default function AgencyTable() {
               placeholder="Search by Name, Email or Phone Number"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg w-72 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="pl-9 pr-4 py-3 text-sm border border-gray-200 rounded-lg w-72 focus:outline-none focus:ring-2 focus:ring-gray-300"
             />
           </div>
           <LinkReuseable
@@ -297,18 +353,18 @@ export default function AgencyTable() {
 
       {/* Table */}
       <DynamicTableTwo
-        columns={visibleColumnsArray}
-        data={filteredData}
-        currentPage={currentPage}
+        columns={columns}
+        data={agencies}
+        currentPage={pagination.current_page}
         itemsPerPage={itemsPerPage}
         onPageChange={(page) => setCurrentPage(page)}
         onItemsPerPageChange={(newItemsPerPage) => {
           setItemsPerPage(newItemsPerPage);
           setCurrentPage(1);
         }}
-        loading={false}
-        totalItems={filteredData.length}
-        totalpage={Math.ceil(filteredData.length / itemsPerPage)}
+        loading={isLoading}
+        totalItems={pagination.total}
+        totalpage={pagination.last_page}
       />
     </div>
   );
