@@ -4,6 +4,7 @@ export interface InputField {
   id: string;
   type: string;
   label: string;
+  name?: string;
   shortDescription?: string;
   placeholder?: string;
   required?: boolean;

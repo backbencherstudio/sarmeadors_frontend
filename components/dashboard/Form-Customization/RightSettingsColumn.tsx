@@ -211,6 +211,18 @@ export default function RightSettingsColumn() {
 
                 <div>
                   <ReusableInput
+                    label={"Field Name"}
+                    value={activeField.name || ""}
+                    onChange={(e) =>
+                      handlePropertyChange("name", e.target.value)
+                    }
+                    placeholder="Unique key sent to backend (snake_case)"
+                    className="w-full bg-bgColor text-sm"
+                  />
+                </div>
+
+                <div>
+                  <ReusableInput
                     label={"Profile Label"}
                     value={activeField.profileLabel || ""}
                     onChange={(e) =>
