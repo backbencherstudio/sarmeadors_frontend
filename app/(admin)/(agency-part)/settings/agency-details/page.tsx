@@ -4,12 +4,12 @@ import LanguageAndLocations from "@/components/agency/globalSetting/agencyDetail
 import NameLogosColorsAndFont from "@/components/agency/globalSetting/agencyDetails/NameLogosColorsAndFont";
 
 export default function AgencyDetailsPage() {
-    return (
-        <div className="space-y-4">
-            <NameLogosColorsAndFont />
-            <LanguageAndLocations />
-            <BusinessDetails />
-            <CommunicationSettings />
-        </div>
-    )
+  return (
+    <div className="space-y-4">
+      <NameLogosColorsAndFont />
+      <LanguageAndLocations />
+      <BusinessDetails />
+      <CommunicationSettings />
+    </div>
+  );
 }
