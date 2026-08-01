@@ -80,7 +80,7 @@ const navItems: NavItem[] = [
   {
     icon: ClientIcon,
     label: "Clients",
-    href: "/clients/admin/list",
+    href: "/clients",
     type: "agency_admin",
   },
   {

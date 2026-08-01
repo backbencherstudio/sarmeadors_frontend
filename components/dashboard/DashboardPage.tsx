@@ -31,9 +31,9 @@ async function DashboardPage() {
               Status Statistics
             </h3>
             <div className="flex gap-2 md:gap-4 items-center">
-              <button className="flex items-center md:px-4 px-2 py-2 md:py-3 text-sm md:text-base cursor-pointer rounded-md gap-2 border border-gray2Color ">
+              <Link href={"/clients/process-flow"} className="flex items-center md:px-4 px-2 py-2 md:py-3 text-sm md:text-base cursor-pointer rounded-md gap-2 border border-gray2Color ">
                 <TiFlowMerge /> Process Flow
-              </button>
+              </Link>
               <button className="flex items-center md:px-4 px-2 py-2 md:py-3 text-sm md:text-base cursor-pointer rounded-md gap-2 border border-gray2Color ">
                 <TbNotes /> View Application Form
               </button>

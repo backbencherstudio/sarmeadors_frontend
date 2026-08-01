@@ -14,6 +14,7 @@ import FilterHeader from "../common/FilterHeader";
 import ButtonReuseable from "../reusable/CustomButton";
 import ClientTableSetting from "./ClientTableSetting";
 import DashboardStatuse from "./DashboardStatuse";
+import LinkReuseable from "../reusable/CustomLink";
 
 function DashboardUserTable() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -165,11 +166,12 @@ function DashboardUserTable() {
         label: "Action",
         accessor: "viewed",
         width: "150px",
-        formatter: () => (
+        formatter: (_, record) => (
           <div className="flex justify-end">
-            <ButtonReuseable
+            <LinkReuseable
+              href={`/clients/${record.id}/admin/list`}
               title=" View "
-              className="text-blackColor! py-2! bg-bgColor! border   font-semibold"
+              className="text-blackColor! py-2! bg-bgColor! border px-6 rounded-md hover:shadow font-semibold"
             />
           </div>
         ),
