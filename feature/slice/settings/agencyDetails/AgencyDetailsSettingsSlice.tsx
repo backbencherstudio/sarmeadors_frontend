@@ -2,19 +2,27 @@ import { baseApi } from "@/feature/api/baseApi";
 
 const AgencyDetailsSettingsSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getClientsSettings: builder.query({
+    getAgencyInfo: builder.query<any, void>({
       query: () => ({
-        url: `/agency/settings/client`,
+        url: `/agency/agency-info`,
         method: "GET",
       }),
       providesTags: ["agencyDetailsSettings"],
     }),
-    getCommunicationSettings: builder.query({
+    getCommunicationSettings: builder.query<any, void>({
       query: () => ({
         url: `/agency/settings/communication`,
         method: "GET",
       }),
       providesTags: ["communicationSettings"],
+    }),
+    postClientsSettingsUpdate: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/agency/info-update/${id}`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["agencyDetailsSettings"],
     }),
     postCommunicationSettingsUpdate: builder.mutation({
       query: (body) => ({
@@ -28,7 +36,8 @@ const AgencyDetailsSettingsSlice = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetClientsSettingsQuery,
+  useGetAgencyInfoQuery,
+  usePostClientsSettingsUpdateMutation,
   useGetCommunicationSettingsQuery,
   usePostCommunicationSettingsUpdateMutation,
 } = AgencyDetailsSettingsSlice;

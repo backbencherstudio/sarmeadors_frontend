@@ -14,9 +14,7 @@ export default function CommunicationSettings() {
   const [defaultFromEmail, setDefaultFromEmail] = useState("");
   const [defaultReplyEmail, setDefaultReplyEmail] = useState("");
 
-  const { data, isLoading, error } = useGetCommunicationSettingsQuery(
-    "communicationSettings",
-  );
+  const { data, isLoading, error } = useGetCommunicationSettingsQuery();
 
   const [updateCommunicationSettings, { isLoading: isUpdating }] =
     usePostCommunicationSettingsUpdateMutation();
