@@ -5,10 +5,7 @@ import { Upload, ChevronDown } from "lucide-react";
 import CommonAccordion from "../CommonAccordion";
 import { toast } from "react-toastify";
 import ButtonReuseable from "@/components/reusable/CustomButton";
-import {
-  useGetAgencyInfoQuery,
-  usePostClientsSettingsUpdateMutation,
-} from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
+import { usePostClientsSettingsUpdateMutation } from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
 
 interface DropZoneProps {
   label: string;
@@ -39,7 +36,7 @@ function DropZone({ label, file, onFileChange }: DropZoneProps) {
         onDrop={handleDrop}
         className={`
                     border border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-3 bg-white
-                    transition-colors min-h-40
+                    transition-colors min-h-[160px]
                     ${dragging ? "border-gray-400 bg-gray-50" : "border-gray-300"}
                 `}
       >
@@ -93,7 +90,13 @@ const FONTS = [
   "Source Sans Pro",
 ];
 
-export default function NameLogosColorsAndFont() {
+interface NameLogosColorsAndFontProps {
+  agencyData: any;
+  isLoading: boolean;
+  error: any;
+}
+
+export default function NameLogosColorsAndFont({ agencyData, isLoading, error }: NameLogosColorsAndFontProps) {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [faviconFile, setFaviconFile] = useState<File | null>(null);
   const [logoHeight, setLogoHeight] = useState("");
@@ -101,18 +104,17 @@ export default function NameLogosColorsAndFont() {
   const [taxId, setTaxId] = useState("");
   const [font, setFont] = useState("Archivo");
 
-  const { data, isLoading, error } = useGetAgencyInfoQuery();
   const [updateClientsSettings, { isLoading: isSaving }] =
     usePostClientsSettingsUpdateMutation();
 
   useEffect(() => {
-    if (data?.data) {
-      setLogoHeight(data.data.logo_height ?? "");
-      setWebsiteLink(data.data.website ?? "");
-      setTaxId(data.data.tax_id ?? "");
-      setFont(data.data.font || "Archivo");
+    if (agencyData?.data) {
+      setLogoHeight(agencyData.data.logo_height ?? "");
+      setWebsiteLink(agencyData.data.website ?? "");
+      setTaxId(agencyData.data.tax_id ?? "");
+      setFont(agencyData.data.font || "Archivo");
     }
-  }, [data]);
+  }, [agencyData]);
 
   const handleSubmit = async () => {
     try {
@@ -125,7 +127,7 @@ export default function NameLogosColorsAndFont() {
       formData.append("font", font);
 
       await updateClientsSettings({
-        id: data?.data?.id,
+        id: agencyData?.data?.id,
         body: formData,
       }).unwrap();
       toast.success("Agency details updated successfully!");
