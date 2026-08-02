@@ -46,10 +46,40 @@ const AgencyDetailsSettingsSlice = baseApi.injectEndpoints({
       }),
       providesTags: ["locations"],
     }),
+    postLocationStore: builder.mutation({
+      query: (locationData) => ({
+        url: `/agency/location-store`,
+        method: "POST",
+        body: locationData,
+      }),
+      invalidatesTags: ["locations"],
+    }),
+    deleteLocation: builder.mutation({
+      query: (id: number) => ({
+        url: `/agency/location-destroy/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["locations"],
+    }),
+    getSubLocations: builder.query({
+      query: (type: string) => ({
+        url: `/agency/sub-locations`,
+        method: "GET",
+      }),
+      providesTags: ["subLocations"],
+    }),
     deleteBusinessHoliday: builder.mutation({
       query: (id: number) => ({
         url: `/agency/business-holiday-delete/${id}`,
         method: "DELETE",
+      }),
+      invalidatesTags: ["businessDetailsSettings"],
+    }),
+    postBusinessHoliday: builder.mutation({
+      query: (body: any) => ({
+        url: `/agency/business-holiday-store`,
+        method: "POST",
+        body,
       }),
       invalidatesTags: ["businessDetailsSettings"],
     }),
@@ -63,5 +93,9 @@ export const {
   usePostCommunicationSettingsUpdateMutation,
   useGetBusinessDetailsSettingsQuery,
   useGetLocationsQuery,
+  usePostLocationStoreMutation,
+  useDeleteLocationMutation,
+  useGetSubLocationsQuery,
   useDeleteBusinessHolidayMutation,
+  usePostBusinessHolidayMutation,
 } = AgencyDetailsSettingsSlice;

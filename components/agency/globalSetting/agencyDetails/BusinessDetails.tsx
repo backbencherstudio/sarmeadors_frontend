@@ -7,6 +7,7 @@ import CommonAccordion from "../CommonAccordion";
 import {
   useGetBusinessDetailsSettingsQuery,
   useDeleteBusinessHolidayMutation,
+  usePostBusinessHolidayMutation,
 } from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
 
 const DAYS = [
@@ -73,6 +74,7 @@ function formatTimeFrom24(time24: string): string {
 export default function BusinessDetails() {
   const { data, isLoading } = useGetBusinessDetailsSettingsQuery();
   const [deleteBusinessHoliday] = useDeleteBusinessHolidayMutation();
+  const [postBusinessHoliday] = usePostBusinessHolidayMutation();
 
   const agency = data?.data?.agency;
   const commonHolidays = data?.data?.common_holidays_master || [];
@@ -143,6 +145,19 @@ export default function BusinessDetails() {
         });
     }
     setHolidayRows((prev) => prev.filter((_, idx) => idx !== i));
+  };
+
+  const saveCustomHolidays = () => {
+    const customHolidays = holidayRows.filter((row) => !row.id);
+    customHolidays.forEach((row) => {
+      const locationIds = row.locationDetails.map((loc) => loc.id);
+      postBusinessHoliday({
+        holiday_name: row.name,
+        date: row.date || null,
+        location_ids: locationIds,
+        is_common: false,
+      });
+    });
   };
 
   const removeCountry = (c: string) =>
@@ -254,6 +269,13 @@ export default function BusinessDetails() {
           className="mt-3 flex items-center gap-1.5 border border-gray-200 bg-[#111927] rounded-lg px-4 py-3 text-sm font-medium text-white transition cursor-pointer"
         >
           <Plus size={14} /> Add Custom Holiday
+        </button>
+
+        <button
+          onClick={saveCustomHolidays}
+          className="mt-3 flex items-center gap-1.5 border border-gray-200 bg-green-700 rounded-lg px-4 py-3 text-sm font-medium text-white transition cursor-pointer"
+        >
+          Save Custom Holidays
         </button>
 
         <hr className="my-4 border-gray-100" />

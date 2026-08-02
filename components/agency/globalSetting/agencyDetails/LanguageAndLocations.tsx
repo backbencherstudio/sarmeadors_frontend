@@ -1,34 +1,64 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, Trash2, Plus } from "lucide-react";
 import CommonAccordion from "../CommonAccordion";
+import { toast } from "react-toastify";
+import ButtonReuseable from "@/components/reusable/CustomButton";
+import {
+  useGetLocationsQuery,
+  usePostLocationStoreMutation,
+  useDeleteLocationMutation,
+} from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
 
 const LANGUAGES = ["English", "Spanish", "French", "German", "Portuguese"];
 
-const DEFAULT_LOCATIONS = [
-  "Chicago",
-  "DC Metro Area",
-  "New York",
-  "Miami",
-  "Iowa",
-  "Other Locations",
-];
-
 export default function LanguageAndLocations() {
+  const { data: locationsData } = useGetLocationsQuery("");
+  const [postLocationStore, { isLoading: isSaving }] =
+    usePostLocationStoreMutation();
+  const [deleteLocation, { isLoading: isDeleting }] =
+    useDeleteLocationMutation();
   const [language, setLanguage] = useState("English");
-  const [locations, setLocations] = useState<string[]>(DEFAULT_LOCATIONS);
-  const [subRows, setSubRows] = useState([
-    { location: "Chicago", subLocation: "" },
-  ]);
+  const [locations, setLocations] = useState<string[]>([]);
+  const [subRows, setSubRows] = useState([{ location: "", subLocation: "" }]);
+
+  useEffect(() => {
+    if (locationsData?.data) {
+      setLocations(
+        locationsData.data
+          .filter((loc: { status: number }) => loc.status === 1)
+          .map((loc: { location: string }) => loc.location),
+      );
+    }
+  }, [locationsData]);
 
   const addLocation = () => setLocations((prev) => [...prev, ""]);
 
   const updateLocation = (index: number, value: string) =>
     setLocations((prev) => prev.map((l, i) => (i === index ? value : l)));
 
-  const removeLocation = (index: number) =>
-    setLocations((prev) => prev.filter((_, i) => i !== index));
+  const removeLocation = async (index: number) => {
+    const locationName = locations[index];
+    const locationObj = (locationsData?.data || []).find(
+      (loc: { location: string }) => loc.location === locationName,
+    );
+
+    if (!locationObj?.id) {
+      toast.error("Location not found.");
+      return;
+    }
+
+    try {
+      await deleteLocation(locationObj.id).unwrap();
+      setLocations((prev) => prev.filter((_, i) => i !== index));
+      toast.success("Location deleted successfully!");
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message || "Error deleting location. Please try again.",
+      );
+    }
+  };
 
   const addSubRow = () =>
     setSubRows((prev) => [...prev, { location: "", subLocation: "" }]);
@@ -44,6 +74,39 @@ export default function LanguageAndLocations() {
 
   const removeSubRow = (index: number) =>
     setSubRows((prev) => prev.filter((_, i) => i !== index));
+
+  const handleSubmit = async () => {
+    const existingLocations = new Set(
+      (locationsData?.data || [])
+        .filter((loc: { status: number }) => loc.status === 1)
+        .map((loc: { location: string }) => loc.location),
+    );
+    const newLocations = locations.filter(
+      (loc) => loc && !existingLocations.has(loc),
+    );
+
+    if (newLocations.length === 0) {
+      toast.error("No new locations to save.");
+      return;
+    }
+
+    try {
+      await postLocationStore({
+        locations: newLocations,
+      }).unwrap();
+      toast.success("Locations saved successfully!");
+    } catch (error: any) {
+      const message =
+        error?.data?.message || "Error saving locations. Please try again.";
+      if (error?.data?.duplicates?.length) {
+        toast.error(
+          `${message} Duplicates: ${error.data.duplicates.join(", ")}`,
+        );
+      } else {
+        toast.error(message);
+      }
+    }
+  };
 
   return (
     <CommonAccordion title="Language & Locations">
@@ -88,7 +151,8 @@ export default function LanguageAndLocations() {
               />
               <button
                 onClick={() => removeLocation(i)}
-                className="text-red-400 hover:text-red-600 transition p-1 cursor-pointer"
+                disabled={isDeleting}
+                className="text-red-400 hover:text-red-600 transition p-1 cursor-pointer disabled:opacity-50"
               >
                 <Trash2 size={18} />
               </button>
@@ -103,6 +167,16 @@ export default function LanguageAndLocations() {
           <Plus size={16} />
           Add Another Item
         </button>
+
+        <div className="flex justify-end mt-4">
+          <ButtonReuseable
+            title="Save Changes"
+            sendingMsg="Saving"
+            onClick={handleSubmit}
+            loading={isSaving}
+            className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px]"
+          />
+        </div>
       </div>
 
       {/* Sub-locations */}

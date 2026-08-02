@@ -101,6 +101,7 @@ export const baseApi = createApi({
     "candidateSettings",
     "tagStore",
     "locations",
+    "subLocations",
     "clientsSettings",
     "typeStore",
     "checklist",
