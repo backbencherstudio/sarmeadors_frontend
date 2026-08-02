@@ -29,7 +29,9 @@ export default function LanguageAndLocations() {
     useDeleteSubLocationMutation();
   const [language, setLanguage] = useState("English");
   const [locations, setLocations] = useState<string[]>([]);
-  const [selectedSubLocation, setSelectedSubLocation] = useState<Record<string, number | null>>({});
+  const [selectedSubLocation, setSelectedSubLocation] = useState<
+    Record<string, number | null>
+  >({});
 
   useEffect(() => {
     if (locationsData?.data) {
@@ -145,8 +147,7 @@ export default function LanguageAndLocations() {
       toast.success("Sub-location added successfully!");
     } catch (error: any) {
       toast.error(
-        error?.data?.message ||
-          "Error adding sub-location. Please try again.",
+        error?.data?.message || "Error adding sub-location. Please try again.",
       );
     }
   };
@@ -214,7 +215,7 @@ export default function LanguageAndLocations() {
               <button
                 onClick={() => removeLocation(i)}
                 disabled={isDeleting}
-                className="text-red-400 hover:text-red-600 transition p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer disabled:opacity-50 shrink-0"
+                className="text-red-400 hover:text-red-600 transition p-2 min-w-11 min-h-11 flex items-center justify-center rounded-lg cursor-pointer disabled:opacity-50 shrink-0"
               >
                 <Trash2 size={18} />
               </button>
@@ -265,7 +266,7 @@ export default function LanguageAndLocations() {
                     <button
                       onClick={() => handleDeleteSubLocation(loc)}
                       disabled={isSubDeleting}
-                      className="text-red-400 hover:text-red-600 transition p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer disabled:opacity-50 shrink-0"
+                      className="text-red-400 hover:text-red-600 transition p-2 min-w-11 min-h-11 flex items-center justify-center rounded-lg cursor-pointer disabled:opacity-50 shrink-0"
                     >
                       <Trash2 size={18} />
                     </button>
