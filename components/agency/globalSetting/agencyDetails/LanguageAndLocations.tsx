@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronDown, Trash2, Plus } from "lucide-react";
+import { Trash2, ChevronDown, Plus } from "lucide-react";
 import CommonAccordion from "../CommonAccordion";
 import { toast } from "react-toastify";
 import ButtonReuseable from "@/components/reusable/CustomButton";
@@ -9,6 +9,9 @@ import {
   useGetLocationsQuery,
   usePostLocationStoreMutation,
   useDeleteLocationMutation,
+  useGetSubLocationsQuery,
+  usePostSubLocationStoreMutation,
+  useDeleteSubLocationMutation,
 } from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
 
 const LANGUAGES = ["English", "Spanish", "French", "German", "Portuguese"];
@@ -19,9 +22,14 @@ export default function LanguageAndLocations() {
     usePostLocationStoreMutation();
   const [deleteLocation, { isLoading: isDeleting }] =
     useDeleteLocationMutation();
+  const { data: subLocationsData } = useGetSubLocationsQuery("");
+  const [postSubLocationStore, { isLoading: isSubSaving }] =
+    usePostSubLocationStoreMutation();
+  const [deleteSubLocation, { isLoading: isSubDeleting }] =
+    useDeleteSubLocationMutation();
   const [language, setLanguage] = useState("English");
   const [locations, setLocations] = useState<string[]>([]);
-  const [subRows, setSubRows] = useState([{ location: "", subLocation: "" }]);
+  const [selectedSubLocation, setSelectedSubLocation] = useState<Record<string, number | null>>({});
 
   useEffect(() => {
     if (locationsData?.data) {
@@ -60,21 +68,6 @@ export default function LanguageAndLocations() {
     }
   };
 
-  const addSubRow = () =>
-    setSubRows((prev) => [...prev, { location: "", subLocation: "" }]);
-
-  const updateSubRow = (
-    index: number,
-    field: "location" | "subLocation",
-    value: string,
-  ) =>
-    setSubRows((prev) =>
-      prev.map((row, i) => (i === index ? { ...row, [field]: value } : row)),
-    );
-
-  const removeSubRow = (index: number) =>
-    setSubRows((prev) => prev.filter((_, i) => i !== index));
-
   const handleSubmit = async () => {
     const existingLocations = new Set(
       (locationsData?.data || [])
@@ -105,6 +98,75 @@ export default function LanguageAndLocations() {
       } else {
         toast.error(message);
       }
+    }
+  };
+
+  const subLocationsByParent = (subLocationsData?.data || []).reduce(
+    (acc: Record<string, { id: number; name: string }[]>, sub: any) => {
+      const parent = sub.location?.location || "";
+      if (!acc[parent]) acc[parent] = [];
+      acc[parent].push({ id: sub.id, name: sub.sub_location });
+      return acc;
+    },
+    {},
+  );
+
+  const locationNameToId = (locationsData?.data || []).reduce(
+    (acc: Record<string, number>, loc: any) => {
+      if (loc?.location && loc?.id) acc[loc.location] = loc.id;
+      return acc;
+    },
+    {},
+  );
+
+  const [newSubLocation, setNewSubLocation] = useState<Record<string, string>>(
+    {},
+  );
+
+  const handleAddSubLocation = async (parentLocation: string) => {
+    const subName = newSubLocation[parentLocation]?.trim();
+    if (!subName) {
+      toast.error("Please enter a sub-location name.");
+      return;
+    }
+
+    const locationId = locationNameToId[parentLocation];
+    if (!locationId) {
+      toast.error("Parent location not found.");
+      return;
+    }
+
+    try {
+      await postSubLocationStore({
+        location_id: locationId,
+        sub_location: subName,
+      }).unwrap();
+      setNewSubLocation((prev) => ({ ...prev, [parentLocation]: "" }));
+      toast.success("Sub-location added successfully!");
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message ||
+          "Error adding sub-location. Please try again.",
+      );
+    }
+  };
+
+  const handleDeleteSubLocation = async (parentLocation: string) => {
+    const subId = selectedSubLocation[parentLocation];
+    if (!subId) {
+      toast.error("Please select a sub-location to delete.");
+      return;
+    }
+
+    try {
+      await deleteSubLocation(subId).unwrap();
+      setSelectedSubLocation((prev) => ({ ...prev, [parentLocation]: null }));
+      toast.success("Sub-location deleted successfully!");
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message ||
+          "Error deleting sub-location. Please try again.",
+      );
     }
   };
 
@@ -142,17 +204,17 @@ export default function LanguageAndLocations() {
         </label>
         <div className="flex flex-col gap-2">
           {locations.map((loc, i) => (
-            <div key={i} className="flex items-center gap-2">
+            <div key={i} className="flex items-center gap-2 sm:gap-3">
               <input
                 type="text"
                 value={loc}
                 onChange={(e) => updateLocation(i, e.target.value)}
-                className="flex-1 bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
+                className="flex-1 bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition min-w-0"
               />
               <button
                 onClick={() => removeLocation(i)}
                 disabled={isDeleting}
-                className="text-red-400 hover:text-red-600 transition p-1 cursor-pointer disabled:opacity-50"
+                className="text-red-400 hover:text-red-600 transition p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer disabled:opacity-50 shrink-0"
               >
                 <Trash2 size={18} />
               </button>
@@ -162,7 +224,7 @@ export default function LanguageAndLocations() {
 
         <button
           onClick={addLocation}
-          className="mt-3 flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition cursor-pointer"
+          className="mt-3 flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition cursor-pointer w-full sm:w-auto"
         >
           <Plus size={16} />
           Add Another Item
@@ -174,7 +236,7 @@ export default function LanguageAndLocations() {
             sendingMsg="Saving"
             onClick={handleSubmit}
             loading={isSaving}
-            className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px]"
+            className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px] w-full sm:w-auto"
           />
         </div>
       </div>
@@ -186,86 +248,82 @@ export default function LanguageAndLocations() {
           sub-locations belong to each location
         </label>
 
-        <div className="flex flex-col gap-3">
-          {subRows.map((row, i) => (
-            <div key={i} className="flex items-center gap-3">
-              {/* Location dropdown */}
-              <div className="flex-1 relative">
-                {i === 0 && (
-                  <p className="text-sm font-medium text-gray-700 mb-1">
-                    Location
+        <div className="flex flex-col gap-4">
+          {locations.filter(Boolean).map((loc) => {
+            const subs = subLocationsByParent[loc] || [];
+            const selectedId = selectedSubLocation[loc] || null;
+            return (
+              <div
+                key={loc}
+                className="border border-gray-200 rounded-lg p-3 sm:p-4 bg-white"
+              >
+                <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
+                  <p className="text-sm font-semibold text-gray-800 truncate">
+                    {loc}
                   </p>
-                )}
-                <div className="relative">
-                  <select
-                    value={row.location}
+                  {selectedId && (
+                    <button
+                      onClick={() => handleDeleteSubLocation(loc)}
+                      disabled={isSubDeleting}
+                      className="text-red-400 hover:text-red-600 transition p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer disabled:opacity-50 shrink-0"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+                  {subs.length > 0 ? (
+                    subs.map((sub) => (
+                      <button
+                        key={sub.id}
+                        type="button"
+                        onClick={() =>
+                          setSelectedSubLocation((prev) => ({
+                            ...prev,
+                            [loc]: sub.id,
+                          }))
+                        }
+                        className={`inline-flex items-center px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium transition cursor-pointer ${
+                          selectedId === sub.id
+                            ? "bg-red-50 text-red-700 ring-2 ring-red-500"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
+                      >
+                        {sub.name}
+                      </button>
+                    ))
+                  ) : (
+                    <span className="text-xs text-gray-400">
+                      No sub-locations
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                  <input
+                    type="text"
+                    value={newSubLocation[loc] || ""}
                     onChange={(e) =>
-                      updateSubRow(i, "location", e.target.value)
+                      setNewSubLocation((prev) => ({
+                        ...prev,
+                        [loc]: e.target.value,
+                      }))
                     }
-                    className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
-                  >
-                    <option value="">Select location</option>
-                    {locations.filter(Boolean).map((l) => (
-                      <option key={l} value={l}>
-                        {l}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    size={16}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                    placeholder="Add sub-location"
+                    className="flex-1 bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition min-w-0"
                   />
+                  <button
+                    onClick={() => handleAddSubLocation(loc)}
+                    disabled={isSubSaving}
+                    className="flex items-center justify-center gap-1 px-4 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition cursor-pointer disabled:opacity-50 w-full sm:w-auto"
+                  >
+                    <Plus size={16} />
+                    Add
+                  </button>
                 </div>
               </div>
-
-              {/* Sub-location dropdown */}
-              <div className="flex-1 relative">
-                {i === 0 && (
-                  <p className="text-sm font-medium text-gray-700 mb-1">
-                    Sub-locations
-                  </p>
-                )}
-                <div className="relative">
-                  <select
-                    value={row.subLocation}
-                    onChange={(e) =>
-                      updateSubRow(i, "subLocation", e.target.value)
-                    }
-                    className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
-                  >
-                    <option value="">Stan typing to filter</option>
-                    {locations.filter(Boolean).map((l) => (
-                      <option key={l} value={l}>
-                        {l}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    size={16}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
-                  />
-                </div>
-              </div>
-
-              {/* Delete */}
-              <div className={i === 0 ? "mt-6" : ""}>
-                <button
-                  onClick={() => removeSubRow(i)}
-                  className="text-red-400 hover:text-red-600 transition p-1 cursor-pointer"
-                >
-                  <Trash2 size={18} />
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-
-        <button
-          onClick={addSubRow}
-          className="mt-3 flex items-center justify-center w-9 h-9 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition cursor-pointer"
-        >
-          <Plus size={18} />
-        </button>
       </div>
     </CommonAccordion>
   );
