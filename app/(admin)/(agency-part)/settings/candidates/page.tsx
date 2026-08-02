@@ -10,6 +10,7 @@ import ProfileSettings2 from "@/components/agency/globalSetting/candidates/Profi
 import RegistrationFeeSettings from "@/components/agency/globalSetting/candidates/RegistrationFeeSettings";
 import ScheduleAvailabilitySettings from "@/components/agency/globalSetting/candidates/ScheduleAvailabilitySettings";
 
+
 export default function CandidatesPage() {
   const { data: settingsData, isLoading } =
     useGetCandidateSettingsQuery("candidateSettings");

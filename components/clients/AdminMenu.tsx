@@ -16,7 +16,7 @@ function AdminTopMenu({ title, id }: { title?: string; id?: string }) {
     {
       href:
         title == "clients"
-          ? "/clients/more/jobs"
+          ? `/clients/${id}/more/jobs`
           : `/candidates/${id}/more/jobs`,
       label: "Jobs",
       icon: JobsIcon,
@@ -24,7 +24,7 @@ function AdminTopMenu({ title, id }: { title?: string; id?: string }) {
     {
       href:
         title == "clients"
-          ? "/clients/more/email_sms_log"
+          ? `/clients/${id}/more/email_sms_log`
           : `/candidates/${id}/more/email_sms_log`,
       label: "Email/SMS Log",
       icon: EmailAndSMSIcon,
@@ -32,7 +32,7 @@ function AdminTopMenu({ title, id }: { title?: string; id?: string }) {
     {
       href:
         title == "clients"
-          ? "/clients/more/records/reviews"
+          ? `/clients/${id}/more/records/reviews`
           : `/candidates/${id}/more/reviews`,
       label: "Records",
       icon: ListIcon,
@@ -45,9 +45,9 @@ function AdminTopMenu({ title, id }: { title?: string; id?: string }) {
     return path === href || path.startsWith(`${href}/`);
   };
   const activeAdminPath =
-    isActive("/clients/admin") || isActive(`/candidates/${id}/admin`);
+    isActive(`/clients/${id}/admin`) || isActive(`/candidates/${id}/admin`);
   const activeProfilePath =
-    isActive("/clients/profile") || isActive(`/candidates/${id}/profile`);
+    isActive(`/clients/${id}/profile`) || isActive(`/candidates/${id}/profile`);
   const activeMorePath = moreMenuItems.some((item) => isActive(item.href));
   return (
     <div>
@@ -68,7 +68,7 @@ function AdminTopMenu({ title, id }: { title?: string; id?: string }) {
             <Link
               href={
                 title == "clients"
-                  ? "/clients/admin/list"
+                  ? `/clients/${id}/admin/list`
                   : `/candidates/${id}/admin/list`
               }
               className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activeAdminPath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
@@ -79,7 +79,7 @@ function AdminTopMenu({ title, id }: { title?: string; id?: string }) {
             <Link
               href={
                 title == "clients"
-                  ? "/clients/profile/contact-and-address"
+                  ? `/clients/${id}/profile/contact-and-address`
                   : `/candidates/${id}/profile/my-profile`
               }
               className={`flex items-center gap-2 px-4 py-3 rounded-none border-b-2 ${activeProfilePath ? "border-gray-800 text-gray-900 font-semibold" : "border-transparent text-gray-700"} hover:text-gray-900 cursor-pointer`}
