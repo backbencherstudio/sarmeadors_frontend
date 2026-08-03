@@ -13,6 +13,7 @@ import {
   useDeleteBusinessHolidayMutation,
   usePostBusinessHolidayMutation,
   usePostBusinessHourMutation,
+  usePatchBusinessHourStatusMutation,
 } from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
 
 const DAYS = [
@@ -114,6 +115,7 @@ export default function BusinessDetails() {
   const [deleteBusinessHoliday] = useDeleteBusinessHolidayMutation();
   const [postBusinessHoliday] = usePostBusinessHolidayMutation();
   const [postBusinessHour] = usePostBusinessHourMutation();
+  const [patchBusinessHourStatus] = usePatchBusinessHourStatusMutation();
 
   const agency = data?.data?.agency;
   const commonHolidays = data?.data?.common_holidays_master || [];
@@ -271,6 +273,22 @@ export default function BusinessDetails() {
     setHours((prev) =>
       prev.map((h, idx) => (idx === i ? { ...h, [field]: val } : h)),
     );
+
+  const updateBusinessHourStatus = async (i: number, is_open: boolean) => {
+    const hour = hours[i];
+    if (!hour.id) return;
+
+    updateHour(i, "enabled", is_open);
+
+    try {
+      await patchBusinessHourStatus({ id: hour.id, is_open }).unwrap();
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message ||
+          "Error updating business hour status. Please try again.",
+      );
+    }
+  };
 
   return (
     <CommonAccordion title="Business Details">
@@ -449,7 +467,9 @@ export default function BusinessDetails() {
                   type="checkbox"
                   className="sr-only peer"
                   checked={hours[i].enabled}
-                  onChange={(e) => updateHour(i, "enabled", e.target.checked)}
+                  onChange={(e) =>
+                    updateBusinessHourStatus(i, e.target.checked)
+                  }
                 />
                 <div className="w-8 h-4.5 bg-gray-200 peer-checked:bg-gray-900 rounded-full transition-colors" />
                 <div className="absolute top-0.5 left-0.5 w-3.5 h-3.5 bg-white rounded-full transition-transform peer-checked:translate-x-3.5" />

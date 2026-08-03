@@ -106,6 +106,14 @@ const AgencyDetailsSettingsSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["businessDetailsSettings"],
     }),
+    patchBusinessHourStatus: builder.mutation({
+      query: ({ id, is_open }: { id: number; is_open: boolean }) => ({
+        url: `/agency/business-hours/${id}/status`,
+        method: "PATCH",
+        body: { is_open },
+      }),
+      invalidatesTags: ["businessDetailsSettings"],
+    }),
   }),
 });
 
@@ -124,4 +132,5 @@ export const {
   useDeleteBusinessHolidayMutation,
   usePostBusinessHolidayMutation,
   usePostBusinessHourMutation,
+  usePatchBusinessHourStatusMutation,
 } = AgencyDetailsSettingsSlice;
