@@ -14,6 +14,7 @@ import {
   usePostBusinessHolidayMutation,
   usePostBusinessHourMutation,
   usePatchBusinessHourStatusMutation,
+  usePostBusinessSettingUpdateMutation,
 } from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
 
 const DAYS = [
@@ -116,6 +117,9 @@ export default function BusinessDetails() {
   const [postBusinessHoliday] = usePostBusinessHolidayMutation();
   const [postBusinessHour] = usePostBusinessHourMutation();
   const [patchBusinessHourStatus] = usePatchBusinessHourStatusMutation();
+  const [postBusinessSettingUpdate] = usePostBusinessSettingUpdateMutation();
+  const [isSavingBusinessSettings, setIsSavingBusinessSettings] =
+    useState(false);
 
   const agency = data?.data?.agency;
   const commonHolidays = data?.data?.common_holidays_master || [];
@@ -256,6 +260,24 @@ export default function BusinessDetails() {
       );
     } finally {
       setIsSavingHours(false);
+    }
+  };
+
+  const savebusinesssetting = async () => {
+    setIsSavingBusinessSettings(true);
+    try {
+      await postBusinessSettingUpdate({
+        currency,
+        countries,
+      }).unwrap();
+      toast.success("Business settings saved successfully!");
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message ||
+          "Error saving business settings. Please try again.",
+      );
+    } finally {
+      setIsSavingBusinessSettings(false);
     }
   };
 
@@ -448,6 +470,16 @@ export default function BusinessDetails() {
             onChange={(e) => setTagInput(e.target.value)}
             onKeyDown={handleTagKey}
             className="border-none outline-none text-xs flex-1 min-w-15 bg-transparent"
+          />
+        </div>
+
+        <div className="flex justify-end mt-4">
+          <ButtonReuseable
+            title="Save Business Setting"
+            sendingMsg="Saving"
+            onClick={savebusinesssetting}
+            loading={isSavingBusinessSettings}
+            className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px] w-full sm:w-auto"
           />
         </div>
 
