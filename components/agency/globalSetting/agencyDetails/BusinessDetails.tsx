@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { Trash2, Plus, Copy } from "lucide-react";
 import { toast } from "react-toastify";
 import CommonAccordion from "../CommonAccordion";
+import ButtonReuseable from "@/components/reusable/CustomButton";
+import MultiSelecte, {
+  type MultiSelectOption,
+} from "@/components/reusable/MultiSelecte";
 import {
   useGetBusinessDetailsSettingsQuery,
   useDeleteBusinessHolidayMutation,
@@ -52,8 +56,8 @@ type HolidayRow = {
   id?: number;
   name: string;
   date: string;
-  location: string;
-  locationDetails: LocationDetail[];
+  selectedLocationIds: number[];
+  is_common: boolean;
 };
 
 type HourRow = {
@@ -71,6 +75,28 @@ function formatTimeFrom24(time24: string): string {
   return `${h12}:${m}${ampm}`;
 }
 
+function formatDateForInput(dateStr: string | null | undefined): string {
+  if (!dateStr) return "";
+  if (typeof dateStr === "string" && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return "";
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatDateForApi(dateStr: string | null | undefined): string | null {
+  if (!dateStr) return null;
+  if (typeof dateStr === "string" && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+  const formatted = formatDateForInput(dateStr);
+  return formatted || null;
+}
+
 export default function BusinessDetails() {
   const { data, isLoading } = useGetBusinessDetailsSettingsQuery();
   const [deleteBusinessHoliday] = useDeleteBusinessHolidayMutation();
@@ -80,6 +106,14 @@ export default function BusinessDetails() {
   const commonHolidays = data?.data?.common_holidays_master || [];
   const savedHolidays = data?.data?.saved_holidays || [];
   const businessHours = data?.data?.business_hours || [];
+  const allAgencyLocations = data?.data?.all_agency_locations || [];
+
+  const locationOptions: MultiSelectOption[] = allAgencyLocations.map(
+    (loc: any) => ({
+      value: String(loc.id),
+      label: loc.location,
+    }),
+  );
 
   const [holidayRows, setHolidayRows] = useState<HolidayRow[]>([]);
   const [currency, setCurrency] = useState("USD");
@@ -88,6 +122,7 @@ export default function BusinessDetails() {
   const [hours, setHours] = useState<HourRow[]>(
     DAYS.map(() => ({ enabled: false, start: "", end: "" })),
   );
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (data?.data) {
@@ -95,9 +130,9 @@ export default function BusinessDetails() {
         savedHolidays.map((h: any) => ({
           id: h.id,
           name: h.holiday_name,
-          date: h.date || "",
-          location: h.location_details?.map((l: any) => l.location).join(", "),
-          locationDetails: h.location_details || [],
+          date: formatDateForInput(h.date),
+          selectedLocationIds: h.location_details?.map((l: any) => l.id) || [],
+          is_common: h.is_common || false,
         })),
       );
       setCurrency(agency?.currency || "USD");
@@ -121,15 +156,24 @@ export default function BusinessDetails() {
     }
   }, [businessHours]);
 
-  const addHolidayRow = () =>
+  const addHolidayRow = (name?: string, isCommon: boolean = false) =>
     setHolidayRows((prev) => [
       ...prev,
-      { name: "", date: "", location: "", locationDetails: [] },
+      {
+        name: name || "",
+        date: "",
+        selectedLocationIds: [],
+        is_common: isCommon,
+      },
     ]);
 
   const updateHolidayRow = (i: number, field: keyof HolidayRow, val: string) =>
     setHolidayRows((prev) =>
-      prev.map((r, idx) => (idx === i ? { ...r, [field]: val } : r)),
+      prev.map((r, idx) =>
+        idx === i
+          ? { ...r, [field]: field === "date" ? formatDateForInput(val) : val }
+          : r,
+      ),
     );
 
   const removeHolidayRow = (i: number) => {
@@ -147,17 +191,45 @@ export default function BusinessDetails() {
     setHolidayRows((prev) => prev.filter((_, idx) => idx !== i));
   };
 
-  const saveCustomHolidays = () => {
+  const saveCustomHolidays = async () => {
     const customHolidays = holidayRows.filter((row) => !row.id);
-    customHolidays.forEach((row) => {
-      const locationIds = row.locationDetails.map((loc) => loc.id);
-      postBusinessHoliday({
-        holiday_name: row.name,
-        date: row.date || null,
-        location_ids: locationIds,
-        is_common: false,
-      });
-    });
+    if (customHolidays.length === 0) {
+      toast.error("No custom holidays to save.");
+      return;
+    }
+
+    try {
+      const promises = customHolidays.map((row) =>
+        postBusinessHoliday({
+          holiday_name: row.name,
+          date: formatDateForApi(row.date),
+          location_ids: row.selectedLocationIds,
+          is_common: row.is_common,
+        }).unwrap(),
+      );
+      await Promise.all(promises);
+      toast.success("Custom holidays saved successfully!");
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message ||
+          "Error saving custom holidays. Please try again.",
+      );
+    }
+  };
+
+  const handleSubmit = async () => {
+    setIsSaving(true);
+    try {
+      await saveCustomHolidays();
+      toast.success("Business details saved successfully!");
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message ||
+          "Error saving business details. Please try again.",
+      );
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const removeCountry = (c: string) =>
@@ -193,6 +265,7 @@ export default function BusinessDetails() {
             return (
               <button
                 key={h}
+                onClick={() => addHolidayRow(h, true)}
                 className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition cursor-pointer ${
                   isSaved
                     ? "bg-[#111927] text-white"
@@ -210,7 +283,7 @@ export default function BusinessDetails() {
         </p>
 
         {/* Table */}
-        <div className="grid grid-cols-[1fr_1fr_1fr_28px] gap-2 mb-1.5">
+        <div className="grid grid-cols-[1fr_1fr_2fr_28px] gap-2 mb-1.5">
           {["Holiday Name", "Date", "Location", ""].map((h, i) => (
             <span key={i} className="text-base font-medium ">
               {h}
@@ -222,7 +295,7 @@ export default function BusinessDetails() {
           {holidayRows.map((row, i) => (
             <div
               key={i}
-              className="grid grid-cols-[1fr_1fr_1fr_28px] gap-2 items-center"
+              className="grid grid-cols-[1fr_1fr_2fr_28px] gap-2 items-center"
             >
               <input
                 value={row.name}
@@ -231,29 +304,35 @@ export default function BusinessDetails() {
                 className="border border-gray-200 rounded-lg p-4 text-sm bg-white text-gray-700 placeholder-gray-300 outline-none focus:border-gray-400 w-full"
               />
               <input
-                value={row.date}
+                type={row.is_common ? "text" : "date"}
+                value={
+                  row.is_common
+                    ? "Common Holidays"
+                    : formatDateForInput(row.date)
+                }
                 onChange={(e) => updateHolidayRow(i, "date", e.target.value)}
-                placeholder="Date"
-                className="border border-gray-200 rounded-lg p-4 text-sm bg-white text-gray-300 placeholder-gray-300 outline-none focus:border-gray-400 w-full"
+                onBlur={(e) => updateHolidayRow(i, "date", e.target.value)}
+                readOnly={row.is_common}
+                className="border border-gray-200 rounded-lg p-4 text-sm bg-white text-gray-700 outline-none focus:border-gray-400 w-full"
               />
-              <div className="relative">
-                <select
-                  value={row.location}
-                  onChange={(e) =>
-                    updateHolidayRow(i, "location", e.target.value)
-                  }
-                  className="w-full appearance-none border border-gray-200 rounded-lg p-4 text-xs text-gray-500 outline-none focus:border-gray-400 pr-6 bg-white"
-                >
-                  {row.locationDetails.map((loc: any) => (
-                    <option key={loc.id} value={loc.location}>
-                      {loc.location}
-                    </option>
-                  ))}
-                </select>
-                <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none">
-                  ▾
-                </span>
-              </div>
+              <MultiSelecte
+                options={locationOptions}
+                value={row.selectedLocationIds.map((id) => {
+                  const opt = locationOptions.find(
+                    (o) => o.value === String(id),
+                  );
+                  return opt || { value: String(id), label: "" };
+                })}
+                onChange={(selected) => {
+                  const ids = selected.map((s) => Number(s.value));
+                  setHolidayRows((prev) =>
+                    prev.map((r, idx) =>
+                      idx === i ? { ...r, selectedLocationIds: ids } : r,
+                    ),
+                  );
+                }}
+                placeholder="Select locations"
+              />
               <button
                 onClick={() => removeHolidayRow(i)}
                 className="text-red-300 hover:text-red-500 transition p-1"
@@ -265,18 +344,21 @@ export default function BusinessDetails() {
         </div>
 
         <button
-          onClick={addHolidayRow}
+          onClick={() => addHolidayRow()}
           className="mt-3 flex items-center gap-1.5 border border-gray-200 bg-[#111927] rounded-lg px-4 py-3 text-sm font-medium text-white transition cursor-pointer"
         >
           <Plus size={14} /> Add Custom Holiday
         </button>
 
-        <button
-          onClick={saveCustomHolidays}
-          className="mt-3 flex items-center gap-1.5 border border-gray-200 bg-green-700 rounded-lg px-4 py-3 text-sm font-medium text-white transition cursor-pointer"
-        >
-          Save Custom Holidays
-        </button>
+        <div className="flex justify-end mt-4">
+          <ButtonReuseable
+            title="Save Custom Holidays"
+            sendingMsg="Saving"
+            onClick={saveCustomHolidays}
+            loading={isSaving}
+            className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px] w-full sm:w-auto"
+          />
+        </div>
 
         <hr className="my-4 border-gray-100" />
 
@@ -382,6 +464,16 @@ export default function BusinessDetails() {
               )}
             </div>
           ))}
+        </div>
+
+        <div className="flex justify-end mt-4">
+          <ButtonReuseable
+            title="Save Changes"
+            sendingMsg="Saving"
+            onClick={handleSubmit}
+            loading={isSaving}
+            className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px] w-full sm:w-auto"
+          />
         </div>
       </div>
     </CommonAccordion>
