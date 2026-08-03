@@ -98,6 +98,14 @@ const AgencyDetailsSettingsSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["businessDetailsSettings"],
     }),
+    postBusinessHour: builder.mutation({
+      query: (body: any) => ({
+        url: `/agency/business-hour-update`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["businessDetailsSettings"],
+    }),
   }),
 });
 
@@ -115,4 +123,5 @@ export const {
   useDeleteSubLocationMutation,
   useDeleteBusinessHolidayMutation,
   usePostBusinessHolidayMutation,
+  usePostBusinessHourMutation,
 } = AgencyDetailsSettingsSlice;

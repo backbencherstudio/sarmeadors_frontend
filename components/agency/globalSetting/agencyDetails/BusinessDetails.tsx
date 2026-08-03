@@ -12,6 +12,7 @@ import {
   useGetBusinessDetailsSettingsQuery,
   useDeleteBusinessHolidayMutation,
   usePostBusinessHolidayMutation,
+  usePostBusinessHourMutation,
 } from "@/feature/slice/settings/agencyDetails/AgencyDetailsSettingsSlice";
 
 const DAYS = [
@@ -75,6 +76,17 @@ function formatTimeFrom24(time24: string): string {
   return `${h12}:${m}${ampm}`;
 }
 
+function formatTimeTo24(time12: string): string {
+  const match = time12.match(/(\d+):(\d+)(AM|PM)/);
+  if (!match) return time12.replace("AM", "").replace("PM", "");
+  let hour = parseInt(match[1], 10);
+  const minutes = match[2];
+  const ampm = match[3];
+  if (ampm === "PM" && hour !== 12) hour += 12;
+  if (ampm === "AM" && hour === 12) hour = 0;
+  return `${String(hour).padStart(2, "0")}:${minutes}`;
+}
+
 function formatDateForInput(dateStr: string | null | undefined): string {
   if (!dateStr) return "";
   if (typeof dateStr === "string" && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
@@ -101,6 +113,7 @@ export default function BusinessDetails() {
   const { data, isLoading } = useGetBusinessDetailsSettingsQuery();
   const [deleteBusinessHoliday] = useDeleteBusinessHolidayMutation();
   const [postBusinessHoliday] = usePostBusinessHolidayMutation();
+  const [postBusinessHour] = usePostBusinessHourMutation();
 
   const agency = data?.data?.agency;
   const commonHolidays = data?.data?.common_holidays_master || [];
@@ -123,6 +136,7 @@ export default function BusinessDetails() {
     DAYS.map(() => ({ enabled: false, start: "", end: "" })),
   );
   const [isSaving, setIsSaving] = useState(false);
+  const [isSavingHours, setIsSavingHours] = useState(false);
 
   useEffect(() => {
     if (data?.data) {
@@ -217,18 +231,29 @@ export default function BusinessDetails() {
     }
   };
 
-  const handleSubmit = async () => {
-    setIsSaving(true);
+  const saveBusinessHours = async () => {
+    setIsSavingHours(true);
+    const business_hours = DAYS.map((day, index) => {
+      const hour = hours[index];
+      return {
+        day,
+        start_time:
+          hour.enabled && hour.start ? formatTimeTo24(hour.start) : null,
+        end_time: hour.enabled && hour.end ? formatTimeTo24(hour.end) : null,
+        is_open: hour.enabled,
+      };
+    });
+
     try {
-      await saveCustomHolidays();
-      toast.success("Business details saved successfully!");
+      await postBusinessHour({ business_hours }).unwrap();
+      toast.success("Business hours saved successfully!");
     } catch (error: any) {
       toast.error(
         error?.data?.message ||
-          "Error saving business details. Please try again.",
+          "Error saving business hours. Please try again.",
       );
     } finally {
-      setIsSaving(false);
+      setIsSavingHours(false);
     }
   };
 
@@ -470,8 +495,8 @@ export default function BusinessDetails() {
           <ButtonReuseable
             title="Save Changes"
             sendingMsg="Saving"
-            onClick={handleSubmit}
-            loading={isSaving}
+            onClick={saveBusinessHours}
+            loading={isSavingHours}
             className="bg-[#111927] text-white cursor-pointer md:px-8 md:py-4.25 px-4 py-2 rounded-[12px] w-full sm:w-auto"
           />
         </div>
