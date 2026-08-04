@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import CommonAccordion from "../CommonAccordion";
-import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
 import ButtonReuseable from "@/components/reusable/CustomButton";
 import { usePostCandidateSettingsUpdateMutation } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
@@ -24,10 +23,8 @@ export default function AccessControlAndVisibilitySettings({
   const [noAccessStatuses, setNoAccessStatuses] = useState<string[]>([]);
   const [noAccessMessage, setNoAccessMessage] = useState("");
   const [resubmitStatuses, setResubmitStatuses] = useState<string[]>([]);
-  const [tagInput, setTagInput] = useState("");
-  const [activeField, setActiveField] = useState<
-    "noAccess" | "resubmit" | null
-  >(null);
+  const [noAccessTagInput, setNoAccessTagInput] = useState("");
+  const [resubmitTagInput, setResubmitTagInput] = useState("");
 
   useEffect(() => {
     if (!accessControlData) return;
@@ -36,14 +33,17 @@ export default function AccessControlAndVisibilitySettings({
     setResubmitStatuses(accessControlData.resubmit_application_statuses || []);
   }, [accessControlData]);
 
-  const handleTagKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim()) {
-      if (activeField === "noAccess") {
-        setNoAccessStatuses((prev) => [...prev, tagInput.trim()]);
-      } else if (activeField === "resubmit") {
-        setResubmitStatuses((prev) => [...prev, tagInput.trim()]);
-      }
-      setTagInput("");
+  const handleNoAccessTagKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && noAccessTagInput.trim()) {
+      setNoAccessStatuses((prev) => [...prev, noAccessTagInput.trim()]);
+      setNoAccessTagInput("");
+    }
+  };
+
+  const handleResubmitTagKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && resubmitTagInput.trim()) {
+      setResubmitStatuses((prev) => [...prev, resubmitTagInput.trim()]);
+      setResubmitTagInput("");
     }
   };
 
@@ -90,17 +90,11 @@ export default function AccessControlAndVisibilitySettings({
             dashboard, preventing them from viewing or changing information (for
             example, rejected or terminated candidates).
           </p>
-          <div
-            className="flex flex-wrap gap-1.5 border border-gray-200 rounded-lg p-4 min-h-[42px] items-center cursor-text"
-            onClick={() => {
-              setActiveField("noAccess");
-              document.getElementById("countryInput")?.focus();
-            }}
-          >
+          <div className="flex flex-wrap gap-1.5 border border-gray-200 rounded-lg p-4 min-h-10.5 items-center cursor-text">
             {noAccessStatuses.map((c) => (
               <span
                 key={c}
-                className="flex items-center gap-1 bg-[#111927] text-white rounded-[8px] px-2 py-0.5 text-xs"
+                className="flex items-center gap-1 bg-[#111927] text-white rounded-xl px-2 py-0.5 text-xs"
               >
                 {c}
                 <span
@@ -112,11 +106,10 @@ export default function AccessControlAndVisibilitySettings({
               </span>
             ))}
             <input
-              id="countryInput"
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              onKeyDown={handleTagKey}
-              className="border-none outline-none text-xs flex-1 min-w-[60px] bg-transparent"
+              value={noAccessTagInput}
+              onChange={(e) => setNoAccessTagInput(e.target.value)}
+              onKeyDown={handleNoAccessTagKey}
+              className="border-none outline-none text-xs flex-1 min-w-15 bg-transparent"
             />
           </div>
         </div>
@@ -145,17 +138,11 @@ export default function AccessControlAndVisibilitySettings({
             can submit the application form without getting a "duplicate email"
             notice
           </p>
-          <div
-            className="flex flex-wrap gap-1.5 border border-gray-200 rounded-lg p-4 min-h-[42px] items-center cursor-text"
-            onClick={() => {
-              setActiveField("resubmit");
-              document.getElementById("countryInput")?.focus();
-            }}
-          >
+          <div className="flex flex-wrap gap-1.5 border border-gray-200 rounded-lg p-4 min-h-10.5 items-center cursor-text">
             {resubmitStatuses.map((c) => (
               <span
                 key={c}
-                className="flex items-center gap-1 bg-[#111927] text-white rounded-[8px] px-2 py-0.5 text-xs"
+                className="flex items-center gap-1 bg-[#111927] text-white rounded-xl px-2 py-0.5 text-xs"
               >
                 {c}
                 <span
@@ -167,11 +154,10 @@ export default function AccessControlAndVisibilitySettings({
               </span>
             ))}
             <input
-              id="countryInput"
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              onKeyDown={handleTagKey}
-              className="border-none outline-none text-xs flex-1 min-w-[60px] bg-transparent"
+              value={resubmitTagInput}
+              onChange={(e) => setResubmitTagInput(e.target.value)}
+              onKeyDown={handleResubmitTagKey}
+              className="border-none outline-none text-xs flex-1 min-w-15 bg-transparent"
             />
           </div>
         </div>
