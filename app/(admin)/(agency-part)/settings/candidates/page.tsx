@@ -17,6 +17,7 @@ export default function CandidatesPage() {
   const registrationFeeData = settingsData?.data?.registration_fee;
   const accessControlData = settingsData?.data?.access_control;
   const profileData = settingsData?.data?.profile;
+  const scheduleData = settingsData?.data?.schedule_availability;
 
   return (
     <div className="space-y-4">
@@ -35,7 +36,10 @@ export default function CandidatesPage() {
         isLoading={isLoading}
       />
       <Documents settingsData={settingsData} isLoading={isLoading} />
-      <ScheduleAvailabilitySettings />
+      <ScheduleAvailabilitySettings
+        scheduleData={scheduleData}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

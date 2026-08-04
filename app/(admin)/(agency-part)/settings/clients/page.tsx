@@ -16,6 +16,7 @@ export default function ClientsPage() {
   const registrationFeeData = settingsData?.data?.registration_fee;
   const accessControlData = settingsData?.data?.access_control;
   const profileData = settingsData?.data?.profile;
+  const scheduleData = settingsData?.data?.schedule_availability;
   return (
     <div className="space-y-4">
       <CandidateDashboardSettings
@@ -33,7 +34,7 @@ export default function ClientsPage() {
         isLoading={isLoading}
       />
       <Documents settingsData={settingsData} isLoading={isLoading} />
-       <ScheduleAvailabilitySettings />
+       <ScheduleAvailabilitySettings scheduleData={scheduleData} isLoading={isLoading} />
     </div>
   );
 }
