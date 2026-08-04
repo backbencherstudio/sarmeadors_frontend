@@ -170,7 +170,7 @@ export default function MiddleFieldsColumn() {
   };
   const handleCreateCustomForm = async () => {
     const payload = buildAgencyTemplatePayload(active);
-    console.log(payload, "payload");
+   
     try {
       const response = await createAgencyTemplateList(payload).unwrap();
       console.log("Form submitted!", response);

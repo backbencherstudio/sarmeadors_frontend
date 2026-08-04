@@ -106,6 +106,7 @@ export const baseApi = createApi({
     "checklist",
     "jobsSettings",
     "AgencyTemplate",
+    "AgencyAdminNote",
   ],
   endpoints: (builder) => ({}),
 });
