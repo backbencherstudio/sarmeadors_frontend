@@ -4,7 +4,6 @@ import CandidateDashboardSettings from "@/components/agency/globalSetting/candid
 import CandidateTypesTagsChecklistSettings from "@/components/agency/globalSetting/candidates/CandidateTypesTagsChecklistSettings";
 import Documents from "@/components/agency/globalSetting/candidates/Documents";
 import ProfileSettings from "@/components/agency/globalSetting/candidates/ProfileSettings";
-import ProfileSettings2 from "@/components/agency/globalSetting/candidates/ProfileSettings2";
 import RegistrationFeeSettings from "@/components/agency/globalSetting/candidates/RegistrationFeeSettings";
 import ScheduleAvailabilitySettings from "@/components/agency/globalSetting/candidates/ScheduleAvailabilitySettings";
 import { useGetClientsSettingsQuery } from "@/feature/slice/settings/clients/ClientsSettingsSlice";
@@ -33,8 +32,7 @@ export default function ClientsPage() {
         isLoading={isLoading}
       />
       <Documents settingsData={settingsData} isLoading={isLoading} />
-      <ProfileSettings2 />
-      <ScheduleAvailabilitySettings />
+       <ScheduleAvailabilitySettings />
     </div>
   );
 }
