@@ -1,62 +1,117 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, Trash2, Plus } from "lucide-react";
 import CommonAccordion from "../CommonAccordion";
+import { toast } from "react-toastify";
+import ButtonReuseable from "@/components/reusable/CustomButton";
+import { usePostCandidateSettingsUpdateMutation } from "@/feature/slice/settings/candidates/CandidateSettingsSlice";
 
-const FONTS = [
-  "Public",
-  "Inter",
-  "Roboto",
-  "Open Sans",
-  "Lato",
-  "Montserrat",
-  "Poppins",
-  "Raleway",
-  "Nunito",
-  "Source Sans Pro",
+const PROFILE_SCOPES = ["Public", "Private", "None"];
+const INTERVIEW_BOX_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const INTERVAL_OPTIONS = [5, 10, 15, 30, 45, 60];
+const MIN_BLOCK_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const MAX_HOURS_OPTIONS = [
+  1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80,
+];
+const TIME_OFF_DAYS_OPTIONS = [0, 1, 2, 3, 5, 7, 10, 14, 21, 30];
+const BUFFER_HOURS_OPTIONS = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+  22, 23, 24,
 ];
 
-const LANGUAGES = ["15", "30", "45", "60", "90", "120"];
+export default function ProfileSettings({
+  profileData,
+  isLoading,
+}: {
+  profileData?: {
+    profile_picture_scope: string;
+    interview_boxes_count: number;
+    availability_scheduling_interval: number;
+    time_off_request_categories: string[];
+    min_time_block_duration: number;
+    max_hours_per_week: number;
+    time_off_request_days: number;
+    buffer_time_hours: number;
+  };
+  isLoading?: boolean;
+}) {
+  const [postCandidateSettingsUpdate, { isLoading: isSaving }] =
+    usePostCandidateSettingsUpdateMutation();
 
-const DEFAULT_LOCATIONS = [
-  "Chicago",
-  "DC Metro Area",
-  "New York",
-  "Miami",
-  "Iowa",
-  "Other Locations",
-];
+  const [profilePictureScope, setProfilePictureScope] = useState("public");
+  const [interviewBoxesCount, setInterviewBoxesCount] = useState(2);
+  const [availabilitySchedulingInterval, setAvailabilitySchedulingInterval] =
+    useState(15);
+  const [timeOffRequestCategories, setTimeOffRequestCategories] = useState<
+    string[]
+  >([]);
+  const [minTimeBlockDuration, setMinTimeBlockDuration] = useState(2);
+  const [maxHoursPerWeek, setMaxHoursPerWeek] = useState(40);
+  const [timeOffRequestDays, setTimeOffRequestDays] = useState(0);
+  const [bufferTimeHours, setBufferTimeHours] = useState(1);
 
-export default function ProfileSettings() {
-  const [language, setLanguage] = useState("English");
-  const [locations, setLocations] = useState<string[]>(DEFAULT_LOCATIONS);
-  const [subRows, setSubRows] = useState([
-    { location: "Chicago", subLocation: "" },
-  ]);
+  useEffect(() => {
+    if (profileData) {
+      setProfilePictureScope(profileData.profile_picture_scope || "public");
+      setInterviewBoxesCount(profileData.interview_boxes_count || 2);
+      setAvailabilitySchedulingInterval(
+        profileData.availability_scheduling_interval || 15,
+      );
+      setTimeOffRequestCategories(
+        profileData.time_off_request_categories || [],
+      );
+      setMinTimeBlockDuration(profileData.min_time_block_duration || 2);
+      setMaxHoursPerWeek(profileData.max_hours_per_week || 40);
+      setTimeOffRequestDays(profileData.time_off_request_days || 0);
+      setBufferTimeHours(profileData.buffer_time_hours || 1);
+    }
+  }, [profileData]);
 
-  const addLocation = () => setLocations((prev) => [...prev, ""]);
+  const handleSubmit = async () => {
+    const payload = {
+      profile: {
+        profile_picture_scope: profilePictureScope,
+        interview_boxes_count: interviewBoxesCount,
+        availability_scheduling_interval: availabilitySchedulingInterval,
+        time_off_request_categories: timeOffRequestCategories,
+        min_time_block_duration: minTimeBlockDuration,
+        max_hours_per_week: maxHoursPerWeek,
+        time_off_request_days: timeOffRequestDays,
+        buffer_time_hours: bufferTimeHours,
+      },
+    };
 
-  const updateLocation = (index: number, value: string) =>
-    setLocations((prev) => prev.map((l, i) => (i === index ? value : l)));
+    try {
+      const response = await postCandidateSettingsUpdate(payload).unwrap();
+      toast.success("Profile settings saved successfully!");
 
-  const removeLocation = (index: number) =>
-    setLocations((prev) => prev.filter((_, i) => i !== index));
-
-  const addSubRow = () =>
-    setSubRows((prev) => [...prev, { location: "", subLocation: "" }]);
-
-  const updateSubRow = (
-    index: number,
-    field: "location" | "subLocation",
-    value: string,
-  ) =>
-    setSubRows((prev) =>
-      prev.map((row, i) => (i === index ? { ...row, [field]: value } : row)),
-    );
-
-  const removeSubRow = (index: number) =>
-    setSubRows((prev) => prev.filter((_, i) => i !== index));
+      if (response?.data?.profile) {
+        setProfilePictureScope(
+          response.data.profile.profile_picture_scope || "public",
+        );
+        setInterviewBoxesCount(
+          response.data.profile.interview_boxes_count || 2,
+        );
+        setAvailabilitySchedulingInterval(
+          response.data.profile.availability_scheduling_interval || 15,
+        );
+        setTimeOffRequestCategories(
+          response.data.profile.time_off_request_categories || [],
+        );
+        setMinTimeBlockDuration(
+          response.data.profile.min_time_block_duration || 2,
+        );
+        setMaxHoursPerWeek(response.data.profile.max_hours_per_week || 40);
+        setTimeOffRequestDays(response.data.profile.time_off_request_days || 0);
+        setBufferTimeHours(response.data.profile.buffer_time_hours || 1);
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message || "Error saving settings. Please try again.",
+      );
+    }
+  };
 
   return (
     <CommonAccordion title="Profile settings">
@@ -68,13 +123,13 @@ export default function ProfileSettings() {
           </label>
           <div className="relative">
             <select
-              // value={font}
-              // onChange={(e) => setFont(e.target.value)}
+              value={profilePictureScope}
+              onChange={(e) => setProfilePictureScope(e.target.value)}
               className="w-full appearance-none border border-gray-300 rounded-lg p-4 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
             >
-              {FONTS.map((f) => (
-                <option key={f} value={f}>
-                  {f}
+              {PROFILE_SCOPES.map((s) => (
+                <option key={s} value={s.toLowerCase()}>
+                  {s}
                 </option>
               ))}
             </select>
@@ -84,8 +139,7 @@ export default function ProfileSettings() {
             />
           </div>
           <p className="text-sm text-[#778593] mt-1">
-            Specify scope Of Of candidate (None if there is no profile picture
-            for candidate). Default picture is Public
+            Specify scope of candidate profile picture. Default is Public
           </p>
         </div>
         {/* Number of candidate interview boxes */}
@@ -95,13 +149,13 @@ export default function ProfileSettings() {
           </label>
           <div className="relative">
             <select
-              // value={font}
-              // onChange={(e) => setFont(e.target.value)}
+              value={interviewBoxesCount}
+              onChange={(e) => setInterviewBoxesCount(Number(e.target.value))}
               className="w-full appearance-none border border-gray-300 rounded-lg p-4 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
             >
-              {FONTS.map((f) => (
-                <option key={f} value={f}>
-                  {f}
+              {INTERVIEW_BOX_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
                 </option>
               ))}
             </select>
@@ -124,11 +178,13 @@ export default function ProfileSettings() {
           </p>
           <div className="relative">
             <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={availabilitySchedulingInterval}
+              onChange={(e) =>
+                setAvailabilitySchedulingInterval(Number(e.target.value))
+              }
               className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
             >
-              {LANGUAGES.map((l) => (
+              {INTERVAL_OPTIONS.map((l) => (
                 <option key={l} value={l}>
                   {l}
                 </option>
@@ -141,22 +197,30 @@ export default function ProfileSettings() {
           </div>
         </div>
 
-        {/* Multiple Locations */}
+        {/* Time Off Request Categories */}
         <div>
           <label className="block text-base font-medium mb-3">
             Time Off Request Categories
           </label>
           <div className="flex flex-col gap-2">
-            {locations.map((loc, i) => (
+            {timeOffRequestCategories.map((loc, i) => (
               <div key={i} className="flex items-center gap-2">
                 <input
                   type="text"
                   value={loc}
-                  onChange={(e) => updateLocation(i, e.target.value)}
+                  onChange={(e) => {
+                    const updated = [...timeOffRequestCategories];
+                    updated[i] = e.target.value;
+                    setTimeOffRequestCategories(updated);
+                  }}
                   className="flex-1 bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition"
                 />
                 <button
-                  onClick={() => removeLocation(i)}
+                  onClick={() =>
+                    setTimeOffRequestCategories(
+                      timeOffRequestCategories.filter((_, idx) => idx !== i),
+                    )
+                  }
                   className="text-red-400 hover:text-red-600 transition p-1 cursor-pointer"
                 >
                   <Trash2 size={18} />
@@ -166,7 +230,9 @@ export default function ProfileSettings() {
           </div>
 
           <button
-            onClick={addLocation}
+            onClick={() =>
+              setTimeOffRequestCategories([...timeOffRequestCategories, ""])
+            }
             className="mt-3 flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition cursor-pointer"
           >
             <Plus size={16} />
@@ -174,18 +240,18 @@ export default function ProfileSettings() {
           </button>
         </div>
 
-        {/*  Minimum time block duration for recurring availability */}
+        {/* Minimum time block duration for recurring availability */}
         <div className="space-y-1">
           <label className="block text-base font-medium">
             Minimum time block duration for recurring availability
           </label>
           <div className="relative">
             <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={minTimeBlockDuration}
+              onChange={(e) => setMinTimeBlockDuration(Number(e.target.value))}
               className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
             >
-              {LANGUAGES.map((l) => (
+              {MIN_BLOCK_OPTIONS.map((l) => (
                 <option key={l} value={l}>
                   {l}
                 </option>
@@ -198,8 +264,7 @@ export default function ProfileSettings() {
           </div>
           <p className="text-sm text-[#778593]">
             This means when a candidate is entering recurring availability, they
-            wont be able to enter a time block less than hours, for example if it
-            is 2 then 5pmto 6:30pm will be too small a block.
+            wont be able to enter a time block less than the selected hours.
           </p>
         </div>
         {/* Maximum number of hours a candidate can work in a week */}
@@ -209,11 +274,11 @@ export default function ProfileSettings() {
           </label>
           <div className="relative">
             <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={maxHoursPerWeek}
+              onChange={(e) => setMaxHoursPerWeek(Number(e.target.value))}
               className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
             >
-              {LANGUAGES.map((l) => (
+              {MAX_HOURS_OPTIONS.map((l) => (
                 <option key={l} value={l}>
                   {l}
                 </option>
@@ -232,11 +297,11 @@ export default function ProfileSettings() {
           </label>
           <div className="relative">
             <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={timeOffRequestDays}
+              onChange={(e) => setTimeOffRequestDays(Number(e.target.value))}
               className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
             >
-              {LANGUAGES.map((l) => (
+              {TIME_OFF_DAYS_OPTIONS.map((l) => (
                 <option key={l} value={l}>
                   {l}
                 </option>
@@ -249,20 +314,19 @@ export default function ProfileSettings() {
           </div>
           <p className="text-sm text-[#778593] mt-1">Default value none/0</p>
         </div>
-        {/* Number of hours in which candidate cannot be select for other jobs after finishing one job (buffer time) */}
+        {/* Buffer time hours */}
         <div>
           <label className="block text-base font-medium mb-1">
             Number of hours in which candidate cannot be select for other jobs
             after finishing one job (buffer time)
           </label>
-
           <div className="relative">
             <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={bufferTimeHours}
+              onChange={(e) => setBufferTimeHours(Number(e.target.value))}
               className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition pr-10"
             >
-              {LANGUAGES.map((l) => (
+              {BUFFER_HOURS_OPTIONS.map((l) => (
                 <option key={l} value={l}>
                   {l}
                 </option>
@@ -274,6 +338,16 @@ export default function ProfileSettings() {
             />
           </div>
         </div>
+      </div>
+
+      <div className="flex justify-end mt-6 gap-2 px-4 pb-4">
+        <ButtonReuseable
+          onClick={handleSubmit}
+          loading={isSaving}
+          title="Save"
+          sendingMsg={"Saving..."}
+          className="bg-gray-900 text-white hover:bg-gray-800"
+        />
       </div>
     </CommonAccordion>
   );

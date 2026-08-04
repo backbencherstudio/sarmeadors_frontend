@@ -15,6 +15,7 @@ export default function ClientsPage() {
   const dashboardData = settingsData?.data?.dashboard;
   const registrationFeeData = settingsData?.data?.registration_fee;
   const accessControlData = settingsData?.data?.access_control;
+  const profileData = settingsData?.data?.profile;
   return (
     <div className="space-y-4">
       <CandidateDashboardSettings
@@ -22,7 +23,7 @@ export default function ClientsPage() {
         isLoading={isLoading}
       />
       <CandidateTypesTagsChecklistSettings type="client" />
-      <ProfileSettings />
+      <ProfileSettings profileData={profileData} isLoading={isLoading} />
       <AccessControlAndVisibilitySettings
         accessControlData={accessControlData}
         isLoading={isLoading}

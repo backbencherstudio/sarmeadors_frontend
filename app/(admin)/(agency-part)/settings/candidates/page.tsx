@@ -16,6 +16,7 @@ export default function CandidatesPage() {
   const dashboardData = settingsData?.data?.dashboard;
   const registrationFeeData = settingsData?.data?.registration_fee;
   const accessControlData = settingsData?.data?.access_control;
+  const profileData = settingsData?.data?.profile;
 
   return (
     <div className="space-y-4">
@@ -24,7 +25,7 @@ export default function CandidatesPage() {
         isLoading={isLoading}
       />
       <CandidateTypesTagsChecklistSettings type="candidate" />
-      <ProfileSettings />
+      <ProfileSettings profileData={profileData} isLoading={isLoading} />
       <AccessControlAndVisibilitySettings
         accessControlData={accessControlData}
         isLoading={isLoading}
