@@ -71,7 +71,7 @@ export function RichTextEditor({
   value = "",
   onChange,
   toolbarClassName,
-  onUpdate,
+  
 }: RichTextEditorProps) {
   const [fontSize, setFontSize] = useState("16px");
 
@@ -124,7 +124,7 @@ export function RichTextEditor({
   return (
     <div className="rounded-xl">
       {/* Update Button */}
-      {onUpdate && (
+      {/* {onUpdate && (
         <div className="flex justify-end pt-4">
           <ButtonReuseable
             title="Admins to Notify"
@@ -134,7 +134,7 @@ export function RichTextEditor({
           />
         </div>
       )}
-      {onUpdate && <hr className="bg-[#E5E7EB] mt-4 mb-10" />}
+      {onUpdate && <hr className="bg-[#E5E7EB] mt-4 mb-10" />} */}
       {/* Toolbar */}
       <div
         className={`flex items-center  gap-1 py-2  mb-2  border p-0.5 h-auto  rounded-[8px] w-full justify-start overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${toolbarClassName}`}
