@@ -109,6 +109,8 @@ export const baseApi = createApi({
     "agencyDetailsSettings",
     "communicationSettings",
     "businessDetailsSettings",
+    "AgencyTemplate",
+    "AgencyAdminNote",
   ],
   endpoints: (builder) => ({}),
 });

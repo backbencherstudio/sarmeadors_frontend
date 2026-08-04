@@ -11,6 +11,8 @@ import {
   reorderSectionInputs,
   setActiveField,
 } from "@/feature/slice/applicationBuilder/ApplicationFormSlice";
+import { buildAgencyTemplatePayload } from "@/feature/slice/applicationBuilder/applicationFormPayload";
+import { useCreateAgencyTemplateListMutation } from "@/feature/slice/agency/agencyTemplateSlice";
 import { useDraggableList } from "@/hooks/useDraggableList";
 import { GripVertical, Lock, PlusIcon, Trash2 } from "lucide-react";
 import Image from "next/image";
@@ -127,9 +129,12 @@ export default function MiddleFieldsColumn() {
   >(undefined);
 
   const dispatch = useDispatch();
+  const [createAgencyTemplateList, { isLoading }] =
+    useCreateAgencyTemplateListMutation();
   const activeBlockId = useSelector(
     (state: any) => state.applicationForm.activeBlockId,
   );
+  const active = useSelector((state: any) => state.applicationForm);
   const activeBlock = useSelector((state: any) =>
     state.applicationForm.blocks.find((b: any) => b.id === activeBlockId),
   );
@@ -163,10 +168,16 @@ export default function MiddleFieldsColumn() {
       reorderBlockFields({ blockId: activeBlockId, fields: blockFields }),
     );
   };
-  const handleCreateCustomForm = () => {
-    // Implement your form submission logic here
-    console.log("Form submitted!");
-  }
+  const handleCreateCustomForm = async () => {
+    const payload = buildAgencyTemplatePayload(active);
+   
+    try {
+      const response = await createAgencyTemplateList(payload).unwrap();
+      console.log("Form submitted!", response);
+    } catch (error) {
+      console.error("Form submission failed:", error);
+    }
+  };
 
   const selectField = (sectionId: string | null, fieldId: string | null) => {
     dispatch(setActiveField({ sectionId, fieldId }));
@@ -414,7 +425,12 @@ export default function MiddleFieldsColumn() {
           </div>
         )}
         <div className="mt-4 flex justify-end">
-          <ButtonReuseable title="submit" onClick={handleCreateCustomForm}/>
+          <ButtonReuseable
+            title="Submit"
+            onClick={handleCreateCustomForm}
+            loading={isLoading}
+            sendingMsg="Saving..."
+          />
         </div>
       </div>
 
